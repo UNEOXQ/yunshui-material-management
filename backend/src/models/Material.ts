@@ -120,14 +120,32 @@ export class MaterialModel {
 
     const { name, category, price, quantity, supplier, type } = value;
 
-    const query = `
-      INSERT INTO materials (name, category, price, quantity, supplier, type)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING *
-    `;
+    try {
+      // 使用記憶體資料庫
+      const newMaterial = await memoryDb.createMaterial({
+        name,
+        category,
+        price,
+        quantity,
+        supplier: supplier || '',
+        type,
+        imageUrl: ''
+      });
+      
+      return newMaterial;
+    } catch (error) {
+      console.warn('Memory database failed, trying PostgreSQL:', error);
+      
+      // 回退到 PostgreSQL
+      const query = `
+        INSERT INTO materials (name, category, price, quantity, supplier, type)
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING *
+      `;
 
-    const result = await pool.query(query, [name, category, price, quantity, supplier || null, type]);
-    return this.entityToModel(result.rows[0]);
+      const result = await pool.query(query, [name, category, price, quantity, supplier || null, type]);
+      return this.entityToModel(result.rows[0]);
+    }
   }
 
   // Find material by ID
