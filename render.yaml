@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: yunshui-backend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        value: yunshui-super-secret-jwt-key-2024
+      - key: JWT_REFRESH_SECRET
+        value: yunshui-refresh-secret-key-2024
