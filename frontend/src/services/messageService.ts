@@ -102,5 +102,43 @@ export const messageService = {
       console.error('獲取用戶列表失敗:', error);
       return { success: false, message: '獲取用戶列表失敗' };
     }
+  },
+
+  // 刪除留言（管理員）
+  async deleteMessage(messageId: string): Promise<{success: boolean, message?: string}> {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${API_BASE_URL}/messages/${messageId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('刪除留言失敗:', error);
+      return { success: false, message: '刪除留言失敗' };
+    }
+  },
+
+  // 刪除用戶的所有留言（管理員）
+  async deleteAllMessagesForUser(userId: string): Promise<{success: boolean, message?: string}> {
+    try {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${API_BASE_URL}/messages/user/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('刪除用戶留言失敗:', error);
+      return { success: false, message: '刪除用戶留言失敗' };
+    }
   }
 };

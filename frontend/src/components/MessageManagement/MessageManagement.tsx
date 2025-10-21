@@ -21,6 +21,8 @@ export const MessageManagement: React.FC<MessageManagementProps> = ({ onBack }) 
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [currentMessages, setCurrentMessages] = useState<{[userId: string]: any}>({});
+  const [loadingMessages, setLoadingMessages] = useState(false);
 
   // 載入用戶列表
   useEffect(() => {
@@ -36,6 +38,9 @@ export const MessageManagement: React.FC<MessageManagementProps> = ({ onBack }) 
         const currentUserId = JSON.parse(localStorage.getItem('user') || '{}').id;
         const filteredUsers = response.data.users?.filter((user: User) => user.id !== currentUserId) || [];
         setUsers(filteredUsers);
+        
+        // 載入每個用戶的當前留言
+        loadCurrentMessages(filteredUsers);
       } else {
         setError(response.message || '載入用戶列表失敗');
       }
@@ -44,6 +49,36 @@ export const MessageManagement: React.FC<MessageManagementProps> = ({ onBack }) 
     } finally {
       setLoading(false);
     }
+  };
+
+  // 載入所有用戶的當前留言
+  const loadCurrentMessages = async (userList: User[]) => {
+    setLoadingMessages(true);
+    const messages: {[userId: string]: any} = {};
+    
+    for (const user of userList) {
+      try {
+        // 這裡我們需要一個新的 API 來獲取發送給特定用戶的最新留言
+        // 暫時使用 getLatestMessage，但需要修改後端
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3004/api'}/messages/latest/${user.id}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.data) {
+            messages[user.id] = result.data;
+          }
+        }
+      } catch (error) {
+        console.error(`載入用戶 ${user.username} 的留言失敗:`, error);
+      }
+    }
+    
+    setCurrentMessages(messages);
+    setLoadingMessages(false);
   };
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -67,9 +102,11 @@ export const MessageManagement: React.FC<MessageManagementProps> = ({ onBack }) 
       const response = await messageService.sendMessage(selectedUserId, messageContent.trim());
       
       if (response.success) {
-        setSuccess('留言發送成功！');
+        setSuccess('留言發送成功！舊留言已被覆蓋');
         setMessageContent('');
-        setSelectedUserId('');
+        
+        // 重新載入該用戶的留言
+        loadCurrentMessages(users);
         
         // 3秒後清除成功訊息
         setTimeout(() => setSuccess(''), 3000);
@@ -80,6 +117,29 @@ export const MessageManagement: React.FC<MessageManagementProps> = ({ onBack }) 
       setError('發送留言失敗');
     } finally {
       setSending(false);
+    }
+  };
+
+  const handleDeleteMessage = async (userId: string, messageId: string) => {
+    if (!confirm('確定要刪除這條留言嗎？')) {
+      return;
+    }
+
+    try {
+      const response = await messageService.deleteAllMessagesForUser(userId);
+      
+      if (response.success) {
+        setSuccess('留言已刪除');
+        
+        // 重新載入留言
+        loadCurrentMessages(users);
+        
+        setTimeout(() => setSuccess(''), 3000);
+      } else {
+        setError(response.message || '刪除留言失敗');
+      }
+    } catch (err) {
+      setError('刪除留言失敗');
     }
   };
 
@@ -192,14 +252,63 @@ export const MessageManagement: React.FC<MessageManagementProps> = ({ onBack }) 
           </form>
         </div>
 
+        <div className="current-messages-section">
+          <h3>📋 當前留言狀態</h3>
+          {loadingMessages ? (
+            <div className="loading-message">載入留言中...</div>
+          ) : (
+            <div className="messages-list">
+              {users.map(user => (
+                <div key={user.id} className="message-item">
+                  <div className="message-user-info">
+                    <strong>{user.username}</strong>
+                    <span className="user-role">
+                      ({user.role === 'PM' ? '專案經理' : 
+                        user.role === 'AM' ? '客戶經理' : 
+                        user.role === 'WAREHOUSE' ? '倉庫管理員' : 
+                        user.role})
+                    </span>
+                  </div>
+                  
+                  {currentMessages[user.id] ? (
+                    <div className="current-message">
+                      <div className="message-content">
+                        <strong>當前留言：</strong>
+                        <p>"{currentMessages[user.id].content}"</p>
+                      </div>
+                      <div className="message-meta">
+                        <span className="message-time">
+                          發送時間：{new Date(currentMessages[user.id].createdAt).toLocaleString()}
+                        </span>
+                        <span className={`message-status ${currentMessages[user.id].isRead ? 'read' : 'unread'}`}>
+                          {currentMessages[user.id].isRead ? '已讀' : '未讀'}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteMessage(user.id, currentMessages[user.id].id)}
+                        className="btn btn-danger btn-small"
+                      >
+                        🗑️ 刪除留言
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="no-message">
+                      <span className="no-message-text">暫無留言</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
         <div className="message-tips">
           <h3>💡 使用提示</h3>
           <ul>
-            <li>選擇要發送留言的用戶</li>
-            <li>輸入留言內容（最多500字符）</li>
-            <li>點擊發送後，用戶會在右上角看到留言通知</li>
-            <li>留言會即時顯示給對應用戶</li>
-            <li>用戶點擊通知後留言會標記為已讀</li>
+            <li><strong>單一留言制：</strong>每個用戶只能有一條留言，新留言會覆蓋舊留言</li>
+            <li><strong>即時通知：</strong>用戶會在右上角看到留言通知</li>
+            <li><strong>狀態追蹤：</strong>可以看到留言是否已被用戶讀取</li>
+            <li><strong>管理功能：</strong>可以隨時刪除已發送的留言</li>
           </ul>
         </div>
       </div>

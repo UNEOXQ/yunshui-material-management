@@ -689,6 +689,9 @@ export class MemoryDatabase {
     content: string;
     isRead: boolean;
   }): Promise<Message> {
+    // 刪除該用戶的所有舊留言（只保留一條最新的）
+    this.messages = this.messages.filter(msg => msg.toUserId !== messageData.toUserId);
+    
     const newMessage: Message = {
       id: this.generateId(),
       fromUserId: messageData.fromUserId,
@@ -742,6 +745,33 @@ export class MemoryDatabase {
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     
     return userMessages.length > 0 ? userMessages[0] : null;
+  }
+
+  async deleteMessage(messageId: string, fromUserId: string): Promise<boolean> {
+    const messageIndex = this.messages.findIndex(msg => 
+      msg.id === messageId && msg.fromUserId === fromUserId
+    );
+    
+    if (messageIndex === -1) return false;
+
+    this.messages.splice(messageIndex, 1);
+    this.hasUnsavedChanges = true;
+    this.saveToFile();
+    
+    return true;
+  }
+
+  async deleteAllMessagesForUser(toUserId: string): Promise<boolean> {
+    const originalLength = this.messages.length;
+    this.messages = this.messages.filter(msg => msg.toUserId !== toUserId);
+    
+    if (this.messages.length !== originalLength) {
+      this.hasUnsavedChanges = true;
+      this.saveToFile();
+      return true;
+    }
+    
+    return false;
   }
 
   async getAllMessages(userId?: string): Promise<Message[]> {

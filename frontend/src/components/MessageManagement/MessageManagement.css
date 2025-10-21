@@ -185,6 +185,144 @@
   line-height: 1.5;
 }
 
+/* 當前留言狀態區域 */
+.current-messages-section {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 30px;
+}
+
+.current-messages-section h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 1.4rem;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.message-item {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.message-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.message-user-info strong {
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.user-role {
+  color: #666;
+  font-size: 0.9rem;
+  background: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.current-message {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message-content {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #28a745;
+}
+
+.message-content strong {
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.message-content p {
+  margin: 0;
+  color: #555;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.message-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.message-time {
+  color: #666;
+}
+
+.message-status {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.message-status.read {
+  background: #d4edda;
+  color: #155724;
+}
+
+.message-status.unread {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  align-self: flex-start;
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+  background: #c82333;
+}
+
+.no-message {
+  padding: 20px;
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 2px dashed #dee2e6;
+}
+
+.no-message-text {
+  color: #6c757d;
+  font-style: italic;
+}
+
 /* 響應式設計 */
 @media (max-width: 768px) {
   .message-content {
@@ -205,5 +343,15 @@
   
   .form-actions {
     flex-direction: column;
+  }
+
+  .message-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .message-item {
+    padding: 15px;
   }
 }

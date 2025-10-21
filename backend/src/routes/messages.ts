@@ -116,6 +116,35 @@ router.get('/latest', authenticateToken, async (req: AuthenticatedRequest, res) 
   }
 });
 
+// 獲取發送給特定用戶的最新留言（管理員用）
+router.get('/latest/:userId', authenticateToken, async (req: AuthenticatedRequest, res) => {
+  try {
+    const { userId } = req.params;
+    const userRole = req.user?.role;
+
+    if (userRole !== 'ADMIN') {
+      return res.status(403).json({
+        success: false,
+        message: '只有管理員可以查看其他用戶的留言'
+      });
+    }
+
+    const latestMessage = await memoryDb.getLatestMessage(userId);
+
+    return res.json({
+      success: true,
+      data: latestMessage
+    });
+
+  } catch (error) {
+    console.error('獲取最新留言失敗:', error);
+    return res.status(500).json({
+      success: false,
+      message: '獲取最新留言失敗'
+    });
+  }
+});
+
 // 標記留言為已讀
 router.put('/:messageId/read', authenticateToken, async (req: AuthenticatedRequest, res) => {
   try {
@@ -148,6 +177,87 @@ router.put('/:messageId/read', authenticateToken, async (req: AuthenticatedReque
     return res.status(500).json({
       success: false,
       message: '標記已讀失敗'
+    });
+  }
+});
+
+// 刪除留言（管理員）
+router.delete('/:messageId', authenticateToken, async (req: AuthenticatedRequest, res) => {
+  try {
+    const { messageId } = req.params;
+    const userId = req.user?.userId;
+    const userRole = req.user?.role;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: '用戶身份驗證失敗'
+      });
+    }
+
+    // 檢查是否為管理員
+    if (userRole !== 'ADMIN') {
+      return res.status(403).json({
+        success: false,
+        message: '只有管理員可以刪除留言'
+      });
+    }
+
+    const success = await memoryDb.deleteMessage(messageId, userId);
+
+    if (success) {
+      return res.json({
+        success: true,
+        message: '留言已刪除'
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: '留言不存在或無權限'
+      });
+    }
+
+  } catch (error) {
+    console.error('刪除留言失敗:', error);
+    return res.status(500).json({
+      success: false,
+      message: '刪除留言失敗'
+    });
+  }
+});
+
+// 刪除用戶的所有留言（管理員）
+router.delete('/user/:userId', authenticateToken, async (req: AuthenticatedRequest, res) => {
+  try {
+    const { userId: targetUserId } = req.params;
+    const userRole = req.user?.role;
+
+    if (!userRole || userRole !== 'ADMIN') {
+      return res.status(403).json({
+        success: false,
+        message: '只有管理員可以刪除留言'
+      });
+    }
+
+    const success = await memoryDb.deleteAllMessagesForUser(targetUserId);
+
+    if (success) {
+      return res.json({
+        success: true,
+        message: '用戶的所有留言已刪除'
+      });
+    } else {
+      return res.json({
+        success: true,
+        message: '該用戶沒有留言'
+      });
+    }
+
+  } catch (error) {
+    console.error('刪除用戶留言失敗:', error);
+    return res.status(500).json({
+      success: false,
+      message: '刪除用戶留言失敗'
     });
   }
 });
