@@ -207,15 +207,27 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
 
   // 過濾訂單
   const filterOrders = (orders: Order[], filter: 'all' | 'processing' | 'completed'): Order[] => {
+    let filtered: Order[];
+    
     switch (filter) {
       case 'completed':
-        return orders.filter(order => isOrderCompleted(order));
+        filtered = orders.filter(order => isOrderCompleted(order));
+        break;
       case 'processing':
-        return orders.filter(order => !isOrderCompleted(order));
+        filtered = orders.filter(order => !isOrderCompleted(order));
+        break;
       case 'all':
       default:
-        return orders;
+        filtered = orders;
+        break;
     }
+    
+    // 按創建時間排序，最新的在最上面
+    return filtered.sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+      return dateB - dateA; // 降序排列（最新的在前）
+    });
   };
 
   // 計算統計信息
