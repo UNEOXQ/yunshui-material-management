@@ -4,6 +4,11 @@
   "outputDirectory": "dist",
   "installCommand": "npm install --legacy-peer-deps",
   "framework": "vite",
+  "env": {
+    "VITE_API_URL": "https://yunshui-backend1.onrender.com/api",
+    "VITE_WS_URL": "https://yunshui-backend1.onrender.com",
+    "VITE_NODE_ENV": "production"
+  },
   "rewrites": [
     {
       "source": "/(.*)",
