@@ -21,6 +21,7 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://localhost:5173',
+    'https://yunshui-material-management.vercel.app',
     process.env.CORS_ORIGIN || 'http://localhost:3000'
   ],
   credentials: true,

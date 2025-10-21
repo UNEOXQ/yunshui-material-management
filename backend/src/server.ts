@@ -35,6 +35,7 @@ app.use(cors({
     'http://192.168.68.104:5173',
     'http://23.16.254.249:3000',
     'http://23.16.254.249:5173',
+    'https://yunshui-material-management.vercel.app',
     process.env.FRONTEND_URL || 'http://localhost:5173'
   ],
   credentials: true,
