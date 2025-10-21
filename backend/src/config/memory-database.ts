@@ -1,5 +1,5 @@
 // 內存數據庫配置 - 用於開發和測試
-import { User, Material, Order, OrderItem, Project, StatusUpdate, Message } from '../types';
+import { User, Material, Order, OrderItem, OrderWithItems, Project, StatusUpdate, Message } from '../types';
 import fs from 'fs';
 import path from 'path';
 
@@ -400,7 +400,7 @@ export class MemoryDatabase {
   }
 
   // 訂單操作
-  async getAllOrders(): Promise<Order[]> {
+  async getAllOrders(): Promise<OrderWithItems[]> {
     const orders = [...this.orders];
     // 豐富每個訂單的材料信息
     const enrichedOrders = await Promise.all(
@@ -503,7 +503,7 @@ export class MemoryDatabase {
   }
 
   // 豐富訂單數據，包含完整的材料信息
-  private async enrichOrderWithMaterials(order: Order): Promise<Order> {
+  private async enrichOrderWithMaterials(order: Order): Promise<OrderWithItems> {
     const orderItems = this.orderItems.filter(item => item.orderId === order.id);
     
     const enrichedItems = await Promise.all(orderItems.map(async (item) => {
@@ -535,7 +535,7 @@ export class MemoryDatabase {
     };
   }
 
-  async findOrdersByUserId(userId: string, filters?: any, page: number = 1, limit: number = 10): Promise<{orders: Order[], total: number}> {
+  async findOrdersByUserId(userId: string, filters?: any, page: number = 1, limit: number = 10): Promise<{orders: OrderWithItems[], total: number}> {
     let filteredOrders = this.orders.filter(order => order.userId === userId);
     
     if (filters?.status) {
@@ -561,7 +561,7 @@ export class MemoryDatabase {
     };
   }
 
-  async findAllOrders(filters?: any, page: number = 1, limit: number = 10): Promise<{orders: Order[], total: number}> {
+  async findAllOrders(filters?: any, page: number = 1, limit: number = 10): Promise<{orders: OrderWithItems[], total: number}> {
     let filteredOrders = [...this.orders];
     
     if (filters?.status) {

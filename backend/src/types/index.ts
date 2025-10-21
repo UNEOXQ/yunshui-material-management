@@ -46,6 +46,16 @@ export interface OrderItem {
   quantity: number;
   unitPrice: number;
   supplier?: string; // For finished materials
+  materialName?: string;
+  materialCategory?: string;
+  materialType?: string;
+  imageUrl?: string;
+  material?: Material;
+}
+
+// 包含項目的訂單類型
+export interface OrderWithItems extends Order {
+  items: OrderItem[];
 }
 
 export interface Project {
