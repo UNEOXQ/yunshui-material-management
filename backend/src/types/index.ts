@@ -48,9 +48,9 @@ export interface OrderItem {
   supplier?: string; // For finished materials
   materialName?: string;
   materialCategory?: string;
-  materialType?: string;
+  materialType?: MaterialType;
   imageUrl?: string;
-  material?: Material;
+  material?: Material | undefined;
 }
 
 // 包含項目的訂單類型

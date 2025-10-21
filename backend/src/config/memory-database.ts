@@ -522,9 +522,11 @@ export class MemoryDatabase {
           category: material.category,
           price: material.price,
           quantity: material.quantity,
-          supplier: material.supplier,
-          imageUrl: material.imageUrl,
-          type: material.type
+          supplier: material.supplier || '',
+          imageUrl: material.imageUrl || '',
+          type: material.type,
+          createdAt: material.createdAt,
+          updatedAt: material.updatedAt
         } : undefined
       };
     }));
