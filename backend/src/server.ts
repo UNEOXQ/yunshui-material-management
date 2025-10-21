@@ -99,7 +99,8 @@ app.get('/health', (_req, res) => {
   res.status(200).json({
     success: true,
     message: 'Server is running',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    version: '1.0.1' // 添加版本號來確認部署
   });
 });
 
