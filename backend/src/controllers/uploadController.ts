@@ -5,6 +5,15 @@ import { getFileUrl, deleteUploadedFile } from '../middleware/upload';
 import path from 'path';
 import fs from 'fs';
 
+// 驗證 ID 格式的輔助函數
+function isValidId(id: string): boolean {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  const memoryIdRegex = /^(material|user|order|project)-\w+$/i;
+  const simpleMemoryIdRegex = /^id-\d+$/i; // 支持 id-2000 格式
+  
+  return uuidRegex.test(id) || memoryIdRegex.test(id) || simpleMemoryIdRegex.test(id);
+}
+
 export class UploadController {
   /**
    * Upload material image
@@ -25,10 +34,7 @@ export class UploadController {
       }
 
       // Validate ID format (UUID or memory database format)
-      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-      const memoryIdRegex = /^(material|user|order|project)-\w+$/i;
-      
-      if (!uuidRegex.test(id) && !memoryIdRegex.test(id)) {
+      if (!isValidId(id)) {
         res.status(400).json({
           success: false,
           error: 'Invalid ID',
@@ -144,10 +150,7 @@ export class UploadController {
       }
 
       // Validate ID format (UUID or memory database format)
-      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-      const memoryIdRegex = /^(material|user|order|project)-\w+$/i;
-      
-      if (!uuidRegex.test(id) && !memoryIdRegex.test(id)) {
+      if (!isValidId(id)) {
         res.status(400).json({
           success: false,
           error: 'Invalid ID',
