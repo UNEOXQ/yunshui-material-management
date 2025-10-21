@@ -401,7 +401,12 @@ export class MemoryDatabase {
 
   // 訂單操作
   async getAllOrders(): Promise<Order[]> {
-    return [...this.orders];
+    const orders = [...this.orders];
+    // 豐富每個訂單的材料信息
+    const enrichedOrders = await Promise.all(
+      orders.map(order => this.enrichOrderWithMaterials(order))
+    );
+    return enrichedOrders;
   }
 
   async createOrder(orderData: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>): Promise<Order> {
@@ -497,6 +502,39 @@ export class MemoryDatabase {
     return newItem;
   }
 
+  // 豐富訂單數據，包含完整的材料信息
+  private async enrichOrderWithMaterials(order: Order): Promise<Order> {
+    const orderItems = this.orderItems.filter(item => item.orderId === order.id);
+    
+    const enrichedItems = await Promise.all(orderItems.map(async (item) => {
+      const material = this.materials.find(m => m.id === item.materialId);
+      
+      return {
+        ...item,
+        materialName: material?.name || '未知材料',
+        materialCategory: material?.category || '',
+        materialType: material?.type || 'AUXILIARY',
+        supplier: material?.supplier || '',
+        imageUrl: material?.imageUrl || '',
+        material: material ? {
+          id: material.id,
+          name: material.name,
+          category: material.category,
+          price: material.price,
+          quantity: material.quantity,
+          supplier: material.supplier,
+          imageUrl: material.imageUrl,
+          type: material.type
+        } : undefined
+      };
+    }));
+
+    return {
+      ...order,
+      items: enrichedItems
+    };
+  }
+
   async findOrdersByUserId(userId: string, filters?: any, page: number = 1, limit: number = 10): Promise<{orders: Order[], total: number}> {
     let filteredOrders = this.orders.filter(order => order.userId === userId);
     
@@ -504,13 +542,21 @@ export class MemoryDatabase {
       filteredOrders = filteredOrders.filter(order => order.status === filters.status);
     }
     
+    // 按創建時間排序（最新的在前）
+    filteredOrders.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    
     const total = filteredOrders.length;
     const startIndex = (page - 1) * limit;
     const endIndex = startIndex + limit;
     const paginatedOrders = filteredOrders.slice(startIndex, endIndex);
     
+    // 豐富每個訂單的材料信息
+    const enrichedOrders = await Promise.all(
+      paginatedOrders.map(order => this.enrichOrderWithMaterials(order))
+    );
+    
     return {
-      orders: paginatedOrders,
+      orders: enrichedOrders,
       total
     };
   }
@@ -522,13 +568,21 @@ export class MemoryDatabase {
       filteredOrders = filteredOrders.filter(order => order.status === filters.status);
     }
     
+    // 按創建時間排序（最新的在前）
+    filteredOrders.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    
     const total = filteredOrders.length;
     const startIndex = (page - 1) * limit;
     const endIndex = startIndex + limit;
     const paginatedOrders = filteredOrders.slice(startIndex, endIndex);
     
+    // 豐富每個訂單的材料信息
+    const enrichedOrders = await Promise.all(
+      paginatedOrders.map(order => this.enrichOrderWithMaterials(order))
+    );
+    
     return {
-      orders: paginatedOrders,
+      orders: enrichedOrders,
       total
     };
   }
