@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試留言小工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            background-color: #f8f9fa;
+        }
+        .success {
+            border-left-color: #28a745;
+            background-color: #d4edda;
+        }
+        .info {
+            border-left-color: #17a2b8;
+            background-color: #d1ecf1;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        .feature-card h3 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        .demo-widget {
+            position: fixed;
+            top: 65px;
+            right: 15px;
+            z-index: 999;
+            max-width: 200px;
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(25, 118, 210, 0.15);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            font-size: 11px;
+            animation: fadeInSlide 0.5s ease-out;
+        }
+        .demo-widget:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        .demo-widget-header {
+            background: linear-gradient(135deg, rgba(25, 118, 210, 0.8), rgba(21, 101, 192, 0.8));
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px 5px 0 0;
+            display: flex;
+            align-items: center;
+            font-size: 10px;
+        }
+        .demo-widget-body {
+            padding: 6px 8px;
+            color: #333;
+            line-height: 1.3;
+        }
+        .demo-widget-text {
+            font-size: 11px;
+            margin-bottom: 3px;
+            word-wrap: break-word;
+        }
+        .demo-widget-time {
+            font-size: 9px;
+            color: #666;
+            text-align: right;
+            opacity: 0.7;
+        }
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateX(20px) translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+        }
+        .demo-widget::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, rgba(25, 118, 210, 0.1), rgba(21, 101, 192, 0.1));
+            border-radius: 10px;
+            z-index: -1;
+            animation: subtlePulse 3s ease-in-out infinite;
+        }
+        @keyframes subtlePulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.02);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 示例留言小工具 -->
+    <div class="demo-widget" id="demoWidget" style="display: none;">
+        <div class="demo-widget-header">
+            <span style="font-size: 10px; margin-right: 3px;">💬</span>
+            <span style="font-size: 10px;">管理員留言</span>
+        </div>
+        <div class="demo-widget-body">
+            <div class="demo-widget-text" id="demoText">
+                這是一條示例留言，展示新的彩蛋式設計風格。
+            </div>
+            <div class="demo-widget-time">
+                12月21日 14:30
+            </div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h1>🎨 新版留言小工具設計</h1>
+        
+        <div class="step info">
+            <h3>🎯 設計理念</h3>
+            <p>重新設計的留言系統採用<strong>彩蛋式設計</strong>，具有以下特點：</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🎨 低調美觀</h3>
+                    <ul>
+                        <li>半透明背景，不搶奪注意力</li>
+                        <li>小字體，精緻設計</li>
+                        <li>柔和的色彩搭配</li>
+                        <li>微妙的脈動動畫</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>🔄 常態顯示</h3>
+                    <ul>
+                        <li>固定在右上角位置</li>
+                        <li>新留言直接覆蓋舊的</li>
+                        <li>懸停時展開更多內容</li>
+                        <li>點擊×號標記已讀</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>👀 視覺效果預覽</h3>
+            <p>點擊下方按鈕查看留言小工具的實際效果：</p>
+            <button onclick="showDemoWidget()">顯示示例留言</button>
+            <button onclick="changeDemoMessage()">更換留言內容</button>
+            <button onclick="hideDemoWidget()">隱藏留言</button>
+        </div>
+
+        <div class="step">
+            <h3>🎯 功能特色</h3>
+            <ul>
+                <li>✨ <strong>彩蛋式設計</strong>：低調不突兀，像隱藏的小驚喜</li>
+                <li>📱 <strong>響應式適配</strong>：在手機上也能完美顯示</li>
+                <li>🎨 <strong>毛玻璃效果</strong>：現代化的視覺效果</li>
+                <li>⚡ <strong>即時更新</strong>：新留言自動覆蓋舊的</li>
+                <li>🖱️ <strong>交互友好</strong>：懸停展開，持續顯示</li>
+                <li>🔄 <strong>微動畫</strong>：淡入效果和脈動提示</li>
+            </ul>
+        </div>
+
+        <div class="step success">
+            <h3>🚀 測試新版留言系統</h3>
+            <p>新版留言系統已經實現，現在可以進行完整測試：</p>
+            <button onclick="openSystem()">打開雲水基材管理系統</button>
+            <button onclick="openTestPage()">打開API測試頁面</button>
+        </div>
+
+        <div class="step">
+            <h3>📋 測試步驟</h3>
+            <ol>
+                <li><strong>管理員發送留言</strong>：登入管理員 → 管理員控制台 → 💬 留言管理</li>
+                <li><strong>用戶查看留言</strong>：切換到目標用戶，查看右上角小工具</li>
+                <li><strong>交互測試</strong>：懸停查看完整內容，留言持續顯示</li>
+                <li><strong>覆蓋測試</strong>：發送新留言，驗證是否覆蓋舊的</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        const demoMessages = [
+            "這是一條示例留言，展示新的彩蛋式設計風格。",
+            "系統維護通知：今晚22:00-24:00進行系統升級。",
+            "恭喜！您的訂單已通過審核，請及時跟進。",
+            "提醒：請在本週五前完成材料清單更新。",
+            "新功能上線：現在支持批量導入材料資料。"
+        ];
+        
+        let currentMessageIndex = 0;
+
+        function showDemoWidget() {
+            document.getElementById('demoWidget').style.display = 'block';
+        }
+
+        function hideDemoWidget() {
+            document.getElementById('demoWidget').style.display = 'none';
+        }
+
+        function changeDemoMessage() {
+            currentMessageIndex = (currentMessageIndex + 1) % demoMessages.length;
+            document.getElementById('demoText').textContent = demoMessages[currentMessageIndex];
+            
+            // 重新觸發動畫
+            const widget = document.getElementById('demoWidget');
+            widget.style.animation = 'none';
+            setTimeout(() => {
+                widget.style.animation = 'fadeInSlide 0.5s ease-out';
+            }, 10);
+        }
+
+        function openSystem() {
+            window.open('http://localhost:5173', '_blank');
+        }
+
+        function openTestPage() {
+            window.open('test-message-api.html', '_blank');
+        }
+
+        // 頁面載入時自動顯示示例
+        window.onload = function() {
+            setTimeout(showDemoWidget, 1000);
+        };
+    </script>
+</body>
+</html>

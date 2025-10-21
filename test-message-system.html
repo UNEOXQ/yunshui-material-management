@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試留言系統</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            background-color: #f8f9fa;
+        }
+        .success {
+            border-left-color: #28a745;
+            background-color: #d4edda;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background-color: #f8d7da;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        .feature-card h3 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        .test-scenario {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 留言系統功能測試</h1>
+        
+        <div class="step">
+            <h3>📋 測試概述</h3>
+            <p>這個測試將驗證管理員留言系統的完整功能，包括：</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>💬 管理員功能</h3>
+                    <ul>
+                        <li>管理員控制台新增留言管理選項</li>
+                        <li>選擇目標用戶</li>
+                        <li>發送留言</li>
+                        <li>即時通知</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>🔔 用戶功能</h3>
+                    <ul>
+                        <li>右上角顯示留言通知</li>
+                        <li>點擊查看留言內容</li>
+                        <li>標記為已讀</li>
+                        <li>多條留言管理</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>🚀 測試步驟</h3>
+            
+            <div class="test-scenario">
+                <h4>步驟 1: 管理員發送留言</h4>
+                <ol>
+                    <li>使用管理員帳號登入系統</li>
+                    <li>進入"👑 管理員控制台"</li>
+                    <li>點擊新增的"💬 留言管理"功能</li>
+                    <li>選擇一個用戶（如PM或AM）</li>
+                    <li>輸入留言內容</li>
+                    <li>點擊發送</li>
+                </ol>
+            </div>
+
+            <div class="test-scenario">
+                <h4>步驟 2: 用戶接收留言</h4>
+                <ol>
+                    <li>登出管理員帳號</li>
+                    <li>使用被發送留言的用戶帳號登入</li>
+                    <li>檢查右上角是否出現留言通知</li>
+                    <li>點擊通知查看留言內容</li>
+                    <li>點擊"已讀"按鈕</li>
+                </ol>
+            </div>
+
+            <div class="test-scenario">
+                <h4>步驟 3: 多條留言測試</h4>
+                <ol>
+                    <li>重複步驟1，發送多條留言給同一用戶</li>
+                    <li>驗證用戶能看到留言數量提示</li>
+                    <li>逐一查看和標記已讀</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>🔍 預期結果</h3>
+            <ul>
+                <li>✅ 管理員控制台顯示"💬 留言管理"選項</li>
+                <li>✅ 留言管理頁面功能完整</li>
+                <li>✅ 用戶能即時收到留言通知</li>
+                <li>✅ 留言通知顯示在右上角美觀位置</li>
+                <li>✅ 點擊通知能查看完整留言內容</li>
+                <li>✅ 標記已讀功能正常</li>
+                <li>✅ 多條留言管理正常</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>🎯 開始測試</h3>
+            <button onclick="openSystem()">打開雲水基材管理系統</button>
+            <button onclick="openConsole()">打開開發者工具</button>
+            <button onclick="showTips()">顯示測試提示</button>
+        </div>
+
+        <div class="step">
+            <h3>📝 測試結果記錄</h3>
+            <p>請在測試完成後記錄結果：</p>
+            <button onclick="recordSuccess()">✅ 測試成功</button>
+            <button onclick="recordPartialSuccess()">⚠️ 部分成功</button>
+            <button onclick="recordFailure()">❌ 測試失敗</button>
+            <div id="testResult" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="step">
+            <h3>🔧 故障排除</h3>
+            <p>如果遇到問題，請檢查：</p>
+            <ul>
+                <li>後端服務是否正常運行（http://localhost:3004）</li>
+                <li>前端服務是否正常運行（http://localhost:5173）</li>
+                <li>F12控制台是否有錯誤信息</li>
+                <li>網絡請求是否成功</li>
+                <li>用戶權限是否正確</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function openSystem() {
+            window.open('http://localhost:5173', '_blank');
+        }
+
+        function openConsole() {
+            alert('請按 F12 打開開發者工具，查看 Console 和 Network 標籤');
+        }
+
+        function showTips() {
+            alert(`測試提示：
+1. 管理員帳號：點擊"管理"快速登入
+2. 其他帳號：pm001, am001, 馬克
+3. 留言會在30秒內自動檢查更新
+4. 注意觀察右上角的通知位置
+5. 可以發送多條留言測試批量處理`);
+        }
+
+        function recordSuccess() {
+            document.getElementById('testResult').innerHTML = 
+                '<div class="step success"><h4>✅ 測試成功！</h4><p>留言系統功能完全正常，所有預期結果都達成</p></div>';
+        }
+
+        function recordPartialSuccess() {
+            const issues = prompt('請描述哪些功能有問題：');
+            document.getElementById('testResult').innerHTML = 
+                '<div class="step" style="border-left-color: #ffc107; background-color: #fff3cd;"><h4>⚠️ 部分成功</h4><p>問題：' + (issues || '未指定') + '</p></div>';
+        }
+
+        function recordFailure() {
+            const error = prompt('請描述遇到的問題：');
+            document.getElementById('testResult').innerHTML = 
+                '<div class="step error"><h4>❌ 測試失敗</h4><p>問題描述：' + (error || '未知錯誤') + '</p></div>';
+        }
+
+        // 頁面載入時的提示
+        window.onload = function() {
+            console.log('🧪 留言系統測試頁面已載入');
+            console.log('📋 請按照步驟進行測試');
+        };
+    </script>
+</body>
+</html>

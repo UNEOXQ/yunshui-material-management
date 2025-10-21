@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言系統調試工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .debug-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .step {
+            margin: 15px 0;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            background-color: #f8f9fa;
+        }
+        .success {
+            border-left-color: #28a745;
+            background-color: #d4edda;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background-color: #f8d7da;
+        }
+        .warning {
+            border-left-color: #ffc107;
+            background-color: #fff3cd;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .user-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        .user-card h4 {
+            margin: 0 0 10px 0;
+            color: #007bff;
+        }
+        .user-card p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        input, select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px;
+            font-size: 14px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🔍 留言系統調試工具</h1>
+        
+        <div class="step">
+            <h3>步驟 1: 檢查後端連接</h3>
+            <button onclick="checkBackend()">檢查後端狀態</button>
+            <div id="backendResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 2: 管理員登入</h3>
+            <button onclick="loginAdmin()">登入管理員</button>
+            <div id="loginResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 3: 獲取所有用戶</h3>
+            <button onclick="getAllUsers()">獲取用戶列表</button>
+            <div id="usersResult"></div>
+            <div id="usersList"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 4: 發送測試留言</h3>
+            <div>
+                <label>選擇目標用戶：</label>
+                <select id="targetUser">
+                    <option value="">-- 請先獲取用戶列表 --</option>
+                </select>
+            </div>
+            <div style="margin: 10px 0;">
+                <label>留言內容：</label><br>
+                <textarea id="messageContent" rows="3" placeholder="輸入要發送的留言內容...">測試留言：這是一條來自管理員的測試訊息 - ${new Date().toLocaleString()}</textarea>
+            </div>
+            <button onclick="sendTestMessage()">發送留言</button>
+            <div id="sendResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 5: 檢查留言狀態</h3>
+            <button onclick="checkAllMessages()">檢查所有留言</button>
+            <button onclick="checkUnreadMessages()">檢查未讀留言</button>
+            <div id="messagesResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 6: 用戶登入測試</h3>
+            <div>
+                <label>選擇用戶：</label>
+                <select id="testUser">
+                    <option value="">-- 請先獲取用戶列表 --</option>
+                </select>
+                <button onclick="loginTestUser()">登入選中用戶</button>
+            </div>
+            <div id="userLoginResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 7: 前端組件測試</h3>
+            <button onclick="testFrontendComponent()">測試前端留言組件</button>
+            <div id="frontendResult"></div>
+        </div>
+    </div>
+
+    <script>
+        let adminToken = '';
+        let userToken = '';
+        let allUsers = [];
+
+        async function checkBackend() {
+            try {
+                const response = await fetch('http://localhost:3004/health');
+                const result = await response.json();
+                
+                document.getElementById('backendResult').innerHTML = 
+                    '<div class="step success">✅ 後端連接正常<pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+            } catch (error) {
+                document.getElementById('backendResult').innerHTML = 
+                    '<div class="step error">❌ 後端連接失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function loginAdmin() {
+            try {
+                const response = await fetch('http://localhost:3004/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    adminToken = result.data.token;
+                    document.getElementById('loginResult').innerHTML = 
+                        '<div class="step success">✅ 管理員登入成功<pre>' + JSON.stringify(result.data.user, null, 2) + '</pre></div>';
+                } else {
+                    document.getElementById('loginResult').innerHTML = 
+                        '<div class="step error">❌ 登入失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('loginResult').innerHTML = 
+                    '<div class="step error">❌ 登入請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function getAllUsers() {
+            if (!adminToken) {
+                alert('請先登入管理員');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3004/api/users', {
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+
+                const result = await response.json();
+                
+                if (result.success && result.data.users) {
+                    allUsers = result.data.users;
+                    
+                    // 更新用戶選擇下拉框
+                    const targetSelect = document.getElementById('targetUser');
+                    const testSelect = document.getElementById('testUser');
+                    
+                    targetSelect.innerHTML = '<option value="">-- 選擇目標用戶 --</option>';
+                    testSelect.innerHTML = '<option value="">-- 選擇測試用戶 --</option>';
+                    
+                    allUsers.forEach(user => {
+                        if (user.role !== 'ADMIN') {
+                            const option1 = new Option(`${user.username} (${user.role})`, user.id);
+                            const option2 = new Option(`${user.username} (${user.role})`, user.id);
+                            targetSelect.add(option1);
+                            testSelect.add(option2);
+                        }
+                    });
+                    
+                    // 顯示用戶卡片
+                    const userCards = allUsers.map(user => `
+                        <div class="user-card">
+                            <h4>${user.username}</h4>
+                            <p><strong>ID:</strong> ${user.id}</p>
+                            <p><strong>角色:</strong> ${user.role}</p>
+                            <p><strong>郵箱:</strong> ${user.email}</p>
+                        </div>
+                    `).join('');
+                    
+                    document.getElementById('usersResult').innerHTML = 
+                        '<div class="step success">✅ 用戶列表獲取成功</div>';
+                    document.getElementById('usersList').innerHTML = 
+                        '<div class="user-grid">' + userCards + '</div>';
+                } else {
+                    document.getElementById('usersResult').innerHTML = 
+                        '<div class="step error">❌ 獲取用戶列表失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('usersResult').innerHTML = 
+                    '<div class="step error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function sendTestMessage() {
+            if (!adminToken) {
+                alert('請先登入管理員');
+                return;
+            }
+
+            const targetUserId = document.getElementById('targetUser').value;
+            const content = document.getElementById('messageContent').value;
+
+            if (!targetUserId) {
+                alert('請選擇目標用戶');
+                return;
+            }
+
+            if (!content.trim()) {
+                alert('請輸入留言內容');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3004/api/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`
+                    },
+                    body: JSON.stringify({
+                        toUserId: targetUserId,
+                        content: content.trim()
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('sendResult').innerHTML = 
+                        '<div class="step success">✅ 留言發送成功<pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+                } else {
+                    document.getElementById('sendResult').innerHTML = 
+                        '<div class="step error">❌ 發送失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('sendResult').innerHTML = 
+                    '<div class="step error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function checkAllMessages() {
+            if (!adminToken) {
+                alert('請先登入管理員');
+                return;
+            }
+
+            try {
+                // 這裡我們需要檢查數據庫中的所有留言
+                // 由於沒有直接的API，我們通過檢查每個用戶的未讀留言來了解情況
+                let allMessages = [];
+                
+                for (const user of allUsers) {
+                    try {
+                        // 先登入該用戶
+                        const loginResponse = await fetch('http://localhost:3004/api/auth/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                username: user.username === '管理' ? 'admin' : 
+                                         user.username === '馬克' ? 'warehouse001' : user.username,
+                                password: user.role === 'ADMIN' ? 'admin123' :
+                                         user.role === 'PM' ? 'pm123' :
+                                         user.role === 'AM' ? 'am123' : 'wh123'
+                            })
+                        });
+                        
+                        if (loginResponse.ok) {
+                            const loginResult = await loginResponse.json();
+                            if (loginResult.success) {
+                                // 獲取該用戶的未讀留言
+                                const messagesResponse = await fetch('http://localhost:3004/api/messages/unread', {
+                                    headers: { 'Authorization': `Bearer ${loginResult.data.token}` }
+                                });
+                                
+                                if (messagesResponse.ok) {
+                                    const messagesResult = await messagesResponse.json();
+                                    if (messagesResult.success && messagesResult.data) {
+                                        messagesResult.data.forEach(msg => {
+                                            allMessages.push({
+                                                ...msg,
+                                                receiverUsername: user.username
+                                            });
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    } catch (e) {
+                        console.log(`檢查用戶 ${user.username} 的留言時出錯:`, e);
+                    }
+                }
+                
+                document.getElementById('messagesResult').innerHTML = 
+                    '<div class="step success">✅ 找到 ' + allMessages.length + ' 條留言<pre>' + 
+                    JSON.stringify(allMessages, null, 2) + '</pre></div>';
+                    
+            } catch (error) {
+                document.getElementById('messagesResult').innerHTML = 
+                    '<div class="step error">❌ 檢查失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function checkUnreadMessages() {
+            if (!userToken) {
+                alert('請先登入一個測試用戶');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3004/api/messages/unread', {
+                    headers: { 'Authorization': `Bearer ${userToken}` }
+                });
+
+                const result = await response.json();
+                
+                document.getElementById('messagesResult').innerHTML = 
+                    '<div class="step success">✅ 未讀留言檢查完成<pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+            } catch (error) {
+                document.getElementById('messagesResult').innerHTML = 
+                    '<div class="step error">❌ 檢查失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function loginTestUser() {
+            const userId = document.getElementById('testUser').value;
+            if (!userId) {
+                alert('請選擇一個用戶');
+                return;
+            }
+
+            const user = allUsers.find(u => u.id === userId);
+            if (!user) {
+                alert('用戶不存在');
+                return;
+            }
+
+            try {
+                const username = user.username === '管理' ? 'admin' : 
+                               user.username === '馬克' ? 'warehouse001' : user.username;
+                const password = user.role === 'ADMIN' ? 'admin123' :
+                               user.role === 'PM' ? 'pm123' :
+                               user.role === 'AM' ? 'am123' : 'wh123';
+
+                const response = await fetch('http://localhost:3004/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    userToken = result.data.token;
+                    document.getElementById('userLoginResult').innerHTML = 
+                        '<div class="step success">✅ 用戶登入成功：' + user.username + 
+                        '<pre>' + JSON.stringify(result.data.user, null, 2) + '</pre></div>';
+                } else {
+                    document.getElementById('userLoginResult').innerHTML = 
+                        '<div class="step error">❌ 用戶登入失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('userLoginResult').innerHTML = 
+                    '<div class="step error">❌ 登入請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        function testFrontendComponent() {
+            document.getElementById('frontendResult').innerHTML = 
+                '<div class="step warning">⚠️ 前端組件測試需要在實際系統中進行<br>' +
+                '請打開 <a href="http://localhost:5173" target="_blank">http://localhost:5173</a> 並登入相應用戶查看留言小工具</div>';
+        }
+
+        // 頁面載入時自動檢查後端
+        window.onload = function() {
+            checkBackend();
+        };
+    </script>
+</body>
+</html>

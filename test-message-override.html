@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試留言覆蓋功能</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .test-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .step {
+            margin: 15px 0;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            background-color: #f8f9fa;
+        }
+        .success {
+            border-left-color: #28a745;
+            background-color: #d4edda;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background-color: #f8d7da;
+        }
+        .info {
+            border-left-color: #17a2b8;
+            background-color: #d1ecf1;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        input, textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px;
+            font-size: 14px;
+        }
+        textarea {
+            width: 100%;
+            resize: vertical;
+        }
+        .message-timeline {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .message-item {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border-left: 3px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔄 留言覆蓋功能測試</h1>
+        
+        <div class="info">
+            <h3>🎯 測試目標</h3>
+            <p>驗證新的留言覆蓋邏輯：</p>
+            <ul>
+                <li>✅ 永遠只顯示一條留言（最新的）</li>
+                <li>✅ 新留言自動覆蓋舊留言</li>
+                <li>✅ 不管留言是否已讀都要顯示</li>
+                <li>✅ 優先顯示未讀留言，沒有未讀時顯示最新已讀留言</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>步驟 1: 管理員登入</h3>
+            <button onclick="loginAdmin()">登入管理員</button>
+            <div id="adminLoginResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 2: Jeffrey登入</h3>
+            <button onclick="loginJeffrey()">登入Jeffrey</button>
+            <div id="jeffreyLoginResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 3: 檢查Jeffrey當前看到的留言</h3>
+            <button onclick="checkCurrentMessage()">檢查當前留言</button>
+            <div id="currentMessageResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 4: 發送新留言測試覆蓋</h3>
+            <div>
+                <textarea id="newMessageContent" rows="3" placeholder="輸入新留言內容...">測試覆蓋留言 - ${new Date().toLocaleString()}</textarea>
+            </div>
+            <button onclick="sendNewMessage()">發送新留言給Jeffrey</button>
+            <div id="sendMessageResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 5: 驗證留言是否覆蓋</h3>
+            <button onclick="checkMessageAfterSend()">檢查Jeffrey的最新留言</button>
+            <div id="afterSendResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 6: 測試已讀狀態</h3>
+            <button onclick="markAsRead()">標記當前留言為已讀</button>
+            <button onclick="checkAfterRead()">檢查標記已讀後的顯示</button>
+            <div id="readTestResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 7: 連續發送測試</h3>
+            <button onclick="sendMultipleMessages()">連續發送3條留言</button>
+            <div id="multipleResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>📋 留言時間軸</h3>
+            <div id="messageTimeline" class="message-timeline">
+                <p>點擊上方按鈕開始測試...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let adminToken = '';
+        let jeffreyToken = '';
+        let currentMessageId = '';
+        let messageHistory = [];
+
+        async function loginAdmin() {
+            try {
+                const response = await fetch('http://localhost:3004/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    adminToken = result.data.token;
+                    document.getElementById('adminLoginResult').innerHTML = 
+                        '<div class="step success">✅ 管理員登入成功</div>';
+                } else {
+                    document.getElementById('adminLoginResult').innerHTML = 
+                        '<div class="step error">❌ 管理員登入失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('adminLoginResult').innerHTML = 
+                    '<div class="step error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function loginJeffrey() {
+            try {
+                // 嘗試用Jeffrey登入
+                const response = await fetch('http://localhost:3004/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'Jeffrey', password: 'pm123' })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    jeffreyToken = result.data.token;
+                    document.getElementById('jeffreyLoginResult').innerHTML = 
+                        '<div class="step success">✅ Jeffrey登入成功</div>';
+                } else {
+                    // 如果Jeffrey登入失敗，嘗試用pm001
+                    const response2 = await fetch('http://localhost:3004/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username: 'pm001', password: 'pm123' })
+                    });
+                    
+                    const result2 = await response2.json();
+                    if (result2.success) {
+                        jeffreyToken = result2.data.token;
+                        document.getElementById('jeffreyLoginResult').innerHTML = 
+                            '<div class="step success">✅ Jeffrey登入成功 (使用pm001)</div>';
+                    } else {
+                        document.getElementById('jeffreyLoginResult').innerHTML = 
+                            '<div class="step error">❌ Jeffrey登入失敗：' + result.message + '</div>';
+                    }
+                }
+            } catch (error) {
+                document.getElementById('jeffreyLoginResult').innerHTML = 
+                    '<div class="step error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function checkCurrentMessage() {
+            if (!jeffreyToken) {
+                alert('請先登入Jeffrey');
+                return;
+            }
+
+            try {
+                // 檢查未讀留言
+                const unreadResponse = await fetch('http://localhost:3004/api/messages/unread', {
+                    headers: { 'Authorization': `Bearer ${jeffreyToken}` }
+                });
+                const unreadResult = await unreadResponse.json();
+
+                // 檢查最新留言
+                const latestResponse = await fetch('http://localhost:3004/api/messages/latest', {
+                    headers: { 'Authorization': `Bearer ${jeffreyToken}` }
+                });
+                const latestResult = await latestResponse.json();
+
+                let displayHtml = '<div class="step success">';
+                displayHtml += `<h4>未讀留言 (${unreadResult.data ? unreadResult.data.length : 0} 條)：</h4>`;
+                if (unreadResult.data && unreadResult.data.length > 0) {
+                    displayHtml += `<pre>${JSON.stringify(unreadResult.data, null, 2)}</pre>`;
+                } else {
+                    displayHtml += '<p>無未讀留言</p>';
+                }
+
+                displayHtml += '<h4>最新留言：</h4>';
+                if (latestResult.success && latestResult.data) {
+                    displayHtml += `<pre>${JSON.stringify(latestResult.data, null, 2)}</pre>`;
+                    currentMessageId = latestResult.data.id;
+                } else {
+                    displayHtml += '<p>無留言</p>';
+                }
+                displayHtml += '</div>';
+
+                document.getElementById('currentMessageResult').innerHTML = displayHtml;
+                updateTimeline();
+            } catch (error) {
+                document.getElementById('currentMessageResult').innerHTML = 
+                    '<div class="step error">❌ 檢查失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function sendNewMessage() {
+            if (!adminToken) {
+                alert('請先登入管理員');
+                return;
+            }
+
+            const content = document.getElementById('newMessageContent').value;
+            if (!content.trim()) {
+                alert('請輸入留言內容');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3004/api/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`
+                    },
+                    body: JSON.stringify({
+                        toUserId: 'user-2', // Jeffrey的ID
+                        content: content.trim()
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    messageHistory.push({
+                        time: new Date().toLocaleString(),
+                        action: '發送留言',
+                        content: content.trim(),
+                        messageId: result.data.id
+                    });
+                    
+                    document.getElementById('sendMessageResult').innerHTML = 
+                        '<div class="step success">✅ 新留言發送成功</div>';
+                    updateTimeline();
+                } else {
+                    document.getElementById('sendMessageResult').innerHTML = 
+                        '<div class="step error">❌ 發送失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('sendMessageResult').innerHTML = 
+                    '<div class="step error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function checkMessageAfterSend() {
+            await checkCurrentMessage();
+            document.getElementById('afterSendResult').innerHTML = 
+                '<div class="step info">✅ 已更新上方的留言檢查結果</div>';
+        }
+
+        async function markAsRead() {
+            if (!jeffreyToken || !currentMessageId) {
+                alert('請先檢查當前留言');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3004/api/messages/${currentMessageId}/read`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${jeffreyToken}` }
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    messageHistory.push({
+                        time: new Date().toLocaleString(),
+                        action: '標記已讀',
+                        messageId: currentMessageId
+                    });
+                    
+                    document.getElementById('readTestResult').innerHTML = 
+                        '<div class="step success">✅ 留言已標記為已讀</div>';
+                    updateTimeline();
+                } else {
+                    document.getElementById('readTestResult').innerHTML = 
+                        '<div class="step error">❌ 標記失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('readTestResult').innerHTML = 
+                    '<div class="step error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function checkAfterRead() {
+            await checkCurrentMessage();
+            document.getElementById('readTestResult').innerHTML += 
+                '<div class="step info">✅ 已更新留言檢查結果</div>';
+        }
+
+        async function sendMultipleMessages() {
+            if (!adminToken) {
+                alert('請先登入管理員');
+                return;
+            }
+
+            const messages = [
+                '第一條測試留言 - ' + new Date().toLocaleString(),
+                '第二條測試留言 - ' + new Date().toLocaleString(),
+                '第三條測試留言 - ' + new Date().toLocaleString()
+            ];
+
+            let results = [];
+            
+            for (let i = 0; i < messages.length; i++) {
+                try {
+                    const response = await fetch('http://localhost:3004/api/messages', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${adminToken}`
+                        },
+                        body: JSON.stringify({
+                            toUserId: 'user-2',
+                            content: messages[i]
+                        })
+                    });
+
+                    const result = await response.json();
+                    results.push(`留言 ${i+1}: ${result.success ? '✅ 成功' : '❌ 失敗'}`);
+                    
+                    messageHistory.push({
+                        time: new Date().toLocaleString(),
+                        action: `發送留言 ${i+1}`,
+                        content: messages[i]
+                    });
+                    
+                    // 每條留言間隔1秒
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                } catch (error) {
+                    results.push(`留言 ${i+1}: ❌ 錯誤 - ${error.message}`);
+                }
+            }
+
+            document.getElementById('multipleResult').innerHTML = 
+                '<div class="step success"><h4>連續發送結果：</h4><ul>' + 
+                results.map(r => `<li>${r}</li>`).join('') + 
+                '</ul></div>';
+            
+            updateTimeline();
+        }
+
+        function updateTimeline() {
+            const timeline = document.getElementById('messageTimeline');
+            if (messageHistory.length === 0) {
+                timeline.innerHTML = '<p>暫無操作記錄</p>';
+                return;
+            }
+
+            const timelineHtml = messageHistory.map(item => `
+                <div class="message-item">
+                    <strong>${item.time}</strong> - ${item.action}
+                    ${item.content ? `<br><em>"${item.content}"</em>` : ''}
+                    ${item.messageId ? `<br><small>ID: ${item.messageId}</small>` : ''}
+                </div>
+            `).join('');
+
+            timeline.innerHTML = timelineHtml;
+        }
+
+        // 頁面載入時的提示
+        window.onload = function() {
+            console.log('🔄 留言覆蓋功能測試頁面已載入');
+        };
+    </script>
+</body>
+</html>

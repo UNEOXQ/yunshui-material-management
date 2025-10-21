@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeffrey留言調試</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f0f8ff; }
+        .step { background: white; padding: 20px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #007bff; }
+        .success { border-left-color: #28a745; background: #d4edda; }
+        .error { border-left-color: #dc3545; background: #f8d7da; }
+        .warning { border-left-color: #ffc107; background: #fff3cd; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        pre { background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 12px; }
+        .checklist { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Jeffrey留言問題調試</h1>
+    
+    <div class="warning">
+        <h3>⚠️ 當前狀況</h3>
+        <p>Jeffrey還是看不到最新留言。讓我們逐步調試：</p>
+        <ul>
+            <li>✅ 後端已重新啟動</li>
+            <li>✅ 新API已添加</li>
+            <li>✅ 前端邏輯已修改</li>
+            <li>❓ 需要確認各個環節是否正常工作</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>步驟 1: 測試API</h3>
+        <button onclick="openAPITest()">打開API測試</button>
+        <p>這會自動測試所有API端點</p>
+    </div>
+
+    <div class="step">
+        <h3>步驟 2: 檢查Jeffrey登入</h3>
+        <div class="checklist">
+            <h4>🔑 登入檢查清單：</h4>
+            <ol>
+                <li>打開系統：<button onclick="openSystem()">http://localhost:5173</button></li>
+                <li>嘗試快速登入Jeffrey（如果有的話）</li>
+                <li>或手動登入：
+                    <ul>
+                        <li>用戶名：<code>Jeffrey</code> 密碼：<code>pm123</code></li>
+                        <li>如果失敗，嘗試：<code>pm001</code> 密碼：<code>pm123</code></li>
+                    </ul>
+                </li>
+                <li>登入成功後，按F12打開開發者工具</li>
+                <li>切換到Console標籤</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>步驟 3: 檢查F12控制台</h3>
+        <div class="checklist">
+            <h4>🔍 應該看到的調試信息：</h4>
+            <pre>
+🔍 MessageNotification: 開始檢查留言...
+📬 未讀留言響應: {success: true, data: [...]}
+✅ 顯示未讀留言: {id: "...", content: "剋星", ...}
+🎨 MessageNotification: 渲染留言組件: {...}
+            </pre>
+            
+            <h4>❌ 如果看到錯誤：</h4>
+            <ul>
+                <li><code>404 Not Found</code> - API端點不存在</li>
+                <li><code>401 Unauthorized</code> - Token問題</li>
+                <li><code>Network Error</code> - 後端連接問題</li>
+                <li><code>🚫 沒有留言，不渲染組件</code> - 沒有找到留言</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>步驟 4: 手動檢查留言</h3>
+        <div class="checklist">
+            <h4>🧪 在F12控制台執行：</h4>
+            <pre>
+// 檢查當前用戶
+console.log('當前用戶:', JSON.parse(localStorage.getItem('user') || '{}'));
+
+// 檢查Token
+console.log('Token:', localStorage.getItem('authToken'));
+
+// 手動調用未讀留言API
+fetch('http://localhost:3004/api/messages/unread', {
+  headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') }
+}).then(r => r.json()).then(data => console.log('未讀留言:', data));
+
+// 手動調用最新留言API
+fetch('http://localhost:3004/api/messages/latest', {
+  headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') }
+}).then(r => r.json()).then(data => console.log('最新留言:', data));
+            </pre>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>步驟 5: 強制刷新測試</h3>
+        <div class="checklist">
+            <h4>🔄 清除緩存步驟：</h4>
+            <ol>
+                <li>在系統頁面按 <code>Ctrl + Shift + R</code> 強制刷新</li>
+                <li>或按 <code>F12</code> → Network標籤 → 勾選"Disable cache"</li>
+                <li>重新登入Jeffrey</li>
+                <li>觀察右上角是否出現留言小工具</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>步驟 6: 發送新留言測試</h3>
+        <button onclick="openMessageTest()">打開留言覆蓋測試</button>
+        <p>這會測試完整的留言發送和接收流程</p>
+    </div>
+
+    <div class="step">
+        <h3>步驟 7: 檢查組件位置</h3>
+        <div class="checklist">
+            <h4>📍 留言小工具應該出現在：</h4>
+            <ul>
+                <li>位置：登出按鈕正下方</li>
+                <li>距離頂部：65px</li>
+                <li>距離右邊：15px</li>
+                <li>背景：半透明白色</li>
+                <li>標題：💬 管理員留言</li>
+            </ul>
+            
+            <h4>🔍 如果沒看到，檢查：</h4>
+            <ul>
+                <li>是否登入的是ADMIN用戶（ADMIN不顯示留言）</li>
+                <li>是否有CSS樣式問題</li>
+                <li>是否被其他元素遮擋</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="error">
+        <h3>🚨 常見問題解決</h3>
+        <ul>
+            <li><strong>API 404錯誤</strong>：後端沒有正確重啟，重新啟動後端</li>
+            <li><strong>Token過期</strong>：重新登入Jeffrey</li>
+            <li><strong>用戶名錯誤</strong>：確認Jeffrey的實際用戶名</li>
+            <li><strong>組件不渲染</strong>：檢查F12控制台的調試信息</li>
+            <li><strong>緩存問題</strong>：強制刷新頁面</li>
+        </ul>
+    </div>
+
+    <script>
+        function openAPITest() {
+            window.open('test-api-quick.html', '_blank');
+        }
+
+        function openSystem() {
+            window.open('http://localhost:5173', '_blank');
+        }
+
+        function openMessageTest() {
+            window.open('test-message-override.html', '_blank');
+        }
+    </script>
+</body>
+</html>

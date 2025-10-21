@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雲水系統公網訪問指南</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #007bff;
+        }
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .warning {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .url-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            text-align: center;
+            margin: 15px 0;
+            border: 2px solid #4a5568;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        .router-config {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .config-table th, .config-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .config-table th {
+            background: #007bff;
+            color: white;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-online { background: #28a745; }
+        .status-offline { background: #dc3545; }
+        .status-unknown { background: #ffc107; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 雲水基材管理系統 - 公網訪問</h1>
+        
+        <div class="step success">
+            <h3>📍 你的網路信息</h3>
+            <ul>
+                <li><strong>公網IP</strong>：23.16.254.249</li>
+                <li><strong>內網IP</strong>：192.168.68.104</li>
+                <li><strong>路由器</strong>：192.168.68.1</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>🎯 外部設備訪問地址</h3>
+            <p>設定完成後，其他網路的設備可以通過以下地址訪問：</p>
+            
+            <div class="url-box">
+                http://23.16.254.249:3000
+            </div>
+            
+            <button onclick="testPublicAccess()">測試公網訪問</button>
+            <button onclick="copyURL()">複製網址</button>
+        </div>
+
+        <div class="step warning">
+            <h3>⚠️ 重要：路由器端口轉發設定</h3>
+            <p>你需要在路由器中設定端口轉發，否則外部無法訪問：</p>
+            
+            <div class="router-config">
+                <h4>🔧 設定步驟：</h4>
+                <ol>
+                    <li>打開瀏覽器，輸入：<button onclick="openRouter()">http://192.168.68.1</button></li>
+                    <li>輸入路由器管理員帳號密碼</li>
+                    <li>找到「端口轉發」或「虛擬服務器」設定</li>
+                    <li>添加以下兩個規則：</li>
+                </ol>
+                
+                <table class="config-table">
+                    <tr>
+                        <th>服務名稱</th>
+                        <th>外部端口</th>
+                        <th>內部IP</th>
+                        <th>內部端口</th>
+                        <th>協議</th>
+                    </tr>
+                    <tr>
+                        <td>雲水系統前端</td>
+                        <td>3000</td>
+                        <td>192.168.68.104</td>
+                        <td>3000</td>
+                        <td>TCP</td>
+                    </tr>
+                    <tr>
+                        <td>雲水系統後端</td>
+                        <td>3004</td>
+                        <td>192.168.68.104</td>
+                        <td>3004</td>
+                        <td>TCP</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>🧪 連接測試</h3>
+            <p>設定完成後，請進行以下測試：</p>
+            
+            <div style="margin: 15px 0;">
+                <h4>📱 本機測試：</h4>
+                <button onclick="testLocal()">測試本機訪問</button>
+                <span id="localStatus"><span class="status-indicator status-unknown"></span>未測試</span>
+            </div>
+            
+            <div style="margin: 15px 0;">
+                <h4>🌐 公網測試：</h4>
+                <button onclick="testPublic()">測試公網訪問</button>
+                <span id="publicStatus"><span class="status-indicator status-unknown"></span>未測試</span>
+            </div>
+        </div>
+
+        <div class="step error">
+            <h3>🔒 安全注意事項</h3>
+            <ul>
+                <li><strong>暴露風險</strong>：系統將暴露在公網上，任何人都可能訪問</li>
+                <li><strong>建議措施</strong>：
+                    <ul>
+                        <li>只在需要時開啟端口轉發</li>
+                        <li>使用強密碼</li>
+                        <li>定期檢查訪問日誌</li>
+                        <li>考慮添加IP白名單</li>
+                    </ul>
+                </li>
+                <li><strong>測試完成後</strong>：建議關閉端口轉發以確保安全</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>📞 故障排除</h3>
+            <h4>如果外部無法訪問，檢查：</h4>
+            <ul>
+                <li>✅ 路由器端口轉發是否正確設定</li>
+                <li>✅ Windows防火牆是否允許端口3000和3004</li>
+                <li>✅ 你的電腦是否正在運行系統</li>
+                <li>✅ 公網IP是否有變化（重新連接網路後可能變化）</li>
+            </ul>
+            
+            <button onclick="checkFirewall()">檢查防火牆設定</button>
+            <button onclick="refreshIP()">重新獲取公網IP</button>
+        </div>
+
+        <div class="step success">
+            <h3>🎉 設定完成後</h3>
+            <p>其他網路的設備就可以通過以下方式訪問你的系統：</p>
+            <ul>
+                <li>📱 手機瀏覽器輸入：<code>http://23.16.254.249:3000</code></li>
+                <li>💻 其他電腦輸入：<code>http://23.16.254.249:3000</code></li>
+                <li>🏢 辦公室網路訪問：<code>http://23.16.254.249:3000</code></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function testPublicAccess() {
+            window.open('http://23.16.254.249:3000', '_blank');
+        }
+
+        function copyURL() {
+            navigator.clipboard.writeText('http://23.16.254.249:3000').then(() => {
+                alert('網址已複製到剪貼板！');
+            });
+        }
+
+        function openRouter() {
+            window.open('http://192.168.68.1', '_blank');
+        }
+
+        function testLocal() {
+            const status = document.getElementById('localStatus');
+            status.innerHTML = '<span class="status-indicator status-unknown"></span>測試中...';
+            
+            fetch('http://localhost:3000')
+                .then(response => {
+                    if (response.ok) {
+                        status.innerHTML = '<span class="status-indicator status-online"></span>本機訪問正常';
+                    } else {
+                        status.innerHTML = '<span class="status-indicator status-offline"></span>本機訪問異常';
+                    }
+                })
+                .catch(error => {
+                    status.innerHTML = '<span class="status-indicator status-offline"></span>本機訪問失敗';
+                });
+        }
+
+        function testPublic() {
+            const status = document.getElementById('publicStatus');
+            status.innerHTML = '<span class="status-indicator status-unknown"></span>測試中...';
+            
+            // 由於跨域限制，這裡只能嘗試打開新窗口
+            const testWindow = window.open('http://23.16.254.249:3000', '_blank');
+            
+            setTimeout(() => {
+                if (testWindow && !testWindow.closed) {
+                    status.innerHTML = '<span class="status-indicator status-online"></span>公網訪問可能正常（請檢查新窗口）';
+                } else {
+                    status.innerHTML = '<span class="status-indicator status-offline"></span>公網訪問可能有問題';
+                }
+            }, 3000);
+        }
+
+        function checkFirewall() {
+            alert('請手動檢查Windows防火牆設定：\n\n1. 開啟「Windows Defender 防火牆」\n2. 點擊「允許應用程式或功能通過防火牆」\n3. 確認Node.js或相關應用程式已被允許\n4. 或者暫時關閉防火牆進行測試');
+        }
+
+        function refreshIP() {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    alert('當前公網IP：' + data.ip + '\n\n如果IP有變化，需要更新配置文件！');
+                })
+                .catch(error => {
+                    alert('無法獲取公網IP，請檢查網路連接');
+                });
+        }
+
+        // 頁面載入時自動測試本機
+        window.onload = function() {
+            setTimeout(testLocal, 1000);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+手動啟動雲水基材管理系統的步驟：
+
+方法 1: 通過命令提示符運行
+================================
+
+1. 按 Win + R 鍵
+2. 輸入 cmd 並按 Enter
+3. 在命令提示符中輸入以下命令（一行一行輸入）：
+
+cd /d "C:\Users\sorry\Documents\Kiro\AO\雲水基材管理系統1"
+dir
+
+如果看到 backend 和 frontend 文件夾，繼續：
+
+4. 檢查 Node.js：
+node --version
+
+如果顯示版本號，繼續：
+
+5. 啟動後端：
+cd backend
+npm run dev
+
+（保持這個窗口開著，後端會在這裡運行）
+
+6. 打開新的命令提示符窗口（重複步驟 1-2）
+7. 在新窗口中輸入：
+
+cd /d "C:\Users\sorry\Documents\Kiro\AO\雲水基材管理系統1"
+cd frontend
+npm run dev
+
+8. 等待前端啟動完成，然後在瀏覽器中訪問：
+http://localhost:3002/
+
+方法 2: 使用 PowerShell
+======================
+
+1. 按 Win + X
+2. 選擇 "Windows PowerShell"
+3. 輸入以下命令：
+
+cd "C:\Users\sorry\Documents\Kiro\AO\雲水基材管理系統1"
+.\start-system.ps1
+
+如果提示執行策略錯誤，先運行：
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+然後再運行：
+.\start-system.ps1
+
+方法 3: 檢查問題
+===============
+
+如果上述方法都不工作，請檢查：
+
+1. Node.js 是否正確安裝
+   - 在命令提示符中運行: node --version
+   - 如果顯示錯誤，請重新安裝 Node.js
+
+2. 項目路徑是否正確
+   - 確認你在正確的目錄中
+   - 確認 backend 和 frontend 文件夾存在
+
+3. 依賴是否安裝
+   - 在 backend 目錄中運行: npm install
+   - 在 frontend 目錄中運行: npm install
+
+4. 端口是否被占用
+   - 檢查是否有其他程序使用 3002 或 3004 端口

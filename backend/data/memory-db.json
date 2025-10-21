@@ -1,0 +1,606 @@
+{
+  "users": [
+    {
+      "id": "user-1",
+      "username": "系統管理員",
+      "email": "admin@yunshui.com",
+      "role": "ADMIN",
+      "passwordHash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.s5uIoO",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2025-10-20T22:57:49.104Z"
+    },
+    {
+      "id": "user-2",
+      "username": "Jeffrey",
+      "email": "pm001@yunshui.com",
+      "role": "PM",
+      "passwordHash": "$2b$12$zqKXuncEKJJ/4hsMpBOtbe1VJhDuDoy1Zc2XE.WUZlxKtdy1UHjT2",
+      "createdAt": "2024-01-02T00:00:00.000Z",
+      "updatedAt": "2025-10-20T22:52:06.229Z"
+    },
+    {
+      "id": "user-3",
+      "username": "Miya",
+      "email": "am001@yunshui.com",
+      "role": "AM",
+      "passwordHash": "$2b$12$isjeHoH0nbtW7I5RQOFqU.hN2U2nmQhWWK94evM/M68NjOG4KhaX6",
+      "createdAt": "2024-01-03T00:00:00.000Z",
+      "updatedAt": "2025-10-20T22:52:19.510Z"
+    },
+    {
+      "id": "user-4",
+      "username": "Mark",
+      "email": "warehouse001@yunshui.com",
+      "role": "WAREHOUSE",
+      "passwordHash": "$2b$12$BN.RIwOJAiedmB/9Ni8m9ejY2NzYc5m2ut4I2RBkUT8e5FjlSOIz2",
+      "createdAt": "2024-01-04T00:00:00.000Z",
+      "updatedAt": "2025-10-20T22:52:52.043Z"
+    },
+    {
+      "username": "Erica",
+      "email": "Erica@yunshui.com",
+      "passwordHash": "$2b$12$6GhKC/tgJgE8Y.xPLLlbl.D0T/OGSlogJzbVRoBuiaq1SAUxYspJm",
+      "role": "AM",
+      "id": "id-2064",
+      "createdAt": "2025-10-20T22:51:24.399Z",
+      "updatedAt": "2025-10-20T22:51:24.399Z"
+    },
+    {
+      "username": "LUKE",
+      "email": "LUKE@yunshui.com",
+      "passwordHash": "$2b$12$0UEbCng3gIthCVF5dDEruu/Iw3akf073kDZZEjwuZvD7tnh7bD5o.",
+      "role": "PM",
+      "id": "id-2065",
+      "createdAt": "2025-10-20T22:51:46.406Z",
+      "updatedAt": "2025-10-20T22:51:46.406Z"
+    }
+  ],
+  "materials": [
+    {
+      "id": "material-1",
+      "name": "螺絲釘 M6x20",
+      "category": "五金配件",
+      "price": 2.5,
+      "quantity": 999,
+      "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
+      "supplier": "五金供應商A",
+      "type": "AUXILIARY",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2025-10-20T23:22:53.733Z"
+    },
+    {
+      "id": "material-2",
+      "name": "木板 2x4x8",
+      "category": "木材",
+      "price": 45,
+      "quantity": 193,
+      "imageUrl": "http://localhost:3004/uploads/materials/3-1761002652944-431354883.jpg",
+      "supplier": "木材供應商B",
+      "type": "FINISHED",
+      "createdAt": "2024-01-02T00:00:00.000Z",
+      "updatedAt": "2025-10-20T23:24:12.945Z"
+    },
+    {
+      "id": "material-3",
+      "name": "電線 2.5mm²",
+      "category": "電氣材料",
+      "price": 8.5,
+      "quantity": 498,
+      "imageUrl": "http://localhost:3004/uploads/materials/2-1761002566198-901414729.jpg",
+      "supplier": "電氣供應商C",
+      "type": "AUXILIARY",
+      "createdAt": "2024-01-03T00:00:00.000Z",
+      "updatedAt": "2025-10-20T23:22:46.201Z"
+    },
+    {
+      "id": "material-4",
+      "name": "水泥 50kg",
+      "category": "建材",
+      "price": 180,
+      "quantity": 91,
+      "imageUrl": "http://localhost:3004/uploads/materials/4-1761002648362-880965179.jpg",
+      "supplier": "建材供應商D",
+      "type": "FINISHED",
+      "createdAt": "2024-01-04T00:00:00.000Z",
+      "updatedAt": "2025-10-20T23:24:08.363Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-1",
+      "userId": "user-2",
+      "status": "PENDING",
+      "totalAmount": 250,
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "updatedAt": "2025-10-20T17:25:41.052Z",
+      "name": "123"
+    },
+    {
+      "userId": "user-3",
+      "totalAmount": 810,
+      "status": "PENDING",
+      "id": "id-2024",
+      "createdAt": "2025-10-17T00:47:48.186Z",
+      "updatedAt": "2025-10-20T16:40:38.382Z",
+      "name": "測試訂單"
+    },
+    {
+      "userId": "user-3",
+      "totalAmount": 270,
+      "status": "PENDING",
+      "id": "id-2040",
+      "createdAt": "2025-10-20T16:49:17.172Z",
+      "updatedAt": "2025-10-20T16:49:22.992Z",
+      "name": "測試00"
+    },
+    {
+      "userId": "user-2",
+      "totalAmount": 19.5,
+      "status": "PENDING",
+      "id": "id-2056",
+      "createdAt": "2025-10-20T22:16:41.405Z",
+      "updatedAt": "2025-10-20T22:16:41.405Z"
+    }
+  ],
+  "orderItems": [
+    {
+      "id": "item-1",
+      "orderId": "order-1",
+      "materialId": "material-1",
+      "quantity": 100,
+      "unitPrice": 2.5
+    },
+    {
+      "orderId": "id-2024",
+      "materialId": "material-2",
+      "quantity": 2,
+      "unitPrice": 45,
+      "id": "id-2025"
+    },
+    {
+      "orderId": "id-2024",
+      "materialId": "material-4",
+      "quantity": 4,
+      "unitPrice": 180,
+      "id": "id-2026"
+    },
+    {
+      "orderId": "id-2040",
+      "materialId": "material-2",
+      "quantity": 2,
+      "unitPrice": 45,
+      "id": "id-2041"
+    },
+    {
+      "orderId": "id-2040",
+      "materialId": "material-4",
+      "quantity": 1,
+      "unitPrice": 180,
+      "id": "id-2042"
+    },
+    {
+      "orderId": "id-2056",
+      "materialId": "material-1",
+      "quantity": 1,
+      "unitPrice": 2.5,
+      "id": "id-2057"
+    },
+    {
+      "orderId": "id-2056",
+      "materialId": "material-3",
+      "quantity": 2,
+      "unitPrice": 8.5,
+      "id": "id-2058"
+    }
+  ],
+  "projects": [
+    {
+      "id": "project-1",
+      "orderId": "order-1",
+      "projectName": "輔材專案-2024-01-10-order-1",
+      "overallStatus": "COMPLETED",
+      "createdAt": "2024-01-10T00:00:00.000Z",
+      "updatedAt": "2025-10-20T19:12:12.451Z"
+    },
+    {
+      "id": "id-2027",
+      "orderId": "id-2024",
+      "projectName": "完成材專案-2025-10-17-id-2024",
+      "overallStatus": "COMPLETED",
+      "createdAt": "2025-10-17T00:47:48.186Z",
+      "updatedAt": "2025-10-20T16:48:16.883Z"
+    },
+    {
+      "id": "id-2043",
+      "orderId": "id-2040",
+      "projectName": "完成材專案-2025-10-20-id-2040",
+      "overallStatus": "ACTIVE",
+      "createdAt": "2025-10-20T16:49:17.173Z",
+      "updatedAt": "2025-10-20T16:49:17.173Z"
+    },
+    {
+      "id": "id-2059",
+      "orderId": "id-2056",
+      "projectName": "輔材專案-2025-10-20-id-2056",
+      "overallStatus": "ACTIVE",
+      "createdAt": "2025-10-20T22:16:41.406Z",
+      "updatedAt": "2025-10-20T22:16:41.406Z"
+    }
+  ],
+  "statusUpdates": [
+    {
+      "id": "id-2028",
+      "projectId": "id-2027",
+      "updatedBy": "user-3",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-17T00:47:48.187Z"
+    },
+    {
+      "id": "id-2029",
+      "projectId": "id-2027",
+      "updatedBy": "user-3",
+      "statusType": "PICKUP",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-17T00:47:48.189Z"
+    },
+    {
+      "id": "id-2030",
+      "projectId": "id-2027",
+      "updatedBy": "user-3",
+      "statusType": "DELIVERY",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-17T00:47:48.190Z"
+    },
+    {
+      "id": "id-2031",
+      "projectId": "id-2027",
+      "updatedBy": "user-3",
+      "statusType": "CHECK",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-17T00:47:48.191Z"
+    },
+    {
+      "id": "id-2032",
+      "projectId": "id-2027",
+      "updatedBy": "user-4",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - Processing",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "Processing"
+      },
+      "createdAt": "2025-10-17T00:48:27.799Z"
+    },
+    {
+      "id": "id-2033",
+      "projectId": "id-2027",
+      "updatedBy": "user-4",
+      "statusType": "PICKUP",
+      "statusValue": "Failed (E.S)",
+      "additionalData": {
+        "primaryStatus": "Failed",
+        "secondaryStatus": "(E.S)"
+      },
+      "createdAt": "2025-10-17T00:48:27.812Z"
+    },
+    {
+      "id": "id-2034",
+      "projectId": "id-2027",
+      "updatedBy": "user-4",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - waiting for pick",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "waiting for pick"
+      },
+      "createdAt": "2025-10-20T16:48:16.819Z"
+    },
+    {
+      "id": "id-2035",
+      "projectId": "id-2027",
+      "updatedBy": "user-4",
+      "statusType": "PICKUP",
+      "statusValue": "Picked (B.T.W)",
+      "additionalData": {
+        "primaryStatus": "Picked",
+        "secondaryStatus": "(B.T.W)"
+      },
+      "createdAt": "2025-10-20T16:48:16.841Z"
+    },
+    {
+      "id": "id-2036",
+      "projectId": "id-2027",
+      "updatedBy": "user-4",
+      "statusType": "DELIVERY",
+      "statusValue": "Delivered",
+      "additionalData": {
+        "time": "11",
+        "address": "22",
+        "po": "33",
+        "deliveredBy": "444"
+      },
+      "createdAt": "2025-10-20T16:48:16.848Z"
+    },
+    {
+      "id": "id-2037",
+      "projectId": "id-2027",
+      "updatedBy": "user-4",
+      "statusType": "CHECK",
+      "statusValue": "(C.B)",
+      "createdAt": "2025-10-20T16:48:16.852Z"
+    },
+    {
+      "id": "id-2038",
+      "projectId": "project-1",
+      "updatedBy": "user-4",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - Processing",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "Processing"
+      },
+      "createdAt": "2025-10-20T16:48:53.910Z"
+    },
+    {
+      "id": "id-2039",
+      "projectId": "project-1",
+      "updatedBy": "user-4",
+      "statusType": "PICKUP",
+      "statusValue": "Picked (B.T.W)",
+      "additionalData": {
+        "primaryStatus": "Picked",
+        "secondaryStatus": "(B.T.W)"
+      },
+      "createdAt": "2025-10-20T16:48:53.915Z"
+    },
+    {
+      "id": "id-2044",
+      "projectId": "id-2043",
+      "updatedBy": "user-3",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-20T16:49:17.173Z"
+    },
+    {
+      "id": "id-2045",
+      "projectId": "id-2043",
+      "updatedBy": "user-3",
+      "statusType": "PICKUP",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-20T16:49:17.175Z"
+    },
+    {
+      "id": "id-2046",
+      "projectId": "id-2043",
+      "updatedBy": "user-3",
+      "statusType": "DELIVERY",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-20T16:49:17.178Z"
+    },
+    {
+      "id": "id-2047",
+      "projectId": "id-2043",
+      "updatedBy": "user-3",
+      "statusType": "CHECK",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-20T16:49:17.180Z"
+    },
+    {
+      "id": "id-2048",
+      "projectId": "id-2043",
+      "updatedBy": "user-4",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - Processing",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "Processing"
+      },
+      "createdAt": "2025-10-20T16:49:41.015Z"
+    },
+    {
+      "id": "id-2049",
+      "projectId": "id-2043",
+      "updatedBy": "user-4",
+      "statusType": "PICKUP",
+      "statusValue": "Picked (B.T.W)",
+      "additionalData": {
+        "primaryStatus": "Picked",
+        "secondaryStatus": "(B.T.W)"
+      },
+      "createdAt": "2025-10-20T16:49:41.019Z"
+    },
+    {
+      "id": "id-2050",
+      "projectId": "project-1",
+      "updatedBy": "user-4",
+      "statusType": "DELIVERY",
+      "statusValue": "Delivered",
+      "additionalData": {
+        "time": "11",
+        "address": "22",
+        "po": "333",
+        "deliveredBy": "3333"
+      },
+      "createdAt": "2025-10-20T16:50:17.967Z"
+    },
+    {
+      "id": "id-2051",
+      "projectId": "id-2043",
+      "updatedBy": "user-4",
+      "statusType": "DELIVERY",
+      "statusValue": "Delivered",
+      "additionalData": {
+        "time": "11",
+        "address": "222",
+        "po": "555",
+        "deliveredBy": "44"
+      },
+      "createdAt": "2025-10-20T17:43:25.443Z"
+    },
+    {
+      "id": "id-2052",
+      "projectId": "id-2043",
+      "updatedBy": "user-4",
+      "statusType": "CHECK",
+      "statusValue": "Check and sign(C.B/PM)",
+      "createdAt": "2025-10-20T17:43:25.467Z"
+    },
+    {
+      "id": "id-2053",
+      "projectId": "project-1",
+      "updatedBy": "user-4",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - waiting for pick",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "waiting for pick"
+      },
+      "createdAt": "2025-10-20T19:12:12.405Z"
+    },
+    {
+      "id": "id-2054",
+      "projectId": "project-1",
+      "updatedBy": "user-4",
+      "statusType": "PICKUP",
+      "statusValue": "Picked (B.T.W)",
+      "additionalData": {
+        "primaryStatus": "Picked",
+        "secondaryStatus": "(B.T.W)"
+      },
+      "createdAt": "2025-10-20T19:12:12.419Z"
+    },
+    {
+      "id": "id-2055",
+      "projectId": "project-1",
+      "updatedBy": "user-4",
+      "statusType": "CHECK",
+      "statusValue": "Check and sign(C.B/PM)",
+      "createdAt": "2025-10-20T19:12:12.422Z"
+    },
+    {
+      "id": "id-2060",
+      "projectId": "id-2059",
+      "updatedBy": "user-2",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-20T22:16:41.407Z"
+    },
+    {
+      "id": "id-2061",
+      "projectId": "id-2059",
+      "updatedBy": "user-2",
+      "statusType": "PICKUP",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-20T22:16:41.408Z"
+    },
+    {
+      "id": "id-2062",
+      "projectId": "id-2059",
+      "updatedBy": "user-2",
+      "statusType": "DELIVERY",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-20T22:16:41.411Z"
+    },
+    {
+      "id": "id-2063",
+      "projectId": "id-2059",
+      "updatedBy": "user-2",
+      "statusType": "CHECK",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-20T22:16:41.413Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": "id-2066",
+      "fromUserId": "user-1",
+      "fromUsername": "系統管理員",
+      "toUserId": "user-2",
+      "toUsername": "Jeffrey",
+      "content": "Jeffrey最棒!",
+      "isRead": true,
+      "createdAt": "2025-10-20T23:55:02.428Z",
+      "updatedAt": "2025-10-20T23:55:13.141Z"
+    },
+    {
+      "id": "id-2067",
+      "fromUserId": "user-1",
+      "fromUsername": "系統管理員",
+      "toUserId": "user-2",
+      "toUsername": "Jeffrey",
+      "content": "你好棒!",
+      "isRead": true,
+      "createdAt": "2025-10-20T23:59:21.966Z",
+      "updatedAt": "2025-10-20T23:59:49.331Z"
+    },
+    {
+      "id": "id-2068",
+      "fromUserId": "user-1",
+      "fromUsername": "系統管理員",
+      "toUserId": "user-2",
+      "toUsername": "Jeffrey",
+      "content": "Jeffrey最棒!",
+      "isRead": false,
+      "createdAt": "2025-10-21T00:04:48.131Z",
+      "updatedAt": "2025-10-21T00:04:48.131Z"
+    },
+    {
+      "id": "id-2069",
+      "fromUserId": "user-1",
+      "fromUsername": "系統管理員",
+      "toUserId": "id-2064",
+      "toUsername": "Erica",
+      "content": "邪惡的女人!",
+      "isRead": false,
+      "createdAt": "2025-10-21T00:08:51.754Z",
+      "updatedAt": "2025-10-21T00:08:51.754Z"
+    },
+    {
+      "id": "id-2070",
+      "fromUserId": "user-1",
+      "fromUsername": "系統管理員",
+      "toUserId": "user-2",
+      "toUsername": "Jeffrey",
+      "content": "耶格剋星",
+      "isRead": false,
+      "createdAt": "2025-10-21T00:10:19.594Z",
+      "updatedAt": "2025-10-21T00:10:19.594Z"
+    },
+    {
+      "id": "id-2071",
+      "fromUserId": "user-1",
+      "fromUsername": "系統管理員",
+      "toUserId": "user-2",
+      "toUsername": "Jeffrey",
+      "content": "剋星",
+      "isRead": false,
+      "createdAt": "2025-10-21T00:10:35.910Z",
+      "updatedAt": "2025-10-21T00:10:35.910Z"
+    },
+    {
+      "id": "id-2072",
+      "fromUserId": "user-1",
+      "fromUsername": "系統管理員",
+      "toUserId": "user-2",
+      "toUsername": "Jeffrey",
+      "content": "~~",
+      "isRead": false,
+      "createdAt": "2025-10-21T00:46:56.471Z",
+      "updatedAt": "2025-10-21T00:46:56.471Z"
+    },
+    {
+      "id": "id-2073",
+      "fromUserId": "user-1",
+      "fromUsername": "系統管理員",
+      "toUserId": "user-2",
+      "toUsername": "Jeffrey",
+      "content": "Jeffrey最棒!",
+      "isRead": false,
+      "createdAt": "2025-10-21T00:58:48.326Z",
+      "updatedAt": "2025-10-21T00:58:48.326Z"
+    }
+  ],
+  "nextId": 2074,
+  "lastSaved": "2025-10-21T00:58:48.326Z"
+}

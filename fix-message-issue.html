@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修復留言問題</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .fix-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .issue {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        .solution {
+            background: #d4edda;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+            margin: 15px 0;
+        }
+        .step {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+            margin: 15px 0;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .user-list {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .user-item {
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="fix-container">
+        <h1>🔧 留言系統問題診斷與修復</h1>
+        
+        <div class="issue">
+            <h3>❌ 問題描述</h3>
+            <p>給Jeffrey留言但是沒有出現，也沒有覆寫。</p>
+        </div>
+
+        <div class="solution">
+            <h3>🔍 問題分析</h3>
+            <p>經過檢查，發現以下可能的問題：</p>
+            <ol>
+                <li><strong>用戶不存在</strong>：系統中沒有名為"Jeffrey"的用戶</li>
+                <li><strong>用戶名稱混淆</strong>：顯示名稱與實際用戶名不同</li>
+                <li><strong>API調用問題</strong>：留言可能沒有正確發送或接收</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>📋 系統中的實際用戶</h3>
+            <div class="user-list">
+                <div class="user-item">
+                    <strong>管理員</strong> - 顯示名稱：<code>管理</code>，實際用戶名：<code>admin</code>，ID：<code>user-1</code>
+                </div>
+                <div class="user-item">
+                    <strong>專案經理</strong> - 顯示名稱：<code>pm001</code>，實際用戶名：<code>pm001</code>，ID：<code>user-2</code>
+                </div>
+                <div class="user-item">
+                    <strong>客戶經理</strong> - 顯示名稱：<code>am001</code>，實際用戶名：<code>am001</code>，ID：<code>user-3</code>
+                </div>
+                <div class="user-item">
+                    <strong>倉庫管理員</strong> - 顯示名稱：<code>馬克</code>，實際用戶名：<code>warehouse001</code>，ID：<code>user-4</code>
+                </div>
+            </div>
+            <p><strong>注意</strong>：系統中沒有名為"Jeffrey"的用戶！</p>
+        </div>
+
+        <div class="step">
+            <h3>🛠️ 解決步驟</h3>
+            
+            <h4>步驟 1: 使用調試工具</h4>
+            <button onclick="openDebugTool()">打開留言系統調試工具</button>
+            <p>使用調試工具來：</p>
+            <ul>
+                <li>檢查後端連接狀態</li>
+                <li>確認用戶列表</li>
+                <li>測試留言發送功能</li>
+                <li>驗證留言接收功能</li>
+            </ul>
+
+            <h4>步驟 2: 正確的測試流程</h4>
+            <ol>
+                <li><strong>管理員登入</strong>：使用"管理"帳號登入</li>
+                <li><strong>進入留言管理</strong>：管理員控制台 → 💬 留言管理</li>
+                <li><strong>選擇正確的用戶</strong>：選擇 pm001、am001 或 馬克</li>
+                <li><strong>發送留言</strong>：輸入內容並發送</li>
+                <li><strong>切換用戶</strong>：登出管理員，登入目標用戶</li>
+                <li><strong>檢查留言</strong>：查看右上角是否出現留言小工具</li>
+            </ol>
+
+            <h4>步驟 3: 如果仍然沒有顯示</h4>
+            <button onclick="openSystemTest()">打開系統測試</button>
+            <p>可能的原因和解決方法：</p>
+            <ul>
+                <li><strong>瀏覽器緩存</strong>：清除瀏覽器緩存並重新載入</li>
+                <li><strong>Token過期</strong>：重新登入用戶</li>
+                <li><strong>API錯誤</strong>：檢查F12控制台的錯誤信息</li>
+                <li><strong>組件未載入</strong>：確認用戶角色不是ADMIN（管理員不顯示留言）</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>🧪 快速測試</h3>
+            <p>按照以下步驟進行快速測試：</p>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <h4>測試腳本：</h4>
+                <ol>
+                    <li>打開系統：<button onclick="openSystem()">http://localhost:5173</button></li>
+                    <li>登入管理員（點擊"管理"）</li>
+                    <li>進入管理員控制台</li>
+                    <li>點擊"💬 留言管理"</li>
+                    <li>選擇"pm001 (PM)"用戶</li>
+                    <li>輸入：<code>測試留言 - ${new Date().toLocaleString()}</code></li>
+                    <li>點擊發送</li>
+                    <li>登出管理員</li>
+                    <li>登入pm001用戶</li>
+                    <li>檢查右上角（登出按鈕下方）是否出現留言小工具</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="solution">
+            <h3>✅ 預期結果</h3>
+            <p>如果一切正常，你應該看到：</p>
+            <ul>
+                <li>✅ 管理員能成功發送留言</li>
+                <li>✅ pm001用戶登入後右上角出現留言小工具</li>
+                <li>✅ 留言小工具顯示剛才發送的內容</li>
+                <li>✅ 懸停時留言展開顯示完整內容</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>🔍 進階調試</h3>
+            <p>如果問題仍然存在，請：</p>
+            <ol>
+                <li><strong>檢查F12控制台</strong>：查看是否有JavaScript錯誤</li>
+                <li><strong>檢查網絡請求</strong>：在Network標籤中查看API請求是否成功</li>
+                <li><strong>檢查localStorage</strong>：確認authToken是否存在</li>
+                <li><strong>檢查用戶角色</strong>：確認登入的不是ADMIN用戶</li>
+            </ol>
+            
+            <button onclick="showDebugCommands()">顯示調試命令</button>
+            <div id="debugCommands" style="display: none; margin-top: 10px;">
+                <h4>在瀏覽器控制台執行：</h4>
+                <pre style="background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px;">
+// 檢查當前用戶
+console.log('Current user:', JSON.parse(localStorage.getItem('user') || '{}'));
+
+// 檢查Token
+console.log('Auth token:', localStorage.getItem('authToken'));
+
+// 手動檢查留言
+fetch('http://localhost:3004/api/messages/unread', {
+  headers: { 'Authorization': 'Bearer ' + localStorage.getItem('authToken') }
+}).then(r => r.json()).then(console.log);
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openDebugTool() {
+            window.open('debug-message-system.html', '_blank');
+        }
+
+        function openSystemTest() {
+            window.open('test-message-system.html', '_blank');
+        }
+
+        function openSystem() {
+            window.open('http://localhost:5173', '_blank');
+        }
+
+        function showDebugCommands() {
+            const div = document.getElementById('debugCommands');
+            div.style.display = div.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API調試頁面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f8ff;
+        }
+        .debug-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h2>🔧 API連接調試</h2>
+        
+        <div id="env-info" class="test-result info">
+            檢測環境變數...
+        </div>
+        
+        <button onclick="testEnvironment()">檢測環境配置</button>
+        <button onclick="testDirectAPI()">測試直接API連接</button>
+        <button onclick="testViteAPI()">測試Vite環境變數API</button>
+        <button onclick="testLogin()">測試登入API</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const timestamp = new Date().toLocaleTimeString();
+            results.innerHTML += `<div class="test-result ${type}">[${timestamp}] ${message}</div>`;
+            results.scrollTop = results.scrollHeight;
+        }
+        
+        function testEnvironment() {
+            log('=== 環境變數檢測 ===', 'info');
+            
+            // 檢測當前頁面URL
+            log(`當前頁面URL: ${window.location.href}`, 'info');
+            
+            // 檢測可能的API URL
+            const possibleUrls = [
+                'http://localhost:3004/api',
+                'http://192.168.68.99:3004/api',
+                '/api'
+            ];
+            
+            possibleUrls.forEach(url => {
+                log(`可能的API URL: ${url}`, 'info');
+            });
+        }
+        
+        async function testDirectAPI() {
+            log('=== 測試直接API連接 ===', 'info');
+            
+            const testUrls = [
+                'http://192.168.68.99:3004/health',
+                'http://localhost:3004/health'
+            ];
+            
+            for (const url of testUrls) {
+                try {
+                    log(`測試: ${url}`, 'info');
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    log(`✅ ${url} - 成功: ${JSON.stringify(data)}`, 'success');
+                } catch (error) {
+                    log(`❌ ${url} - 失敗: ${error.message}`, 'error');
+                }
+            }
+        }
+        
+        async function testViteAPI() {
+            log('=== 測試Vite環境變數 ===', 'info');
+            
+            // 模擬Vite環境變數讀取
+            const viteApiUrl = 'http://192.168.68.99:3004/api'; // 這應該是環境變數的值
+            log(`模擬VITE_API_URL: ${viteApiUrl}`, 'info');
+            
+            try {
+                const healthUrl = viteApiUrl.replace('/api', '/health');
+                log(`測試健康檢查: ${healthUrl}`, 'info');
+                const response = await fetch(healthUrl);
+                const data = await response.json();
+                log(`✅ Vite API健康檢查成功: ${JSON.stringify(data)}`, 'success');
+            } catch (error) {
+                log(`❌ Vite API健康檢查失敗: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testLogin() {
+            log('=== 測試登入API ===', 'info');
+            
+            const apiUrl = 'http://192.168.68.99:3004/api';
+            const loginData = {
+                username: 'admin',
+                password: 'admin123'
+            };
+            
+            try {
+                log(`登入URL: ${apiUrl}/auth/login`, 'info');
+                log(`登入資料: ${JSON.stringify(loginData)}`, 'info');
+                
+                const response = await fetch(`${apiUrl}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(loginData)
+                });
+                
+                log(`響應狀態: ${response.status} ${response.statusText}`, 'info');
+                
+                const result = await response.json();
+                log(`響應內容: ${JSON.stringify(result, null, 2)}`, response.ok ? 'success' : 'error');
+                
+                if (result.success && result.data && result.data.user) {
+                    log(`✅ 登入成功: ${result.data.user.username} (${result.data.user.role})`, 'success');
+                } else {
+                    log(`❌ 登入失敗: ${result.message || '未知錯誤'}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ 登入請求失敗: ${error.message}`, 'error');
+                log(`錯誤詳情: ${JSON.stringify({
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                }, null, 2)}`, 'error');
+            }
+        }
+        
+        // 頁面載入時自動檢測環境
+        window.onload = function() {
+            document.getElementById('env-info').innerHTML = `
+                <strong>環境資訊:</strong><br>
+                頁面URL: ${window.location.href}<br>
+                User Agent: ${navigator.userAgent}<br>
+                時間: ${new Date().toLocaleString()}
+            `;
+            
+            setTimeout(testEnvironment, 500);
+        };
+    </script>
+</body>
+</html>

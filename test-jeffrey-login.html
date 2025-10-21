@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeffrey登入測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .test-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .step {
+            margin: 15px 0;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            background-color: #f8f9fa;
+        }
+        .success {
+            border-left-color: #28a745;
+            background-color: #d4edda;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background-color: #f8d7da;
+        }
+        .warning {
+            border-left-color: #ffc107;
+            background-color: #fff3cd;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px;
+            font-size: 14px;
+            width: 200px;
+        }
+        .message-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Jeffrey登入與留言測試</h1>
+        
+        <div class="message-info">
+            <h3>📋 發現的問題</h3>
+            <p>根據數據庫分析，發現以下情況：</p>
+            <ul>
+                <li>✅ Jeffrey用戶確實存在 (user-2)</li>
+                <li>✅ 有多條給Jeffrey的留言記錄</li>
+                <li>⚠️ 最新留言："剋星" (未讀狀態)</li>
+                <li>❌ 前端快速登入可能使用舊憑證</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>步驟 1: 測試Jeffrey登入</h3>
+            <p>嘗試不同的登入方式：</p>
+            
+            <div style="margin: 10px 0;">
+                <h4>方法 1: 使用用戶名 "Jeffrey"</h4>
+                <input type="text" id="username1" value="Jeffrey" placeholder="用戶名">
+                <input type="password" id="password1" value="pm123" placeholder="密碼">
+                <button onclick="testLogin(1)">測試登入</button>
+            </div>
+            
+            <div style="margin: 10px 0;">
+                <h4>方法 2: 使用原始用戶名 "pm001"</h4>
+                <input type="text" id="username2" value="pm001" placeholder="用戶名">
+                <input type="password" id="password2" value="pm123" placeholder="密碼">
+                <button onclick="testLogin(2)">測試登入</button>
+            </div>
+            
+            <div style="margin: 10px 0;">
+                <h4>方法 3: 嘗試默認密碼</h4>
+                <input type="text" id="username3" value="Jeffrey" placeholder="用戶名">
+                <input type="password" id="password3" value="default123" placeholder="密碼">
+                <button onclick="testLogin(3)">測試登入</button>
+            </div>
+            
+            <div id="loginResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 2: 檢查Jeffrey的未讀留言</h3>
+            <button onclick="checkJeffreyMessages()">檢查Jeffrey的留言</button>
+            <div id="messagesResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 3: 測試前端留言組件</h3>
+            <p>如果登入成功，測試前端留言小工具：</p>
+            <button onclick="openSystemAsJeffrey()">打開系統並登入Jeffrey</button>
+            <div class="warning">
+                <h4>⚠️ 注意事項</h4>
+                <ul>
+                    <li>Jeffrey的密碼可能已經被修改</li>
+                    <li>需要使用正確的用戶名和密碼組合</li>
+                    <li>前端快速登入可能需要更新</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 4: 手動登入指南</h3>
+            <div class="message-info">
+                <h4>如果自動登入失敗，請手動登入：</h4>
+                <ol>
+                    <li>打開系統：<button onclick="openSystem()">http://localhost:5173</button></li>
+                    <li>在登入表單中輸入：
+                        <ul>
+                            <li>用戶名：<code>Jeffrey</code></li>
+                            <li>密碼：嘗試 <code>pm123</code> 或 <code>default123</code></li>
+                        </ul>
+                    </li>
+                    <li>登入後檢查右上角是否有留言小工具</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>步驟 5: 調試信息</h3>
+            <button onclick="showDebugInfo()">顯示調試信息</button>
+            <div id="debugInfo"></div>
+        </div>
+    </div>
+
+    <script>
+        let jeffreyToken = '';
+
+        async function testLogin(method) {
+            const username = document.getElementById(`username${method}`).value;
+            const password = document.getElementById(`password${method}`).value;
+            
+            try {
+                const response = await fetch('http://localhost:3004/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    jeffreyToken = result.data.token;
+                    document.getElementById('loginResult').innerHTML = 
+                        `<div class="step success">✅ 方法 ${method} 登入成功！<br>
+                        用戶名：${username}<br>
+                        實際用戶：${result.data.user.username}<br>
+                        <pre>${JSON.stringify(result.data.user, null, 2)}</pre></div>`;
+                } else {
+                    document.getElementById('loginResult').innerHTML = 
+                        `<div class="step error">❌ 方法 ${method} 登入失敗：${result.message}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('loginResult').innerHTML = 
+                    `<div class="step error">❌ 方法 ${method} 請求失敗：${error.message}</div>`;
+            }
+        }
+
+        async function checkJeffreyMessages() {
+            if (!jeffreyToken) {
+                alert('請先成功登入Jeffrey');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3004/api/messages/unread', {
+                    headers: { 'Authorization': `Bearer ${jeffreyToken}` }
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('messagesResult').innerHTML = 
+                        `<div class="step success">✅ Jeffrey的未讀留言 (${result.data.length} 條)：
+                        <pre>${JSON.stringify(result.data, null, 2)}</pre></div>`;
+                } else {
+                    document.getElementById('messagesResult').innerHTML = 
+                        `<div class="step error">❌ 獲取留言失敗：${result.message}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('messagesResult').innerHTML = 
+                    `<div class="step error">❌ 請求失敗：${error.message}</div>`;
+            }
+        }
+
+        function openSystemAsJeffrey() {
+            if (!jeffreyToken) {
+                alert('請先成功登入Jeffrey');
+                return;
+            }
+            
+            // 將token存儲到localStorage，然後打開系統
+            localStorage.setItem('authToken', jeffreyToken);
+            localStorage.setItem('userRole', 'PM');
+            localStorage.setItem('username', 'Jeffrey');
+            
+            window.open('http://localhost:5173', '_blank');
+        }
+
+        function openSystem() {
+            window.open('http://localhost:5173', '_blank');
+        }
+
+        function showDebugInfo() {
+            const debugInfo = `
+數據庫中的Jeffrey信息：
+- ID: user-2
+- 用戶名: Jeffrey
+- 郵箱: pm001@yunshui.com
+- 角色: PM
+- 密碼哈希: $2b$12$zqKXuncEKJJ/4hsMpBOtbe1VJhDuDoy1Zc2XE.WUZlxKtdy1UHjT2
+
+未讀留言：
+- id-2070: "耶格剋星" (未讀)
+- id-2071: "剋星" (未讀)
+
+可能的問題：
+1. 密碼已被修改，不再是 pm123
+2. 前端快速登入使用舊憑證
+3. 留言組件可能有緩存問題
+            `;
+            
+            document.getElementById('debugInfo').innerHTML = 
+                `<div class="step warning"><pre>${debugInfo}</pre></div>`;
+        }
+
+        // 頁面載入時自動嘗試第一種方法
+        window.onload = function() {
+            setTimeout(() => testLogin(1), 1000);
+        };
+    </script>
+</body>
+</html>

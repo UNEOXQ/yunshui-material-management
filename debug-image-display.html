@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖片顯示調試</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .test-image { max-width: 200px; margin: 10px; border: 2px solid #ddd; }
+        .success { border-color: green; }
+        .error { border-color: red; }
+        .log { background: #f5f5f5; padding: 10px; margin: 10px 0; font-family: monospace; }
+        .material-image-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border: 2px solid red;
+        }
+        .material-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>圖片顯示調試</h1>
+    
+    <div class="test-section">
+        <h2>測試 1: 使用相同的 CSS 樣式</h2>
+        <div class="material-image-container">
+            <img class="material-image" 
+                 src="/uploads/materials/LOGO-1760477822347-453709527.png" 
+                 alt="Test Image"
+                 onload="console.log('Test image loaded'); this.style.border='2px solid green';"
+                 onerror="console.log('Test image failed'); this.style.border='2px solid red';">
+        </div>
+        <div class="log" id="test1-log">載入中...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>測試 2: 簡單的圖片標籤</h2>
+        <img src="/uploads/materials/LOGO-1760477822347-453709527.png" 
+             alt="Simple Test" 
+             style="width: 100px; height: 100px; border: 2px solid blue;"
+             onload="document.getElementById('test2-log').textContent = '✅ 簡單圖片載入成功';"
+             onerror="document.getElementById('test2-log').textContent = '❌ 簡單圖片載入失敗';">
+        <div class="log" id="test2-log">載入中...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>測試 3: 檢查 DOM 元素</h2>
+        <button onclick="checkImages()">檢查頁面中的圖片</button>
+        <div class="log" id="dom-check">點擊按鈕檢查</div>
+    </div>
+    
+    <script>
+        function checkImages() {
+            const images = document.querySelectorAll('img');
+            const log = document.getElementById('dom-check');
+            let report = `找到 ${images.length} 個圖片元素:\n`;
+            
+            images.forEach((img, index) => {
+                const computedStyle = window.getComputedStyle(img);
+                report += `圖片 ${index + 1}:\n`;
+                report += `  - src: ${img.src}\n`;
+                report += `  - display: ${computedStyle.display}\n`;
+                report += `  - visibility: ${computedStyle.visibility}\n`;
+                report += `  - opacity: ${computedStyle.opacity}\n`;
+                report += `  - width: ${computedStyle.width}\n`;
+                report += `  - height: ${computedStyle.height}\n`;
+                report += `  - naturalWidth: ${img.naturalWidth}\n`;
+                report += `  - naturalHeight: ${img.naturalHeight}\n\n`;
+            });
+            
+            log.innerHTML = `<pre>${report}</pre>`;
+        }
+        
+        // 自動檢查
+        setTimeout(checkImages, 2000);
+    </script>
+</body>
+</html>

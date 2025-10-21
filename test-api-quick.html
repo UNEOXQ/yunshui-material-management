@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速API測試</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f0f8ff; }
+        .test { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        pre { background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; }
+        .error { background: #f8d7da; border-left: 4px solid #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>🚀 快速API測試</h1>
+    
+    <div class="test">
+        <h3>步驟 1: 測試後端連接</h3>
+        <button onclick="testBackend()">測試後端</button>
+        <div id="backendResult"></div>
+    </div>
+
+    <div class="test">
+        <h3>步驟 2: Jeffrey登入</h3>
+        <button onclick="loginJeffrey()">登入Jeffrey</button>
+        <div id="loginResult"></div>
+    </div>
+
+    <div class="test">
+        <h3>步驟 3: 測試新API</h3>
+        <button onclick="testLatestAPI()">測試 /messages/latest</button>
+        <button onclick="testUnreadAPI()">測試 /messages/unread</button>
+        <div id="apiResult"></div>
+    </div>
+
+    <div class="test">
+        <h3>步驟 4: 前端組件測試</h3>
+        <button onclick="testFrontend()">打開系統測試前端</button>
+    </div>
+
+    <script>
+        let token = '';
+
+        async function testBackend() {
+            try {
+                const response = await fetch('http://localhost:3004/health');
+                const result = await response.json();
+                document.getElementById('backendResult').innerHTML = 
+                    '<div class="success">✅ 後端正常<pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+            } catch (error) {
+                document.getElementById('backendResult').innerHTML = 
+                    '<div class="error">❌ 後端連接失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function loginJeffrey() {
+            try {
+                // 嘗試Jeffrey
+                let response = await fetch('http://localhost:3004/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'Jeffrey', password: 'pm123' })
+                });
+
+                let result = await response.json();
+                
+                if (!result.success) {
+                    // 嘗試pm001
+                    response = await fetch('http://localhost:3004/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username: 'pm001', password: 'pm123' })
+                    });
+                    result = await response.json();
+                }
+
+                if (result.success) {
+                    token = result.data.token;
+                    document.getElementById('loginResult').innerHTML = 
+                        '<div class="success">✅ 登入成功<pre>' + JSON.stringify(result.data.user, null, 2) + '</pre></div>';
+                } else {
+                    document.getElementById('loginResult').innerHTML = 
+                        '<div class="error">❌ 登入失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('loginResult').innerHTML = 
+                    '<div class="error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function testLatestAPI() {
+            if (!token) {
+                alert('請先登入');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3004/api/messages/latest', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const result = await response.json();
+                
+                document.getElementById('apiResult').innerHTML = 
+                    '<div class="success"><h4>✅ Latest API 結果：</h4><pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+            } catch (error) {
+                document.getElementById('apiResult').innerHTML = 
+                    '<div class="error">❌ Latest API 失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function testUnreadAPI() {
+            if (!token) {
+                alert('請先登入');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3004/api/messages/unread', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const result = await response.json();
+                
+                document.getElementById('apiResult').innerHTML += 
+                    '<div class="success"><h4>✅ Unread API 結果：</h4><pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+            } catch (error) {
+                document.getElementById('apiResult').innerHTML += 
+                    '<div class="error">❌ Unread API 失敗：' + error.message + '</div>';
+            }
+        }
+
+        function testFrontend() {
+            if (token) {
+                // 設置localStorage然後打開系統
+                localStorage.setItem('authToken', token);
+                localStorage.setItem('userRole', 'PM');
+                localStorage.setItem('username', 'Jeffrey');
+                
+                const user = {
+                    id: 'user-2',
+                    username: 'Jeffrey',
+                    role: 'PM',
+                    email: 'pm001@yunshui.com'
+                };
+                localStorage.setItem('user', JSON.stringify(user));
+            }
+            
+            window.open('http://localhost:5173', '_blank');
+        }
+
+        // 自動測試
+        window.onload = function() {
+            setTimeout(testBackend, 500);
+            setTimeout(loginJeffrey, 1500);
+            setTimeout(testLatestAPI, 3000);
+            setTimeout(testUnreadAPI, 4000);
+        };
+    </script>
+</body>
+</html>

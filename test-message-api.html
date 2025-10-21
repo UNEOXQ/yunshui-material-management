@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試留言API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+        }
+        .success {
+            border-left-color: #28a745;
+            background-color: #d4edda;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background-color: #f8d7da;
+        }
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 留言API測試</h1>
+        
+        <div class="test-container">
+            <h3>步驟 1: 管理員登入</h3>
+            <button onclick="loginAsAdmin()">登入管理員</button>
+            <div id="loginResult"></div>
+        </div>
+
+        <div class="test-container">
+            <h3>步驟 2: 獲取用戶列表</h3>
+            <button onclick="getUsers()">獲取用戶列表</button>
+            <div id="usersResult"></div>
+        </div>
+
+        <div class="test-container">
+            <h3>步驟 3: 發送留言</h3>
+            <button onclick="sendMessage()">發送測試留言</button>
+            <div id="sendResult"></div>
+        </div>
+
+        <div class="test-container">
+            <h3>步驟 4: 檢查未讀留言</h3>
+            <button onclick="checkUnreadMessages()">檢查未讀留言</button>
+            <div id="unreadResult"></div>
+        </div>
+
+        <div class="test-container">
+            <h3>🔧 API狀態檢查</h3>
+            <button onclick="checkBackendStatus()">檢查後端狀態</button>
+            <div id="statusResult"></div>
+        </div>
+    </div>
+
+    <script>
+        let authToken = '';
+        let targetUserId = '';
+
+        async function loginAsAdmin() {
+            try {
+                const response = await fetch('http://localhost:3004/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: 'admin',
+                        password: 'admin123'
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    authToken = result.data.token;
+                    document.getElementById('loginResult').innerHTML = 
+                        '<div class="result success">✅ 管理員登入成功！<pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+                } else {
+                    document.getElementById('loginResult').innerHTML = 
+                        '<div class="result error">❌ 登入失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('loginResult').innerHTML = 
+                    '<div class="result error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function getUsers() {
+            if (!authToken) {
+                alert('請先登入管理員');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3004/api/users', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                const result = await response.json();
+                
+                if (result.success && result.data.users) {
+                    // 選擇第一個非管理員用戶作為目標
+                    const nonAdminUser = result.data.users.find(user => user.role !== 'ADMIN');
+                    if (nonAdminUser) {
+                        targetUserId = nonAdminUser.id;
+                    }
+                    
+                    document.getElementById('usersResult').innerHTML = 
+                        '<div class="result success">✅ 用戶列表獲取成功！目標用戶：' + (nonAdminUser ? nonAdminUser.username : '無') + 
+                        '<pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+                } else {
+                    document.getElementById('usersResult').innerHTML = 
+                        '<div class="result error">❌ 獲取用戶列表失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('usersResult').innerHTML = 
+                    '<div class="result error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function sendMessage() {
+            if (!authToken) {
+                alert('請先登入管理員');
+                return;
+            }
+
+            if (!targetUserId) {
+                alert('請先獲取用戶列表');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3004/api/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        toUserId: targetUserId,
+                        content: '這是一條測試留言，請查收！ - ' + new Date().toLocaleString()
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('sendResult').innerHTML = 
+                        '<div class="result success">✅ 留言發送成功！<pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+                } else {
+                    document.getElementById('sendResult').innerHTML = 
+                        '<div class="result error">❌ 發送留言失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('sendResult').innerHTML = 
+                    '<div class="result error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function checkUnreadMessages() {
+            if (!authToken) {
+                alert('請先登入管理員');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3004/api/messages/unread', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('unreadResult').innerHTML = 
+                        '<div class="result success">✅ 未讀留言檢查成功！數量：' + (result.data ? result.data.length : 0) + 
+                        '<pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+                } else {
+                    document.getElementById('unreadResult').innerHTML = 
+                        '<div class="result error">❌ 檢查未讀留言失敗：' + result.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('unreadResult').innerHTML = 
+                    '<div class="result error">❌ 請求失敗：' + error.message + '</div>';
+            }
+        }
+
+        async function checkBackendStatus() {
+            try {
+                const response = await fetch('http://localhost:3004/health');
+                const result = await response.json();
+                
+                document.getElementById('statusResult').innerHTML = 
+                    '<div class="result success">✅ 後端服務正常運行！<pre>' + JSON.stringify(result, null, 2) + '</pre></div>';
+            } catch (error) {
+                document.getElementById('statusResult').innerHTML = 
+                    '<div class="result error">❌ 後端服務連接失敗：' + error.message + '</div>';
+            }
+        }
+
+        // 頁面載入時自動檢查後端狀態
+        window.onload = function() {
+            checkBackendStatus();
+        };
+    </script>
+</body>
+</html>

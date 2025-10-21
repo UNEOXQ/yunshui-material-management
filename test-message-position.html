@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言位置測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            min-height: 100vh;
+        }
+        
+        /* 模擬系統頂部導航 */
+        .mock-header {
+            background: #ffffff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mock-title {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .mock-user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 14px;
+        }
+        
+        .mock-username {
+            color: #666;
+        }
+        
+        .mock-logout-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        /* 留言小工具 - 新位置 */
+        .message-widget {
+            position: fixed;
+            top: 65px;
+            right: 15px;
+            z-index: 999;
+            max-width: 200px;
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(25, 118, 210, 0.15);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            font-size: 11px;
+            animation: fadeInSlide 0.5s ease-out;
+        }
+        
+        .message-widget:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .message-widget-header {
+            background: linear-gradient(135deg, rgba(25, 118, 210, 0.8), rgba(21, 101, 192, 0.8));
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px 5px 0 0;
+            display: flex;
+            align-items: center;
+            font-size: 10px;
+        }
+        
+        .message-widget-icon {
+            font-size: 10px;
+            margin-right: 3px;
+        }
+        
+        .message-widget-title {
+            flex: 1;
+            font-weight: 500;
+            font-size: 10px;
+        }
+        
+        .message-widget-body {
+            padding: 6px 8px;
+            color: #333;
+            line-height: 1.3;
+            max-height: 50px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .message-widget-body.expanded {
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        
+        .message-widget-text {
+            font-size: 11px;
+            margin-bottom: 3px;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .message-widget-body.expanded .message-widget-text {
+            display: block;
+            -webkit-line-clamp: unset;
+        }
+        
+        .message-widget-time {
+            font-size: 9px;
+            color: #666;
+            text-align: right;
+            opacity: 0.7;
+        }
+        
+        .message-widget::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, rgba(25, 118, 210, 0.1), rgba(21, 101, 192, 0.1));
+            border-radius: 8px;
+            z-index: -1;
+            animation: subtlePulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateX(20px) translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+        }
+        
+        @keyframes subtlePulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.02);
+            }
+        }
+        
+        .content {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .position-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #1976d2;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background: #1565c0;
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .message-widget {
+                top: 55px;
+                right: 10px;
+                max-width: 160px;
+                min-width: 120px;
+            }
+            
+            .mock-header {
+                padding: 10px 15px;
+            }
+            
+            .mock-title {
+                font-size: 1.2rem;
+            }
+            
+            .mock-user-info {
+                font-size: 12px;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 模擬系統頂部導航 -->
+    <header class="mock-header">
+        <div class="mock-title">雲水建設 - 基材管理系統</div>
+        <div class="mock-user-info">
+            <span class="mock-username">歡迎，pm001 (PM)</span>
+            <button class="mock-logout-btn">登出</button>
+        </div>
+    </header>
+
+    <!-- 留言小工具 -->
+    <div class="message-widget" id="messageWidget">
+        <div class="message-widget-header">
+            <span class="message-widget-icon">💬</span>
+            <span class="message-widget-title">管理員留言</span>
+        </div>
+        <div class="message-widget-body" id="messageBody">
+            <div class="message-widget-text" id="messageText">
+                系統維護通知：今晚22:00-24:00進行系統升級，請提前保存工作。
+            </div>
+            <div class="message-widget-time">
+                12月21日 14:30
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="test-section">
+            <h1>📍 留言小工具位置測試</h1>
+            
+            <div class="position-info">
+                <h3>✅ 新位置設計</h3>
+                <ul>
+                    <li><strong>位置</strong>：登出按鈕正下方，距離頂部 65px</li>
+                    <li><strong>尺寸</strong>：最大寬度 200px，最小寬度 150px</li>
+                    <li><strong>避免遮擋</strong>：完全不會遮擋到用戶名和登出按鈕</li>
+                    <li><strong>響應式</strong>：手機版調整到距離頂部 55px</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🎯 功能測試</h2>
+            <p>測試留言小工具的各種功能：</p>
+            
+            <button onclick="toggleExpand()">切換展開/收縮</button>
+            <button onclick="changeMessage()">更換留言內容</button>
+            <button onclick="toggleWidget()">顯示/隱藏小工具</button>
+        </div>
+
+        <div class="test-section">
+            <h2>📱 響應式測試</h2>
+            <p>調整瀏覽器窗口大小，觀察留言小工具在不同屏幕尺寸下的表現：</p>
+            <ul>
+                <li><strong>桌面版</strong>：位於登出按鈕正下方，距離頂部 65px</li>
+                <li><strong>手機版</strong>：自動調整到距離頂部 55px 位置</li>
+                <li><strong>尺寸適配</strong>：根據屏幕大小自動調整寬度</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>🎨 設計特色</h2>
+            <ul>
+                <li>✨ <strong>彩蛋式設計</strong>：低調不突兀，像隱藏的小驚喜</li>
+                <li>📍 <strong>智能定位</strong>：避免遮擋重要界面元素</li>
+                <li>🎯 <strong>持續顯示</strong>：無關閉按鈕，新留言覆蓋舊的</li>
+                <li>🖱️ <strong>懸停展開</strong>：鼠標懸停時顯示完整內容</li>
+                <li>💫 <strong>微動畫</strong>：淡入效果和脈動提示</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let isExpanded = false;
+        let isVisible = true;
+        let messageIndex = 0;
+        
+        const messages = [
+            "系統維護通知：今晚22:00-24:00進行系統升級，請提前保存工作。",
+            "恭喜！您的訂單已通過審核，請及時跟進後續流程。",
+            "提醒：請在本週五前完成材料清單更新。",
+            "新功能上線：現在支持批量導入材料資料。",
+            "重要通知：下週一開始實施新的訂單審核流程。"
+        ];
+
+        function toggleExpand() {
+            const messageBody = document.getElementById('messageBody');
+            isExpanded = !isExpanded;
+            
+            if (isExpanded) {
+                messageBody.classList.add('expanded');
+            } else {
+                messageBody.classList.remove('expanded');
+            }
+        }
+
+        function changeMessage() {
+            messageIndex = (messageIndex + 1) % messages.length;
+            document.getElementById('messageText').textContent = messages[messageIndex];
+            
+            // 重新觸發動畫
+            const widget = document.getElementById('messageWidget');
+            widget.style.animation = 'none';
+            setTimeout(() => {
+                widget.style.animation = 'fadeInSlide 0.5s ease-out';
+            }, 10);
+        }
+
+        function toggleWidget() {
+            const widget = document.getElementById('messageWidget');
+            isVisible = !isVisible;
+            widget.style.display = isVisible ? 'block' : 'none';
+        }
+
+        // 自動懸停效果
+        document.getElementById('messageWidget').addEventListener('mouseenter', function() {
+            document.getElementById('messageBody').classList.add('expanded');
+        });
+
+        document.getElementById('messageWidget').addEventListener('mouseleave', function() {
+            if (!isExpanded) {
+                document.getElementById('messageBody').classList.remove('expanded');
+            }
+        });
+    </script>
+</body>
+</html>

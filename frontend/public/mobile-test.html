@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手機連接測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f8ff;
+        }
+        .test-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h2>🔧 雲水基材管理系統</h2>
+        <h3>手機連接測試</h3>
+        
+        <div id="network-info" class="status info">
+            檢測網路連接...
+        </div>
+        
+        <button onclick="testBackend()">測試後端連接</button>
+        <button onclick="testLogin()">測試登入功能</button>
+        <button onclick="openMainApp()">開啟主應用</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://192.168.68.99:3004/api';
+        const FRONTEND_URL = 'http://192.168.68.99:3000';
+        
+        // 顯示網路資訊
+        document.getElementById('network-info').innerHTML = `
+            <strong>連接資訊:</strong><br>
+            前端: ${FRONTEND_URL}<br>
+            後端: ${API_URL}
+        `;
+        
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const timestamp = new Date().toLocaleTimeString();
+            results.innerHTML += `<div class="${type}">[${timestamp}] ${message}</div>`;
+            results.scrollTop = results.scrollHeight;
+        }
+        
+        async function testBackend() {
+            log('測試後端健康檢查...', 'info');
+            try {
+                const response = await fetch(`${API_URL.replace('/api', '')}/health`);
+                const data = await response.json();
+                log(`✅ 後端連接成功: ${data.message}`, 'success');
+            } catch (error) {
+                log(`❌ 後端連接失敗: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testLogin() {
+            log('測試登入API...', 'info');
+            
+            // 測試多個可能的用戶
+            const testUsers = [
+                { username: 'admin', password: 'admin123' },
+                { username: 'Jeffrey', password: 'password123' },
+                { username: 'Miya', password: 'password123' },
+                { username: 'Mark', password: 'password123' },
+                { username: 'pm001', password: 'pm123' },
+                { username: 'am001', password: 'am123' }
+            ];
+            
+            for (const user of testUsers) {
+                try {
+                    log(`嘗試登入: ${user.username}`, 'info');
+                    const response = await fetch(`${API_URL}/auth/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(user)
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success && result.data && result.data.user) {
+                            log(`✅ 登入成功: ${result.data.user.username} (${result.data.user.role})`, 'success');
+                            return; // 找到有效用戶就停止
+                        } else {
+                            log(`❌ ${user.username} 響應格式錯誤`, 'error');
+                        }
+                    } else {
+                        const error = await response.json();
+                        log(`❌ ${user.username} 登入失敗: ${error.message}`, 'error');
+                    }
+                } catch (error) {
+                    log(`❌ ${user.username} 請求失敗: ${error.message}`, 'error');
+                }
+            }
+            
+            log('所有測試用戶都登入失敗', 'error');
+        }
+        
+        function openMainApp() {
+            window.open(FRONTEND_URL, '_blank');
+        }
+        
+        // 頁面載入時自動測試
+        window.onload = function() {
+            setTimeout(testBackend, 1000);
+        };
+    </script>
+</body>
+</html>

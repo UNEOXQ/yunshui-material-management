@@ -1,0 +1,488 @@
+/* Header Styles */
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #e9ecef;
+  padding: 0 16px;
+  position: relative;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Menu Toggle Button */
+.menu-toggle-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  gap: 4px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+}
+
+.menu-toggle-btn:hover {
+  background-color: #f8f9fa;
+}
+
+.menu-toggle-btn:active {
+  background-color: #e9ecef;
+  transform: scale(0.95);
+}
+
+.menu-toggle-btn.mobile-menu-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+}
+
+.menu-toggle-btn.mobile-menu-btn:active {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.hamburger-line {
+  width: 20px;
+  height: 2px;
+  background-color: #495057;
+  transition: all 0.3s ease;
+}
+
+/* Brand */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.logo-icon {
+  font-size: 1.5rem;
+  filter: brightness(0) invert(1);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.brand-subtitle {
+  font-size: 0.7rem;
+  color: #6c757d;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* WebSocket Status in Header */
+.header-websocket {
+  display: flex;
+  align-items: center;
+}
+
+/* User Menu */
+.user-menu {
+  position: relative;
+}
+
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  min-height: 44px;
+}
+
+.user-menu-trigger:hover {
+  background-color: #f8f9fa;
+}
+
+.user-menu-trigger:active {
+  background-color: #e9ecef;
+  transform: scale(0.98);
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.user-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2c3e50;
+  line-height: 1.2;
+}
+
+.user-role {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.user-role.role-pm {
+  background: rgba(0, 123, 255, 0.1);
+  color: #0056b3;
+}
+
+.user-role.role-am {
+  background: rgba(40, 167, 69, 0.1);
+  color: #155724;
+}
+
+.user-role.role-warehouse {
+  background: rgba(255, 193, 7, 0.1);
+  color: #856404;
+}
+
+.user-role.role-admin {
+  background: rgba(220, 53, 69, 0.1);
+  color: #721c24;
+}
+
+.dropdown-arrow {
+  font-size: 0.7rem;
+  color: #6c757d;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* User Dropdown */
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 280px;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+  margin-top: 8px;
+  animation: dropdownSlide 0.2s ease;
+}
+
+.user-dropdown.mobile-dropdown {
+  position: fixed;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  border-radius: 16px 16px 0 0;
+  margin-top: 0;
+  animation: slideUpMobile 0.3s ease;
+}
+
+@keyframes slideUpMobile {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-header {
+  padding: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.user-details strong {
+  display: block;
+  color: #2c3e50;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.user-details small {
+  display: block;
+  color: #6c757d;
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.role-badge.role-pm {
+  background: rgba(0, 123, 255, 0.1);
+  color: #0056b3;
+}
+
+.role-badge.role-am {
+  background: rgba(40, 167, 69, 0.1);
+  color: #155724;
+}
+
+.role-badge.role-warehouse {
+  background: rgba(255, 193, 7, 0.1);
+  color: #856404;
+}
+
+.role-badge.role-admin {
+  background: rgba(220, 53, 69, 0.1);
+  color: #721c24;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #e9ecef;
+  margin: 0;
+}
+
+.dropdown-menu {
+  padding: 8px 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 12px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  min-height: 44px;
+}
+
+.dropdown-item:hover:not(:disabled) {
+  background-color: #f8f9fa;
+}
+
+.dropdown-item:active:not(:disabled) {
+  background-color: #e9ecef;
+  transform: scale(0.98);
+}
+
+.dropdown-item:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dropdown-item.mobile-dropdown-item {
+  padding: 16px 20px;
+  min-height: 56px;
+  font-size: 16px;
+}
+
+.item-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.item-note {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.logout-item {
+  color: #dc3545;
+}
+
+.logout-item:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* User Menu Overlay */
+.user-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+  .main-header {
+    height: 56px;
+    padding: 0 12px;
+    /* Safe area adjustments for devices with notches */
+    padding-top: max(0px, env(safe-area-inset-top));
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+  
+  .header-left {
+    gap: 12px;
+  }
+  
+  .header-right {
+    gap: 8px;
+  }
+  
+  .brand-title {
+    font-size: 1rem;
+  }
+  
+  .brand-subtitle {
+    display: none;
+  }
+  
+  .user-info {
+    display: none;
+  }
+  
+  .user-dropdown {
+    width: 260px;
+    right: -12px;
+  }
+  
+  .menu-toggle-btn {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .hamburger-line {
+    width: 18px;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .user-menu-trigger {
+    padding: 6px;
+    border-radius: 50%;
+  }
+
+  /* Mobile dropdown specific styles */
+  .user-dropdown.mobile-dropdown {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+
+  .user-dropdown.mobile-dropdown .dropdown-header {
+    padding: 20px 24px;
+  }
+
+  .user-dropdown.mobile-dropdown .dropdown-menu {
+    padding: 12px 0;
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .brand-subtitle {
+    font-size: 0.65rem;
+  }
+  
+  .user-name {
+    font-size: 0.85rem;
+  }
+  
+  .user-role {
+    font-size: 0.65rem;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .main-header {
+    border-bottom-color: #000000;
+  }
+  
+  .menu-toggle-btn:hover {
+    background-color: #e9ecef;
+  }
+  
+  .user-menu-trigger:hover {
+    background-color: #e9ecef;
+  }
+  
+  .user-dropdown {
+    border-color: #000000;
+  }
+}

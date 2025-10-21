@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>檢查認證狀態</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .info { background: #e8f4fd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .error { background: #ffe8e8; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #e8f5e8; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>認證狀態檢查</h1>
+    
+    <div id="tokenStatus" class="info">檢查中...</div>
+    
+    <button onclick="checkToken()">重新檢查 Token</button>
+    <button onclick="testLogin()">測試登入</button>
+    <button onclick="testMaterialsAPI()">測試材料 API</button>
+    <button onclick="clearToken()">清除 Token</button>
+    
+    <div id="results"></div>
+    
+    <script>
+        function addResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.innerHTML = message;
+            document.getElementById('results').appendChild(div);
+        }
+        
+        function checkToken() {
+            const token = localStorage.getItem('authToken');
+            const statusDiv = document.getElementById('tokenStatus');
+            
+            if (token) {
+                statusDiv.className = 'success';
+                statusDiv.innerHTML = `✅ Token 存在: ${token.substring(0, 20)}...`;
+                
+                // 嘗試解析 JWT token
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    const exp = new Date(payload.exp * 1000);
+                    const now = new Date();
+                    
+                    if (exp > now) {
+                        addResult(`✅ Token 有效，到期時間: ${exp.toLocaleString()}`, 'success');
+                    } else {
+                        addResult(`❌ Token 已過期，到期時間: ${exp.toLocaleString()}`, 'error');
+                    }
+                } catch (e) {
+                    addResult('⚠️ 無法解析 Token', 'error');
+                }
+            } else {
+                statusDiv.className = 'error';
+                statusDiv.innerHTML = '❌ 沒有找到 Token';
+            }
+        }
+        
+        async function testLogin() {
+            try {
+                const response = await fetch('http://localhost:3004/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: 'admin',
+                        password: 'admin123'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.data.token) {
+                    localStorage.setItem('authToken', data.data.token);
+                    addResult('✅ 登入成功，Token 已保存', 'success');
+                    checkToken();
+                } else {
+                    addResult(`❌ 登入失敗: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ 登入請求失敗: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testMaterialsAPI() {
+            const token = localStorage.getItem('authToken');
+            
+            try {
+                const response = await fetch('http://localhost:3004/api/materials', {
+                    headers: {
+                        'Authorization': token ? `Bearer ${token}` : '',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    addResult(`✅ 材料 API 調用成功，獲得 ${data.data.materials.length} 個材料`, 'success');
+                } else {
+                    addResult(`❌ 材料 API 調用失敗: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ 材料 API 請求失敗: ${error.message}`, 'error');
+            }
+        }
+        
+        function clearToken() {
+            localStorage.removeItem('authToken');
+            addResult('🗑️ Token 已清除', 'info');
+            checkToken();
+        }
+        
+        // 頁面載入時檢查
+        checkToken();
+    </script>
+</body>
+</html>

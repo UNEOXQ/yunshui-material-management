@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>同WiFi設備測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .warning {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        .url-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            text-align: center;
+            margin: 15px 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .user-list {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .user-item {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border-left: 3px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 同WiFi設備測試指南</h1>
+        
+        <div class="step success">
+            <h3>✅ 問題已修復</h3>
+            <ul>
+                <li>✅ API配置已改為內網IP</li>
+                <li>✅ 快速登入用戶名已更新</li>
+                <li>✅ 後端CORS已允許內網訪問</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>📱 手機訪問地址</h3>
+            <div class="url-box">
+                http://192.168.68.104:3000
+            </div>
+            <button onclick="copyURL()">複製網址到剪貼板</button>
+            <button onclick="testConnection()">測試連接</button>
+        </div>
+
+        <div class="step">
+            <h3>👥 更新後的用戶列表</h3>
+            <div class="user-list">
+                <div class="user-item">
+                    <strong>系統管理員</strong> - 角色：ADMIN
+                </div>
+                <div class="user-item">
+                    <strong>Jeffrey</strong> - 角色：PM (專案經理)
+                </div>
+                <div class="user-item">
+                    <strong>Miya</strong> - 角色：AM (客戶經理)
+                </div>
+                <div class="user-item">
+                    <strong>Mark</strong> - 角色：WAREHOUSE (倉庫管理員)
+                </div>
+                <div class="user-item">
+                    <strong>Erica</strong> - 角色：AM (客戶經理)
+                </div>
+                <div class="user-item">
+                    <strong>LUKE</strong> - 角色：PM (專案經理)
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>🧪 測試步驟</h3>
+            <ol>
+                <li><strong>清除手機瀏覽器緩存</strong>：
+                    <ul>
+                        <li>Chrome：設定 → 隱私權 → 清除瀏覽資料</li>
+                        <li>Safari：設定 → Safari → 清除歷史記錄與網站資料</li>
+                    </ul>
+                </li>
+                <li><strong>在手機瀏覽器輸入</strong>：<code>http://192.168.68.104:3000</code></li>
+                <li><strong>應該看到更新後的用戶名</strong>：系統管理員、Jeffrey、Miya、Mark、Erica、LUKE</li>
+                <li><strong>測試登入</strong>：點擊任一用戶快速登入</li>
+            </ol>
+        </div>
+
+        <div class="warning">
+            <h3>⚠️ 如果仍然看到舊用戶名</h3>
+            <p>可能的原因和解決方法：</p>
+            <ul>
+                <li><strong>瀏覽器緩存</strong>：強制刷新頁面 (Ctrl+F5)</li>
+                <li><strong>localStorage緩存</strong>：清除瀏覽器存儲數據</li>
+                <li><strong>前端未重新載入</strong>：等待前端重新編譯</li>
+            </ul>
+        </div>
+
+        <div class="error">
+            <h3>🔧 如果連接失敗</h3>
+            <p>檢查以下項目：</p>
+            <ol>
+                <li><strong>網路連接</strong>：確認手機和電腦在同一WiFi</li>
+                <li><strong>防火牆</strong>：Windows防火牆可能阻擋連接</li>
+                <li><strong>服務狀態</strong>：確認前端和後端都在運行</li>
+                <li><strong>IP地址</strong>：確認電腦IP沒有變化</li>
+            </ol>
+            
+            <button onclick="checkServices()">檢查服務狀態</button>
+            <button onclick="showFirewallHelp()">防火牆設定幫助</button>
+        </div>
+
+        <div class="step">
+            <h3>🎯 成功標準</h3>
+            <p>如果設定成功，你應該看到：</p>
+            <ul>
+                <li>✅ 手機能正常載入登入頁面</li>
+                <li>✅ 快速登入顯示正確的用戶名</li>
+                <li>✅ 點擊用戶能成功登入</li>
+                <li>✅ 系統功能正常運作</li>
+                <li>✅ Jeffrey能看到留言小工具</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function copyURL() {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText('http://192.168.68.104:3000').then(() => {
+                    alert('網址已複製！請在手機瀏覽器貼上');
+                });
+            } else {
+                // 備用方法
+                const textArea = document.createElement('textarea');
+                textArea.value = 'http://192.168.68.104:3000';
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('網址已複製！請在手機瀏覽器貼上');
+            }
+        }
+
+        function testConnection() {
+            fetch('http://192.168.68.104:3000')
+                .then(response => {
+                    if (response.ok) {
+                        alert('✅ 連接測試成功！手機應該可以正常訪問');
+                    } else {
+                        alert('⚠️ 連接有問題，狀態碼：' + response.status);
+                    }
+                })
+                .catch(error => {
+                    alert('❌ 連接失敗：' + error.message);
+                });
+        }
+
+        function checkServices() {
+            alert('請檢查：\n\n1. 前端服務：http://localhost:3000\n2. 後端服務：http://localhost:3004/health\n\n如果無法訪問，請重新啟動服務');
+        }
+
+        function showFirewallHelp() {
+            alert('Windows防火牆設定：\n\n1. 開啟「控制台」→「系統及安全性」→「Windows Defender 防火牆」\n2. 點擊「允許應用程式或功能通過 Windows Defender 防火牆」\n3. 點擊「變更設定」\n4. 找到Node.js或相關應用程式，確認已勾選\n5. 或暫時關閉防火牆進行測試');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試管理員訂單狀態管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            background-color: #f8f9fa;
+        }
+        .success {
+            border-left-color: #28a745;
+            background-color: #d4edda;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background-color: #f8d7da;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .console-output {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 管理員訂單狀態管理測試</h1>
+        
+        <div class="step">
+            <h3>📋 測試步驟</h3>
+            <ol>
+                <li>點擊下方按鈕打開系統</li>
+                <li>使用管理員帳號登入（點擊"管理"快速登入）</li>
+                <li>點擊"👑 管理員控制台"</li>
+                <li>點擊"📋 訂單狀態管理"</li>
+                <li>檢查是否正常進入訂單管理頁面（不會跳回）</li>
+                <li>打開F12查看控制台調試信息</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>🔍 預期結果</h3>
+            <ul>
+                <li>✅ 點擊"📋 訂單狀態管理"後應該正常進入訂單管理頁面</li>
+                <li>✅ 不應該跳回管理員控制台</li>
+                <li>✅ F12控制台應該顯示調試信息：
+                    <div class="console-output">
+OrderManagementPageWrapper - currentUser: {id: "user-1", username: "管理", ...}
+OrderManagementPageWrapper - currentUser.role: "ADMIN"
+                    </div>
+                </li>
+                <li>✅ 頁面應該顯示訂單列表和狀態管理功能</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>🚀 開始測試</h3>
+            <button onclick="openSystem()">打開雲水基材管理系統</button>
+            <button onclick="openConsole()">打開開發者工具</button>
+        </div>
+
+        <div class="step">
+            <h3>📝 測試結果記錄</h3>
+            <p>請在測試完成後記錄結果：</p>
+            <button onclick="recordSuccess()">✅ 測試成功</button>
+            <button onclick="recordFailure()">❌ 測試失敗</button>
+            <div id="testResult" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="step">
+            <h3>🔧 如果測試失敗</h3>
+            <p>請檢查以下項目：</p>
+            <ul>
+                <li>F12控制台是否有錯誤信息</li>
+                <li>調試信息是否正確顯示</li>
+                <li>網絡請求是否正常</li>
+                <li>後端服務是否正在運行</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function openSystem() {
+            window.open('http://localhost:5173', '_blank');
+        }
+
+        function openConsole() {
+            alert('請按 F12 打開開發者工具，然後切換到 Console 標籤');
+        }
+
+        function recordSuccess() {
+            document.getElementById('testResult').innerHTML = 
+                '<div class="step success"><h4>✅ 測試成功！</h4><p>管理員訂單狀態管理功能正常工作</p></div>';
+        }
+
+        function recordFailure() {
+            const error = prompt('請描述遇到的問題：');
+            document.getElementById('testResult').innerHTML = 
+                '<div class="step error"><h4>❌ 測試失敗</h4><p>問題描述：' + (error || '未知錯誤') + '</p></div>';
+        }
+
+        // 頁面載入時的提示
+        window.onload = function() {
+            console.log('🧪 管理員訂單狀態管理測試頁面已載入');
+            console.log('📋 請按照步驟進行測試');
+        };
+    </script>
+</body>
+</html>

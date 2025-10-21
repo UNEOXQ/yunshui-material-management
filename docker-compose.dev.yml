@@ -1,0 +1,123 @@
+version: '3.8'
+
+services:
+  # PostgreSQL 資料庫 (開發環境)
+  database:
+    image: postgres:15-alpine
+    container_name: yun-shui-db-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: yun_shui_materials_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dev_password
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    ports:
+      - "5433:5432"
+    networks:
+      - yun-shui-dev-network
+
+  # Redis (開發環境)
+  redis:
+    image: redis:7-alpine
+    container_name: yun-shui-redis-dev
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_dev_data:/data
+    ports:
+      - "6380:6379"
+    networks:
+      - yun-shui-dev-network
+
+  # 後端 API 服務 (開發環境)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: development
+    container_name: yun-shui-backend-dev
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: yun_shui_materials_dev
+      DB_USER: postgres
+      DB_PASSWORD: dev_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: dev_jwt_secret_key
+      JWT_EXPIRES_IN: 24h
+      UPLOAD_PATH: ./uploads
+      MAX_FILE_SIZE: 5242880
+      CORS_ORIGIN: http://localhost:3000
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - backend_dev_uploads:/app/uploads
+    ports:
+      - "3001:3001"
+    networks:
+      - yun-shui-dev-network
+    depends_on:
+      - database
+      - redis
+    command: npm run dev
+
+  # 前端 Web 服務 (開發環境)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: development
+    container_name: yun-shui-frontend-dev
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      VITE_API_URL: http://localhost:3001/api
+      VITE_WS_URL: http://localhost:3001
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    networks:
+      - yun-shui-dev-network
+    depends_on:
+      - backend
+    command: npm run dev
+
+  # pgAdmin (資料庫管理工具)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: yun-shui-pgadmin-dev
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@yunshui.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin_dev_data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - yun-shui-dev-network
+    depends_on:
+      - database
+
+volumes:
+  postgres_dev_data:
+    driver: local
+  redis_dev_data:
+    driver: local
+  backend_dev_uploads:
+    driver: local
+  pgadmin_dev_data:
+    driver: local
+
+networks:
+  yun-shui-dev-network:
+    driver: bridge

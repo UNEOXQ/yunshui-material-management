@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS 圖片測試</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-image { max-width: 200px; margin: 10px; border: 1px solid #ccc; }
+        .error { color: red; }
+        .success { color: green; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>CORS 圖片載入測試</h1>
+    
+    <div id="results"></div>
+    
+    <script>
+        const testImages = [
+            'http://localhost:3004/uploads/materials/LOGO-1760471119261-231160952.png',
+            'http://localhost:3004/uploads/materials/LOGO-1760471140490-834598999.png',
+            'http://localhost:3004/uploads/materials/LOGO-1760471154442-828313974.png'
+        ];
+        
+        const resultsDiv = document.getElementById('results');
+        
+        function addResult(message, type = 'info') {
+            const p = document.createElement('p');
+            p.className = type;
+            p.textContent = message;
+            resultsDiv.appendChild(p);
+        }
+        
+        function testImageLoad(imageUrl) {
+            addResult(`測試圖片: ${imageUrl}`, 'info');
+            
+            const img = document.createElement('img');
+            img.className = 'test-image';
+            img.src = imageUrl;
+            
+            img.onload = function() {
+                addResult(`✅ 圖片載入成功: ${imageUrl}`, 'success');
+            };
+            
+            img.onerror = function(e) {
+                addResult(`❌ 圖片載入失敗: ${imageUrl}`, 'error');
+                console.error('Image load error:', e);
+            };
+            
+            resultsDiv.appendChild(img);
+        }
+        
+        // 測試 fetch API
+        function testFetchAPI(imageUrl) {
+            fetch(imageUrl, {
+                method: 'GET',
+                mode: 'cors',
+                credentials: 'omit'
+            })
+            .then(response => {
+                if (response.ok) {
+                    addResult(`✅ Fetch API 成功: ${imageUrl} (${response.status})`, 'success');
+                    console.log('Response headers:', [...response.headers.entries()]);
+                } else {
+                    addResult(`❌ Fetch API 失敗: ${imageUrl} (${response.status})`, 'error');
+                }
+            })
+            .catch(error => {
+                addResult(`❌ Fetch API 錯誤: ${imageUrl} - ${error.message}`, 'error');
+                console.error('Fetch error:', error);
+            });
+        }
+        
+        // 開始測試
+        addResult('開始 CORS 測試...', 'info');
+        
+        testImages.forEach(imageUrl => {
+            testImageLoad(imageUrl);
+            testFetchAPI(imageUrl);
+        });
+    </script>
+</body>
+</html>
