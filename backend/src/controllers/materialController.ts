@@ -3,11 +3,11 @@ import { MaterialModel } from '../models/Material';
 import { AuthenticatedRequest, CreateMaterialRequest, UpdateMaterialRequest, MaterialType } from '../types';
 import Joi from 'joi';
 
-// é©—è? ID ?¼å??„è??©å‡½??
+// é©—ï¿½? ID ?ï¿½ï¿½??ï¿½ï¿½??ï¿½å‡½??
 function isValidId(id: string): boolean {
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   const memoryIdRegex = /^(material|user|order|project)-\w+$/i;
-  const simpleMemoryIdRegex = /^id-\d+$/i; // ?¯æ? id-2000 ?¼å?
+  const simpleMemoryIdRegex = /^id-\d+$/i; // ?ï¿½ï¿½? id-2000 ?ï¿½ï¿½?
   
   return uuidRegex.test(id) || memoryIdRegex.test(id) || simpleMemoryIdRegex.test(id);
 }
@@ -100,6 +100,11 @@ const updateMaterialSchema = Joi.object({
     .allow('')
     .messages({
       'string.max': 'Supplier name cannot exceed 255 characters'
+    }),
+  type: Joi.string()
+    .valid('AUXILIARY', 'FINISHED')
+    .messages({
+      'any.only': 'Type must be either AUXILIARY or FINISHED'
     })
 }).min(1);
 

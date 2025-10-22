@@ -90,6 +90,11 @@ export const updateMaterialSchema = Joi.object({
     .allow('')
     .messages({
       'string.max': 'Supplier name cannot exceed 255 characters'
+    }),
+  type: Joi.string()
+    .valid('AUXILIARY', 'FINISHED')
+    .messages({
+      'any.only': 'Type must be either AUXILIARY or FINISHED'
     })
 }).min(1);
 
