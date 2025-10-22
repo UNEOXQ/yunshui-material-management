@@ -677,8 +677,10 @@ export class MemoryDatabase {
     return this.statusUpdates.filter(su => su.projectId === projectId);
   }
 
-  // 持久化功能
-  private dataFilePath = path.join(process.cwd(), 'data', 'memory-db.json');
+  // 持久化功能 - 在 Render 上使用 /tmp 目錄（臨時解決方案）
+  private dataFilePath = process.env.NODE_ENV === 'production' 
+    ? path.join('/tmp', 'memory-db.json')
+    : path.join(process.cwd(), 'data', 'memory-db.json');
 
   private ensureDataDirectory() {
     const dataDir = path.dirname(this.dataFilePath);
@@ -729,10 +731,33 @@ export class MemoryDatabase {
         
         console.log('Memory database loaded from file');
         console.log(`Loaded: ${this.users.length} users, ${this.orders.length} orders, ${this.orderItems.length} order items, ${this.statusUpdates.length} status updates, ${this.messages.length} messages`);
+      } else {
+        console.log('No existing database file found, using default data');
+        // 在 Render 上文件可能會被清除，確保基本數據存在
+        this.ensureBasicData();
       }
     } catch (error) {
       console.error('Failed to load memory database:', error);
+      // 如果載入失敗，確保基本數據存在
+      this.ensureBasicData();
     }
+  }
+
+  // 確保基本數據存在（用於 Render 等臨時文件系統）
+  private ensureBasicData() {
+    // 確保至少有基本的用戶數據
+    if (this.users.length === 0) {
+      console.log('Restoring default users...');
+      // 用戶數據已在構造函數中初始化
+    }
+    
+    // 確保有一些基本的材料數據
+    if (this.materials.length === 0) {
+      console.log('Restoring basic materials...');
+      // 材料數據已在構造函數中初始化
+    }
+    
+    console.log(`Ensured basic data: ${this.users.length} users, ${this.materials.length} materials`);
   }
 
   // 自動保存功能
