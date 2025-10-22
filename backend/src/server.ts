@@ -128,11 +128,27 @@ app.use(errorHandler);
 // Initialize WebSocket service
 initializeWebSocketService(httpServer);
 
+// Ensure upload directories exist
+const uploadsDir = path.join(process.cwd(), 'uploads');
+const materialsDir = path.join(uploadsDir, 'materials');
+
+if (!require('fs').existsSync(uploadsDir)) {
+  require('fs').mkdirSync(uploadsDir, { recursive: true });
+  console.log('📁 Created uploads directory');
+}
+
+if (!require('fs').existsSync(materialsDir)) {
+  require('fs').mkdirSync(materialsDir, { recursive: true });
+  console.log('📁 Created materials directory');
+}
+
 // Start server
 if (process.env.NODE_ENV !== 'test') {
   httpServer.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT} - Version: ${APP_VERSION}`);
     console.log(`🔧 Memory Database Persistence: ENHANCED`);
+    console.log(`📁 Upload directories: ${uploadsDir}`);
+    console.log(`🖼️  Materials directory: ${materialsDir}`);
     console.log(`🔌 WebSocket server initialized`);
     console.log(`📊 Health check: http://localhost:${PORT}/health`);
     console.log(`🔐 Auth API: http://localhost:${PORT}/api/auth`);
