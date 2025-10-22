@@ -12,7 +12,7 @@ export function processImageUrl(imageUrl: string | null | undefined): string | n
 
   // 如果是完整的 URL，在開發環境中轉換為相對路徑以使用 Vite 代理
   if (imageUrl.startsWith('http://localhost:3004/uploads/') || 
-      imageUrl.startsWith('https://yunshui-material-management.onrender.com/uploads/')) {
+      imageUrl.startsWith('https://yunshui-backend1.onrender.com/uploads/')) {
     // 在開發環境中，移除域名部分，使用 Vite 代理
     if (import.meta.env.DEV) {
       return imageUrl.replace(/^https?:\/\/[^\/]+/, '');

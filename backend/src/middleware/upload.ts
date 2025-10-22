@@ -137,7 +137,7 @@ export const deleteUploadedFile = (filePath: string): Promise<void> => {
 export const getFileUrl = (filename: string, type: 'material' | 'general' = 'general'): string => {
   // 在生產環境中使用正確的 Render URL，開發環境使用 localhost
   const baseUrl = process.env.BASE_URL || 
-                  (process.env.NODE_ENV === 'production' ? 'https://yunshui-material-management.onrender.com' : 'http://localhost:3004');
+                  (process.env.NODE_ENV === 'production' ? 'https://yunshui-backend1.onrender.com' : 'http://localhost:3004');
   
   if (type === 'material') {
     return `${baseUrl}/uploads/materials/${filename}`;
