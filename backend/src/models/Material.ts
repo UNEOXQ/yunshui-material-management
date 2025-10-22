@@ -71,6 +71,11 @@ export const updateMaterialSchema = Joi.object({
       'string.min': 'Category cannot be empty',
       'string.max': 'Category cannot exceed 100 characters'
     }),
+  type: Joi.string()
+    .valid('AUXILIARY', 'FINISHED')
+    .messages({
+      'any.only': 'Type must be either AUXILIARY or FINISHED'
+    }),
   price: Joi.number()
     .positive()
     .precision(2)
