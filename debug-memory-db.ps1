@@ -1,5 +1,5 @@
 # 測試記憶體資料庫持久化
-Write-Host "🔍 測試記憶體資料庫..." -ForegroundColor Yellow
+Write-Host "測試記憶體資料庫..." -ForegroundColor Yellow
 
 # 測試材料 API
 $API_URL = "https://yunshui-backend1.onrender.com/api"
@@ -14,7 +14,7 @@ $loginData = @{
 try {
     $loginResponse = Invoke-RestMethod -Uri "$API_URL/auth/login" -Method POST -Body $loginData -ContentType "application/json"
     $token = $loginResponse.data.token
-    Write-Host "   ✅ Token 獲取成功" -ForegroundColor Green
+    Write-Host "   Token 獲取成功" -ForegroundColor Green
 } catch {
     Write-Host "   ❌ Token 獲取失敗: $($_.Exception.Message)" -ForegroundColor Red
     exit 1
@@ -73,4 +73,4 @@ if ($createdId) {
     }
 }
 
-Write-Host "🎯 測試完成！" -ForegroundColor Yellow
+Write-Host "測試完成！" -ForegroundColor Yellow

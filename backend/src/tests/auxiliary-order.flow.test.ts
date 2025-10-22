@@ -3,7 +3,23 @@ import app from '../server';
 
 // Mock all models to avoid database dependencies
 jest.mock('../models/Order');
-jest.mock('../models/Material');
+jest.mock('../models/Material', () => ({
+  MaterialModel: {
+    create: jest.fn(),
+    findById: jest.fn(),
+    findAll: jest.fn(),
+    update: jest.fn(),
+    updateImageUrl: jest.fn(),
+    delete: jest.fn(),
+    exists: jest.fn(),
+    hasQuantity: jest.fn(),
+    updateQuantity: jest.fn(),
+    getCategories: jest.fn(),
+    findByType: jest.fn(),
+    findByCategory: jest.fn(),
+    getSuppliers: jest.fn()
+  }
+}));
 jest.mock('../models/Project');
 jest.mock('../models/StatusUpdate');
 jest.mock('../models/User');

@@ -5,7 +5,23 @@ import { Material } from '../types';
 import fs from 'fs';
 
 // Mock the MaterialModel
-jest.mock('../models/Material');
+jest.mock('../models/Material', () => ({
+  MaterialModel: {
+    create: jest.fn(),
+    findById: jest.fn(),
+    findAll: jest.fn(),
+    update: jest.fn(),
+    updateImageUrl: jest.fn(),
+    delete: jest.fn(),
+    exists: jest.fn(),
+    hasQuantity: jest.fn(),
+    updateQuantity: jest.fn(),
+    getCategories: jest.fn(),
+    findByType: jest.fn(),
+    findByCategory: jest.fn(),
+    getSuppliers: jest.fn()
+  }
+}));
 
 // Mock fs operations
 jest.mock('fs');

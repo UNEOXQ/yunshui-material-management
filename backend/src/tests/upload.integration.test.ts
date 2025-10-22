@@ -3,7 +3,23 @@ import { MaterialModel } from '../models/Material';
 import { Material } from '../types';
 
 // Mock the MaterialModel
-jest.mock('../models/Material');
+jest.mock('../models/Material', () => ({
+  MaterialModel: {
+    create: jest.fn(),
+    findById: jest.fn(),
+    findAll: jest.fn(),
+    update: jest.fn(),
+    updateImageUrl: jest.fn(),
+    delete: jest.fn(),
+    exists: jest.fn(),
+    hasQuantity: jest.fn(),
+    updateQuantity: jest.fn(),
+    getCategories: jest.fn(),
+    findByType: jest.fn(),
+    findByCategory: jest.fn(),
+    getSuppliers: jest.fn()
+  }
+}));
 
 const mockMaterial: Material = {
   id: '550e8400-e29b-41d4-a716-446655440000',
