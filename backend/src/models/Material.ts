@@ -126,7 +126,7 @@ export class MaterialModel {
     const { name, category, price, quantity, supplier, type } = value;
 
     try {
-      // 使用記憶體資料庫
+      // 使用記憶體�??�庫
       const newMaterial = await memoryDb.createMaterial({
         name,
         category,
@@ -141,7 +141,7 @@ export class MaterialModel {
     } catch (error) {
       console.warn('Memory database failed, trying PostgreSQL:', error);
       
-      // 回退到 PostgreSQL
+      // ?�退??PostgreSQL
       const query = `
         INSERT INTO materials (name, category, price, quantity, supplier, type)
         VALUES ($1, $2, $3, $4, $5, $6)
@@ -156,12 +156,12 @@ export class MaterialModel {
   // Find material by ID
   static async findById(id: string): Promise<Material | null> {
     try {
-      // 嘗試使用內存數據庫
+      // ?�試使用?��??��?�?
       return await memoryDb.getMaterialById(id);
     } catch (error) {
       console.warn('Memory database failed, trying PostgreSQL:', error);
       
-      // 回退到 PostgreSQL
+      // ?�退??PostgreSQL
       try {
         const query = 'SELECT * FROM materials WHERE id = $1';
         const result = await pool.query(query, [id]);
@@ -190,7 +190,7 @@ export class MaterialModel {
     limit: number = 10
   ): Promise<{ materials: Material[], total: number }> {
     try {
-      // 嘗試使用內存數據庫
+      // ?�試使用?��??��?�?
       return await memoryDb.getAllMaterials(filters, page, limit);
     } catch (error) {
       console.warn('Memory database failed, trying PostgreSQL:', error);
@@ -262,12 +262,12 @@ export class MaterialModel {
   // Get unique categories
   static async getCategories(type?: MaterialType): Promise<string[]> {
     try {
-      // 嘗試使用內存數據庫
+      // ?�試使用?��??��?�?
       return await memoryDb.getCategories(type);
     } catch (error) {
       console.warn('Memory database failed, trying PostgreSQL:', error);
       
-      // 回退到 PostgreSQL
+      // ?�退??PostgreSQL
       try {
         let query = 'SELECT DISTINCT category FROM materials';
         const values: any[] = [];
@@ -291,12 +291,12 @@ export class MaterialModel {
   // Get unique suppliers
   static async getSuppliers(type?: MaterialType): Promise<string[]> {
     try {
-      // 嘗試使用內存數據庫
+      // ?�試使用?��??��?�?
       return await memoryDb.getSuppliers(type);
     } catch (error) {
       console.warn('Memory database failed, trying PostgreSQL:', error);
       
-      // 回退到 PostgreSQL
+      // ?�退??PostgreSQL
       try {
         let query = 'SELECT DISTINCT supplier FROM materials WHERE supplier IS NOT NULL';
         const values: any[] = [];
@@ -322,43 +322,51 @@ export class MaterialModel {
     // Validate input
     const { error, value } = updateMaterialSchema.validate(updateData);
     if (error) {
-      throw new Error(`Validation error: ${error.details[0].message}`);
+      throw new Error(\Validation error: \\);
     }
 
-    const fields = Object.keys(value);
-    const values = Object.values(value);
-    
-    if (fields.length === 0) {
+    if (Object.keys(value).length === 0) {
       throw new Error('No fields to update');
     }
 
-    // Build dynamic query
-    const setClause = fields.map((field, index) => `${field} = $${index + 2}`).join(', ');
-    const query = `
-      UPDATE materials 
-      SET ${setClause}, updated_at = CURRENT_TIMESTAMP
-      WHERE id = $1 
-      RETURNING *
-    `;
+    try {
+      // �ϥΰO�����Ʈw
+      return await memoryDb.updateMaterial(id, value);
+    } catch (error) {
+      console.warn('Memory database failed, trying PostgreSQL:', error);
+      
+      // �^�h�� PostgreSQL
+      const fields = Object.keys(value);
+      const values = Object.values(value);
+      
+      // Build dynamic query
+      const setClause = fields.map((field, index) => \\ = \$\\).join(', ');
+      const query = \`n        UPDATE materials 
+        SET \, updated_at = CURRENT_TIMESTAMP
+        WHERE id = \ 
+        RETURNING *
+      \;
 
-    const result = await pool.query(query, [id, ...values]);
-    
-    if (result.rows.length === 0) {
-      return null;
+      const result = await pool.query(query, [id, ...values]);
+      
+      if (result.rows.length === 0) {
+        return null;
+      }
+      
+      return this.entityToModel(result.rows[0]);
     }
-    
-    return this.entityToModel(result.rows[0]);
+  }
   }
 
   // Update material image URL
   static async updateImageUrl(id: string, imageUrl: string): Promise<Material | null> {
     try {
-      // 嘗試使用內存數據庫
+      // ?�試使用?��??��?�?
       return await memoryDb.updateMaterialImageUrl(id, imageUrl);
     } catch (error) {
       console.warn('Memory database failed, trying PostgreSQL:', error);
       
-      // 回退到 PostgreSQL
+      // ?�退??PostgreSQL
       try {
         const query = `
           UPDATE materials 
@@ -388,7 +396,7 @@ export class MaterialModel {
     }
 
     try {
-      // 嘗試使用內存數據庫
+      // ?�試使用?��??��?�?
       return await memoryDb.updateMaterial(id, { quantity });
     } catch (error) {
       console.warn('Memory database failed, trying PostgreSQL:', error);
@@ -414,12 +422,12 @@ export class MaterialModel {
   // Delete material
   static async delete(id: string): Promise<boolean> {
     try {
-      // 使用記憶體資料庫
+      // 使用記憶體�??�庫
       return await memoryDb.deleteMaterial(id);
     } catch (error) {
       console.warn('Memory database failed, trying PostgreSQL:', error);
       
-      // 回退到 PostgreSQL
+      // ?�退??PostgreSQL
       const query = 'DELETE FROM materials WHERE id = $1';
       const result = await pool.query(query, [id]);
       return (result.rowCount ?? 0) > 0;
@@ -429,13 +437,13 @@ export class MaterialModel {
   // Check if material exists
   static async exists(id: string): Promise<boolean> {
     try {
-      // 使用記憶體資料庫
+      // 使用記憶體�??�庫
       const material = await memoryDb.getMaterialById(id);
       return material !== null;
     } catch (error) {
       console.warn('Memory database failed, trying PostgreSQL:', error);
       
-      // 回退到 PostgreSQL
+      // ?�退??PostgreSQL
       const query = 'SELECT 1 FROM materials WHERE id = $1';
       const result = await pool.query(query, [id]);
       return result.rows.length > 0;
