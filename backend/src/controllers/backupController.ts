@@ -4,7 +4,7 @@ import { githubBackupService } from '../services/githubBackupService';
 /**
  * 手動觸發備份
  */
-export const triggerBackup = async (req: Request, res: Response) => {
+export const triggerBackup = async (_req: Request, res: Response) => {
   try {
     console.log('📝 收到手動備份請求');
     
@@ -35,7 +35,7 @@ export const triggerBackup = async (req: Request, res: Response) => {
 /**
  * 獲取備份狀態
  */
-export const getBackupStatus = async (req: Request, res: Response) => {
+export const getBackupStatus = async (_req: Request, res: Response) => {
   try {
     const status = githubBackupService.getBackupStatus();
     

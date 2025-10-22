@@ -1,5 +1,5 @@
 import { Octokit } from '@octokit/rest';
-import { memoryDatabase } from '../config/memory-database';
+import { memoryDb } from '../config/memory-database';
 
 interface BackupData {
   timestamp: string;
@@ -112,11 +112,11 @@ class GitHubBackupService {
       timestamp: new Date().toISOString(),
       version: '1.0.0',
       data: {
-        materials: Array.from(memoryDatabase.materials.values()),
-        orders: Array.from(memoryDatabase.orders.values()),
-        users: Array.from(memoryDatabase.users.values()),
-        statusUpdates: Array.from(memoryDatabase.statusUpdates.values()),
-        messages: Array.from(memoryDatabase.messages.values()),
+        materials: memoryDb.getAllMaterials(),
+        orders: memoryDb.getAllOrders(),
+        users: memoryDb.getAllUsers(),
+        statusUpdates: memoryDb.getAllStatusUpdates(),
+        messages: memoryDb.getAllMessages(),
       },
     };
   }
@@ -167,15 +167,20 @@ class GitHubBackupService {
       // 創建或更新文件
       const commitMessage = `自動備份數據 - ${new Date().toLocaleString('zh-TW')}`;
       
-      await this.octokit.repos.createOrUpdateFileContents({
+      const updateParams: any = {
         owner: this.owner,
         repo: this.repo,
         path: `data-backups/${fileName}`,
         message: commitMessage,
         content: Buffer.from(content).toString('base64'),
         branch: this.branch,
-        sha: fileSha,
-      });
+      };
+      
+      if (fileSha) {
+        updateParams.sha = fileSha;
+      }
+      
+      await this.octokit.repos.createOrUpdateFileContents(updateParams);
 
       // 同時更新 latest.json
       await this.updateLatestBackup(content);
@@ -214,15 +219,20 @@ class GitHubBackupService {
         }
       }
 
-      await this.octokit!.repos.createOrUpdateFileContents({
+      const latestParams: any = {
         owner: this.owner,
         repo: this.repo,
         path: 'data-backups/latest.json',
         message: `更新最新備份 - ${new Date().toLocaleString('zh-TW')}`,
         content: Buffer.from(content).toString('base64'),
         branch: this.branch,
-        sha: latestSha,
-      });
+      };
+      
+      if (latestSha) {
+        latestParams.sha = latestSha;
+      }
+      
+      await this.octokit!.repos.createOrUpdateFileContents(latestParams);
     } catch (error) {
       console.error('⚠️ 更新最新備份失敗:', error);
       // 不拋出錯誤，因為主備份已經成功
