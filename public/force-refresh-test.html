@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>強制刷新測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f8ff;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🔄 強制刷新測試</h2>
+        
+        <div class="info">
+            如果主應用還是顯示錯誤的API URL，請按以下步驟操作：
+        </div>
+        
+        <button onclick="clearCache()">清除瀏覽器快取</button>
+        <button onclick="forceReload()">強制重新載入</button>
+        <button onclick="openMainApp()">開啟主應用</button>
+        
+        <div class="info">
+            <strong>預期結果：</strong><br>
+            主應用應該顯示：<br>
+            "API URL: http://192.168.68.99:3004/api (強制修復)"
+        </div>
+    </div>
+
+    <script>
+        function clearCache() {
+            // 清除localStorage
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            alert('已清除本地快取，請重新載入頁面');
+        }
+        
+        function forceReload() {
+            // 強制重新載入，繞過快取
+            window.location.reload(true);
+        }
+        
+        function openMainApp() {
+            // 開啟主應用，添加時間戳避免快取
+            const timestamp = new Date().getTime();
+            window.open(`http://192.168.68.99:3000/?t=${timestamp}`, '_blank');
+        }
+        
+        // 顯示當前時間，確認頁面是最新的
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date().toLocaleString();
+            document.querySelector('.container').innerHTML += `
+                <div class="info">
+                    <small>頁面載入時間: ${now}</small>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

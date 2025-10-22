@@ -1,0 +1,2081 @@
+/* Status Management Components Styles */
+
+.status-manager {
+  background: #ffffff;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status-manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.status-manager-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.status-type-badge {
+  background: #3498db;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-type-badge.order { background: #3498db; }
+.status-type-badge.pickup { background: #e67e22; }
+.status-type-badge.delivery { background: #27ae60; }
+.status-type-badge.check { background: #9b59b6; }
+
+.status-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #2c3e50;
+  font-size: 0.9rem;
+}
+
+.status-select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: white;
+  transition: all 0.2s ease;
+  min-height: 42px;
+}
+
+.status-select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.status-select:disabled {
+  background: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.status-select.disabled {
+  background: #f8f9fa;
+  color: #6c757d;
+}
+
+.help-text {
+  color: #6c757d;
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.current-status {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #3498db;
+}
+
+.current-status h4 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.status-display {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.primary-status {
+  background: #3498db;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.secondary-status {
+  background: #95a5a6;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.status-separator {
+  color: #7f8c8d;
+  font-weight: bold;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fee;
+  color: #c0392b;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #f5c6cb;
+  font-size: 0.9rem;
+}
+
+.error-icon {
+  font-size: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  justify-content: center;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #2980b9;
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #7f8c8d;
+}
+
+.btn.loading {
+  pointer-events: none;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.status-rules {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 20px;
+  border-left: 4px solid #17a2b8;
+}
+
+.status-rules h4 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.status-rules ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #495057;
+}
+
+.status-rules li {
+  margin-bottom: 5px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .status-manager {
+    padding: 15px;
+  }
+  
+  .status-manager-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Status Manager Grid Layout */
+.status-managers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .status-managers-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+/* Status History */
+.status-history {
+  background: white;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.status-history h3 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.status-history-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.status-history-item:last-child {
+  border-bottom: none;
+}
+
+.status-history-time {
+  font-size: 0.8rem;
+  color: #6c757d;
+  min-width: 120px;
+}
+
+.status-history-type {
+  background: #e9ecef;
+  color: #495057;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  min-width: 60px;
+  text-align: center;
+}
+
+.status-history-value {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #2c3e50;
+}
+
+.status-history-user {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.empty-state-message {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.empty-state-description {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}/*
+ Status History Specific Styles */
+
+.status-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.project-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.project-name {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.project-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.project-status.active {
+  background: #d4edda;
+  color: #155724;
+}
+
+.project-status.completed {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.project-status.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.current-status-summary {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 25px;
+}
+
+.current-status-summary h4 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.status-item {
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #e1e5e9;
+}
+
+.status-type-label {
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.status-value {
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.status-time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.detailed-history {
+  margin-top: 25px;
+}
+
+.detailed-history h4 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.history-timeline {
+  position: relative;
+}
+
+.status-history-item {
+  display: flex;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 15px;
+  position: relative;
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px #e1e5e9;
+  z-index: 2;
+}
+
+.timeline-line {
+  width: 2px;
+  height: 40px;
+  background: #e1e5e9;
+  margin-top: 5px;
+}
+
+.timeline-content {
+  flex: 1;
+  background: white;
+  border: 1px solid #e1e5e9;
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.timeline-time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.timeline-body .status-value {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.additional-data {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+  font-size: 0.85rem;
+}
+
+.additional-data pre {
+  margin: 5px 0 0 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: #495057;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.updated-by {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+.history-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+/* Responsive adjustments for status history */
+@media (max-width: 768px) {
+  .status-history-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .status-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .timeline-marker {
+    margin-right: 10px;
+  }
+  
+  .timeline-content {
+    padding: 12px;
+  }
+}/* 
+Pickup Status Manager Specific Styles */
+
+.pickup-status-manager .status-type-badge.pickup {
+  background: #e67e22;
+}
+
+.pickup-status-manager .primary-status.pickup {
+  background: #e67e22;
+}
+
+.pickup-status-manager .secondary-status.pickup {
+  background: #d35400;
+}
+
+.pickup-status-manager .current-status {
+  border-left-color: #e67e22;
+}
+
+/* Status Codes Explanation */
+.status-codes-explanation {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e1e5e9;
+}
+
+.status-codes-explanation h5 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.codes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.code-group {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  border-left: 3px solid #e67e22;
+}
+
+.code-group strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-size: 0.8rem;
+}
+
+.code-group ul {
+  margin: 0;
+  padding-left: 15px;
+  list-style-type: none;
+}
+
+.code-group li {
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+  color: #495057;
+  position: relative;
+}
+
+.code-group li::before {
+  content: '•';
+  color: #e67e22;
+  font-weight: bold;
+  position: absolute;
+  left: -10px;
+}
+
+.code-group code {
+  background: #e9ecef;
+  color: #495057;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Responsive adjustments for pickup status */
+@media (max-width: 768px) {
+  .codes-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .code-group {
+    padding: 8px;
+  }
+}
+
+/* Delivery Status Manager Specific Styles */
+.delivery-status-manager .status-type-badge.delivery {
+  background: #27ae60;
+}
+
+.delivery-status-manager .primary-status.delivery {
+  background: #27ae60;
+}
+
+.delivery-status-manager .current-status {
+  border-left-color: #27ae60;
+}
+
+/* Check Status Manager Specific Styles */
+.check-status-manager .status-type-badge.check {
+  background: #9b59b6;
+}
+
+.check-status-manager .primary-status.check {
+  background: #9b59b6;
+}
+
+.check-status-manager .current-status {
+  border-left-color: #9b59b6;
+}
+
+/* Status Manager Variants */
+.status-manager.pickup-status-manager {
+  border-left: 4px solid #e67e22;
+}
+
+.status-manager.delivery-status-manager {
+  border-left: 4px solid #27ae60;
+}
+
+.status-manager.check-status-manager {
+  border-left: 4px solid #9b59b6;
+}
+
+/* Form Field Variants */
+.form-group.pickup .status-select:focus {
+  border-color: #e67e22;
+  box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+}
+
+.form-group.delivery .status-select:focus {
+  border-color: #27ae60;
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+}
+
+.form-group.check .status-select:focus {
+  border-color: #9b59b6;
+  box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.1);
+}
+
+/* Status Display Enhancements */
+.status-display .primary-status {
+  position: relative;
+}
+
+.status-display .primary-status::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -8px;
+  width: 0;
+  height: 0;
+  border-left: 4px solid currentColor;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  opacity: 0.7;
+}
+
+.status-display .secondary-status {
+  margin-left: 4px;
+}
+
+/* Enhanced Error States */
+.error-message.pickup {
+  border-color: #e67e22;
+  background: rgba(230, 126, 34, 0.1);
+  color: #d35400;
+}
+
+.error-message.delivery {
+  border-color: #27ae60;
+  background: rgba(39, 174, 96, 0.1);
+  color: #229954;
+}
+
+.error-message.check {
+  border-color: #9b59b6;
+  background: rgba(155, 89, 182, 0.1);
+  color: #8e44ad;
+}
+
+/* Success States */
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #d4edda;
+  color: #155724;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #c3e6cb;
+  font-size: 0.9rem;
+}
+
+.success-icon {
+  font-size: 1rem;
+}
+
+/* Loading States Enhancement */
+.status-manager.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.status-manager.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+/* Accessibility Improvements */
+.status-select:focus-visible {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .status-type-badge {
+    border: 2px solid currentColor;
+  }
+  
+  .primary-status,
+  .secondary-status {
+    border: 1px solid currentColor;
+  }
+  
+  .status-select {
+    border-width: 2px;
+  }
+}/* Delive
+ry Status Manager Specific Styles */
+
+.delivery-details {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 6px;
+  margin: 20px 0;
+  border-left: 4px solid #27ae60;
+}
+
+.delivery-details h4 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.delivery-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: white;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #27ae60;
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+}
+
+.form-input:disabled {
+  background: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.form-input.error {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+.form-input::placeholder {
+  color: #6c757d;
+  opacity: 0.8;
+}
+
+.required {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.field-error {
+  display: block;
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* Delivery Info Display */
+.delivery-info {
+  margin-top: 10px;
+  padding: 15px;
+  background: rgba(39, 174, 96, 0.1);
+  border-radius: 6px;
+  border: 1px solid rgba(39, 174, 96, 0.2);
+}
+
+.delivery-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-item strong {
+  color: #2c3e50;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.info-item span {
+  color: #495057;
+  font-size: 0.85rem;
+  word-break: break-word;
+}
+
+/* Form Group Enhancements */
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.form-group.delivery label {
+  color: #27ae60;
+  font-weight: 500;
+}
+
+/* Input Type Specific Styles */
+input[type="datetime-local"] {
+  font-family: inherit;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.5);
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+  filter: invert(0.3);
+}
+
+/* Validation States */
+.form-group.has-error .form-input {
+  border-color: #dc3545;
+}
+
+.form-group.has-success .form-input {
+  border-color: #28a745;
+}
+
+.form-group.has-warning .form-input {
+  border-color: #ffc107;
+}
+
+/* Responsive Design for Delivery Form */
+@media (max-width: 768px) {
+  .delivery-form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .delivery-details {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .delivery-info-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .info-item {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .info-item strong {
+    min-width: 60px;
+    flex-shrink: 0;
+  }
+}
+
+/* Form Actions Enhancement */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e1e5e9;
+}
+
+.form-actions .btn {
+  flex: 1;
+  max-width: 200px;
+}
+
+@media (max-width: 480px) {
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions .btn {
+    max-width: none;
+  }
+}
+
+/* Status Display Enhancement for Delivery */
+.status-display .delivery-info {
+  margin-top: 15px;
+}
+
+.delivery-info .info-item:not(:last-child) {
+  border-bottom: 1px solid rgba(39, 174, 96, 0.2);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+/* Loading State for Form */
+.delivery-form-grid.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Focus Management */
+.form-input:focus + .field-error {
+  display: none;
+}
+
+/* Accessibility Improvements */
+.form-group label[for] {
+  cursor: pointer;
+}
+
+.required::after {
+  content: ' (必填)';
+  font-size: 0.7rem;
+  font-weight: normal;
+  color: #6c757d;
+}
+
+/* Print Styles */
+@media print {
+  .delivery-status-manager {
+    break-inside: avoid;
+  }
+  
+  .form-actions {
+    display: none;
+  }
+  
+  .delivery-info {
+    border: 1px solid #000;
+  }
+}
+
+/* Dark Mode Support (if needed) */
+@media (prefers-color-scheme: dark) {
+  .delivery-details {
+    background: #2c3e50;
+    color: #ecf0f1;
+  }
+  
+  .form-input {
+    background: #34495e;
+    border-color: #5a6c7d;
+    color: #ecf0f1;
+  }
+  
+  .form-input::placeholder {
+    color: #95a5a6;
+  }
+  
+  .delivery-info {
+    background: rgba(39, 174, 96, 0.2);
+    border-color: rgba(39, 174, 96, 0.4);
+  }
+}
+
+/* Inspection Status Manager Specific Styles */
+.inspection-status-manager .status-type-badge.inspection {
+  background: #9b59b6;
+}
+
+.inspection-status-manager .inspection-select {
+  border-color: #9b59b6;
+}
+
+.inspection-status-manager .inspection-select:focus {
+  border-color: #8e44ad;
+  box-shadow: 0 0 0 2px rgba(155, 89, 182, 0.2);
+}
+
+.completion-notice {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.notice-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.completion-icon {
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+.notice-text {
+  flex: 1;
+}
+
+.notice-text strong {
+  color: #155724;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.notice-text p {
+  color: #155724;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.inspection-status {
+  background: #9b59b6;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.completion-badge {
+  background: #28a745;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+/* Responsive adjustments for inspection status */
+@media (max-width: 768px) {
+  .completion-notice {
+    padding: 12px;
+  }
+  
+  .notice-content {
+    gap: 8px;
+  }
+  
+  .completion-icon {
+    font-size: 1rem;
+  }
+  
+  .notice-text strong {
+    font-size: 0.9rem;
+  }
+  
+  .notice-text p {
+    font-size: 0.8rem;
+  }
+}/* Sta
+tus Management Demo Styles */
+.status-management-demo {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.status-managers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* Status History Styles */
+.status-history {
+  background: #ffffff;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.status-history-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.project-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.project-name {
+  font-weight: 500;
+  color: #34495e;
+}
+
+.project-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.project-status.active {
+  background: #3498db;
+  color: white;
+}
+
+.project-status.completed {
+  background: #27ae60;
+  color: white;
+}
+
+.project-status.cancelled {
+  background: #e74c3c;
+  color: white;
+}
+
+.current-status-summary {
+  margin-bottom: 30px;
+}
+
+.current-status-summary h4 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.status-item {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.status-type-label {
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.status-value {
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.status-time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.detailed-history h4 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.history-timeline {
+  position: relative;
+}
+
+.status-history-item {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.timeline-marker {
+  position: relative;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px #e1e5e9;
+}
+
+.timeline-line {
+  width: 2px;
+  height: 40px;
+  background: #e1e5e9;
+  margin-top: 8px;
+}
+
+.timeline-content {
+  flex: 1;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.status-type-badge {
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.timeline-time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.timeline-body .status-value {
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.additional-data {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.additional-data strong {
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.additional-data pre {
+  margin: 5px 0 0 0;
+  font-size: 0.8rem;
+  color: #6c757d;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.updated-by {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.history-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.loading-state,
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.empty-state-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.empty-state-message {
+  font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .status-managers-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .project-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}/* We
+bSocket Integration Styles */
+.websocket-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.connection-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.connection-error {
+  color: #dc3545;
+  font-size: 0.8rem;
+  background: rgba(220, 53, 69, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.btn-sm {
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #0056b3;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #545b62;
+}
+
+/* Real-time Updates Panel */
+.realtime-updates-panel {
+  background: #e8f5e8;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.realtime-updates-panel h4 {
+  margin: 0 0 12px 0;
+  color: #155724;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.updates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.update-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px 80px;
+  gap: 12px;
+  align-items: center;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #d4edda;
+  font-size: 0.8rem;
+}
+
+.update-type {
+  background: #17a2b8;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.update-value {
+  color: #495057;
+  font-weight: 500;
+}
+
+.update-user {
+  color: #6c757d;
+  font-size: 0.7rem;
+}
+
+.update-time {
+  color: #6c757d;
+  font-size: 0.7rem;
+  text-align: right;
+}
+
+/* Responsive adjustments for WebSocket features */
+@media (max-width: 768px) {
+  .websocket-controls {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .connection-controls {
+    justify-content: center;
+  }
+  
+  .realtime-updates-panel {
+    padding: 12px;
+  }
+  
+  .update-item {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    text-align: center;
+  }
+  
+  .update-type {
+    justify-self: center;
+    width: fit-content;
+  }
+  
+  .update-time {
+    text-align: center;
+  }
+}
+
+/* Animation for real-time updates */
+.update-item {
+  animation: slideInUpdate 0.3s ease;
+}
+
+@keyframes slideInUpdate {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Connection status indicators */
+.websocket-controls .websocket-indicator.connected {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+/* S
+tatus Management Page Wrapper Styles */
+.status-management-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+  padding: 20px;
+}
+
+.page-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.header-actions {
+  margin-bottom: 20px;
+}
+
+.header-actions .btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.header-actions .btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.header-content h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.page-description {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Project Selector Styles */
+.project-selector {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.selector-header {
+  margin-bottom: 25px;
+}
+
+.selector-header h3 {
+  margin: 0 0 8px 0;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.selector-header p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 1rem;
+}
+
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #fafbfc;
+}
+
+.project-card:hover {
+  border-color: #3498db;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+}
+
+.project-card.selected {
+  border-color: #3498db;
+  background: #ebf3fd;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+}
+
+.project-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.project-info h4 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.project-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.project-status.active {
+  background: #d5f4e6;
+  color: #27ae60;
+}
+
+.project-status.completed {
+  background: #fdeaa7;
+  color: #f39c12;
+}
+
+.project-id {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  font-family: 'Courier New', monospace;
+}
+
+/* Status Management Container */
+.status-management-container {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container-header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e1e5e9;
+}
+
+.container-header h3 {
+  margin: 0 0 8px 0;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.container-header p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 1rem;
+}
+
+/* Usage Instructions */
+.usage-instructions {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.usage-instructions h3 {
+  margin: 0 0 25px 0;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.instructions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.instruction-card {
+  background: #f8f9fa;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.instruction-card h4 {
+  margin: 0 0 12px 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.instruction-card p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .status-management-page {
+    padding: 15px;
+  }
+  
+  .page-header {
+    padding: 20px;
+  }
+  
+  .header-content h1 {
+    font-size: 2rem;
+  }
+  
+  .project-selector,
+  .status-management-container,
+  .usage-instructions {
+    padding: 20px;
+  }
+  
+  .project-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .instructions-grid {
+    grid-template-columns: 1fr;
+  }
+}/* 強制顯
+示測試元素 - 緊急調試 */
+.status-manager::before {
+  content: "🚨 CSS 測試：組件已加載！🚨";
+  display: block;
+  background: red !important;
+  color: white !important;
+  padding: 20px !important;
+  font-size: 24px !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  border: 5px solid yellow !important;
+  margin: 20px 0 !important;
+}
+
+/* 強制顯示空白選項 */
+.status-select option[value="CLEAR"]::after {
+  content: "　(空白選項)" !important;
+}
+
+/* 強制顯示到案詳細輸入欄位 */
+.delivery-status-manager .delivery-details {
+  display: block !important;
+  visibility: visible !important;
+  background: lightblue !important;
+  border: 3px solid red !important;
+  padding: 20px !important;
+  margin: 20px 0 !important;
+}
+
+.delivery-details::before {
+  content: "📝 到案詳細輸入區域（強制顯示）" !important;
+  display: block !important;
+  color: red !important;
+  font-weight: bold !important;
+  margin-bottom: 15px !important;
+}/
+* Status Operation History Styles */
+.status-operation-history {
+  margin-top: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.status-operation-history .history-toggle {
+  width: 100%;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.status-operation-history .history-toggle:hover {
+  background-color: #f0f0f0;
+}
+
+.status-operation-history .toggle-icon {
+  transition: transform 0.2s ease;
+  font-size: 12px;
+  color: #666;
+}
+
+.status-operation-history .toggle-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.status-operation-history .history-count {
+  background: #007bff;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  margin-left: 8px;
+}
+
+.status-operation-history .history-content {
+  border-top: 1px solid #e0e0e0;
+  padding: 16px;
+  background: white;
+}
+
+.status-operation-history .history-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+  color: #666;
+}
+
+.status-operation-history .history-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  color: #856404;
+}
+
+.status-operation-history .history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.status-operation-history .history-item {
+  padding: 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  transition: box-shadow 0.2s ease;
+}
+
+.status-operation-history .history-item:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status-operation-history .history-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.status-operation-history .history-main-info {
+  font-size: 14px;
+  color: #333;
+}
+
+.status-operation-history .history-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.status-operation-history .history-user {
+  font-weight: 500;
+}
+
+.status-operation-history .history-timestamp {
+  color: #666;
+}
+
+.status-operation-history .history-details {
+  margin-top: 8px;
+  padding: 8px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.status-operation-history .delivery-details-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.status-operation-history .detail-row {
+  font-size: 12px;
+  color: #555;
+}
+
+.status-operation-history .detail-row strong {
+  color: #333;
+  margin-right: 4px;
+}
+
+.status-operation-history .history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 30px;
+  color: #666;
+  text-align: center;
+}
+
+.status-operation-history .empty-icon {
+  font-size: 24px;
+  opacity: 0.5;
+}
+
+/* Responsive design for operation history */
+@media (max-width: 768px) {
+  .status-operation-history .history-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .status-operation-history .history-content {
+    padding: 12px;
+  }
+  
+  .status-operation-history .history-item {
+    padding: 10px;
+  }
+}
