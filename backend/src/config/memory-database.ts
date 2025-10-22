@@ -337,6 +337,10 @@ export class MemoryDatabase {
     };
     this.materials.push(newMaterial);
     this.hasUnsavedChanges = true;
+    
+    // 立即保存材料創建（重要數據）
+    this.saveToFile();
+    
     return newMaterial;
   }
 
@@ -350,6 +354,10 @@ export class MemoryDatabase {
       updatedAt: new Date()
     };
     this.hasUnsavedChanges = true;
+    
+    // 立即保存材料更新（重要數據）
+    this.saveToFile();
+    
     return this.materials[index];
   }
 
@@ -363,6 +371,10 @@ export class MemoryDatabase {
       updatedAt: new Date()
     };
     this.hasUnsavedChanges = true;
+    
+    // 立即保存圖片更新（重要數據）
+    this.saveToFile();
+    
     return this.materials[index];
   }
 
@@ -372,6 +384,10 @@ export class MemoryDatabase {
 
     this.materials.splice(index, 1);
     this.hasUnsavedChanges = true;
+    
+    // 立即保存材料刪除（重要數據）
+    this.saveToFile();
+    
     return true;
   }
 
@@ -418,6 +434,10 @@ export class MemoryDatabase {
     };
     this.orders.push(newOrder);
     this.hasUnsavedChanges = true;
+    
+    // 立即保存訂單創建（重要數據）
+    this.saveToFile();
+    
     return newOrder;
   }
 
@@ -499,6 +519,10 @@ export class MemoryDatabase {
     };
     this.orderItems.push(newItem);
     this.hasUnsavedChanges = true; // 標記有未保存的更改
+    
+    // 立即保存訂單項目創建（重要數據）
+    this.saveToFile();
+    
     return newItem;
   }
 
