@@ -60,7 +60,8 @@ export const BackupManagement: React.FC = () => {
       setError(null);
       
       const token = localStorage.getItem('authToken');
-      const response = await fetch('/api/backup/status', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004/api';
+      const response = await fetch(`${API_URL}/backup/status`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -85,7 +86,8 @@ export const BackupManagement: React.FC = () => {
   const fetchRecoveryStatus = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch('/api/backup/recovery-status', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004/api';
+      const response = await fetch(`${API_URL}/backup/recovery-status`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -106,7 +108,8 @@ export const BackupManagement: React.FC = () => {
   const fetchAvailableBackups = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch('/api/backup/available', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004/api';
+      const response = await fetch(`${API_URL}/backup/available`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -130,7 +133,8 @@ export const BackupManagement: React.FC = () => {
       setError(null);
       
       const token = localStorage.getItem('authToken');
-      const response = await fetch('/api/backup/trigger', {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004/api';
+      const response = await fetch(`${API_URL}/backup/trigger`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -168,8 +172,9 @@ export const BackupManagement: React.FC = () => {
       
       const token = localStorage.getItem('authToken');
       const body = backupDate ? JSON.stringify({ backupDate }) : '{}';
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004/api';
       
-      const response = await fetch('/api/backup/recover', {
+      const response = await fetch(`${API_URL}/backup/recover`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
