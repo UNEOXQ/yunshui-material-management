@@ -1,0 +1,120 @@
+/* Notification Container Styles */
+
+.notification-container {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.notification-container > * {
+  pointer-events: auto;
+}
+
+/* Position variants */
+.notification-container.position-top-right {
+  top: 20px;
+  right: 20px;
+}
+
+.notification-container.position-top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.notification-container.position-bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.notification-container.position-bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.notification-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.clear-all-button {
+  background: none;
+  border: none;
+  color: #6c757d;
+  font-size: 0.7rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.clear-all-button:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #495057;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .notification-container.position-top-right,
+  .notification-container.position-top-left {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+  }
+  
+  .notification-container.position-bottom-right,
+  .notification-container.position-bottom-left {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+  }
+  
+  .notification-header {
+    padding: 6px 10px;
+    margin-bottom: 6px;
+  }
+  
+  .notification-count {
+    font-size: 0.75rem;
+  }
+  
+  .clear-all-button {
+    font-size: 0.65rem;
+    padding: 3px 6px;
+  }
+}
+
+/* Animation for container */
+.notification-container {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

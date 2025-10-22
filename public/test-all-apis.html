@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全API測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f8ff;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h2>🔧 全API連接測試</h2>
+        
+        <button onclick="testAllAPIs()">測試所有API端點</button>
+        <button onclick="testWithAuth()">測試需要認證的API</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://192.168.68.99:3004';
+        let authToken = null;
+        
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const timestamp = new Date().toLocaleTimeString();
+            results.innerHTML += `<div class="test-result ${type}">[${timestamp}] ${message}</div>`;
+            results.scrollTop = results.scrollHeight;
+        }
+        
+        async function testAllAPIs() {
+            log('=== 測試基本API端點 ===', 'info');
+            
+            const endpoints = [
+                '/health',
+                '/api/auth/login',
+            ];
+            
+            for (const endpoint of endpoints) {
+                try {
+                    const url = `${API_BASE}${endpoint}`;
+                    log(`測試: ${url}`, 'info');
+                    
+                    if (endpoint === '/api/auth/login') {
+                        // 測試登入
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                        });
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            authToken = data.data.token;
+                            log(`✅ ${endpoint} - 登入成功，獲得token`, 'success');
+                        } else {
+                            log(`❌ ${endpoint} - 登入失敗`, 'error');
+                        }
+                    } else {
+                        // 測試其他端點
+                        const response = await fetch(url);
+                        if (response.ok) {
+                            const data = await response.json();
+                            log(`✅ ${endpoint} - 成功: ${data.message || 'OK'}`, 'success');
+                        } else {
+                            log(`❌ ${endpoint} - 失敗: ${response.status}`, 'error');
+                        }
+                    }
+                } catch (error) {
+                    log(`❌ ${endpoint} - 錯誤: ${error.message}`, 'error');
+                }
+            }
+        }
+        
+        async function testWithAuth() {
+            if (!authToken) {
+                log('請先執行基本API測試以獲得認證token', 'error');
+                return;
+            }
+            
+            log('=== 測試需要認證的API ===', 'info');
+            
+            const authEndpoints = [
+                '/api/orders',
+                '/api/materials',
+                '/api/users',
+                '/api/status'
+            ];
+            
+            for (const endpoint of authEndpoints) {
+                try {
+                    const url = `${API_BASE}${endpoint}`;
+                    log(`測試: ${url}`, 'info');
+                    
+                    const response = await fetch(url, {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        log(`✅ ${endpoint} - 成功，返回 ${Array.isArray(data.data) ? data.data.length : 'N/A'} 項目`, 'success');
+                    } else {
+                        const errorData = await response.json();
+                        log(`❌ ${endpoint} - 失敗: ${errorData.message || response.status}`, 'error');
+                    }
+                } catch (error) {
+                    log(`❌ ${endpoint} - 錯誤: ${error.message}`, 'error');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
