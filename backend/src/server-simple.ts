@@ -126,7 +126,7 @@ if (process.env.NODE_ENV !== 'test') {
     console.log(`💾 Backup API: http://localhost:${PORT}/api/backup`);
     console.log(`🖼️  Static files: http://localhost:${PORT}/uploads`);
     console.log('');
-    console.log('✅ 服務器啟動成功！使用內存數據庫模式');
+    console.log('✅ 服務器啟動成功！使用內存數據庫模式 - 測試自動恢復功能');
     
     // 初始化 GitHub 備份和恢復服務
     console.log('');
