@@ -408,9 +408,17 @@ export class MaterialModel {
 
   // Delete material
   static async delete(id: string): Promise<boolean> {
-    const query = 'DELETE FROM materials WHERE id = $1';
-    const result = await pool.query(query, [id]);
-    return (result.rowCount ?? 0) > 0;
+    try {
+      // 使用記憶體資料庫
+      return await memoryDb.deleteMaterial(id);
+    } catch (error) {
+      console.warn('Memory database failed, trying PostgreSQL:', error);
+      
+      // 回退到 PostgreSQL
+      const query = 'DELETE FROM materials WHERE id = $1';
+      const result = await pool.query(query, [id]);
+      return (result.rowCount ?? 0) > 0;
+    }
   }
 
   // Check if material exists

@@ -11,11 +11,14 @@ export function processImageUrl(imageUrl: string | null | undefined): string | n
   }
 
   // 如果是完整的 URL，在開發環境中轉換為相對路徑以使用 Vite 代理
-  if (imageUrl.startsWith('http://localhost:3004/uploads/')) {
+  if (imageUrl.startsWith('http://localhost:3004/uploads/') || 
+      imageUrl.startsWith('https://yunshui-backend1.onrender.com/uploads/')) {
     // 在開發環境中，移除域名部分，使用 Vite 代理
     if (import.meta.env.DEV) {
-      return imageUrl.replace('http://localhost:3004', '');
+      return imageUrl.replace(/^https?:\/\/[^\/]+/, '');
     }
+    // 在生產環境中，直接返回完整 URL
+    return imageUrl;
   }
 
   // 如果已經是相對路徑，直接返回
