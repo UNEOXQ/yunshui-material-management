@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>檢查前端 API 配置</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .info { background: #d1ecf1; color: #0c5460; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .error { background: #f8d7da; color: #721c24; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>前端 API 配置檢查</h1>
+    
+    <div class="info">
+        <h3>當前前端配置:</h3>
+        <p><strong>前端 URL:</strong> <span id="frontend-url"></span></p>
+        <p><strong>預期 API URL:</strong> https://yunshui-backend1.onrender.com/api</p>
+    </div>
+    
+    <div id="api-test-result"></div>
+    
+    <div class="info">
+        <h3>測試步驟:</h3>
+        <ol>
+            <li>檢查前端是否使用正確的 API URL</li>
+            <li>測試 API 連接</li>
+            <li>檢查 CORS 設置</li>
+        </ol>
+    </div>
+    
+    <script>
+        // 顯示當前前端 URL
+        document.getElementById('frontend-url').textContent = window.location.origin;
+        
+        // 模擬前端 API 調用
+        async function testFrontendAPI() {
+            const resultDiv = document.getElementById('api-test-result');
+            
+            // 檢查前端是否在 Vercel 上
+            const isVercel = window.location.hostname.includes('vercel.app');
+            const expectedAPI = 'https://yunshui-backend1.onrender.com/api';
+            
+            if (isVercel) {
+                resultDiv.innerHTML = `
+                    <div class="info">
+                        <h3>Vercel 前端檢測到</h3>
+                        <p>前端應該使用生產環境 API: ${expectedAPI}</p>
+                    </div>
+                `;
+                
+                // 測試 API 連接
+                try {
+                    const response = await fetch(`${expectedAPI.replace('/api', '')}/health`);
+                    const data = await response.json();
+                    
+                    resultDiv.innerHTML += `
+                        <div class="success">
+                            <h3>✅ API 連接測試成功</h3>
+                            <p>後端版本: ${data.version}</p>
+                            <p>時間戳: ${data.timestamp}</p>
+                        </div>
+                    `;
+                    
+                    // 測試材料 API
+                    const materialsResponse = await fetch(`${expectedAPI}/materials`);
+                    if (materialsResponse.status === 401) {
+                        resultDiv.innerHTML += `
+                            <div class="success">
+                                <h3>✅ 材料 API 正常</h3>
+                                <p>返回 401 (需要認證) - 這是正確的行為</p>
+                            </div>
+                        `;
+                    } else {
+                        resultDiv.innerHTML += `
+                            <div class="info">
+                                <h3>ℹ️ 材料 API 響應</h3>
+                                <p>狀態碼: ${materialsResponse.status}</p>
+                            </div>
+                        `;
+                    }
+                    
+                } catch (error) {
+                    resultDiv.innerHTML += `
+                        <div class="error">
+                            <h3>❌ API 連接失敗</h3>
+                            <p>錯誤: ${error.message}</p>
+                            <p><strong>可能原因:</strong></p>
+                            <ul>
+                                <li>CORS 設置問題</li>
+                                <li>後端服務離線</li>
+                                <li>網絡連接問題</li>
+                            </ul>
+                        </div>
+                    `;
+                }
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="info">
+                        <h3>本地環境檢測到</h3>
+                        <p>本地開發應該使用: http://localhost:3004/api</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // 執行測試
+        testFrontendAPI();
+    </script>
+</body>
+</html>

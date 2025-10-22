@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>圖片顯示問題診斷</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        img { max-width: 200px; margin: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>圖片顯示問題診斷</h1>
+    
+    <div class="test-section">
+        <h3>1. 測試後端靜態文件服務</h3>
+        <div id="static-test">測試中...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. 測試材料 API 返回的圖片 URL</h3>
+        <div id="api-test">測試中...</div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. 測試圖片直接訪問</h3>
+        <div id="direct-test">
+            <p>嘗試直接訪問圖片 URL：</p>
+            <img id="test-image" src="" alt="測試圖片" style="display: none;">
+            <div id="image-result"></div>
+        </div>
+    </div>
+    
+    <script>
+        const baseUrl = 'https://yunshui-material-management.onrender.com';
+        
+        // 測試 1: 靜態文件服務
+        async function testStaticFiles() {
+            try {
+                const response = await fetch(`${baseUrl}/uploads/materials/`);
+                document.getElementById('static-test').innerHTML = 
+                    `<span class="success">✅ 靜態文件路由可訪問 (狀態: ${response.status})</span>`;
+            } catch (error) {
+                document.getElementById('static-test').innerHTML = 
+                    `<span class="error">❌ 靜態文件路由不可訪問: ${error.message}</span>`;
+            }
+        }
+        
+        // 測試 2: 材料 API
+        async function testMaterialAPI() {
+            try {
+                // 先嘗試獲取材料列表（不需要認證的端點）
+                const response = await fetch(`${baseUrl}/api/materials`);
+                
+                if (response.status === 401) {
+                    document.getElementById('api-test').innerHTML = 
+                        `<span class="info">ℹ️ 材料 API 需要認證（正常行為）</span>`;
+                } else {
+                    const data = await response.json();
+                    document.getElementById('api-test').innerHTML = 
+                        `<span class="success">✅ 材料 API 響應正常</span>`;
+                }
+            } catch (error) {
+                document.getElementById('api-test').innerHTML = 
+                    `<span class="error">❌ 材料 API 錯誤: ${error.message}</span>`;
+            }
+        }
+        
+        // 測試 3: 直接圖片訪問
+        function testDirectImageAccess() {
+            // 嘗試一些可能的圖片 URL
+            const testUrls = [
+                `${baseUrl}/uploads/materials/test.jpg`,
+                `${baseUrl}/uploads/test.jpg`,
+                `${baseUrl}/static/materials/test.jpg`
+            ];
+            
+            let resultHtml = '';
+            testUrls.forEach((url, index) => {
+                resultHtml += `
+                    <div>
+                        <p>測試 URL ${index + 1}: <a href="${url}" target="_blank">${url}</a></p>
+                        <img src="${url}" alt="測試圖片 ${index + 1}" 
+                             onload="this.nextElementSibling.innerHTML='<span class=\\"success\\">✅ 圖片載入成功</span>'"
+                             onerror="this.nextElementSibling.innerHTML='<span class=\\"error\\">❌ 圖片載入失敗</span>'"
+                             style="max-width: 100px;">
+                        <div></div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('image-result').innerHTML = resultHtml;
+        }
+        
+        // 執行所有測試
+        testStaticFiles();
+        testMaterialAPI();
+        testDirectImageAccess();
+        
+        // 測試健康檢查中的圖片信息
+        fetch(`${baseUrl}/health`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('健康檢查數據:', data);
+            })
+            .catch(error => {
+                console.error('健康檢查失敗:', error);
+            });
+    </script>
+</body>
+</html>

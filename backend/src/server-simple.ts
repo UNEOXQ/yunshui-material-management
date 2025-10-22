@@ -80,6 +80,8 @@ import orderRoutes from './routes/orderRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 import errorRoutes from './routes/errorRoutes';
 import statusRoutes from './routes/statusRoutes';
+import backupRoutes from './routes/backup';
+import { githubBackupService } from './services/githubBackupService';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
@@ -88,6 +90,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/errors', errorRoutes);
 app.use('/api/status', statusRoutes);
+app.use('/api/backup', backupRoutes);
 
 // 404 處理
 app.use('*', (req, res) => {
@@ -109,7 +112,7 @@ app.use((error: any, _req: express.Request, res: express.Response, _next: expres
 
 // 啟動服務器
 if (process.env.NODE_ENV !== 'test') {
-  httpServer.listen(PORT, () => {
+  httpServer.listen(PORT, async () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`📊 Health check: http://localhost:${PORT}/health`);
     console.log(`🔐 Auth API: http://localhost:${PORT}/api/auth`);
@@ -119,9 +122,27 @@ if (process.env.NODE_ENV !== 'test') {
     console.log(`📤 Upload API: http://localhost:${PORT}/api/upload`);
     console.log(`❌ Error API: http://localhost:${PORT}/api/errors`);
     console.log(`📊 Status API: http://localhost:${PORT}/api/status`);
+    console.log(`💾 Backup API: http://localhost:${PORT}/api/backup`);
     console.log(`🖼️  Static files: http://localhost:${PORT}/uploads`);
     console.log('');
     console.log('✅ 服務器啟動成功！使用內存數據庫模式');
+    
+    // 初始化 GitHub 備份服務
+    console.log('');
+    console.log('🔄 初始化 GitHub 備份服務...');
+    const backupInitialized = await githubBackupService.initialize();
+    
+    if (backupInitialized) {
+      console.log('✅ GitHub 自動備份已啟用');
+      console.log('📅 備份頻率: 每 30 分鐘');
+      console.log('📂 備份位置: GitHub data-backup 分支');
+    } else {
+      console.log('⚠️  GitHub 備份未配置，數據僅存儲在內存中');
+      console.log('💡 要啟用自動備份，請設置以下環境變數:');
+      console.log('   - GITHUB_TOKEN: GitHub Personal Access Token');
+      console.log('   - GITHUB_OWNER: GitHub 用戶名或組織名');
+      console.log('   - GITHUB_REPO: 倉庫名稱');
+    }
   });
 }
 

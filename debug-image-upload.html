@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>圖片上傳診斷</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        input[type="file"] { margin: 10px 0; }
+        img { max-width: 200px; margin: 10px; border: 1px solid #ddd; }
+        .log { font-family: monospace; font-size: 12px; background: #f8f9fa; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>圖片上傳完整診斷</h1>
+    
+    <div class="section">
+        <h3>步驟 1: 測試後端連接</h3>
+        <button onclick="testBackendConnection()">測試後端</button>
+        <div id="backend-result"></div>
+    </div>
+    
+    <div class="section">
+        <h3>步驟 2: 測試管理員登入</h3>
+        <button onclick="testAdminLogin()">管理員登入</button>
+        <div id="login-result"></div>
+    </div>
+    
+    <div class="section">
+        <h3>步驟 3: 創建測試材料</h3>
+        <button onclick="createTestMaterial()">創建材料</button>
+        <div id="material-result"></div>
+    </div>
+    
+    <div class="section">
+        <h3>步驟 4: 上傳圖片</h3>
+        <input type="file" id="imageFile" accept="image/*">
+        <button onclick="uploadImage()">上傳圖片</button>
+        <div id="upload-result"></div>
+    </div>
+    
+    <div class="section">
+        <h3>步驟 5: 測試圖片顯示</h3>
+        <button onclick="testImageDisplay()">測試顯示</button>
+        <div id="display-result"></div>
+    </div>
+    
+    <div class="section">
+        <h3>診斷日誌</h3>
+        <div id="log" class="log"></div>
+    </div>
+    
+    <script>
+        const baseUrl = 'https://yunshui-backend1.onrender.com';
+        let authToken = '';
+        let testMaterialId = '';
+        
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        function setResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="${type}">${message}</div>`;
+        }
+        
+        // 步驟 1: 測試後端連接
+        async function testBackendConnection() {
+            log('測試後端連接...');
+            try {
+                const response = await fetch(`${baseUrl}/health`);
+                const data = await response.json();
+                
+                setResult('backend-result', `✅ 後端連接成功<br>版本: ${data.version}<br>時間: ${data.timestamp}`, 'success');
+                log(`後端連接成功: ${data.version}`);
+                return true;
+            } catch (error) {
+                setResult('backend-result', `❌ 後端連接失敗: ${error.message}`, 'error');
+                log(`後端連接失敗: ${error.message}`);
+                return false;
+            }
+        }
+        
+        // 步驟 2: 管理員登入
+        async function testAdminLogin() {
+            log('嘗試管理員登入...');
+            try {
+                const response = await fetch(`${baseUrl}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    authToken = data.data.token;
+                    setResult('login-result', `✅ 登入成功<br>Token: ${authToken.substring(0, 20)}...`, 'success');
+                    log(`登入成功，獲得 token`);
+                    return true;
+                } else {
+                    setResult('login-result', `❌ 登入失敗: ${data.message}`, 'error');
+                    log(`登入失敗: ${data.message}`);
+                    return false;
+                }
+            } catch (error) {
+                setResult('login-result', `❌ 登入錯誤: ${error.message}`, 'error');
+                log(`登入錯誤: ${error.message}`);
+                return false;
+            }
+        }
+        
+        // 步驟 3: 創建測試材料
+        async function createTestMaterial() {
+            if (!authToken) {
+                setResult('material-result', '❌ 請先登入', 'error');
+                return false;
+            }
+            
+            log('創建測試材料...');
+            try {
+                const materialData = {
+                    name: `測試材料-圖片上傳-${Date.now()}`,
+                    category: '測試分類',
+                    type: 'AUXILIARY',
+                    price: 100,
+                    quantity: 10,
+                    supplier: '測試供應商'
+                };
+                
+                const response = await fetch(`${baseUrl}/api/materials`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(materialData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    testMaterialId = data.data.id;
+                    setResult('material-result', `✅ 材料創建成功<br>ID: ${testMaterialId}<br>名稱: ${data.data.name}`, 'success');
+                    log(`材料創建成功: ${testMaterialId}`);
+                    return true;
+                } else {
+                    setResult('material-result', `❌ 材料創建失敗: ${data.message}`, 'error');
+                    log(`材料創建失敗: ${data.message}`);
+                    return false;
+                }
+            } catch (error) {
+                setResult('material-result', `❌ 材料創建錯誤: ${error.message}`, 'error');
+                log(`材料創建錯誤: ${error.message}`);
+                return false;
+            }
+        }
+        
+        // 步驟 4: 上傳圖片
+        async function uploadImage() {
+            if (!authToken || !testMaterialId) {
+                setResult('upload-result', '❌ 請先完成前面的步驟', 'error');
+                return false;
+            }
+            
+            const fileInput = document.getElementById('imageFile');
+            if (!fileInput.files || !fileInput.files[0]) {
+                setResult('upload-result', '❌ 請選擇一個圖片文件', 'error');
+                return false;
+            }
+            
+            log('上傳圖片...');
+            try {
+                const formData = new FormData();
+                formData.append('image', fileInput.files[0]);
+                
+                log(`上傳到: ${baseUrl}/api/upload/material/${testMaterialId}/image`);
+                
+                const response = await fetch(`${baseUrl}/api/upload/material/${testMaterialId}/image`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${authToken}` },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                log(`上傳響應: ${response.status} - ${JSON.stringify(data)}`);
+                
+                if (response.ok && data.success) {
+                    const imageUrl = data.data.imageUrl;
+                    setResult('upload-result', `✅ 圖片上傳成功<br>URL: ${imageUrl}<br><img src="${imageUrl}" alt="上傳的圖片">`, 'success');
+                    log(`圖片上傳成功: ${imageUrl}`);
+                    return true;
+                } else {
+                    setResult('upload-result', `❌ 圖片上傳失敗: ${data.message}<br>狀態碼: ${response.status}`, 'error');
+                    log(`圖片上傳失敗: ${response.status} - ${data.message}`);
+                    return false;
+                }
+            } catch (error) {
+                setResult('upload-result', `❌ 圖片上傳錯誤: ${error.message}`, 'error');
+                log(`圖片上傳錯誤: ${error.message}`);
+                return false;
+            }
+        }
+        
+        // 步驟 5: 測試圖片顯示
+        async function testImageDisplay() {
+            log('測試圖片顯示...');
+            
+            // 測試靜態文件服務
+            const testUrls = [
+                `${baseUrl}/uploads/`,
+                `${baseUrl}/uploads/materials/`,
+                `${baseUrl}/uploads/materials/1-1761002573730-540964348.jpg`
+            ];
+            
+            let html = '<h4>靜態文件測試:</h4>';
+            
+            for (const url of testUrls) {
+                try {
+                    const response = await fetch(url);
+                    html += `<div class="success">✅ ${url} - 狀態: ${response.status}</div>`;
+                    log(`靜態文件測試成功: ${url} - ${response.status}`);
+                } catch (error) {
+                    html += `<div class="error">❌ ${url} - 錯誤: ${error.message}</div>`;
+                    log(`靜態文件測試失敗: ${url} - ${error.message}`);
+                }
+            }
+            
+            // 測試現有圖片
+            const existingImageUrl = `${baseUrl}/uploads/materials/1-1761002573730-540964348.jpg`;
+            html += `<h4>現有圖片測試:</h4>`;
+            html += `<img src="${existingImageUrl}" alt="現有圖片" onload="log('現有圖片載入成功')" onerror="log('現有圖片載入失敗')">`;
+            
+            setResult('display-result', html, 'info');
+        }
+        
+        // 自動開始測試
+        window.onload = function() {
+            log('開始自動診斷...');
+            testBackendConnection();
+        };
+    </script>
+</body>
+</html>

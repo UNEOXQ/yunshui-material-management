@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>測試圖片 URL</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 15px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background: #d4edda; }
+        .error { background: #f8d7da; }
+        img { max-width: 200px; margin: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>圖片 URL 測試</h1>
+    
+    <div class="test">
+        <h3>測試 1: 直接訪問現有圖片</h3>
+        <p>URL: https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg</p>
+        <img src="https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg" 
+             alt="現有圖片" 
+             onload="this.parentElement.className='test success'; this.parentElement.innerHTML += '<p>✅ 圖片載入成功</p>'"
+             onerror="this.parentElement.className='test error'; this.parentElement.innerHTML += '<p>❌ 圖片載入失敗</p>'">
+    </div>
+    
+    <div class="test">
+        <h3>測試 2: 測試靜態文件目錄</h3>
+        <button onclick="testStaticDirectory()">測試目錄訪問</button>
+        <div id="static-result"></div>
+    </div>
+    
+    <div class="test">
+        <h3>測試 3: 獲取材料列表檢查圖片 URL</h3>
+        <button onclick="testMaterialImages()">檢查材料圖片</button>
+        <div id="materials-result"></div>
+    </div>
+    
+    <script>
+        const baseUrl = 'https://yunshui-backend1.onrender.com';
+        
+        async function testStaticDirectory() {
+            const resultDiv = document.getElementById('static-result');
+            resultDiv.innerHTML = '測試中...';
+            
+            try {
+                // 測試 uploads 目錄
+                const uploadsResponse = await fetch(`${baseUrl}/uploads/`);
+                let html = `<p>✅ /uploads/ - 狀態: ${uploadsResponse.status}</p>`;
+                
+                // 測試 materials 目錄
+                const materialsResponse = await fetch(`${baseUrl}/uploads/materials/`);
+                html += `<p>✅ /uploads/materials/ - 狀態: ${materialsResponse.status}</p>`;
+                
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<p>❌ 錯誤: ${error.message}</p>`;
+            }
+        }
+        
+        async function testMaterialImages() {
+            const resultDiv = document.getElementById('materials-result');
+            resultDiv.innerHTML = '測試中...';
+            
+            try {
+                // 先登入獲取 token
+                const loginResponse = await fetch(`${baseUrl}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+                
+                if (!loginResponse.ok) {
+                    resultDiv.innerHTML = '<p>❌ 登入失敗</p>';
+                    return;
+                }
+                
+                const loginData = await loginResponse.json();
+                const token = loginData.data.token;
+                
+                // 獲取材料列表
+                const materialsResponse = await fetch(`${baseUrl}/api/materials`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const materialsData = await materialsResponse.json();
+                
+                if (materialsData.success && materialsData.data.materials) {
+                    let html = '<h4>材料圖片 URL:</h4>';
+                    
+                    materialsData.data.materials.forEach(material => {
+                        if (material.imageUrl) {
+                            html += `
+                                <div style="margin: 10px 0; padding: 10px; border: 1px solid #ddd;">
+                                    <p><strong>${material.name}</strong></p>
+                                    <p>URL: ${material.imageUrl}</p>
+                                    <img src="${material.imageUrl}" alt="${material.name}" 
+                                         onload="this.nextElementSibling.innerHTML='✅ 載入成功'"
+                                         onerror="this.nextElementSibling.innerHTML='❌ 載入失敗'"
+                                         style="max-width: 150px;">
+                                    <div></div>
+                                </div>
+                            `;
+                        }
+                    });
+                    
+                    if (html === '<h4>材料圖片 URL:</h4>') {
+                        html += '<p>沒有找到有圖片的材料</p>';
+                    }
+                    
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = '<p>❌ 獲取材料列表失敗</p>';
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p>❌ 錯誤: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

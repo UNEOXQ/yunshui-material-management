@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>當前 Render 狀態測試</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Render 後端狀態診斷</h1>
+    
+    <button onclick="testHealth()">測試健康檢查</button>
+    <button onclick="testAuth()">測試認證端點</button>
+    <button onclick="testMaterials()">測試材料 API</button>
+    
+    <div id="results"></div>
+    
+    <script>
+        const resultsDiv = document.getElementById('results');
+        const baseUrl = 'https://yunshui-material-management.onrender.com';
+        
+        function addResult(title, content, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.innerHTML = `<h3>${title}</h3>${content}`;
+            resultsDiv.appendChild(div);
+        }
+        
+        async function testHealth() {
+            try {
+                const response = await fetch(`${baseUrl}/health`);
+                const data = await response.json();
+                
+                addResult('✅ 健康檢查成功', `
+                    <p><strong>版本:</strong> ${data.version || '未知'}</p>
+                    <p><strong>狀態:</strong> ${data.message}</p>
+                    <p><strong>時間:</strong> ${data.timestamp}</p>
+                    <p><strong>記憶體資料庫增強:</strong> ${data.memoryDbEnhanced ? '是' : '否'}</p>
+                `, 'success');
+                
+                if (data.version !== '1.0.1-memory-db-fix') {
+                    addResult('⚠️ 版本警告', `
+                        <p>當前版本: ${data.version}</p>
+                        <p>預期版本: 1.0.1-memory-db-fix</p>
+                        <p>Render 可能還沒有部署最新版本</p>
+                    `, 'error');
+                }
+                
+            } catch (error) {
+                addResult('❌ 健康檢查失敗', `
+                    <p>錯誤: ${error.message}</p>
+                    <p>可能原因: 服務離線或正在重啟</p>
+                `, 'error');
+            }
+        }
+        
+        async function testAuth() {
+            try {
+                const response = await fetch(`${baseUrl}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'test', password: 'test' })
+                });
+                
+                if (response.status === 401) {
+                    addResult('✅ 認證端點正常', '返回正確的 401 錯誤（預期行為）', 'success');
+                } else {
+                    const data = await response.json();
+                    addResult('✅ 認證端點響應', `狀態碼: ${response.status}`, 'success');
+                }
+            } catch (error) {
+                addResult('❌ 認證端點失敗', `錯誤: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testMaterials() {
+            try {
+                const response = await fetch(`${baseUrl}/api/materials`);
+                
+                if (response.status === 401) {
+                    addResult('✅ 材料 API 正常', '需要認證（預期行為）', 'success');
+                } else {
+                    addResult('✅ 材料 API 響應', `狀態碼: ${response.status}`, 'success');
+                }
+            } catch (error) {
+                addResult('❌ 材料 API 失敗', `錯誤: ${error.message}`, 'error');
+            }
+        }
+        
+        // 自動執行健康檢查
+        testHealth();
+    </script>
+</body>
+</html>

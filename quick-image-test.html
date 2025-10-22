@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>快速圖片測試</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background: #d4edda; }
+        .error { background: #f8d7da; }
+        img { max-width: 200px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>快速圖片測試</h1>
+    
+    <div class="result">
+        <h3>測試現有圖片</h3>
+        <p>如果你能看到下面的圖片，說明圖片服務正常：</p>
+        <img src="https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg" 
+             alt="測試圖片"
+             onload="this.nextElementSibling.className='result success'; this.nextElementSibling.innerHTML='✅ 圖片載入成功！靜態文件服務正常工作。'"
+             onerror="this.nextElementSibling.className='result error'; this.nextElementSibling.innerHTML='❌ 圖片載入失敗。可能是靜態文件服務問題。'">
+        <div class="result">載入中...</div>
+    </div>
+    
+    <div class="result">
+        <h3>診斷信息</h3>
+        <p><strong>如果圖片能顯示：</strong></p>
+        <ul>
+            <li>後端靜態文件服務正常</li>
+            <li>CORS 設置正確</li>
+            <li>問題可能在前端應用的圖片處理邏輯</li>
+        </ul>
+        
+        <p><strong>如果圖片不能顯示：</strong></p>
+        <ul>
+            <li>檢查後端服務是否在線</li>
+            <li>檢查 uploads 目錄是否存在</li>
+            <li>檢查圖片文件是否存在</li>
+        </ul>
+    </div>
+    
+    <div class="result">
+        <h3>下一步建議</h3>
+        <p>如果這個測試成功，請：</p>
+        <ol>
+            <li>登入實際的材料管理系統</li>
+            <li>嘗試上傳一張新圖片</li>
+            <li>檢查上傳後的圖片 URL 格式</li>
+            <li>查看瀏覽器開發者工具的 Network 標籤</li>
+        </ol>
+    </div>
+</body>
+</html>

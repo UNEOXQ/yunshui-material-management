@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>檢查 Render 基本狀態</title>
+</head>
+<body>
+    <h1>Render 服務檢查</h1>
+    <div id="status">檢查中...</div>
+    
+    <script>
+        const statusDiv = document.getElementById('status');
+        
+        // 直接嘗試訪問健康檢查
+        fetch('https://yunshui-material-management.onrender.com/health')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                statusDiv.innerHTML = `
+                    <h2 style="color: green;">✅ Render 服務正常</h2>
+                    <p><strong>版本:</strong> ${data.version}</p>
+                    <p><strong>時間:</strong> ${data.timestamp}</p>
+                    <p><strong>記憶體資料庫增強:</strong> ${data.memoryDbEnhanced}</p>
+                    <p><strong>自動保存間隔:</strong> ${data.autoSaveInterval}</p>
+                `;
+            })
+            .catch(error => {
+                statusDiv.innerHTML = `
+                    <h2 style="color: red;">❌ Render 服務異常</h2>
+                    <p><strong>錯誤:</strong> ${error.message}</p>
+                    <p><strong>可能原因:</strong></p>
+                    <ul>
+                        <li>服務正在重新部署中</li>
+                        <li>服務部署失敗</li>
+                        <li>服務進入休眠狀態</li>
+                        <li>網絡連接問題</li>
+                    </ul>
+                    <p><strong>建議:</strong> 檢查 Render 控制台的 Events 和 Logs</p>
+                `;
+            });
+    </script>
+</body>
+</html>

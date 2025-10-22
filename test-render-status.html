@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>檢查 Render 部署狀態</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .warning { background-color: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+    <h1>Render 後端部署狀態檢查</h1>
+    <div id="status">檢查中...</div>
+    
+    <script>
+        async function checkRenderStatus() {
+            const statusDiv = document.getElementById('status');
+            
+            try {
+                const response = await fetch('https://yunshui-material-management.onrender.com/health');
+                const data = await response.json();
+                
+                statusDiv.innerHTML = `
+                    <div class="status success">
+                        <h3>✅ Render 後端服務正常運行</h3>
+                        <p><strong>版本:</strong> ${data.version}</p>
+                        <p><strong>時間戳:</strong> ${data.timestamp}</p>
+                        <p><strong>記憶體資料庫增強:</strong> ${data.memoryDbEnhanced ? '是' : '否'}</p>
+                        <p><strong>自動保存間隔:</strong> ${data.autoSaveInterval || '未知'}</p>
+                        ${data.version === '1.0.1-memory-db-fix' ? 
+                            '<div class="status success">🎉 新版本已成功部署！</div>' : 
+                            '<div class="status warning">⚠️ 版本可能還沒更新</div>'
+                        }
+                    </div>
+                `;
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="status error">
+                        <h3>❌ 無法連接到 Render 後端服務</h3>
+                        <p>錯誤: ${error.message}</p>
+                        <p>可能原因：服務正在重新部署中，請稍後再試</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // 立即檢查
+        checkRenderStatus();
+        
+        // 每30秒自動檢查一次
+        setInterval(checkRenderStatus, 30000);
+    </script>
+</body>
+</html>
