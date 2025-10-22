@@ -17,7 +17,7 @@ export class MemoryDatabase {
     },
     {
       id: 'user-2',
-      username: 'pm001',
+      username: 'Jeffrey', // 恢復自定義名稱
       email: 'pm001@yunshui.com',
       role: 'PM',
       passwordHash: '$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // pm123
@@ -26,7 +26,7 @@ export class MemoryDatabase {
     },
     {
       id: 'user-3',
-      username: 'am001',
+      username: 'Miya', // 恢復自定義名稱
       email: 'am001@yunshui.com',
       role: 'AM',
       passwordHash: '$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6', // am123
@@ -35,7 +35,7 @@ export class MemoryDatabase {
     },
     {
       id: 'user-4',
-      username: 'warehouse001',
+      username: 'Mark', // 恢復自定義名稱
       email: 'warehouse001@yunshui.com',
       role: 'WAREHOUSE',
       passwordHash: '$2b$12$6BNUHWuoAhHfufkBMy4MJ.qiAiHXVBFy4XGaGILoxN05oy01L9Hhm', // wh123
@@ -116,27 +116,39 @@ export class MemoryDatabase {
   private orders: Order[] = [
     {
       id: 'order-1',
-      userId: 'demo-pm001', // PM user (matches JWT token)
+      userId: 'user-2', // Jeffrey (PM)
       status: 'PENDING',
       totalAmount: 250.0,
+      name: 'Jeffrey的輔材訂單',
       createdAt: new Date('2024-01-10'),
       updatedAt: new Date('2024-01-10')
     },
     {
       id: 'order-2',
-      userId: 'demo-admin', // Admin user (matches JWT token)
+      userId: 'user-1', // Admin
       status: 'APPROVED',
       totalAmount: 90.0,
+      name: '管理員測試訂單',
       createdAt: new Date('2024-01-11'),
       updatedAt: new Date('2024-01-11')
     },
     {
-      id: 'id-1002',
-      userId: 'demo-warehouse001', // Warehouse user
+      id: 'order-3',
+      userId: 'user-3', // Miya (AM)
       status: 'PENDING',
-      totalAmount: 150.0,
+      totalAmount: 360.0,
+      name: 'Miya的完成材訂單',
       createdAt: new Date('2024-01-12'),
       updatedAt: new Date('2024-01-12')
+    },
+    {
+      id: 'order-4',
+      userId: 'id-2064', // Erica (AM)
+      status: 'COMPLETED',
+      totalAmount: 180.0,
+      name: 'Erica的完成材訂單',
+      createdAt: new Date('2024-01-13'),
+      updatedAt: new Date('2024-01-13')
     }
   ];
 
