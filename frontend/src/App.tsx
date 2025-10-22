@@ -381,6 +381,7 @@ import { MaterialManagementPage } from './components/MaterialManagement';
 import { AuxiliaryOrderPage } from './components/OrderManagement';
 import { MessageManagement } from './components/MessageManagement/MessageManagement';
 import { MessageNotification } from './components/MessageNotification/MessageNotification';
+import { BackupManagement } from './components/BackupManagement/BackupManagement';
 
 // 包裝組件以添加返回按鈕和錯誤處理
 const UserManagementPageWrapper: React.FC<{ onBack: () => void }> = ({ onBack }) => {
@@ -495,6 +496,42 @@ const OrderManagementPageWrapper: React.FC<{ onBack: () => void; currentUser: Us
   }
 };
 
+const BackupManagementPageWrapper: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const [error, setError] = useState<string | null>(null);
+
+  if (error) {
+    return (
+      <div className="feature-page">
+        <div className="feature-header">
+          <button onClick={onBack} className="btn btn-secondary">← 返回儀表板</button>
+          <h1>💾 GitHub 自動備份</h1>
+        </div>
+        <div className="feature-content">
+          <div style={{ padding: '40px', textAlign: 'center' }}>
+            <h2>載入錯誤</h2>
+            <p style={{ color: 'red' }}>{error}</p>
+            <button onClick={() => setError(null)} className="btn btn-primary">重試</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  try {
+    return (
+      <div className="feature-page">
+        <div className="feature-header">
+          <button onClick={onBack} className="btn btn-secondary">← 返回儀表板</button>
+        </div>
+        <BackupManagement />
+      </div>
+    );
+  } catch (err) {
+    setError(err instanceof Error ? err.message : '未知錯誤');
+    return null;
+  }
+};
+
 
 
 // 管理員控制台組件
@@ -525,6 +562,13 @@ const AdminDashboard: React.FC<{
       description: '管理系統用戶和權限設置',
       color: '#6f42c1',
       icon: '👥'
+    },
+    {
+      id: 'backup-management',
+      title: '💾 GitHub 自動備份',
+      description: '管理系統數據的自動備份和恢復功能',
+      color: '#17a2b8',
+      icon: '💾'
     },
     {
       id: 'message-management',
@@ -758,6 +802,9 @@ const Dashboard: React.FC<{ user: User }> = ({ user }) => {
   }
   if (currentPage === 'material-management') {
     return <MaterialManagementPageWrapper onBack={handleBackToDashboard} />;
+  }
+  if (currentPage === 'backup-management') {
+    return <BackupManagementPageWrapper onBack={handleBackToDashboard} />;
   }
   if (currentPage === 'auxiliary-orders') {
     return <OrderManagementPageWrapper onBack={handleBackToDashboard} currentUser={user} />;
