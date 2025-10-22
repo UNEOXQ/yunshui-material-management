@@ -289,6 +289,129 @@ class GitHubBackupService {
   }
 
   /**
+   * 從 GitHub 恢復數據
+   */
+  async restoreFromBackup(): Promise<boolean> {
+    if (!this.isInitialized || !this.octokit) {
+      console.log('⚠️ GitHub 備份服務未初始化，無法恢復數據');
+      return false;
+    }
+
+    try {
+      console.log('🔄 開始從 GitHub 恢復數據...');
+
+      // 嘗試獲取最新備份
+      const { data: latestFile } = await this.octokit.repos.getContent({
+        owner: this.owner,
+        repo: this.repo,
+        path: 'data-backups/latest.json',
+        ref: this.branch,
+      });
+
+      if (!('content' in latestFile)) {
+        console.log('❌ 無法獲取備份文件內容');
+        return false;
+      }
+
+      // 解析備份數據
+      const backupContent = Buffer.from(latestFile.content, 'base64').toString();
+      const backupData: BackupData = JSON.parse(backupContent);
+
+      console.log(`📊 找到備份數據，時間戳: ${backupData.timestamp}`);
+      console.log(`📦 數據統計: ${backupData.data.materials.length} 材料, ${backupData.data.orders.length} 訂單, ${backupData.data.users.length} 用戶`);
+
+      // 恢復數據到內存數據庫
+      await this.restoreDataToMemoryDb(backupData.data);
+
+      console.log('✅ 數據恢復完成');
+      return true;
+
+    } catch (error: any) {
+      if (error.status === 404) {
+        console.log('📝 沒有找到備份文件，使用默認數據');
+        return false;
+      }
+      console.error('❌ 恢復數據失敗:', error);
+      return false;
+    }
+  }
+
+  /**
+   * 將備份數據恢復到內存數據庫
+   */
+  private async restoreDataToMemoryDb(data: BackupData['data']): Promise<void> {
+    try {
+      // 清空現有數據（保留基本用戶）
+      console.log('🔄 清空現有數據...');
+      
+      // 恢復材料數據
+      if (data.materials && data.materials.length > 0) {
+        console.log(`📦 恢復 ${data.materials.length} 個材料...`);
+        for (const material of data.materials) {
+          await memoryDb.createMaterial(material);
+        }
+      }
+
+      // 恢復用戶數據（跳過已存在的用戶）
+      if (data.users && data.users.length > 0) {
+        console.log(`👥 恢復 ${data.users.length} 個用戶...`);
+        for (const user of data.users) {
+          const existingUser = await memoryDb.getUserById(user.id);
+          if (!existingUser) {
+            await memoryDb.createUser(user);
+          }
+        }
+      }
+
+      // 恢復訂單數據
+      if (data.orders && data.orders.length > 0) {
+        console.log(`🛒 恢復 ${data.orders.length} 個訂單...`);
+        for (const order of data.orders) {
+          await memoryDb.createOrder(order);
+        }
+      }
+
+      // 恢復消息數據
+      if (data.messages && data.messages.length > 0) {
+        console.log(`💬 恢復 ${data.messages.length} 條消息...`);
+        for (const message of data.messages) {
+          await memoryDb.createMessage(message);
+        }
+      }
+
+      console.log('✅ 所有數據已恢復到內存數據庫');
+
+    } catch (error) {
+      console.error('❌ 恢復數據到內存數據庫失敗:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * 檢查是否需要恢復數據
+   */
+  async shouldRestoreFromBackup(): Promise<boolean> {
+    try {
+      // 檢查內存數據庫是否為空（除了默認用戶）
+      const materials = await memoryDb.getAllMaterials();
+      const orders = await memoryDb.getAllOrders();
+      
+      // 如果材料或訂單數據很少，可能需要恢復
+      const hasMinimalData = materials.materials.length <= 4 && orders.length === 0;
+      
+      if (hasMinimalData) {
+        console.log('🔍 檢測到最小數據集，檢查是否有備份可恢復...');
+        return true;
+      }
+      
+      return false;
+    } catch (error) {
+      console.error('檢查恢復條件失敗:', error);
+      return false;
+    }
+  }
+
+  /**
    * 獲取備份狀態
    */
   getBackupStatus() {

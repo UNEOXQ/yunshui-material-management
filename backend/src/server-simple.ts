@@ -82,6 +82,7 @@ import errorRoutes from './routes/errorRoutes';
 import statusRoutes from './routes/statusRoutes';
 import backupRoutes from './routes/backup';
 import { githubBackupService } from './services/githubBackupService';
+import { githubRecoveryService } from './services/githubRecoveryService';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
@@ -127,18 +128,38 @@ if (process.env.NODE_ENV !== 'test') {
     console.log('');
     console.log('✅ 服務器啟動成功！使用內存數據庫模式');
     
-    // 初始化 GitHub 備份服務
+    // 初始化 GitHub 備份和恢復服務
     console.log('');
-    console.log('🔄 初始化 GitHub 備份服務...');
+    console.log('🔄 初始化 GitHub 備份和恢復服務...');
+    
+    // 初始化備份服務
     const backupInitialized = await githubBackupService.initialize();
     
-    if (backupInitialized) {
-      console.log('✅ GitHub 自動備份已啟用');
+    // 初始化恢復服務
+    const recoveryInitialized = await githubRecoveryService.initialize();
+    
+    if (backupInitialized && recoveryInitialized) {
+      console.log('✅ GitHub 自動備份和恢復已啟用');
       console.log('📅 備份頻率: 每 30 分鐘');
       console.log('📂 備份位置: GitHub data-backup 分支');
+      console.log('🔄 自動恢復: 啟動時檢查');
+      
+      // 執行自動恢復
+      console.log('');
+      console.log('🔍 執行啟動時自動恢復檢查...');
+      const autoRecoverySuccess = await githubRecoveryService.autoRecover();
+      
+      if (autoRecoverySuccess) {
+        console.log('✅ 自動恢復檢查完成');
+      } else {
+        console.log('⚠️  自動恢復跳過或失敗');
+      }
+    } else if (backupInitialized) {
+      console.log('✅ GitHub 自動備份已啟用（僅備份功能）');
+      console.log('⚠️  恢復服務初始化失敗');
     } else {
-      console.log('⚠️  GitHub 備份未配置，數據僅存儲在內存中');
-      console.log('💡 要啟用自動備份，請設置以下環境變數:');
+      console.log('⚠️  GitHub 備份和恢復未配置，數據僅存儲在內存中');
+      console.log('💡 要啟用自動備份和恢復，請設置以下環境變數:');
       console.log('   - GITHUB_TOKEN: GitHub Personal Access Token');
       console.log('   - GITHUB_OWNER: GitHub 用戶名或組織名');
       console.log('   - GITHUB_REPO: 倉庫名稱');

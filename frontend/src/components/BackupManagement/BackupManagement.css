@@ -168,26 +168,46 @@
   margin: 8px 0;
 }
 
-/* Manual Backup Card */
-.manual-backup-card {
+/* Manual Operations Card */
+.manual-operations-card {
   background: white;
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid #e9ecef;
+}
+
+.manual-operations-card h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
   text-align: center;
 }
 
-.manual-backup-card h3 {
-  margin: 0 0 12px 0;
-  font-size: 20px;
+.operation-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.operation-section:last-child {
+  margin-bottom: 0;
+}
+
+.operation-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
   font-weight: 600;
   color: #333;
 }
 
-.manual-backup-card p {
-  margin: 0 0 20px 0;
+.operation-section p {
+  margin: 0 0 16px 0;
   color: #666;
+  font-size: 14px;
 }
 
 .backup-button {
@@ -356,5 +376,224 @@
   .manual-backup-card,
   .backup-info-card {
     padding: 16px;
+  }
+}/* Recovery
+ Status Styles */
+.recovery-status {
+  border-left: 4px solid #17a2b8;
+}
+
+.recovery-status .status-header h3 {
+  color: #17a2b8;
+}
+
+.recovery-result {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+.recovery-statistics {
+  margin-top: 12px;
+}
+
+.recovery-statistics h5 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 12px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.stat-number {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #17a2b8;
+}
+
+.stat-label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.recovery-errors {
+  margin-top: 12px;
+  padding: 12px;
+  background: #f8d7da;
+  border-radius: 6px;
+  border: 1px solid #f5c6cb;
+}
+
+.recovery-errors h5 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #721c24;
+}
+
+.recovery-errors ul {
+  margin: 0;
+  padding-left: 16px;
+  color: #721c24;
+}
+
+.recovery-errors li {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+/* Recovery Operations */
+.recovery-option {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.recovery-option:last-child {
+  margin-bottom: 0;
+}
+
+.recovery-option h5 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057;
+}
+
+.backup-selector {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.backup-selector select {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background: white;
+  font-size: 14px;
+  color: #495057;
+}
+
+.backup-selector select:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.restore-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #17a2b8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.restore-button:hover:not(:disabled) {
+  background: #138496;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+}
+
+.restore-button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.restore-button.secondary {
+  background: #6c757d;
+  min-width: 140px;
+}
+
+.restore-button.secondary:hover:not(:disabled) {
+  background: #5a6268;
+  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+/* Status Values */
+.value.success {
+  color: #28a745;
+}
+
+.value.error {
+  color: #dc3545;
+}
+
+.value.recovering {
+  color: #17a2b8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inline-spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid transparent;
+  border-top: 2px solid #17a2b8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Responsive adjustments for recovery features */
+@media (max-width: 768px) {
+  .backup-selector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .backup-selector select {
+    min-width: auto;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .recovery-option {
+    padding: 12px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .restore-button {
+    width: 100%;
+    min-width: auto;
   }
 }
