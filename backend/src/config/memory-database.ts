@@ -41,6 +41,24 @@ export class MemoryDatabase {
       passwordHash: '$2b$12$6BNUHWuoAhHfufkBMy4MJ.qiAiHXVBFy4XGaGILoxN05oy01L9Hhm', // wh123
       createdAt: new Date('2024-01-04'),
       updatedAt: new Date('2024-01-04')
+    },
+    {
+      id: 'id-2064',
+      username: 'Erica',
+      email: 'Erica@yunshui.com',
+      role: 'AM',
+      passwordHash: '$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6', // default123
+      createdAt: new Date('2024-01-05'),
+      updatedAt: new Date('2024-01-05')
+    },
+    {
+      id: 'id-2065',
+      username: 'LUKE',
+      email: 'LUKE@yunshui.com',
+      role: 'PM',
+      passwordHash: '$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // default123
+      createdAt: new Date('2024-01-06'),
+      updatedAt: new Date('2024-01-06')
     }
   ];
 
