@@ -107,16 +107,16 @@ class GitHubBackupService {
   /**
    * 導出當前數據
    */
-  private exportCurrentData(): BackupData {
+  private async exportCurrentData(): Promise<BackupData> {
     return {
       timestamp: new Date().toISOString(),
       version: '1.0.0',
       data: {
-        materials: memoryDb.getAllMaterials(),
-        orders: memoryDb.getAllOrders(),
-        users: memoryDb.getAllUsers(),
-        statusUpdates: memoryDb.getAllStatusUpdates(),
-        messages: memoryDb.getAllMessages(),
+        materials: (await memoryDb.getAllMaterials()).materials,
+        orders: await memoryDb.getAllOrders(),
+        users: await memoryDb.getAllUsers(),
+        statusUpdates: (memoryDb as any).statusUpdates || [], // 直接訪問 statusUpdates 數組
+        messages: await memoryDb.getAllMessages(),
       },
     };
   }
@@ -134,7 +134,7 @@ class GitHubBackupService {
       console.log('🔄 開始執行 GitHub 備份...');
 
       // 導出數據
-      const backupData = this.exportCurrentData();
+      const backupData = await this.exportCurrentData();
       const content = JSON.stringify(backupData, null, 2);
       const fileName = `backup-${new Date().toISOString().split('T')[0]}.json`;
 
