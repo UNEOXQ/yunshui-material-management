@@ -3,27 +3,37 @@
  */
 
 /**
- * 處理圖片 URL，確保在開發環境中使用代理
+ * 處理圖片 URL，確保在不同環境中使用正確的 URL
  */
 export function processImageUrl(imageUrl: string | null | undefined): string | null {
   if (!imageUrl) {
     return null;
   }
 
-  // 如果是完整的 URL，在開發環境中轉換為相對路徑以使用 Vite 代理
-  if (imageUrl.startsWith('http://localhost:3004/uploads/') || 
-      imageUrl.startsWith('https://yunshui-backend1.onrender.com/uploads/')) {
-    // 在開發環境中，移除域名部分，使用 Vite 代理
-    if (import.meta.env.DEV) {
+  // 在開發環境中，將完整 URL 轉換為相對路徑以使用 Vite 代理
+  if (import.meta.env.DEV) {
+    if (imageUrl.startsWith('http://localhost:3004/uploads/') || 
+        imageUrl.startsWith('https://yunshui-backend1.onrender.com/uploads/')) {
       return imageUrl.replace(/^https?:\/\/[^\/]+/, '');
     }
-    // 在生產環境中，直接返回完整 URL
-    return imageUrl;
+  } else {
+    // 在生產環境中，將 localhost URL 轉換為正確的 Render URL
+    if (imageUrl.startsWith('http://localhost:3004/uploads/')) {
+      return imageUrl.replace('http://localhost:3004', 'https://yunshui-backend1.onrender.com');
+    }
+    // 如果已經是正確的 Render URL，直接返回
+    if (imageUrl.startsWith('https://yunshui-backend1.onrender.com/uploads/')) {
+      return imageUrl;
+    }
   }
 
-  // 如果已經是相對路徑，直接返回
+  // 如果是相對路徑，在生產環境中轉換為完整 URL
   if (imageUrl.startsWith('/uploads/')) {
-    return imageUrl;
+    if (import.meta.env.DEV) {
+      return imageUrl; // 開發環境使用代理
+    } else {
+      return `https://yunshui-backend1.onrender.com${imageUrl}`;
+    }
   }
 
   // 如果是其他格式的 URL，直接返回
