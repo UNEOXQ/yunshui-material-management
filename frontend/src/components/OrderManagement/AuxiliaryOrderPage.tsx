@@ -5,6 +5,7 @@ import { Order, OrderItem } from '../../types';
 import { MaterialSelectionModal, CartItem } from '../MaterialSelection/MaterialSelectionModal';
 import { FinishedMaterialModal } from '../MaterialSelection/FinishedMaterialModal';
 import OperationHistory from './OperationHistory';
+import { processImageUrl } from '../../utils/imageUtils';
 
 import './OrderManagement.css';
 
@@ -693,6 +694,57 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
                       <div className="order-title-section">
                         <div className="order-title-row">
                           <span className="order-id">訂單 #{order.id}</span>
+                          
+                          {/* 右上角狀態顯示 */}
+                          <div className="order-status-indicator">
+                            {(() => {
+                              // 獲取當前狀態（前端優先，後端備用）
+                              const checkStatus = orderStatuses[order.id]?.checkStatus || 
+                                                (order as any).latestStatuses?.CHECK?.statusValue;
+                              const deliveryStatus = orderStatuses[order.id]?.deliveryStatus || 
+                                                   (order as any).latestStatuses?.DELIVERY?.statusValue;
+                              const pickupStatus = orderStatuses[order.id]?.pickupStatus || 
+                                                 (order as any).latestStatuses?.PICKUP?.statusValue;
+                              const orderStatus = orderStatuses[order.id]?.orderStatus || 
+                                                (order as any).latestStatuses?.ORDER?.statusValue;
+                              
+                              // 優先級：點收 > 到案 > 取貨 > 叫貨
+                              if (checkStatus && checkStatus !== '' && checkStatus !== '未設定') {
+                                return (
+                                  <span className="status-badge check-status" title="點收狀態">
+                                    📋 {checkStatus}
+                                  </span>
+                                );
+                              } else if (deliveryStatus && deliveryStatus !== '' && deliveryStatus !== '未設定') {
+                                return (
+                                  <span className="status-badge delivery-status" title="到案狀態">
+                                    🚚 {deliveryStatus}
+                                  </span>
+                                );
+                              } else if (pickupStatus && pickupStatus !== '' && pickupStatus !== '未設定') {
+                                const secondaryStatus = orderStatuses[order.id]?.pickupSecondaryStatus || '';
+                                return (
+                                  <span className="status-badge pickup-status" title="取貨狀態">
+                                    📦 {pickupStatus} {secondaryStatus}
+                                  </span>
+                                );
+                              } else if (orderStatus && orderStatus !== '' && orderStatus !== '未設定') {
+                                const secondaryStatus = orderStatuses[order.id]?.orderSecondaryStatus || '';
+                                return (
+                                  <span className="status-badge order-status" title="叫貨狀態">
+                                    📞 {orderStatus} {secondaryStatus}
+                                  </span>
+                                );
+                              }
+                              
+                              return (
+                                <span className="status-badge no-status" title="尚無狀態">
+                                  ⏳ 待處理
+                                </span>
+                              );
+                            })()}
+                          </div>
+                          
                           {/* 管理員刪除按鈕 */}
                           {isAdmin && (
                             <button
@@ -728,62 +780,58 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
 
                   </div>
                   
-                  <div className="order-items">
+                  <div className="order-items-grid">
                     {order.items.map((item: OrderItem, index: number) => (
-                      <div key={`${order.id}-item-${index}`} className="order-item with-image">
+                      <div key={`${order.id}-item-${index}`} className="order-item-compact">
                         {/* 材料圖片 */}
-                        <div className="item-image">
-                          {item.imageUrl || item.material?.imageUrl ? (
-                            <img 
-                              src={item.imageUrl || item.material?.imageUrl} 
-                              alt={item.materialName || item.material?.name || '材料圖片'}
-                              className="material-image"
-                              onClick={() => setSelectedImage({
-                                url: item.imageUrl || item.material?.imageUrl || '',
-                                name: item.materialName || item.material?.name || '材料圖片'
-                              })}
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.style.display = 'none';
-                                const placeholder = target.nextElementSibling as HTMLElement;
-                                if (placeholder) placeholder.style.display = 'flex';
-                              }}
-                              title="點擊查看大圖"
-                            />
-                          ) : null}
+                        <div className="item-image-small">
+                          {(() => {
+                            const rawImageUrl = item.imageUrl || item.material?.imageUrl;
+                            const processedImageUrl = processImageUrl(rawImageUrl);
+                            return processedImageUrl ? (
+                              <img 
+                                src={processedImageUrl} 
+                                alt={item.materialName || item.material?.name || '材料圖片'}
+                                className="material-image-small"
+                                onClick={() => setSelectedImage({
+                                  url: processedImageUrl,
+                                  name: item.materialName || item.material?.name || '材料圖片'
+                                })}
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = 'none';
+                                  const placeholder = target.nextElementSibling as HTMLElement;
+                                  if (placeholder) placeholder.style.display = 'flex';
+                                }}
+                                title="點擊查看大圖"
+                              />
+                            ) : null;
+                          })()}
                           <div 
-                            className="image-placeholder"
+                            className="image-placeholder-small"
                             style={{ 
-                              display: (item.imageUrl || item.material?.imageUrl) ? 'none' : 'flex' 
+                              display: processImageUrl(item.imageUrl || item.material?.imageUrl) ? 'none' : 'flex' 
                             }}
                           >
-                            <span className="placeholder-icon">
+                            <span className="placeholder-icon-small">
                               {item.materialType === 'FINISHED' ? '🏗️' : '🔧'}
                             </span>
                           </div>
                         </div>
                         
-                        {/* 材料信息 */}
-                        <div className="item-content">
-                          <div className="item-main-info">
-                            <span className="item-name">{item.materialName || item.material?.name || '未知材料'}</span>
-                            <div className="item-quantity-price">
-                              <span className="item-quantity">x{item.quantity}</span>
-                              <span className="item-price">{formatPrice(item.quantity * item.unitPrice)}</span>
+                        {/* 緊湊的材料信息 */}
+                        <div className="item-content-compact">
+                          <div className="item-name-compact" title={item.materialName || item.material?.name || '未知材料'}>
+                            {item.materialName || item.material?.name || '未知材料'}
+                          </div>
+                          <div className="item-quantity-compact">x{item.quantity}</div>
+                          <div className="item-price-compact">{formatPrice(item.quantity * item.unitPrice)}</div>
+                          {/* 供應商信息 */}
+                          {(item.supplier || item.material?.supplier) && (
+                            <div className="item-supplier-compact" title={`供應商: ${item.supplier || item.material?.supplier}`}>
+                              🏢 {item.supplier || item.material?.supplier}
                             </div>
-                          </div>
-                          {/* 顯示額外信息 */}
-                          <div className="item-details">
-                            {item.materialCategory && (
-                              <span className="item-category">分類: {item.materialCategory}</span>
-                            )}
-                            {item.supplier && (
-                              <span className="item-supplier">供應商: {item.supplier}</span>
-                            )}
-                            {item.materialType && (
-                              <span className="item-type">類型: {item.materialType === 'FINISHED' ? '完成材' : '輔材'}</span>
-                            )}
-                          </div>
+                          )}
                         </div>
                       </div>
                     ))}
