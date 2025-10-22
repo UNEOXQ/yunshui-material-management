@@ -1,7 +1,7 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
-  "installCommand": "npm run install:frontend",
+  "installCommand": "cd frontend && npm install",
   "env": {
     "VITE_API_URL": "https://yunshui-backend1.onrender.com/api",
     "VITE_WS_URL": "https://yunshui-backend1.onrender.com",
