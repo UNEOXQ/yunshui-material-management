@@ -20,7 +20,7 @@ import path from 'path';
 dotenv.config({ path: '.env.development' });
 
 // Version info for deployment tracking
-const APP_VERSION = '1.0.1-memory-db-fix';
+const APP_VERSION = '1.0.2-image-fix-deploy';
 
 const app = express();
 const httpServer = createServer(app);
