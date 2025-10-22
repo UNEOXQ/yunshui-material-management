@@ -99,6 +99,11 @@ export const updateMaterialSchema = Joi.object({
 }).min(1);
 
 export class MaterialModel {
+  // 決定使用哪個資料庫
+  private static usePostgreSQL(): boolean {
+    return process.env.NODE_ENV === 'production' && !!process.env.DATABASE_URL;
+  }
+
   // Convert database entity to model
   private static entityToModel(entity: MaterialEntity): Material {
     return {
@@ -125,8 +130,24 @@ export class MaterialModel {
 
     const { name, category, price, quantity, supplier, type } = value;
 
+    // 在生產環境中優先使用 PostgreSQL
+    if (process.env.NODE_ENV === 'production' && process.env.DATABASE_URL) {
+      try {
+        const query = `
+          INSERT INTO materials (id, name, category, price, quantity, supplier, type, created_at, updated_at)
+          VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+          RETURNING *
+        `;
+
+        const result = await pool.query(query, [name, category, price, quantity, supplier || null, type]);
+        return this.entityToModel(result.rows[0]);
+      } catch (error) {
+        console.warn('PostgreSQL failed, trying memory database:', error);
+      }
+    }
+
+    // 回退到記憶體資料庫
     try {
-      // 使用記憶體資料庫
       const newMaterial = await memoryDb.createMaterial({
         name,
         category,
@@ -139,17 +160,8 @@ export class MaterialModel {
       
       return newMaterial;
     } catch (error) {
-      console.warn('Memory database failed, trying PostgreSQL:', error);
-      
-      // 回退到 PostgreSQL
-      const query = `
-        INSERT INTO materials (name, category, price, quantity, supplier, type)
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING *
-      `;
-
-      const result = await pool.query(query, [name, category, price, quantity, supplier || null, type]);
-      return this.entityToModel(result.rows[0]);
+      console.error('Both databases failed:', error);
+      throw new Error('Failed to create material');
     }
   }
 

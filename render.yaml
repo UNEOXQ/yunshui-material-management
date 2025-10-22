@@ -13,3 +13,34 @@ services:
         value: yunshui-super-secret-jwt-key-2024
       - key: JWT_REFRESH_SECRET
         value: yunshui-refresh-secret-key-2024
+      - key: DATABASE_URL
+        fromDatabase:
+          name: yunshui-postgres
+          property: connectionString
+      - key: DB_HOST
+        fromDatabase:
+          name: yunshui-postgres
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: yunshui-postgres
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: yunshui-postgres
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: yunshui-postgres
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: yunshui-postgres
+          property: password
+
+databases:
+  - name: yunshui-postgres
+    databaseName: yunshui_db
+    user: yunshui_user
+    region: oregon
+    plan: free

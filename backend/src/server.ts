@@ -14,6 +14,7 @@ import errorRoutes from './routes/errorRoutes';
 import messageRoutes from './routes/messages';
 import { initializeWebSocketService } from './services/websocketService';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
+import { initializeDatabase } from './scripts/initDatabase';
 import path from 'path';
 
 // Load environment variables
@@ -123,20 +124,38 @@ app.use(errorHandler);
 // Initialize WebSocket service
 initializeWebSocketService(httpServer);
 
-// Start server
+// Initialize database and start server
 if (process.env.NODE_ENV !== 'test') {
-  httpServer.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`🔌 WebSocket server initialized`);
-    console.log(`📊 Health check: http://localhost:${PORT}/health`);
-    console.log(`🔐 Auth API: http://localhost:${PORT}/api/auth`);
-    console.log(`👥 Users API: http://localhost:${PORT}/api/users`);
-    console.log(`📦 Materials API: http://localhost:${PORT}/api/materials`);
-    console.log(`📁 Upload API: http://localhost:${PORT}/api/upload`);
-    console.log(`🛒 Orders API: http://localhost:${PORT}/api/orders`);
-    console.log(`📊 Status API: http://localhost:${PORT}/api/status`);
-    console.log(`🖼️  Static files: http://localhost:${PORT}/uploads`);
-  });
+  const startServer = async () => {
+    try {
+      // 在生產環境中初始化 PostgreSQL 資料庫
+      if (process.env.NODE_ENV === 'production' && process.env.DATABASE_URL) {
+        console.log('🗄️  Initializing PostgreSQL database...');
+        await initializeDatabase();
+        console.log('✅ Database initialization completed');
+      } else {
+        console.log('🗄️  Using memory database for development');
+      }
+      
+      httpServer.listen(PORT, () => {
+        console.log(`🚀 Server running on port ${PORT}`);
+        console.log(`🔌 WebSocket server initialized`);
+        console.log(`📊 Health check: http://localhost:${PORT}/health`);
+        console.log(`🔐 Auth API: http://localhost:${PORT}/api/auth`);
+        console.log(`👥 Users API: http://localhost:${PORT}/api/users`);
+        console.log(`📦 Materials API: http://localhost:${PORT}/api/materials`);
+        console.log(`📁 Upload API: http://localhost:${PORT}/api/upload`);
+        console.log(`🛒 Orders API: http://localhost:${PORT}/api/orders`);
+        console.log(`📊 Status API: http://localhost:${PORT}/api/status`);
+        console.log(`🖼️  Static files: http://localhost:${PORT}/uploads`);
+      });
+    } catch (error) {
+      console.error('❌ Failed to start server:', error);
+      process.exit(1);
+    }
+  };
+  
+  startServer();
 }
 
 export default app;
