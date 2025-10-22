@@ -693,13 +693,17 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
                   <div className="order-status-indicator">
                     {(() => {
                       // 獲取當前狀態（前端優先，後端備用）
-                      const checkStatus = orderStatuses[order.id]?.checkStatus || 
+                      const checkStatus = orderStatuses[order.id]?.checkStatus !== undefined ? 
+                                        orderStatuses[order.id]?.checkStatus : 
                                         (order as any).latestStatuses?.CHECK?.statusValue;
-                      const deliveryStatus = orderStatuses[order.id]?.deliveryStatus || 
+                      const deliveryStatus = orderStatuses[order.id]?.deliveryStatus !== undefined ? 
+                                           orderStatuses[order.id]?.deliveryStatus : 
                                            (order as any).latestStatuses?.DELIVERY?.statusValue;
-                      const pickupStatus = orderStatuses[order.id]?.pickupStatus || 
+                      const pickupStatus = orderStatuses[order.id]?.pickupStatus !== undefined ? 
+                                         orderStatuses[order.id]?.pickupStatus : 
                                          (order as any).latestStatuses?.PICKUP?.statusValue;
-                      const orderStatus = orderStatuses[order.id]?.orderStatus || 
+                      const orderStatus = orderStatuses[order.id]?.orderStatus !== undefined ? 
+                                        orderStatuses[order.id]?.orderStatus : 
                                         (order as any).latestStatuses?.ORDER?.statusValue;
                       
                       // 優先級：點收 > 到案 > 取貨 > 叫貨
