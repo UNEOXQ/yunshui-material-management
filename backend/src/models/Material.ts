@@ -319,6 +319,13 @@ export class MaterialModel {
 
   // Update material
   static async update(id: string, updateData: UpdateMaterialRequest): Promise<Material | null> {
+    try {
+      // 嘗試使用記憶體資料庫
+      return await memoryDb.updateMaterial(id, updateData);
+    } catch (error) {
+      console.warn('Memory database failed, trying PostgreSQL:', error);
+    }
+
     // Validate input
     const { error, value } = updateMaterialSchema.validate(updateData);
     if (error) {
