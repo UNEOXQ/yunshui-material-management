@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 
 // 設定頁面標題
@@ -900,9 +901,35 @@ const Dashboard: React.FC<{ user: User }> = ({ user }) => {
   );
 };
 
-const App: React.FC = () => {
+// 受保護的路由組件
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  useEffect(() => {
+    const userStr = localStorage.getItem('user');
+    const token = localStorage.getItem('authToken');
+    
+    if (!userStr || !token) {
+      navigate('/login', { replace: true, state: { from: location } });
+    }
+  }, [navigate, location]);
+
+  const userStr = localStorage.getItem('user');
+  const token = localStorage.getItem('authToken');
+  
+  if (!userStr || !token) {
+    return null;
+  }
+
+  return <>{children}</>;
+};
+
+// 主應用組件
+const AppContent: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadUserFromStorage = () => {
@@ -956,12 +983,14 @@ const App: React.FC = () => {
   const handleLogin = (userData: User) => {
     console.log('Setting user state in App component:', userData);
     setUser(userData);
+    navigate('/dashboard');
   };
 
   const handleLogout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('authToken');
     setUser(null);
+    navigate('/login');
   };
 
   if (isLoading) {
@@ -975,28 +1004,37 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      {user ? (
-        <div className="app-authenticated">
-          <header className="app-header">
-            <h1>雲水建設 - 基材管理系統</h1>
-            <div className="user-info">
-              <span>歡迎，{user.username} ({user.role})</span>
-              <button onClick={handleLogout} className="btn btn-secondary btn-sm">
-                登出
-              </button>
+      <Routes>
+        <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <div className="app-authenticated">
+              <header className="app-header">
+                <h1>雲水建設 - 基材管理系統</h1>
+                <div className="user-info">
+                  <span>歡迎，{user?.username} ({user?.role})</span>
+                  <button onClick={handleLogout} className="btn btn-secondary btn-sm">
+                    登出
+                  </button>
+                </div>
+              </header>
+              {/* 留言通知組件 - 只對非管理員用戶顯示 */}
+              {user?.role !== 'ADMIN' && <MessageNotification user={user} />}
+              <main className="app-main">
+                <Dashboard user={user!} />
+              </main>
             </div>
-          </header>
-          {/* 留言通知組件 - 只對非管理員用戶顯示 */}
-          {user.role !== 'ADMIN' && <MessageNotification user={user} />}
-          <main className="app-main">
-            <Dashboard user={user} />
-          </main>
-        </div>
-      ) : (
-        <LoginPage onLogin={handleLogin} />
-      )}
+          </ProtectedRoute>
+        } />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
     </div>
   );
+};
+
+const App: React.FC = () => {
+  return <AppContent />;
 };
 
 export default App;
