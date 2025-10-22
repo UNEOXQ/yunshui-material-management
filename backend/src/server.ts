@@ -19,6 +19,9 @@ import path from 'path';
 // Load environment variables
 dotenv.config({ path: '.env.development' });
 
+// Version info for deployment tracking
+const APP_VERSION = '1.0.1-memory-db-fix';
+
 const app = express();
 const httpServer = createServer(app);
 const PORT = process.env.PORT || 3001;
@@ -100,7 +103,9 @@ app.get('/health', (_req, res) => {
     success: true,
     message: 'Server is running',
     timestamp: new Date().toISOString(),
-    version: '1.0.1' // 添加版本號來確認部署
+    version: APP_VERSION,
+    memoryDbEnhanced: true,
+    autoSaveInterval: process.env.NODE_ENV === 'development' ? '30s' : '60s'
   });
 });
 
@@ -126,7 +131,8 @@ initializeWebSocketService(httpServer);
 // Start server
 if (process.env.NODE_ENV !== 'test') {
   httpServer.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`🚀 Server running on port ${PORT} - Version: ${APP_VERSION}`);
+    console.log(`🔧 Memory Database Persistence: ENHANCED`);
     console.log(`🔌 WebSocket server initialized`);
     console.log(`📊 Health check: http://localhost:${PORT}/health`);
     console.log(`🔐 Auth API: http://localhost:${PORT}/api/auth`);
