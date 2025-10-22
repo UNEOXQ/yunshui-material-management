@@ -13,3 +13,5 @@ services:
         value: yunshui-super-secret-jwt-key-2024
       - key: JWT_REFRESH_SECRET
         value: yunshui-refresh-secret-key-2024
+      - key: DEPLOY_VERSION
+        value: "1.0.1-memory-db-fix"
