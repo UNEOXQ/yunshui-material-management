@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>圖片測試 - Vercel 版本</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 15px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        img { max-width: 200px; margin: 10px; border: 1px solid #ddd; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>圖片功能測試</h1>
+    
+    <div class="test info">
+        <h3>環境信息</h3>
+        <p><strong>當前域名:</strong> <span id="current-domain"></span></p>
+        <p><strong>協議:</strong> <span id="protocol"></span></p>
+        <p><strong>預期後端:</strong> https://yunshui-backend1.onrender.com</p>
+    </div>
+    
+    <div class="test">
+        <h3>測試 1: 直接圖片訪問</h3>
+        <p>測試現有圖片是否能正常顯示：</p>
+        <img src="https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg" 
+             alt="測試圖片" 
+             onload="showResult('img1-result', '✅ 圖片載入成功', 'success')"
+             onerror="showResult('img1-result', '❌ 圖片載入失敗', 'error')">
+        <div id="img1-result"></div>
+    </div>
+    
+    <div class="test">
+        <h3>測試 2: 後端健康檢查</h3>
+        <button onclick="testHealth()">測試後端連接</button>
+        <div id="health-result"></div>
+    </div>
+    
+    <div class="test">
+        <h3>測試 3: 靜態文件服務</h3>
+        <button onclick="testStaticFiles()">測試靜態文件</button>
+        <div id="static-result"></div>
+    </div>
+    
+    <div class="test">
+        <h3>測試 4: 材料 API</h3>
+        <button onclick="testMaterialsAPI()">測試材料 API</button>
+        <div id="materials-result"></div>
+    </div>
+    
+    <script>
+        // 顯示環境信息
+        document.getElementById('current-domain').textContent = window.location.hostname;
+        document.getElementById('protocol').textContent = window.location.protocol;
+        
+        const backendUrl = 'https://yunshui-backend1.onrender.com';
+        
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="${type}">${message}</div>`;
+        }
+        
+        async function testHealth() {
+            showResult('health-result', '測試中...', 'info');
+            
+            try {
+                const response = await fetch(`${backendUrl}/health`);
+                const data = await response.json();
+                
+                showResult('health-result', 
+                    `✅ 後端連接成功<br>版本: ${data.version}<br>時間: ${data.timestamp}`, 
+                    'success'
+                );
+            } catch (error) {
+                showResult('health-result', 
+                    `❌ 後端連接失敗: ${error.message}<br>可能原因: CORS 設置或網絡問題`, 
+                    'error'
+                );
+            }
+        }
+        
+        async function testStaticFiles() {
+            showResult('static-result', '測試中...', 'info');
+            
+            try {
+                const uploadsResponse = await fetch(`${backendUrl}/uploads/`);
+                const materialsResponse = await fetch(`${backendUrl}/uploads/materials/`);
+                
+                showResult('static-result', 
+                    `✅ 靜態文件服務正常<br>/uploads/: ${uploadsResponse.status}<br>/uploads/materials/: ${materialsResponse.status}`, 
+                    'success'
+                );
+            } catch (error) {
+                showResult('static-result', 
+                    `❌ 靜態文件測試失敗: ${error.message}`, 
+                    'error'
+                );
+            }
+        }
+        
+        async function testMaterialsAPI() {
+            showResult('materials-result', '測試中...', 'info');
+            
+            try {
+                const response = await fetch(`${backendUrl}/api/materials`);
+                
+                if (response.status === 401) {
+                    showResult('materials-result', 
+                        '✅ 材料 API 正常 (返回 401 - 需要認證)', 
+                        'success'
+                    );
+                } else {
+                    showResult('materials-result', 
+                        `ℹ️ 材料 API 響應: ${response.status}`, 
+                        'info'
+                    );
+                }
+            } catch (error) {
+                showResult('materials-result', 
+                    `❌ 材料 API 測試失敗: ${error.message}`, 
+                    'error'
+                );
+            }
+        }
+        
+        // 自動執行基本測試
+        window.onload = function() {
+            setTimeout(testHealth, 1000);
+        };
+    </script>
+</body>
+</html>
