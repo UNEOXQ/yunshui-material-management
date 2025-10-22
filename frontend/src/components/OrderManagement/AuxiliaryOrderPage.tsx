@@ -689,61 +689,61 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
             <div className="orders-list">
               {orders.map(order => (
                 <div key={order.id} className="order-card with-status">
+                  {/* 右上角狀態顯示 */}
+                  <div className="order-status-indicator">
+                    {(() => {
+                      // 獲取當前狀態（前端優先，後端備用）
+                      const checkStatus = orderStatuses[order.id]?.checkStatus || 
+                                        (order as any).latestStatuses?.CHECK?.statusValue;
+                      const deliveryStatus = orderStatuses[order.id]?.deliveryStatus || 
+                                           (order as any).latestStatuses?.DELIVERY?.statusValue;
+                      const pickupStatus = orderStatuses[order.id]?.pickupStatus || 
+                                         (order as any).latestStatuses?.PICKUP?.statusValue;
+                      const orderStatus = orderStatuses[order.id]?.orderStatus || 
+                                        (order as any).latestStatuses?.ORDER?.statusValue;
+                      
+                      // 優先級：點收 > 到案 > 取貨 > 叫貨
+                      if (checkStatus && checkStatus !== '' && checkStatus !== '未設定') {
+                        return (
+                          <span className="status-badge check-status" title="點收狀態">
+                            📋 {checkStatus}
+                          </span>
+                        );
+                      } else if (deliveryStatus && deliveryStatus !== '' && deliveryStatus !== '未設定') {
+                        return (
+                          <span className="status-badge delivery-status" title="到案狀態">
+                            🚚 {deliveryStatus}
+                          </span>
+                        );
+                      } else if (pickupStatus && pickupStatus !== '' && pickupStatus !== '未設定') {
+                        const secondaryStatus = orderStatuses[order.id]?.pickupSecondaryStatus || '';
+                        return (
+                          <span className="status-badge pickup-status" title="取貨狀態">
+                            📦 {pickupStatus} {secondaryStatus}
+                          </span>
+                        );
+                      } else if (orderStatus && orderStatus !== '' && orderStatus !== '未設定') {
+                        const secondaryStatus = orderStatuses[order.id]?.orderSecondaryStatus || '';
+                        return (
+                          <span className="status-badge order-status" title="叫貨狀態">
+                            📞 {orderStatus} {secondaryStatus}
+                          </span>
+                        );
+                      }
+                      
+                      return (
+                        <span className="status-badge no-status" title="尚無狀態">
+                          ⏳ 待處理
+                        </span>
+                      );
+                    })()}
+                  </div>
+                  
                   <div className="order-header">
                     <div className="order-info">
                       <div className="order-title-section">
                         <div className="order-title-row">
                           <span className="order-id">訂單 #{order.id}</span>
-                          
-                          {/* 右上角狀態顯示 */}
-                          <div className="order-status-indicator">
-                            {(() => {
-                              // 獲取當前狀態（前端優先，後端備用）
-                              const checkStatus = orderStatuses[order.id]?.checkStatus || 
-                                                (order as any).latestStatuses?.CHECK?.statusValue;
-                              const deliveryStatus = orderStatuses[order.id]?.deliveryStatus || 
-                                                   (order as any).latestStatuses?.DELIVERY?.statusValue;
-                              const pickupStatus = orderStatuses[order.id]?.pickupStatus || 
-                                                 (order as any).latestStatuses?.PICKUP?.statusValue;
-                              const orderStatus = orderStatuses[order.id]?.orderStatus || 
-                                                (order as any).latestStatuses?.ORDER?.statusValue;
-                              
-                              // 優先級：點收 > 到案 > 取貨 > 叫貨
-                              if (checkStatus && checkStatus !== '' && checkStatus !== '未設定') {
-                                return (
-                                  <span className="status-badge check-status" title="點收狀態">
-                                    📋 {checkStatus}
-                                  </span>
-                                );
-                              } else if (deliveryStatus && deliveryStatus !== '' && deliveryStatus !== '未設定') {
-                                return (
-                                  <span className="status-badge delivery-status" title="到案狀態">
-                                    🚚 {deliveryStatus}
-                                  </span>
-                                );
-                              } else if (pickupStatus && pickupStatus !== '' && pickupStatus !== '未設定') {
-                                const secondaryStatus = orderStatuses[order.id]?.pickupSecondaryStatus || '';
-                                return (
-                                  <span className="status-badge pickup-status" title="取貨狀態">
-                                    📦 {pickupStatus} {secondaryStatus}
-                                  </span>
-                                );
-                              } else if (orderStatus && orderStatus !== '' && orderStatus !== '未設定') {
-                                const secondaryStatus = orderStatuses[order.id]?.orderSecondaryStatus || '';
-                                return (
-                                  <span className="status-badge order-status" title="叫貨狀態">
-                                    📞 {orderStatus} {secondaryStatus}
-                                  </span>
-                                );
-                              }
-                              
-                              return (
-                                <span className="status-badge no-status" title="尚無狀態">
-                                  ⏳ 待處理
-                                </span>
-                              );
-                            })()}
-                          </div>
                           
                           {/* 管理員刪除按鈕 */}
                           {isAdmin && (
