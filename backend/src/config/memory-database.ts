@@ -868,12 +868,39 @@ export const memoryDb = new MemoryDatabase();
 // 啟動時加載數據
 memoryDb.loadFromFile();
 
-// 啟動自動保存（開發環境下也啟用，但間隔較長）
+// 啟動自動保存（縮短間隔以防止數據丟失）
 if (process.env.NODE_ENV === 'development') {
-  memoryDb.startAutoSave(60000); // 開發環境每1分鐘保存一次
+  memoryDb.startAutoSave(30000); // 開發環境每30秒保存一次
 } else {
-  memoryDb.startAutoSave(300000); // 生產環境每5分鐘保存一次
+  memoryDb.startAutoSave(60000); // 生產環境每1分鐘保存一次（Render 重啟頻繁）
 }
+
+// 優雅關閉處理 - 確保在服務關閉時保存數據
+process.on('SIGTERM', () => {
+  console.log('Received SIGTERM, saving database before shutdown...');
+  memoryDb.saveToFile();
+  memoryDb.stopAutoSave();
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  console.log('Received SIGINT, saving database before shutdown...');
+  memoryDb.saveToFile();
+  memoryDb.stopAutoSave();
+  process.exit(0);
+});
+
+// 處理未捕獲的異常
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  memoryDb.saveToFile();
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  memoryDb.saveToFile();
+});
 
 // 進程退出時保存數據
 process.on('SIGINT', () => {
