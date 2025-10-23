@@ -399,13 +399,10 @@ class GitHubRecoveryService {
         if (!hasAdmin) {
           console.warn('⚠️ 備份中沒有管理員用戶，創建默認管理員...');
           await memoryDb.createUser({
-            id: 'user-1',
             username: '系統管理員',
             email: 'admin@yunshui.com',
             passwordHash: '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj6hsxq5S/kS', // admin123
-            role: 'ADMIN' as any,
-            createdAt: new Date(),
-            updatedAt: new Date()
+            role: 'ADMIN' as any
           });
           console.log('✅ 默認管理員用戶已創建');
         }
