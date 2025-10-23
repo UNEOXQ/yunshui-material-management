@@ -293,7 +293,7 @@ export const ValidatedMaterialForm: React.FC<ValidatedMaterialFormProps> = ({
 
           <div className="form-row">
             <InputField
-              label="價格 (TWD)"
+              label="價格 (CAD)"
               required
               type="text"
               id="price"

@@ -399,9 +399,9 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   // 移除輔材選擇相關函數，倉管只需要管理狀態
 
   const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat('zh-TW', {
+    return new Intl.NumberFormat('en-CA', {
       style: 'currency',
-      currency: 'TWD',
+      currency: 'CAD',
       minimumFractionDigits: 0,
       maximumFractionDigits: 2
     }).format(price);
