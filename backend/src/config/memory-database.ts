@@ -903,10 +903,16 @@ export class MemoryDatabase {
     return userMessages.length > 0 ? userMessages[0] : null;
   }
 
-  async deleteMessage(messageId: string, fromUserId: string): Promise<boolean> {
-    const messageIndex = this.messages.findIndex(msg => 
-      msg.id === messageId && msg.fromUserId === fromUserId
-    );
+  async deleteMessage(messageId: string, fromUserId?: string): Promise<boolean> {
+    const messageIndex = this.messages.findIndex(msg => {
+      if (fromUserId) {
+        // 普通用戶只能刪除自己發送的留言
+        return msg.id === messageId && msg.fromUserId === fromUserId;
+      } else {
+        // 管理員可以刪除任何留言
+        return msg.id === messageId;
+      }
+    });
     
     if (messageIndex === -1) return false;
 
