@@ -41,6 +41,14 @@ router.get('/role/:role', requireRole('ADMIN'), UserController.getUsersByRole);
 router.get('/:id', UserController.getUserById);
 
 /**
+ * @route   GET /api/users/:id/role
+ * @desc    Get user role information (Admin and Warehouse only)
+ * @access  Private (Admin, Warehouse)
+ * @param   id - User UUID
+ */
+router.get('/:id/role', requireRole('ADMIN', 'WAREHOUSE'), UserController.getUserRole);
+
+/**
  * @route   PUT /api/users/:id
  * @desc    Update user (Admin or own profile, role change Admin only)
  * @access  Private

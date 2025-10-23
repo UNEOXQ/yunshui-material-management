@@ -212,8 +212,8 @@ export class UserController {
     try {
       const { id } = req.params;
 
-      // Check if user has admin privileges or is requesting their own data
-      if (req.user?.role !== 'ADMIN' && req.user?.userId !== id) {
+      // Check if user has admin/warehouse privileges or is requesting their own data
+      if (req.user?.role !== 'ADMIN' && req.user?.role !== 'WAREHOUSE' && req.user?.userId !== id) {
         res.status(403).json({
           success: false,
           error: 'Forbidden',
@@ -258,6 +258,65 @@ export class UserController {
         success: false,
         error: 'Internal server error',
         message: 'An error occurred while retrieving the user'
+      });
+    }
+  }
+
+  /**
+   * Get user role information
+   * GET /api/users/:id/role
+   */
+  static async getUserRole(req: AuthenticatedRequest, res: Response): Promise<void> {
+    try {
+      const { id: targetUserId } = req.params;
+      const userRole = req.user!.role;
+
+      // 驗證 ID 格式
+      if (!isValidId(targetUserId)) {
+        res.status(400).json({
+          success: false,
+          error: 'Invalid ID',
+          message: 'User ID must be a valid UUID or memory database ID'
+        });
+        return;
+      }
+
+      // 檢查權限：只有管理員和倉管可以查看
+      if (userRole !== 'ADMIN' && userRole !== 'WAREHOUSE') {
+        res.status(403).json({
+          success: false,
+          error: 'Forbidden',
+          message: 'Only administrators and warehouse staff can access user roles'
+        });
+        return;
+      }
+
+      const user = await UserModel.findById(targetUserId);
+      if (!user) {
+        res.status(404).json({
+          success: false,
+          error: 'Not found',
+          message: 'User not found'
+        });
+        return;
+      }
+
+      // 只返回基本的角色信息
+      res.json({
+        success: true,
+        data: {
+          id: user.id,
+          username: user.username,
+          role: user.role
+        },
+        message: 'User role retrieved successfully'
+      });
+    } catch (error: any) {
+      console.error('Get user role error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Internal server error',
+        message: 'Failed to retrieve user role'
       });
     }
   }

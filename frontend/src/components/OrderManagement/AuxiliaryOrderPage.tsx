@@ -462,10 +462,9 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       'user-4': 'WAREHOUSE',
       'id-2032': 'ADMIN', // 系統管理員
       'id-2033': 'PM',    // Jeffrey
-      'id-2034': 'PM',    // Miya
-      'id-2035': 'PM',    // Erica  
+      'id-2034': 'AM',    // Miya (修正為 AM)
+      'id-2035': 'AM',    // Erica (修正為 AM)
       'id-2036': 'PM',    // LUKE
-      'id-2037': 'PM',    // 777 (新 PM 用戶)
       'id-2038': 'AM',    // 5555 (新 AM 用戶)
       'id-2064': 'AM',
       'id-2065': 'PM'
@@ -487,8 +486,13 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       }
     }
 
-    // 嘗試動態獲取用戶角色
-    fetchUserRole(userId);
+    // 嘗試動態獲取用戶角色（異步）
+    fetchUserRole(userId).then(role => {
+      if (role) {
+        // 強制重新渲染以顯示正確的角色
+        setUserRoleCache(prev => ({ ...prev, [userId]: role }));
+      }
+    });
 
     // 如果找不到映射，記錄日誌並返回默認值
     console.log(`⚠️ 未找到用戶 ID ${userId} 的角色映射，返回 USER`);
@@ -502,11 +506,11 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       const token = localStorage.getItem('authToken');
       
       if (!token) {
-        return;
+        return null;
       }
 
-      // 嘗試獲取特定用戶信息
-      const response = await fetch(`${API_URL}/users/${userId}`, {
+      // 使用專門的角色 API
+      const response = await fetch(`${API_URL}/users/${userId}/role`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -521,11 +525,15 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
             [userId]: result.data.role
           }));
           console.log(`✅ 動態獲取用戶 ${userId} 角色: ${result.data.role}`);
+          return result.data.role;
         }
+      } else {
+        console.warn(`獲取用戶 ${userId} 角色失敗: ${response.status}`);
       }
     } catch (error) {
       console.warn(`動態獲取用戶 ${userId} 角色失敗:`, error);
     }
+    return null;
   };
 
   // 預載入用戶角色信息（僅對有權限的用戶）
