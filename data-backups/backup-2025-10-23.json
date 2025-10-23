@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T03:09:27.316Z",
+  "timestamp": "2025-10-23T03:17:13.378Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -64,125 +64,7 @@
         "updatedAt": "2025-10-23T03:09:24.816Z"
       }
     ],
-    "orders": [
-      {
-        "userId": "id-2006",
-        "totalAmount": 8799,
-        "status": "PENDING",
-        "id": "id-2011",
-        "createdAt": "2025-10-23T02:34:59.429Z",
-        "updatedAt": "2025-10-23T02:52:08.002Z",
-        "items": [
-          {
-            "orderId": "id-2011",
-            "materialId": "id-2000",
-            "quantity": 2,
-            "unitPrice": 2.5,
-            "id": "id-2012",
-            "materialName": "螺絲釘 M6x20",
-            "materialCategory": "五金配件",
-            "materialType": "AUXILIARY",
-            "supplier": "五金供應商A",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
-            "material": {
-              "id": "id-2000",
-              "name": "螺絲釘 M6x20",
-              "category": "五金配件",
-              "price": 2.5,
-              "quantity": 991,
-              "supplier": "五金供應商A",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:09:24.814Z",
-              "updatedAt": "2025-10-23T03:09:24.814Z"
-            }
-          },
-          {
-            "orderId": "id-2011",
-            "materialId": "id-2002",
-            "quantity": 2,
-            "unitPrice": 8.5,
-            "id": "id-2013",
-            "materialName": "電線 2.5mm²",
-            "materialCategory": "電氣材料",
-            "materialType": "AUXILIARY",
-            "supplier": "電氣供應商C",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
-            "material": {
-              "id": "id-2002",
-              "name": "電線 2.5mm²",
-              "category": "電氣材料",
-              "price": 8.5,
-              "quantity": 491,
-              "supplier": "電氣供應商C",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:09:24.815Z",
-              "updatedAt": "2025-10-23T03:09:24.815Z"
-            }
-          }
-        ],
-        "name": "玉面小猴的訂單"
-      },
-      {
-        "userId": "id-2007",
-        "totalAmount": 450,
-        "status": "PENDING",
-        "id": "id-2011",
-        "createdAt": "2025-10-23T02:52:36.867Z",
-        "updatedAt": "2025-10-23T02:52:36.867Z",
-        "items": [
-          {
-            "orderId": "id-2011",
-            "materialId": "id-2000",
-            "quantity": 2,
-            "unitPrice": 2.5,
-            "id": "id-2012",
-            "materialName": "螺絲釘 M6x20",
-            "materialCategory": "五金配件",
-            "materialType": "AUXILIARY",
-            "supplier": "五金供應商A",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
-            "material": {
-              "id": "id-2000",
-              "name": "螺絲釘 M6x20",
-              "category": "五金配件",
-              "price": 2.5,
-              "quantity": 991,
-              "supplier": "五金供應商A",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:09:24.814Z",
-              "updatedAt": "2025-10-23T03:09:24.814Z"
-            }
-          },
-          {
-            "orderId": "id-2011",
-            "materialId": "id-2002",
-            "quantity": 2,
-            "unitPrice": 8.5,
-            "id": "id-2013",
-            "materialName": "電線 2.5mm²",
-            "materialCategory": "電氣材料",
-            "materialType": "AUXILIARY",
-            "supplier": "電氣供應商C",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
-            "material": {
-              "id": "id-2002",
-              "name": "電線 2.5mm²",
-              "category": "電氣材料",
-              "price": 8.5,
-              "quantity": 491,
-              "supplier": "電氣供應商C",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:09:24.815Z",
-              "updatedAt": "2025-10-23T03:09:24.815Z"
-            }
-          }
-        ]
-      }
-    ],
+    "orders": [],
     "users": [
       {
         "id": "id-2005",
@@ -287,22 +169,6 @@
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-23T01:38:25.106Z",
         "updatedAt": "2025-10-23T01:38:25.106Z"
-      },
-      {
-        "id": "id-2015",
-        "orderId": "id-2011",
-        "projectName": "輔材專案-2025-10-23-id-2011",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T02:34:59.433Z",
-        "updatedAt": "2025-10-23T02:34:59.433Z"
-      },
-      {
-        "id": "id-2014",
-        "orderId": "id-2011",
-        "projectName": "完成材專案-2025-10-23-id-2011",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T02:52:36.877Z",
-        "updatedAt": "2025-10-23T02:52:36.877Z"
       }
     ],
     "orderItems": [
@@ -340,20 +206,6 @@
         "quantity": 2,
         "unitPrice": 180,
         "id": "id-2024"
-      },
-      {
-        "orderId": "id-2011",
-        "materialId": "id-2000",
-        "quantity": 2,
-        "unitPrice": 2.5,
-        "id": "id-2012"
-      },
-      {
-        "orderId": "id-2011",
-        "materialId": "id-2002",
-        "quantity": 2,
-        "unitPrice": 8.5,
-        "id": "id-2013"
       }
     ],
     "statusUpdates": [],
