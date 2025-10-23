@@ -85,8 +85,8 @@ const OperationHistory: React.FC<OperationHistoryProps> = ({ order }) => {
     };
 
     const getRoleFromUserId = (userId: string): string => {
-        // 映射真實用戶ID到角色
-        const roleMap: { [key: string]: string } = {
+        // 靜態映射表
+        const staticRoleMap: { [key: string]: string } = {
             'user-1': 'ADMIN',
             'user-2': 'PM',
             'user-3': 'AM',
@@ -95,7 +95,13 @@ const OperationHistory: React.FC<OperationHistoryProps> = ({ order }) => {
             'id-2065': 'PM'
         };
         
-        return roleMap[userId] || 'USER';
+        if (staticRoleMap[userId]) {
+            return staticRoleMap[userId];
+        }
+
+        // 如果找不到映射，記錄日誌並返回默認值
+        console.log(`⚠️ 未找到用戶 ID ${userId} 的角色映射，返回 USER`);
+        return 'USER';
     };
 
     const getStatusTypeDisplayName = (statusType: string): string => {

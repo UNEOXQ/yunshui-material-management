@@ -323,6 +323,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
     // 切換訂單類型時重置過濾器
     setOrderFilter('all');
     loadOrders();
+    preloadUserRoles(); // 預載入用戶角色信息
   }, [selectedOrderType]); // 當選擇的訂單類型改變時重新載入
 
   // 當過濾器或訂單狀態改變時重新過濾
@@ -423,9 +424,17 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
     return userMap[userId as keyof typeof userMap] || userId;
   };
 
+  // 用戶角色緩存
+  const [userRoleCache, setUserRoleCache] = useState<{ [key: string]: string }>({});
+
   const getRoleFromUserId = (userId: string): string => {
-    // 映射真實用戶ID到角色
-    const roleMap: { [key: string]: string } = {
+    // 檢查緩存
+    if (userRoleCache[userId]) {
+      return userRoleCache[userId];
+    }
+
+    // 靜態映射表（作為後備）
+    const staticRoleMap: { [key: string]: string } = {
       'user-1': 'ADMIN',
       'user-2': 'PM',
       'user-3': 'AM', 
@@ -434,7 +443,45 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       'id-2065': 'PM'
     };
     
-    return roleMap[userId] || 'USER';
+    if (staticRoleMap[userId]) {
+      return staticRoleMap[userId];
+    }
+
+    // 如果找不到映射，記錄日誌並返回默認值
+    console.log(`⚠️ 未找到用戶 ID ${userId} 的角色映射，返回 USER`);
+    return 'USER';
+  };
+
+  // 預載入用戶角色信息
+  const preloadUserRoles = async () => {
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004/api';
+      const token = localStorage.getItem('authToken');
+      
+      if (!token) {
+        return;
+      }
+
+      const response = await fetch(`${API_URL}/users`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.data) {
+          const roleCache: { [key: string]: string } = {};
+          result.data.forEach((user: any) => {
+            roleCache[user.id] = user.role;
+          });
+          setUserRoleCache(roleCache);
+          console.log('✅ 用戶角色信息預載入完成:', roleCache);
+        }
+      }
+    } catch (error) {
+      console.warn('預載入用戶角色失敗:', error);
+    }
   };
 
   // 處理輔材訂單創建
