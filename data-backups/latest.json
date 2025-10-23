@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T00:25:15.452Z",
+  "timestamp": "2025-10-23T00:26:18.382Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -20,12 +20,12 @@
         "name": "木板 2x4x8",
         "category": "木材",
         "price": 45,
-        "quantity": 200,
+        "quantity": 199,
         "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
         "supplier": "木材供應商B",
         "type": "FINISHED",
         "createdAt": "2024-01-02T00:00:00.000Z",
-        "updatedAt": "2025-10-23T00:16:04.214Z"
+        "updatedAt": "2025-10-23T00:25:49.792Z"
       },
       {
         "id": "material-3",
@@ -44,12 +44,12 @@
         "name": "水泥 50kg",
         "category": "建材",
         "price": 180,
-        "quantity": 100,
+        "quantity": 98,
         "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
         "supplier": "建材供應商D",
         "type": "FINISHED",
         "createdAt": "2024-01-04T00:00:00.000Z",
-        "updatedAt": "2025-10-23T00:16:12.430Z"
+        "updatedAt": "2025-10-23T00:25:49.793Z"
       },
       {
         "name": "好折凳",
@@ -96,6 +96,64 @@
               "type": "AUXILIARY",
               "createdAt": "2024-01-01T00:00:00.000Z",
               "updatedAt": "2024-01-01T00:00:00.000Z"
+            }
+          }
+        ]
+      },
+      {
+        "userId": "user-3",
+        "totalAmount": 405,
+        "status": "PENDING",
+        "id": "id-2012",
+        "createdAt": "2025-10-23T00:25:49.791Z",
+        "updatedAt": "2025-10-23T00:25:49.791Z",
+        "items": [
+          {
+            "orderId": "id-2012",
+            "materialId": "material-2",
+            "quantity": 1,
+            "unitPrice": 45,
+            "id": "id-2013",
+            "materialName": "木板 2x4x8",
+            "materialCategory": "木材",
+            "materialType": "FINISHED",
+            "supplier": "木材供應商B",
+            "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
+            "material": {
+              "id": "material-2",
+              "name": "木板 2x4x8",
+              "category": "木材",
+              "price": 45,
+              "quantity": 199,
+              "supplier": "木材供應商B",
+              "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
+              "type": "FINISHED",
+              "createdAt": "2024-01-02T00:00:00.000Z",
+              "updatedAt": "2025-10-23T00:25:49.792Z"
+            }
+          },
+          {
+            "orderId": "id-2012",
+            "materialId": "material-4",
+            "quantity": 2,
+            "unitPrice": 180,
+            "id": "id-2014",
+            "materialName": "水泥 50kg",
+            "materialCategory": "建材",
+            "materialType": "FINISHED",
+            "supplier": "建材供應商D",
+            "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
+            "material": {
+              "id": "material-4",
+              "name": "水泥 50kg",
+              "category": "建材",
+              "price": 180,
+              "quantity": 98,
+              "supplier": "建材供應商D",
+              "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
+              "type": "FINISHED",
+              "createdAt": "2024-01-04T00:00:00.000Z",
+              "updatedAt": "2025-10-23T00:25:49.793Z"
             }
           }
         ]
@@ -157,7 +215,40 @@
         "updatedAt": "2024-01-06T00:00:00.000Z"
       }
     ],
-    "statusUpdates": [],
+    "statusUpdates": [
+      {
+        "id": "id-2016",
+        "projectId": "id-2015",
+        "updatedBy": "user-3",
+        "statusType": "ORDER",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T00:25:49.794Z"
+      },
+      {
+        "id": "id-2017",
+        "projectId": "id-2015",
+        "updatedBy": "user-3",
+        "statusType": "PICKUP",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T00:25:49.794Z"
+      },
+      {
+        "id": "id-2018",
+        "projectId": "id-2015",
+        "updatedBy": "user-3",
+        "statusType": "DELIVERY",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T00:25:49.795Z"
+      },
+      {
+        "id": "id-2019",
+        "projectId": "id-2015",
+        "updatedBy": "user-3",
+        "statusType": "CHECK",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T00:25:49.795Z"
+      }
+    ],
     "messages": []
   }
 }
