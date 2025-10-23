@@ -75,10 +75,10 @@ const pickupStatusSchema = Joi.object({
 
 const deliveryStatusSchema = Joi.object({
   status: Joi.string()
-    .valid('Delivered', '')
+    .valid('Delivered', '', 'RESET')
     .required()
     .messages({
-      'any.only': 'Status must be "Delivered" or empty',
+      'any.only': 'Status must be "Delivered", empty, or "RESET"',
       'any.required': 'Status is required'
     }),
   time: Joi.string()
@@ -121,10 +121,10 @@ const deliveryStatusSchema = Joi.object({
 
 const checkStatusSchema = Joi.object({
   status: Joi.string()
-    .valid('Check and sign(C.B/PM)', '(C.B)', 'WH)')
+    .valid('Check and sign(C.B/PM)', '(C.B)', 'WH)', 'RESET')
     .required()
     .messages({
-      'any.only': 'Status must be one of: Check and sign(C.B/PM), (C.B), WH)',
+      'any.only': 'Status must be one of: Check and sign(C.B/PM), (C.B), WH), or RESET',
       'any.required': 'Status is required'
     })
 });
