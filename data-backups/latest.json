@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T21:28:05.446Z",
+  "timestamp": "2025-10-23T21:29:54.892Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -943,18 +943,18 @@
     ],
     "messages": [
       {
-        "id": "id-2097",
-        "fromUserId": "user-1",
-        "fromUsername": "admin",
+        "id": "id-2132",
+        "fromUserId": "id-2032",
+        "fromUsername": "系統管理員",
         "toUserId": "id-2033",
         "toUsername": "Jeffrey",
-        "content": "你最棒!",
+        "content": "你最讚!",
         "isRead": false,
         "messageType": "USER_MESSAGE",
-        "createdAt": "2025-10-23T05:24:32.191Z",
-        "updatedAt": "2025-10-23T05:24:32.191Z"
+        "createdAt": "2025-10-23T21:29:33.306Z",
+        "updatedAt": "2025-10-23T21:29:33.306Z"
       }
     ],
-    "nextId": 2132
+    "nextId": 2133
   }
 }
