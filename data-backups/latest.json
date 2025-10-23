@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T00:03:16.084Z",
+  "timestamp": "2025-10-23T00:06:38.320Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -53,7 +53,7 @@
       },
       {
         "id": "id-2000",
-        "name": "螺絲釘 M6x20",
+        "name": "螺絲釘 M6x2011",
         "category": "五金配件",
         "price": 2.5,
         "quantity": 1000,
@@ -61,7 +61,7 @@
         "supplier": "五金供應商A",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T00:03:13.136Z",
-        "updatedAt": "2025-10-23T00:03:13.136Z"
+        "updatedAt": "2025-10-23T00:04:16.104Z"
       },
       {
         "id": "id-2001",
@@ -159,152 +159,17 @@
             }
           }
         ]
-      },
-      {
-        "id": "order-2",
-        "userId": "user-1",
-        "status": "APPROVED",
-        "totalAmount": 90,
-        "name": "管理員測試訂單",
-        "createdAt": "2024-01-11T00:00:00.000Z",
-        "updatedAt": "2024-01-11T00:00:00.000Z",
-        "items": [
-          {
-            "id": "item-2",
-            "orderId": "order-2",
-            "materialId": "material-2",
-            "quantity": 2,
-            "unitPrice": 45,
-            "materialName": "木板 2x4x8",
-            "materialCategory": "木材",
-            "materialType": "FINISHED",
-            "supplier": "木材供應商B",
-            "imageUrl": "",
-            "material": {
-              "id": "material-2",
-              "name": "木板 2x4x8",
-              "category": "木材",
-              "price": 45,
-              "quantity": 200,
-              "supplier": "木材供應商B",
-              "imageUrl": "",
-              "type": "FINISHED",
-              "createdAt": "2024-01-02T00:00:00.000Z",
-              "updatedAt": "2024-01-02T00:00:00.000Z"
-            }
-          }
-        ]
-      },
-      {
-        "id": "order-3",
-        "userId": "user-3",
-        "status": "PENDING",
-        "totalAmount": 360,
-        "name": "Miya的完成材訂單",
-        "createdAt": "2024-01-12T00:00:00.000Z",
-        "updatedAt": "2024-01-12T00:00:00.000Z",
-        "items": []
-      },
-      {
-        "id": "order-4",
-        "userId": "id-2064",
-        "status": "COMPLETED",
-        "totalAmount": 180,
-        "name": "Erica的完成材訂單",
-        "createdAt": "2024-01-13T00:00:00.000Z",
-        "updatedAt": "2024-01-13T00:00:00.000Z",
-        "items": []
-      },
-      {
-        "id": "id-2008",
-        "userId": "user-2",
-        "status": "PENDING",
-        "totalAmount": 250,
-        "name": "Jeffrey的輔材訂單",
-        "createdAt": "2025-10-23T00:03:13.475Z",
-        "updatedAt": "2025-10-23T00:03:13.475Z",
-        "items": []
-      },
-      {
-        "id": "id-2009",
-        "userId": "user-1",
-        "status": "APPROVED",
-        "totalAmount": 90,
-        "name": "管理員測試訂單",
-        "createdAt": "2025-10-23T00:03:13.529Z",
-        "updatedAt": "2025-10-23T00:03:13.529Z",
-        "items": []
-      },
-      {
-        "id": "id-2010",
-        "userId": "user-3",
-        "status": "PENDING",
-        "totalAmount": 360,
-        "name": "Miya的完成材訂單",
-        "createdAt": "2025-10-23T00:03:13.573Z",
-        "updatedAt": "2025-10-23T00:03:13.573Z",
-        "items": []
-      },
-      {
-        "id": "id-2011",
-        "userId": "id-2064",
-        "status": "COMPLETED",
-        "totalAmount": 180,
-        "name": "Erica的完成材訂單",
-        "createdAt": "2025-10-23T00:03:13.574Z",
-        "updatedAt": "2025-10-23T00:03:13.574Z",
-        "items": []
-      },
-      {
-        "id": "id-2012",
-        "userId": "user-2",
-        "status": "PENDING",
-        "totalAmount": 250,
-        "name": "Jeffrey的輔材訂單",
-        "createdAt": "2025-10-23T00:03:13.575Z",
-        "updatedAt": "2025-10-23T00:03:13.575Z",
-        "items": []
-      },
-      {
-        "id": "id-2013",
-        "userId": "user-1",
-        "status": "APPROVED",
-        "totalAmount": 90,
-        "name": "管理員測試訂單",
-        "createdAt": "2025-10-23T00:03:13.576Z",
-        "updatedAt": "2025-10-23T00:03:13.576Z",
-        "items": []
-      },
-      {
-        "id": "id-2014",
-        "userId": "user-3",
-        "status": "PENDING",
-        "totalAmount": 360,
-        "name": "Miya的完成材訂單",
-        "createdAt": "2025-10-23T00:03:13.577Z",
-        "updatedAt": "2025-10-23T00:03:13.577Z",
-        "items": []
-      },
-      {
-        "id": "id-2015",
-        "userId": "id-2064",
-        "status": "COMPLETED",
-        "totalAmount": 180,
-        "name": "Erica的完成材訂單",
-        "createdAt": "2025-10-23T00:03:13.578Z",
-        "updatedAt": "2025-10-23T00:03:13.578Z",
-        "items": []
       }
     ],
     "users": [
       {
         "id": "user-1",
-        "username": "admin",
+        "username": "系統管理員",
         "email": "admin@yunshui.com",
         "role": "ADMIN",
         "passwordHash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.s5uIoO",
         "createdAt": "2024-01-01T00:00:00.000Z",
-        "updatedAt": "2024-01-01T00:00:00.000Z"
+        "updatedAt": "2025-10-23T00:05:20.423Z"
       },
       {
         "id": "user-2",
