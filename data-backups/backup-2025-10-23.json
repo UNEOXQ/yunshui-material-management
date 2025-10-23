@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T04:00:16.218Z",
+  "timestamp": "2025-10-23T04:01:19.834Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -8,12 +8,12 @@
         "name": "螺絲釘 M6x20",
         "category": "五金配件",
         "price": 2.5,
-        "quantity": 988,
+        "quantity": 987,
         "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
         "supplier": "五金供應商A",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T03:17:25.095Z",
-        "updatedAt": "2025-10-23T03:49:51.986Z"
+        "updatedAt": "2025-10-23T04:01:06.857Z"
       },
       {
         "id": "id-2028",
@@ -90,12 +90,12 @@
               "name": "螺絲釘 M6x20",
               "category": "五金配件",
               "price": 2.5,
-              "quantity": 988,
+              "quantity": 987,
               "supplier": "五金供應商A",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T03:49:51.986Z"
+              "updatedAt": "2025-10-23T04:01:06.857Z"
             }
           },
           {
@@ -232,12 +232,12 @@
               "name": "螺絲釘 M6x20",
               "category": "五金配件",
               "price": 2.5,
-              "quantity": 988,
+              "quantity": 987,
               "supplier": "五金供應商A",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T03:49:51.986Z"
+              "updatedAt": "2025-10-23T04:01:06.857Z"
             }
           },
           {
@@ -373,12 +373,12 @@
               "name": "螺絲釘 M6x20",
               "category": "五金配件",
               "price": 2.5,
-              "quantity": 988,
+              "quantity": 987,
               "supplier": "五金供應商A",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T03:49:51.986Z"
+              "updatedAt": "2025-10-23T04:01:06.857Z"
             }
           },
           {
@@ -403,6 +403,40 @@
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.096Z",
               "updatedAt": "2025-10-23T03:49:51.987Z"
+            }
+          }
+        ]
+      },
+      {
+        "userId": "user-2",
+        "totalAmount": 2.5,
+        "status": "PENDING",
+        "id": "id-2076",
+        "createdAt": "2025-10-23T04:01:06.852Z",
+        "updatedAt": "2025-10-23T04:01:06.852Z",
+        "items": [
+          {
+            "orderId": "id-2076",
+            "materialId": "id-2027",
+            "quantity": 1,
+            "unitPrice": 2.5,
+            "id": "id-2077",
+            "materialName": "螺絲釘 M6x20",
+            "materialCategory": "五金配件",
+            "materialType": "AUXILIARY",
+            "supplier": "五金供應商A",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+            "material": {
+              "id": "id-2027",
+              "name": "螺絲釘 M6x20",
+              "category": "五金配件",
+              "price": 2.5,
+              "quantity": 987,
+              "supplier": "五金供應商A",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T03:17:25.095Z",
+              "updatedAt": "2025-10-23T04:01:06.857Z"
             }
           }
         ]
@@ -552,6 +586,14 @@
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-23T03:49:51.989Z",
         "updatedAt": "2025-10-23T03:49:51.989Z"
+      },
+      {
+        "id": "id-2078",
+        "orderId": "id-2076",
+        "projectName": "輔材專案-2025-10-23-id-2076",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2025-10-23T04:01:06.866Z",
+        "updatedAt": "2025-10-23T04:01:06.866Z"
       }
     ],
     "orderItems": [
@@ -673,10 +715,50 @@
         "quantity": 1,
         "unitPrice": 8.5,
         "id": "id-2068"
+      },
+      {
+        "orderId": "id-2076",
+        "materialId": "id-2027",
+        "quantity": 1,
+        "unitPrice": 2.5,
+        "id": "id-2077"
       }
     ],
-    "statusUpdates": [],
+    "statusUpdates": [
+      {
+        "id": "id-2079",
+        "projectId": "id-2078",
+        "updatedBy": "user-2",
+        "statusType": "ORDER",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T04:01:06.867Z"
+      },
+      {
+        "id": "id-2080",
+        "projectId": "id-2078",
+        "updatedBy": "user-2",
+        "statusType": "PICKUP",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T04:01:06.877Z"
+      },
+      {
+        "id": "id-2081",
+        "projectId": "id-2078",
+        "updatedBy": "user-2",
+        "statusType": "DELIVERY",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T04:01:06.887Z"
+      },
+      {
+        "id": "id-2082",
+        "projectId": "id-2078",
+        "updatedBy": "user-2",
+        "statusType": "CHECK",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T04:01:06.895Z"
+      }
+    ],
     "messages": [],
-    "nextId": 2076
+    "nextId": 2083
   }
 }
