@@ -461,7 +461,12 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       'user-3': 'AM', 
       'user-4': 'WAREHOUSE',
       'id-2032': 'ADMIN', // 系統管理員
-      'id-2033': 'PM',    // Jeffrey 的新用戶 ID
+      'id-2033': 'PM',    // Jeffrey
+      'id-2034': 'PM',    // Miya
+      'id-2035': 'PM',    // Erica  
+      'id-2036': 'PM',    // LUKE
+      'id-2037': 'PM',    // 777 (新 PM 用戶)
+      'id-2038': 'AM',    // 5555 (新 AM 用戶)
       'id-2064': 'AM',
       'id-2065': 'PM'
     };
@@ -470,14 +475,68 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       return staticRoleMap[userId];
     }
 
+    // 嘗試從用戶名推斷角色（基於常見的命名模式）
+    const username = getUsernameFromId(userId);
+    if (username) {
+      // 如果用戶名包含特定關鍵字，可以推斷角色
+      const lowerUsername = username.toLowerCase();
+      if (lowerUsername.includes('admin') || lowerUsername.includes('管理')) {
+        return 'ADMIN';
+      } else if (lowerUsername.includes('warehouse') || lowerUsername.includes('倉管')) {
+        return 'WAREHOUSE';
+      }
+    }
+
+    // 嘗試動態獲取用戶角色
+    fetchUserRole(userId);
+
     // 如果找不到映射，記錄日誌並返回默認值
     console.log(`⚠️ 未找到用戶 ID ${userId} 的角色映射，返回 USER`);
     return 'USER';
   };
 
-  // 預載入用戶角色信息
+  // 動態獲取單個用戶角色
+  const fetchUserRole = async (userId: string) => {
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004/api';
+      const token = localStorage.getItem('authToken');
+      
+      if (!token) {
+        return;
+      }
+
+      // 嘗試獲取特定用戶信息
+      const response = await fetch(`${API_URL}/users/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.data) {
+          // 更新緩存
+          setUserRoleCache(prev => ({
+            ...prev,
+            [userId]: result.data.role
+          }));
+          console.log(`✅ 動態獲取用戶 ${userId} 角色: ${result.data.role}`);
+        }
+      }
+    } catch (error) {
+      console.warn(`動態獲取用戶 ${userId} 角色失敗:`, error);
+    }
+  };
+
+  // 預載入用戶角色信息（僅對有權限的用戶）
   const preloadUserRoles = async () => {
     try {
+      // 只有管理員才嘗試載入用戶列表
+      if (user.role !== 'ADMIN') {
+        console.log('⚠️ 非管理員用戶，跳過用戶角色預載入');
+        return;
+      }
+
       const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3004/api';
       const token = localStorage.getItem('authToken');
       
