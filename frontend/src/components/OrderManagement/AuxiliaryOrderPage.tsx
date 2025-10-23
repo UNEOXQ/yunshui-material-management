@@ -399,11 +399,12 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
 
   const getUsernameFromId = (userId: string): string => {
     // 映射真實用戶ID到用戶名（使用最新的名稱）
-    const userMap = {
+    const userMap: { [key: string]: string } = {
       'user-1': 'admin000000',
       'user-2': 'pm001',
       'user-3': 'am001', 
-      'user-4': '馬克'
+      'user-4': '馬克',
+      'id-2033': 'Jeffrey'  // Jeffrey 的新用戶 ID
     };
     
     // 嘗試從localStorage獲取最新的用戶名稱
@@ -439,6 +440,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       'user-2': 'PM',
       'user-3': 'AM', 
       'user-4': 'WAREHOUSE',
+      'id-2033': 'PM',  // Jeffrey 的新用戶 ID
       'id-2064': 'AM',
       'id-2065': 'PM'
     };

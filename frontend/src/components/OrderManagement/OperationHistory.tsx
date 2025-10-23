@@ -91,6 +91,7 @@ const OperationHistory: React.FC<OperationHistoryProps> = ({ order }) => {
             'user-2': 'PM',
             'user-3': 'AM',
             'user-4': 'WAREHOUSE',
+            'id-2033': 'PM',  // Jeffrey 的新用戶 ID
             'id-2064': 'AM',
             'id-2065': 'PM'
         };
