@@ -49,11 +49,10 @@ export const createStatusUpdateSchema = Joi.object({
             'any.required': 'Status type is required'
         }),
     statusValue: Joi.string()
-        .min(1)
         .max(100)
+        .allow('')
         .required()
         .messages({
-            'string.min': 'Status value cannot be empty',
             'string.max': 'Status value cannot exceed 100 characters',
             'any.required': 'Status value is required'
         }),
