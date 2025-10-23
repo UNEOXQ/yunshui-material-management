@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T05:22:55.269Z",
+  "timestamp": "2025-10-23T05:52:50.269Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -8,12 +8,12 @@
         "name": "螺絲釘 M6x20",
         "category": "五金配件",
         "price": 2.5,
-        "quantity": 987,
+        "quantity": 986,
         "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
         "supplier": "五金供應商A",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T03:17:25.095Z",
-        "updatedAt": "2025-10-23T04:01:06.857Z"
+        "updatedAt": "2025-10-23T05:41:57.935Z"
       },
       {
         "id": "id-2028",
@@ -32,12 +32,12 @@
         "name": "電線 2.5mm²",
         "category": "電氣材料",
         "price": 8.5,
-        "quantity": 487,
+        "quantity": 486,
         "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
         "supplier": "電氣供應商C",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T03:17:25.096Z",
-        "updatedAt": "2025-10-23T03:49:51.987Z"
+        "updatedAt": "2025-10-23T05:41:57.935Z"
       },
       {
         "id": "id-2030",
@@ -55,13 +55,13 @@
         "name": "好折凳",
         "category": "武器",
         "price": 8777,
-        "quantity": 982,
+        "quantity": 979,
         "supplier": "食神軍火",
         "type": "AUXILIARY",
         "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
         "id": "id-2031",
         "createdAt": "2025-10-23T03:17:25.098Z",
-        "updatedAt": "2025-10-23T03:33:04.350Z"
+        "updatedAt": "2025-10-23T05:41:57.935Z"
       }
     ],
     "orders": [
@@ -90,12 +90,12 @@
               "name": "螺絲釘 M6x20",
               "category": "五金配件",
               "price": 2.5,
-              "quantity": 987,
+              "quantity": 986,
               "supplier": "五金供應商A",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T04:01:06.857Z"
+              "updatedAt": "2025-10-23T05:41:57.935Z"
             }
           },
           {
@@ -114,12 +114,12 @@
               "name": "電線 2.5mm²",
               "category": "電氣材料",
               "price": 8.5,
-              "quantity": 487,
+              "quantity": 486,
               "supplier": "電氣供應商C",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.096Z",
-              "updatedAt": "2025-10-23T03:49:51.987Z"
+              "updatedAt": "2025-10-23T05:41:57.935Z"
             }
           },
           {
@@ -138,12 +138,12 @@
               "name": "好折凳",
               "category": "武器",
               "price": 8777,
-              "quantity": 982,
+              "quantity": 979,
               "supplier": "食神軍火",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-23T03:33:04.350Z"
+              "updatedAt": "2025-10-23T05:41:57.935Z"
             }
           }
         ]
@@ -232,12 +232,12 @@
               "name": "螺絲釘 M6x20",
               "category": "五金配件",
               "price": 2.5,
-              "quantity": 987,
+              "quantity": 986,
               "supplier": "五金供應商A",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T04:01:06.857Z"
+              "updatedAt": "2025-10-23T05:41:57.935Z"
             }
           },
           {
@@ -256,12 +256,12 @@
               "name": "電線 2.5mm²",
               "category": "電氣材料",
               "price": 8.5,
-              "quantity": 487,
+              "quantity": 486,
               "supplier": "電氣供應商C",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.096Z",
-              "updatedAt": "2025-10-23T03:49:51.987Z"
+              "updatedAt": "2025-10-23T05:41:57.935Z"
             }
           },
           {
@@ -280,12 +280,12 @@
               "name": "好折凳",
               "category": "武器",
               "price": 8777,
-              "quantity": 982,
+              "quantity": 979,
               "supplier": "食神軍火",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-23T03:33:04.350Z"
+              "updatedAt": "2025-10-23T05:41:57.935Z"
             }
           }
         ]
@@ -345,6 +345,89 @@
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.097Z",
               "updatedAt": "2025-10-23T03:33:25.367Z"
+            }
+          }
+        ]
+      },
+      {
+        "userId": "user-2",
+        "totalAmount": 26342,
+        "status": "PENDING",
+        "id": "id-2098",
+        "createdAt": "2025-10-23T05:41:57.933Z",
+        "updatedAt": "2025-10-23T05:42:10.364Z",
+        "name": "海綿",
+        "items": [
+          {
+            "orderId": "id-2098",
+            "materialId": "id-2027",
+            "quantity": 1,
+            "unitPrice": 2.5,
+            "id": "id-2099",
+            "materialName": "螺絲釘 M6x20",
+            "materialCategory": "五金配件",
+            "materialType": "AUXILIARY",
+            "supplier": "五金供應商A",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+            "material": {
+              "id": "id-2027",
+              "name": "螺絲釘 M6x20",
+              "category": "五金配件",
+              "price": 2.5,
+              "quantity": 986,
+              "supplier": "五金供應商A",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T03:17:25.095Z",
+              "updatedAt": "2025-10-23T05:41:57.935Z"
+            }
+          },
+          {
+            "orderId": "id-2098",
+            "materialId": "id-2029",
+            "quantity": 1,
+            "unitPrice": 8.5,
+            "id": "id-2100",
+            "materialName": "電線 2.5mm²",
+            "materialCategory": "電氣材料",
+            "materialType": "AUXILIARY",
+            "supplier": "電氣供應商C",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
+            "material": {
+              "id": "id-2029",
+              "name": "電線 2.5mm²",
+              "category": "電氣材料",
+              "price": 8.5,
+              "quantity": 486,
+              "supplier": "電氣供應商C",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T03:17:25.096Z",
+              "updatedAt": "2025-10-23T05:41:57.935Z"
+            }
+          },
+          {
+            "orderId": "id-2098",
+            "materialId": "id-2031",
+            "quantity": 3,
+            "unitPrice": 8777,
+            "id": "id-2101",
+            "materialName": "好折凳",
+            "materialCategory": "武器",
+            "materialType": "AUXILIARY",
+            "supplier": "食神軍火",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
+            "material": {
+              "id": "id-2031",
+              "name": "好折凳",
+              "category": "武器",
+              "price": 8777,
+              "quantity": 979,
+              "supplier": "食神軍火",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T03:17:25.098Z",
+              "updatedAt": "2025-10-23T05:41:57.935Z"
             }
           }
         ]
@@ -486,6 +569,14 @@
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-23T03:33:25.368Z",
         "updatedAt": "2025-10-23T03:33:25.368Z"
+      },
+      {
+        "id": "id-2102",
+        "orderId": "id-2098",
+        "projectName": "輔材專案-2025-10-23-id-2098",
+        "overallStatus": "COMPLETED",
+        "createdAt": "2025-10-23T05:41:57.936Z",
+        "updatedAt": "2025-10-23T05:43:09.201Z"
       }
     ],
     "orderItems": [
@@ -593,10 +684,161 @@
         "quantity": 2,
         "unitPrice": 180,
         "id": "id-2060"
+      },
+      {
+        "orderId": "id-2098",
+        "materialId": "id-2027",
+        "quantity": 1,
+        "unitPrice": 2.5,
+        "id": "id-2099"
+      },
+      {
+        "orderId": "id-2098",
+        "materialId": "id-2029",
+        "quantity": 1,
+        "unitPrice": 8.5,
+        "id": "id-2100"
+      },
+      {
+        "orderId": "id-2098",
+        "materialId": "id-2031",
+        "quantity": 3,
+        "unitPrice": 8777,
+        "id": "id-2101"
       }
     ],
-    "statusUpdates": [],
-    "messages": [],
-    "nextId": 2097
+    "statusUpdates": [
+      {
+        "id": "id-2103",
+        "projectId": "id-2102",
+        "updatedBy": "user-2",
+        "statusType": "ORDER",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T05:41:57.936Z"
+      },
+      {
+        "id": "id-2104",
+        "projectId": "id-2102",
+        "updatedBy": "user-2",
+        "statusType": "PICKUP",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T05:41:57.937Z"
+      },
+      {
+        "id": "id-2105",
+        "projectId": "id-2102",
+        "updatedBy": "user-2",
+        "statusType": "DELIVERY",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T05:41:57.938Z"
+      },
+      {
+        "id": "id-2106",
+        "projectId": "id-2102",
+        "updatedBy": "user-2",
+        "statusType": "CHECK",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T05:41:57.939Z"
+      },
+      {
+        "id": "id-2107",
+        "projectId": "id-2102",
+        "updatedBy": "user-4",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - waiting for pick",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "waiting for pick"
+        },
+        "createdAt": "2025-10-23T05:43:09.142Z"
+      },
+      {
+        "id": "id-2108",
+        "projectId": "id-2102",
+        "updatedBy": "user-4",
+        "statusType": "PICKUP",
+        "statusValue": "Picked (B.T.W)",
+        "additionalData": {
+          "primaryStatus": "Picked",
+          "secondaryStatus": "(B.T.W)"
+        },
+        "createdAt": "2025-10-23T05:43:09.184Z"
+      },
+      {
+        "id": "id-2109",
+        "projectId": "id-2102",
+        "updatedBy": "user-4",
+        "statusType": "CHECK",
+        "statusValue": "Check and sign(C.B/PM)",
+        "createdAt": "2025-10-23T05:43:09.200Z"
+      },
+      {
+        "id": "id-2110",
+        "projectId": "id-2102",
+        "updatedBy": "user-4",
+        "statusType": "DELIVERY",
+        "statusValue": "Delivered",
+        "additionalData": {
+          "time": "20250713",
+          "address": "1111",
+          "po": "222",
+          "deliveredBy": "333"
+        },
+        "createdAt": "2025-10-23T05:43:09.236Z"
+      },
+      {
+        "id": "id-2111",
+        "projectId": "id-2102",
+        "updatedBy": "user-4",
+        "statusType": "PICKUP",
+        "statusValue": "Picked (B.T.W)",
+        "additionalData": {
+          "primaryStatus": "Picked",
+          "secondaryStatus": "(B.T.W)"
+        },
+        "createdAt": "2025-10-23T05:43:32.885Z"
+      },
+      {
+        "id": "id-2112",
+        "projectId": "id-2102",
+        "updatedBy": "user-4",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - waiting for pick",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "waiting for pick"
+        },
+        "createdAt": "2025-10-23T05:43:32.921Z"
+      },
+      {
+        "id": "id-2113",
+        "projectId": "id-2102",
+        "updatedBy": "user-4",
+        "statusType": "DELIVERY",
+        "statusValue": "Delivered",
+        "additionalData": {
+          "time": "20250713",
+          "address": "1111",
+          "po": "222",
+          "deliveredBy": "333"
+        },
+        "createdAt": "2025-10-23T05:43:32.924Z"
+      }
+    ],
+    "messages": [
+      {
+        "id": "id-2097",
+        "fromUserId": "user-1",
+        "fromUsername": "admin",
+        "toUserId": "id-2033",
+        "toUsername": "Jeffrey",
+        "content": "你最棒!",
+        "isRead": false,
+        "messageType": "USER_MESSAGE",
+        "createdAt": "2025-10-23T05:24:32.191Z",
+        "updatedAt": "2025-10-23T05:24:32.191Z"
+      }
+    ],
+    "nextId": 2114
   }
 }
