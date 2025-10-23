@@ -489,6 +489,24 @@ export class StatusController {
         return;
       }
 
+      // Handle reset status
+      if (status === 'RESET') {
+        // Create a reset status update to override previous status
+        const statusUpdate = await StatusUpdateModel.create({
+          projectId: project.id,
+          updatedBy: userId,
+          statusType: 'DELIVERY',
+          statusValue: ''  // Empty string indicates reset
+        });
+
+        res.json({
+          success: true,
+          data: { statusUpdate },
+          message: 'Delivery status reset successfully'
+        });
+        return;
+      }
+
       // Create status update
       const statusUpdateData: any = {
         projectId: project.id,
@@ -567,6 +585,24 @@ export class StatusController {
           success: false,
           error: 'Not found',
           message: 'Project not found for this order'
+        });
+        return;
+      }
+
+      // Handle reset status
+      if (status === 'RESET') {
+        // Create a reset status update to override previous status
+        const statusUpdate = await StatusUpdateModel.create({
+          projectId: project.id,
+          updatedBy: userId,
+          statusType: 'CHECK',
+          statusValue: ''  // Empty string indicates reset
+        });
+
+        res.json({
+          success: true,
+          data: { statusUpdate },
+          message: 'Check status reset successfully'
         });
         return;
       }

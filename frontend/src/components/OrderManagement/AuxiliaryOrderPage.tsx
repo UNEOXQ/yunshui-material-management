@@ -203,7 +203,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
     
     // 檢查後端狀態
     const backendCheckStatus = (order as any).latestStatuses?.CHECK?.statusValue;
-    return backendCheckStatus && backendCheckStatus !== '' && backendCheckStatus !== '未設定';
+    return backendCheckStatus && backendCheckStatus !== '' && backendCheckStatus !== '未設定' && backendCheckStatus !== 'RESET';
   };
 
   // 過濾訂單
@@ -758,13 +758,13 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
                                         (order as any).latestStatuses?.ORDER?.statusValue;
                       
                       // 優先級：點收 > 到案 > 取貨 > 叫貨
-                      if (checkStatus && checkStatus !== '' && checkStatus !== '未設定') {
+                      if (checkStatus && checkStatus !== '' && checkStatus !== '未設定' && checkStatus !== 'RESET') {
                         return (
                           <span className="status-badge check-status" title="點收狀態">
                             📋 {checkStatus}
                           </span>
                         );
-                      } else if (deliveryStatus && deliveryStatus !== '' && deliveryStatus !== '未設定') {
+                      } else if (deliveryStatus && deliveryStatus !== '' && deliveryStatus !== '未設定' && deliveryStatus !== 'RESET') {
                         return (
                           <span className="status-badge delivery-status" title="到案狀態">
                             🚚 {deliveryStatus}
@@ -1689,8 +1689,13 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
                             // 保存到案狀態
                             if (statusData.deliveryStatus !== undefined) {
                               if (statusData.deliveryStatus === '') {
-                                // 重置到案狀態 - 不發送到後端，只在前端標記為重置
+                                // 重置到案狀態 - 發送重置請求到後端
                                 console.log('重置到案狀態');
+                                promises.push(
+                                  statusService.updateDeliveryStatus(orderId, {
+                                    status: 'RESET'
+                                  })
+                                );
                               } else {
                                 promises.push(
                                   statusService.updateDeliveryStatus(orderId, {
@@ -1707,8 +1712,13 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
                             // 保存點收狀態
                             if (statusData.checkStatus !== undefined) {
                               if (statusData.checkStatus === '') {
-                                // 重置點收狀態 - 不發送到後端，只在前端標記為重置
+                                // 重置點收狀態 - 發送重置請求到後端
                                 console.log('重置點收狀態');
+                                promises.push(
+                                  statusService.updateCheckStatus(orderId, {
+                                    status: 'RESET'
+                                  })
+                                );
                               } else {
                                 promises.push(
                                   statusService.updateCheckStatus(orderId, {
