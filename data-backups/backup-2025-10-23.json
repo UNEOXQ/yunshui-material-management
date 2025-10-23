@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T02:51:36.778Z",
+  "timestamp": "2025-10-23T02:53:10.061Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -12,20 +12,20 @@
         "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
         "supplier": "五金供應商A",
         "type": "AUXILIARY",
-        "createdAt": "2025-10-23T02:45:00.571Z",
-        "updatedAt": "2025-10-23T02:45:00.571Z"
+        "createdAt": "2025-10-23T02:51:38.119Z",
+        "updatedAt": "2025-10-23T02:51:38.119Z"
       },
       {
         "id": "id-2001",
         "name": "木板 2x4x8",
         "category": "木材",
         "price": 45,
-        "quantity": 191,
-        "imageUrl": "http://localhost:3004/uploads/materials/3-1761187841773-683366066.jpg",
+        "quantity": 189,
+        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761187841773-683366066.jpg",
         "supplier": "木材供應商B",
         "type": "FINISHED",
-        "createdAt": "2025-10-23T02:45:00.572Z",
-        "updatedAt": "2025-10-23T02:50:41.781Z"
+        "createdAt": "2025-10-23T02:51:38.153Z",
+        "updatedAt": "2025-10-23T02:52:36.874Z"
       },
       {
         "id": "id-2002",
@@ -33,23 +33,23 @@
         "category": "電氣材料",
         "price": 8.5,
         "quantity": 491,
-        "imageUrl": "http://localhost:3004/uploads/materials/2-1761187846589-666619379.jpg",
+        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
         "supplier": "電氣供應商C",
         "type": "AUXILIARY",
-        "createdAt": "2025-10-23T02:45:00.572Z",
-        "updatedAt": "2025-10-23T02:50:46.591Z"
+        "createdAt": "2025-10-23T02:51:38.169Z",
+        "updatedAt": "2025-10-23T02:51:38.169Z"
       },
       {
         "id": "id-2003",
         "name": "水泥 50kg",
         "category": "建材",
         "price": 180,
-        "quantity": 91,
-        "imageUrl": "http://localhost:3004/uploads/materials/4-1761187851811-901514397.jpg",
+        "quantity": 89,
+        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761187851811-901514397.jpg",
         "supplier": "建材供應商D",
         "type": "FINISHED",
-        "createdAt": "2025-10-23T02:45:00.573Z",
-        "updatedAt": "2025-10-23T02:50:51.812Z"
+        "createdAt": "2025-10-23T02:51:38.183Z",
+        "updatedAt": "2025-10-23T02:52:36.876Z"
       },
       {
         "name": "好折凳",
@@ -58,10 +58,10 @@
         "quantity": 987,
         "supplier": "食神軍火",
         "type": "AUXILIARY",
-        "imageUrl": "http://localhost:3004/uploads/materials/5-1761187856350-613135435.jpg",
+        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
         "id": "id-2004",
-        "createdAt": "2025-10-23T02:45:00.574Z",
-        "updatedAt": "2025-10-23T02:50:56.352Z"
+        "createdAt": "2025-10-23T02:51:38.191Z",
+        "updatedAt": "2025-10-23T02:51:38.191Z"
       }
     ],
     "orders": [
@@ -71,7 +71,7 @@
         "status": "PENDING",
         "id": "id-2011",
         "createdAt": "2025-10-23T02:34:59.429Z",
-        "updatedAt": "2025-10-23T02:34:59.429Z",
+        "updatedAt": "2025-10-23T02:52:08.002Z",
         "items": [
           {
             "orderId": "id-2011",
@@ -93,8 +93,8 @@
               "supplier": "五金供應商A",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
               "type": "AUXILIARY",
-              "createdAt": "2025-10-23T02:45:00.571Z",
-              "updatedAt": "2025-10-23T02:45:00.571Z"
+              "createdAt": "2025-10-23T02:51:38.119Z",
+              "updatedAt": "2025-10-23T02:51:38.119Z"
             }
           },
           {
@@ -107,7 +107,7 @@
             "materialCategory": "電氣材料",
             "materialType": "AUXILIARY",
             "supplier": "電氣供應商C",
-            "imageUrl": "http://localhost:3004/uploads/materials/2-1761187846589-666619379.jpg",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
             "material": {
               "id": "id-2002",
               "name": "電線 2.5mm²",
@@ -115,10 +115,165 @@
               "price": 8.5,
               "quantity": 491,
               "supplier": "電氣供應商C",
-              "imageUrl": "http://localhost:3004/uploads/materials/2-1761187846589-666619379.jpg",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
               "type": "AUXILIARY",
-              "createdAt": "2025-10-23T02:45:00.572Z",
-              "updatedAt": "2025-10-23T02:50:46.591Z"
+              "createdAt": "2025-10-23T02:51:38.169Z",
+              "updatedAt": "2025-10-23T02:51:38.169Z"
+            }
+          },
+          {
+            "orderId": "id-2011",
+            "materialId": "id-2001",
+            "quantity": 2,
+            "unitPrice": 45,
+            "id": "id-2012",
+            "materialName": "木板 2x4x8",
+            "materialCategory": "木材",
+            "materialType": "FINISHED",
+            "supplier": "木材供應商B",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761187841773-683366066.jpg",
+            "material": {
+              "id": "id-2001",
+              "name": "木板 2x4x8",
+              "category": "木材",
+              "price": 45,
+              "quantity": 189,
+              "supplier": "木材供應商B",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761187841773-683366066.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T02:51:38.153Z",
+              "updatedAt": "2025-10-23T02:52:36.874Z"
+            }
+          },
+          {
+            "orderId": "id-2011",
+            "materialId": "id-2003",
+            "quantity": 2,
+            "unitPrice": 180,
+            "id": "id-2013",
+            "materialName": "水泥 50kg",
+            "materialCategory": "建材",
+            "materialType": "FINISHED",
+            "supplier": "建材供應商D",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761187851811-901514397.jpg",
+            "material": {
+              "id": "id-2003",
+              "name": "水泥 50kg",
+              "category": "建材",
+              "price": 180,
+              "quantity": 89,
+              "supplier": "建材供應商D",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761187851811-901514397.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T02:51:38.183Z",
+              "updatedAt": "2025-10-23T02:52:36.876Z"
+            }
+          }
+        ],
+        "name": "玉面小猴的訂單"
+      },
+      {
+        "userId": "id-2007",
+        "totalAmount": 450,
+        "status": "PENDING",
+        "id": "id-2011",
+        "createdAt": "2025-10-23T02:52:36.867Z",
+        "updatedAt": "2025-10-23T02:52:36.867Z",
+        "items": [
+          {
+            "orderId": "id-2011",
+            "materialId": "id-2000",
+            "quantity": 2,
+            "unitPrice": 2.5,
+            "id": "id-2012",
+            "materialName": "螺絲釘 M6x20",
+            "materialCategory": "五金配件",
+            "materialType": "AUXILIARY",
+            "supplier": "五金供應商A",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+            "material": {
+              "id": "id-2000",
+              "name": "螺絲釘 M6x20",
+              "category": "五金配件",
+              "price": 2.5,
+              "quantity": 991,
+              "supplier": "五金供應商A",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T02:51:38.119Z",
+              "updatedAt": "2025-10-23T02:51:38.119Z"
+            }
+          },
+          {
+            "orderId": "id-2011",
+            "materialId": "id-2002",
+            "quantity": 2,
+            "unitPrice": 8.5,
+            "id": "id-2013",
+            "materialName": "電線 2.5mm²",
+            "materialCategory": "電氣材料",
+            "materialType": "AUXILIARY",
+            "supplier": "電氣供應商C",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
+            "material": {
+              "id": "id-2002",
+              "name": "電線 2.5mm²",
+              "category": "電氣材料",
+              "price": 8.5,
+              "quantity": 491,
+              "supplier": "電氣供應商C",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T02:51:38.169Z",
+              "updatedAt": "2025-10-23T02:51:38.169Z"
+            }
+          },
+          {
+            "orderId": "id-2011",
+            "materialId": "id-2001",
+            "quantity": 2,
+            "unitPrice": 45,
+            "id": "id-2012",
+            "materialName": "木板 2x4x8",
+            "materialCategory": "木材",
+            "materialType": "FINISHED",
+            "supplier": "木材供應商B",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761187841773-683366066.jpg",
+            "material": {
+              "id": "id-2001",
+              "name": "木板 2x4x8",
+              "category": "木材",
+              "price": 45,
+              "quantity": 189,
+              "supplier": "木材供應商B",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761187841773-683366066.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T02:51:38.153Z",
+              "updatedAt": "2025-10-23T02:52:36.874Z"
+            }
+          },
+          {
+            "orderId": "id-2011",
+            "materialId": "id-2003",
+            "quantity": 2,
+            "unitPrice": 180,
+            "id": "id-2013",
+            "materialName": "水泥 50kg",
+            "materialCategory": "建材",
+            "materialType": "FINISHED",
+            "supplier": "建材供應商D",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761187851811-901514397.jpg",
+            "material": {
+              "id": "id-2003",
+              "name": "水泥 50kg",
+              "category": "建材",
+              "price": 180,
+              "quantity": 89,
+              "supplier": "建材供應商D",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761187851811-901514397.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T02:51:38.183Z",
+              "updatedAt": "2025-10-23T02:52:36.876Z"
             }
           }
         ]
@@ -131,8 +286,8 @@
         "email": "admin@yunshui.com",
         "role": "ADMIN",
         "passwordHash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.s5uIoO",
-        "createdAt": "2025-10-23T02:45:00.575Z",
-        "updatedAt": "2025-10-23T02:45:00.575Z"
+        "createdAt": "2025-10-23T02:51:38.204Z",
+        "updatedAt": "2025-10-23T02:51:38.204Z"
       },
       {
         "id": "id-2006",
@@ -140,8 +295,8 @@
         "email": "pm001@yunshui.com",
         "role": "PM",
         "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
-        "createdAt": "2025-10-23T02:45:00.576Z",
-        "updatedAt": "2025-10-23T02:45:00.576Z"
+        "createdAt": "2025-10-23T02:51:38.214Z",
+        "updatedAt": "2025-10-23T02:51:38.214Z"
       },
       {
         "id": "id-2007",
@@ -149,8 +304,8 @@
         "email": "am001@yunshui.com",
         "role": "AM",
         "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
-        "createdAt": "2025-10-23T02:45:00.577Z",
-        "updatedAt": "2025-10-23T02:45:00.577Z"
+        "createdAt": "2025-10-23T02:51:38.217Z",
+        "updatedAt": "2025-10-23T02:51:38.217Z"
       },
       {
         "id": "id-2008",
@@ -158,8 +313,8 @@
         "email": "warehouse001@yunshui.com",
         "role": "WAREHOUSE",
         "passwordHash": "$2b$12$6BNUHWuoAhHfufkBMy4MJ.qiAiHXVBFy4XGaGILoxN05oy01L9Hhm",
-        "createdAt": "2025-10-23T02:45:00.578Z",
-        "updatedAt": "2025-10-23T02:45:00.578Z"
+        "createdAt": "2025-10-23T02:51:38.220Z",
+        "updatedAt": "2025-10-23T02:51:38.220Z"
       },
       {
         "id": "id-2009",
@@ -167,8 +322,8 @@
         "email": "Erica@yunshui.com",
         "role": "AM",
         "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
-        "createdAt": "2025-10-23T02:45:00.579Z",
-        "updatedAt": "2025-10-23T02:45:00.579Z"
+        "createdAt": "2025-10-23T02:51:38.242Z",
+        "updatedAt": "2025-10-23T02:51:38.242Z"
       },
       {
         "id": "id-2010",
@@ -176,8 +331,8 @@
         "email": "LUKE@yunshui.com",
         "role": "PM",
         "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
-        "createdAt": "2025-10-23T02:45:00.580Z",
-        "updatedAt": "2025-10-23T02:45:00.580Z"
+        "createdAt": "2025-10-23T02:51:38.265Z",
+        "updatedAt": "2025-10-23T02:51:38.265Z"
       }
     ],
     "projects": [
@@ -236,6 +391,14 @@
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-23T02:34:59.433Z",
         "updatedAt": "2025-10-23T02:34:59.433Z"
+      },
+      {
+        "id": "id-2014",
+        "orderId": "id-2011",
+        "projectName": "完成材專案-2025-10-23-id-2011",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2025-10-23T02:52:36.877Z",
+        "updatedAt": "2025-10-23T02:52:36.877Z"
       }
     ],
     "orderItems": [
@@ -287,9 +450,56 @@
         "quantity": 2,
         "unitPrice": 8.5,
         "id": "id-2013"
+      },
+      {
+        "orderId": "id-2011",
+        "materialId": "id-2001",
+        "quantity": 2,
+        "unitPrice": 45,
+        "id": "id-2012"
+      },
+      {
+        "orderId": "id-2011",
+        "materialId": "id-2003",
+        "quantity": 2,
+        "unitPrice": 180,
+        "id": "id-2013"
       }
     ],
-    "statusUpdates": [],
+    "statusUpdates": [
+      {
+        "id": "id-2015",
+        "projectId": "id-2014",
+        "updatedBy": "id-2007",
+        "statusType": "ORDER",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T02:52:36.877Z"
+      },
+      {
+        "id": "id-2016",
+        "projectId": "id-2014",
+        "updatedBy": "id-2007",
+        "statusType": "PICKUP",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T02:52:36.878Z"
+      },
+      {
+        "id": "id-2017",
+        "projectId": "id-2014",
+        "updatedBy": "id-2007",
+        "statusType": "DELIVERY",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T02:52:36.880Z"
+      },
+      {
+        "id": "id-2018",
+        "projectId": "id-2014",
+        "updatedBy": "id-2007",
+        "statusType": "CHECK",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T02:52:36.882Z"
+      }
+    ],
     "messages": []
   }
 }
