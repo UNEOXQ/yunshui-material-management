@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T01:37:46.112Z",
+  "timestamp": "2025-10-23T01:38:51.486Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -8,60 +8,60 @@
         "name": "螺絲釘 M6x20",
         "category": "五金配件",
         "price": 2.5,
-        "quantity": 995,
+        "quantity": 993,
         "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
         "supplier": "五金供應商A",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T01:37:43.009Z",
-        "updatedAt": "2025-10-23T01:37:43.009Z"
+        "updatedAt": "2025-10-23T01:38:16.992Z"
       },
       {
         "id": "id-2001",
         "name": "木板 2x4x8",
         "category": "木材",
         "price": 45,
-        "quantity": 193,
+        "quantity": 191,
         "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
         "supplier": "木材供應商B",
         "type": "FINISHED",
         "createdAt": "2025-10-23T01:37:43.009Z",
-        "updatedAt": "2025-10-23T01:37:43.009Z"
+        "updatedAt": "2025-10-23T01:38:25.104Z"
       },
       {
         "id": "id-2002",
         "name": "電線 2.5mm²",
         "category": "電氣材料",
         "price": 8.5,
-        "quantity": 495,
+        "quantity": 493,
         "imageUrl": "http://localhost:3004/uploads/materials/2-1761178568299-497165776.jpg",
         "supplier": "電氣供應商C",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T01:37:43.010Z",
-        "updatedAt": "2025-10-23T01:37:43.010Z"
+        "updatedAt": "2025-10-23T01:38:16.993Z"
       },
       {
         "id": "id-2003",
         "name": "水泥 50kg",
         "category": "建材",
         "price": 180,
-        "quantity": 93,
+        "quantity": 91,
         "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
         "supplier": "建材供應商D",
         "type": "FINISHED",
         "createdAt": "2025-10-23T01:37:43.010Z",
-        "updatedAt": "2025-10-23T01:37:43.010Z"
+        "updatedAt": "2025-10-23T01:38:25.105Z"
       },
       {
         "name": "好折凳",
         "category": "武器",
         "price": 8777,
-        "quantity": 990,
+        "quantity": 988,
         "supplier": "食神軍火",
         "type": "AUXILIARY",
         "imageUrl": "http://localhost:3004/uploads/materials/5-1761178576187-171959358.jpg",
         "id": "id-2004",
         "createdAt": "2025-10-23T01:37:43.011Z",
-        "updatedAt": "2025-10-23T01:37:43.011Z"
+        "updatedAt": "2025-10-23T01:38:16.993Z"
       }
     ],
     "orders": [
@@ -69,19 +69,261 @@
         "userId": "id-2006",
         "totalAmount": 17576,
         "status": "PENDING",
-        "id": "id-2011",
-        "createdAt": "2025-10-23T01:37:43.014Z",
-        "updatedAt": "2025-10-23T01:37:43.014Z",
-        "items": []
+        "id": "id-2013",
+        "createdAt": "2025-10-23T01:38:16.989Z",
+        "updatedAt": "2025-10-23T01:38:16.989Z",
+        "items": [
+          {
+            "orderId": "id-2013",
+            "materialId": "id-2000",
+            "quantity": 2,
+            "unitPrice": 2.5,
+            "id": "id-2014",
+            "materialName": "螺絲釘 M6x20",
+            "materialCategory": "五金配件",
+            "materialType": "AUXILIARY",
+            "supplier": "五金供應商A",
+            "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
+            "material": {
+              "id": "id-2000",
+              "name": "螺絲釘 M6x20",
+              "category": "五金配件",
+              "price": 2.5,
+              "quantity": 993,
+              "supplier": "五金供應商A",
+              "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T01:37:43.009Z",
+              "updatedAt": "2025-10-23T01:38:16.992Z"
+            }
+          },
+          {
+            "orderId": "id-2013",
+            "materialId": "id-2002",
+            "quantity": 2,
+            "unitPrice": 8.5,
+            "id": "id-2015",
+            "materialName": "電線 2.5mm²",
+            "materialCategory": "電氣材料",
+            "materialType": "AUXILIARY",
+            "supplier": "電氣供應商C",
+            "imageUrl": "http://localhost:3004/uploads/materials/2-1761178568299-497165776.jpg",
+            "material": {
+              "id": "id-2002",
+              "name": "電線 2.5mm²",
+              "category": "電氣材料",
+              "price": 8.5,
+              "quantity": 493,
+              "supplier": "電氣供應商C",
+              "imageUrl": "http://localhost:3004/uploads/materials/2-1761178568299-497165776.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T01:37:43.010Z",
+              "updatedAt": "2025-10-23T01:38:16.993Z"
+            }
+          },
+          {
+            "orderId": "id-2013",
+            "materialId": "id-2004",
+            "quantity": 2,
+            "unitPrice": 8777,
+            "id": "id-2016",
+            "materialName": "好折凳",
+            "materialCategory": "武器",
+            "materialType": "AUXILIARY",
+            "supplier": "食神軍火",
+            "imageUrl": "http://localhost:3004/uploads/materials/5-1761178576187-171959358.jpg",
+            "material": {
+              "id": "id-2004",
+              "name": "好折凳",
+              "category": "武器",
+              "price": 8777,
+              "quantity": 988,
+              "supplier": "食神軍火",
+              "imageUrl": "http://localhost:3004/uploads/materials/5-1761178576187-171959358.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T01:37:43.011Z",
+              "updatedAt": "2025-10-23T01:38:16.993Z"
+            }
+          },
+          {
+            "orderId": "id-2013",
+            "materialId": "id-2000",
+            "quantity": 2,
+            "unitPrice": 2.5,
+            "id": "id-2014",
+            "materialName": "螺絲釘 M6x20",
+            "materialCategory": "五金配件",
+            "materialType": "AUXILIARY",
+            "supplier": "五金供應商A",
+            "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
+            "material": {
+              "id": "id-2000",
+              "name": "螺絲釘 M6x20",
+              "category": "五金配件",
+              "price": 2.5,
+              "quantity": 993,
+              "supplier": "五金供應商A",
+              "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T01:37:43.009Z",
+              "updatedAt": "2025-10-23T01:38:16.992Z"
+            }
+          },
+          {
+            "orderId": "id-2013",
+            "materialId": "id-2002",
+            "quantity": 2,
+            "unitPrice": 8.5,
+            "id": "id-2015",
+            "materialName": "電線 2.5mm²",
+            "materialCategory": "電氣材料",
+            "materialType": "AUXILIARY",
+            "supplier": "電氣供應商C",
+            "imageUrl": "http://localhost:3004/uploads/materials/2-1761178568299-497165776.jpg",
+            "material": {
+              "id": "id-2002",
+              "name": "電線 2.5mm²",
+              "category": "電氣材料",
+              "price": 8.5,
+              "quantity": 493,
+              "supplier": "電氣供應商C",
+              "imageUrl": "http://localhost:3004/uploads/materials/2-1761178568299-497165776.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T01:37:43.010Z",
+              "updatedAt": "2025-10-23T01:38:16.993Z"
+            }
+          },
+          {
+            "orderId": "id-2013",
+            "materialId": "id-2004",
+            "quantity": 2,
+            "unitPrice": 8777,
+            "id": "id-2016",
+            "materialName": "好折凳",
+            "materialCategory": "武器",
+            "materialType": "AUXILIARY",
+            "supplier": "食神軍火",
+            "imageUrl": "http://localhost:3004/uploads/materials/5-1761178576187-171959358.jpg",
+            "material": {
+              "id": "id-2004",
+              "name": "好折凳",
+              "category": "武器",
+              "price": 8777,
+              "quantity": 988,
+              "supplier": "食神軍火",
+              "imageUrl": "http://localhost:3004/uploads/materials/5-1761178576187-171959358.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T01:37:43.011Z",
+              "updatedAt": "2025-10-23T01:38:16.993Z"
+            }
+          }
+        ]
       },
       {
         "userId": "id-2007",
-        "totalAmount": 495,
+        "totalAmount": 450,
         "status": "PENDING",
-        "id": "id-2012",
-        "createdAt": "2025-10-23T01:37:43.014Z",
-        "updatedAt": "2025-10-23T01:37:43.014Z",
-        "items": []
+        "id": "id-2022",
+        "createdAt": "2025-10-23T01:38:25.101Z",
+        "updatedAt": "2025-10-23T01:38:25.101Z",
+        "items": [
+          {
+            "orderId": "id-2022",
+            "materialId": "id-2001",
+            "quantity": 3,
+            "unitPrice": 45,
+            "id": "id-2023",
+            "materialName": "木板 2x4x8",
+            "materialCategory": "木材",
+            "materialType": "FINISHED",
+            "supplier": "木材供應商B",
+            "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
+            "material": {
+              "id": "id-2001",
+              "name": "木板 2x4x8",
+              "category": "木材",
+              "price": 45,
+              "quantity": 191,
+              "supplier": "木材供應商B",
+              "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T01:37:43.009Z",
+              "updatedAt": "2025-10-23T01:38:25.104Z"
+            }
+          },
+          {
+            "orderId": "id-2022",
+            "materialId": "id-2003",
+            "quantity": 2,
+            "unitPrice": 180,
+            "id": "id-2024",
+            "materialName": "水泥 50kg",
+            "materialCategory": "建材",
+            "materialType": "FINISHED",
+            "supplier": "建材供應商D",
+            "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
+            "material": {
+              "id": "id-2003",
+              "name": "水泥 50kg",
+              "category": "建材",
+              "price": 180,
+              "quantity": 91,
+              "supplier": "建材供應商D",
+              "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T01:37:43.010Z",
+              "updatedAt": "2025-10-23T01:38:25.105Z"
+            }
+          },
+          {
+            "orderId": "id-2022",
+            "materialId": "id-2001",
+            "quantity": 2,
+            "unitPrice": 45,
+            "id": "id-2023",
+            "materialName": "木板 2x4x8",
+            "materialCategory": "木材",
+            "materialType": "FINISHED",
+            "supplier": "木材供應商B",
+            "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
+            "material": {
+              "id": "id-2001",
+              "name": "木板 2x4x8",
+              "category": "木材",
+              "price": 45,
+              "quantity": 191,
+              "supplier": "木材供應商B",
+              "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T01:37:43.009Z",
+              "updatedAt": "2025-10-23T01:38:25.104Z"
+            }
+          },
+          {
+            "orderId": "id-2022",
+            "materialId": "id-2003",
+            "quantity": 2,
+            "unitPrice": 180,
+            "id": "id-2024",
+            "materialName": "水泥 50kg",
+            "materialCategory": "建材",
+            "materialType": "FINISHED",
+            "supplier": "建材供應商D",
+            "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
+            "material": {
+              "id": "id-2003",
+              "name": "水泥 50kg",
+              "category": "建材",
+              "price": 180,
+              "quantity": 91,
+              "supplier": "建材供應商D",
+              "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T01:37:43.010Z",
+              "updatedAt": "2025-10-23T01:38:25.105Z"
+            }
+          }
+        ]
       }
     ],
     "users": [
@@ -172,6 +414,22 @@
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-23T01:29:40.001Z",
         "updatedAt": "2025-10-23T01:29:40.001Z"
+      },
+      {
+        "id": "id-2017",
+        "orderId": "id-2013",
+        "projectName": "輔材專案-2025-10-23-id-2013",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2025-10-23T01:38:16.995Z",
+        "updatedAt": "2025-10-23T01:38:16.995Z"
+      },
+      {
+        "id": "id-2025",
+        "orderId": "id-2022",
+        "projectName": "完成材專案-2025-10-23-id-2022",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2025-10-23T01:38:25.106Z",
+        "updatedAt": "2025-10-23T01:38:25.106Z"
       }
     ],
     "orderItems": [
@@ -209,9 +467,109 @@
         "quantity": 2,
         "unitPrice": 180,
         "id": "id-2024"
+      },
+      {
+        "orderId": "id-2013",
+        "materialId": "id-2000",
+        "quantity": 2,
+        "unitPrice": 2.5,
+        "id": "id-2014"
+      },
+      {
+        "orderId": "id-2013",
+        "materialId": "id-2002",
+        "quantity": 2,
+        "unitPrice": 8.5,
+        "id": "id-2015"
+      },
+      {
+        "orderId": "id-2013",
+        "materialId": "id-2004",
+        "quantity": 2,
+        "unitPrice": 8777,
+        "id": "id-2016"
+      },
+      {
+        "orderId": "id-2022",
+        "materialId": "id-2001",
+        "quantity": 2,
+        "unitPrice": 45,
+        "id": "id-2023"
+      },
+      {
+        "orderId": "id-2022",
+        "materialId": "id-2003",
+        "quantity": 2,
+        "unitPrice": 180,
+        "id": "id-2024"
       }
     ],
-    "statusUpdates": [],
+    "statusUpdates": [
+      {
+        "id": "id-2018",
+        "projectId": "id-2017",
+        "updatedBy": "id-2006",
+        "statusType": "ORDER",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T01:38:16.995Z"
+      },
+      {
+        "id": "id-2019",
+        "projectId": "id-2017",
+        "updatedBy": "id-2006",
+        "statusType": "PICKUP",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T01:38:16.995Z"
+      },
+      {
+        "id": "id-2020",
+        "projectId": "id-2017",
+        "updatedBy": "id-2006",
+        "statusType": "DELIVERY",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T01:38:16.996Z"
+      },
+      {
+        "id": "id-2021",
+        "projectId": "id-2017",
+        "updatedBy": "id-2006",
+        "statusType": "CHECK",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T01:38:16.997Z"
+      },
+      {
+        "id": "id-2026",
+        "projectId": "id-2025",
+        "updatedBy": "id-2007",
+        "statusType": "ORDER",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T01:38:25.106Z"
+      },
+      {
+        "id": "id-2027",
+        "projectId": "id-2025",
+        "updatedBy": "id-2007",
+        "statusType": "PICKUP",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T01:38:25.107Z"
+      },
+      {
+        "id": "id-2028",
+        "projectId": "id-2025",
+        "updatedBy": "id-2007",
+        "statusType": "DELIVERY",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T01:38:25.109Z"
+      },
+      {
+        "id": "id-2029",
+        "projectId": "id-2025",
+        "updatedBy": "id-2007",
+        "statusType": "CHECK",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T01:38:25.110Z"
+      }
+    ],
     "messages": []
   }
 }
