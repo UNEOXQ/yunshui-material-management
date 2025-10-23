@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { processUserData } from './utils/userUtils';
 import './App.css';
 
 // 設定頁面標題
@@ -177,14 +178,14 @@ const LoginPage: React.FC<{ onLogin: (user: User) => void }> = ({ onLogin }) => 
       console.log('Login response:', result);
 
       if (result.success && result.data) {
-        const user: User = {
+        const user: User = processUserData({
           id: result.data.user.id,
           username: result.data.user.username,
           email: result.data.user.email,
           role: result.data.user.role.toUpperCase() as User['role'],
           createdAt: new Date(result.data.user.createdAt),
           updatedAt: new Date(result.data.user.updatedAt)
-        };
+        });
 
         // 存儲真正的 JWT token
         localStorage.setItem('user', JSON.stringify(user));
@@ -265,14 +266,14 @@ const LoginPage: React.FC<{ onLogin: (user: User) => void }> = ({ onLogin }) => 
       console.log('Quick login response from backend:', result);
 
       if (result.success && result.data) {
-        const user: User = {
+        const user: User = processUserData({
           id: result.data.user.id,
           username: result.data.user.username,
           email: result.data.user.email,
           role: result.data.user.role.toUpperCase() as User['role'],
           createdAt: new Date(result.data.user.createdAt),
           updatedAt: new Date(result.data.user.updatedAt)
-        };
+        });
 
         // 存儲真正的 JWT token
         localStorage.setItem('user', JSON.stringify(user));

@@ -426,25 +426,9 @@ class GitHubRecoveryService {
             const existingUser = (memoryDb as any).users.find((u: any) => u.id === user.id);
             
             if (!existingUser) {
-              // 用戶名稱映射：保持顯示名稱而不是原始帳號名
-              const displayNameMap: { [key: string]: string } = {
-                'pm001': 'Jeffrey',
-                'am001': 'Miya', 
-                'warehouse001': 'Mark',
-                'admin': '系統管理員'
-              };
-              
-              // 如果是原始帳號名，使用顯示名稱
-              let displayName = user.username;
-              if (displayNameMap[user.username]) {
-                displayName = displayNameMap[user.username];
-                console.log(`🔄 映射用戶名稱: ${user.username} → ${displayName}`);
-              }
-              
-              // 直接添加到用戶數組，保持原始 ID 但使用顯示名稱
+              // 直接添加到用戶數組，保持原始數據不變
               const userData = {
                 ...user,
-                username: displayName, // 使用顯示名稱
                 createdAt: new Date(user.createdAt),
                 updatedAt: new Date(user.updatedAt)
               };
