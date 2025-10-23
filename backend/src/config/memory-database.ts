@@ -77,6 +77,15 @@ export class MemoryDatabase {
       passwordHash: '$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6', // default123
       createdAt: new Date('2024-01-08'),
       updatedAt: new Date('2024-01-08')
+    },
+    {
+      id: 'id-2037',
+      username: 'Unknown User',
+      email: 'unknown@yunshui.com',
+      role: 'PM',
+      passwordHash: '$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // default123
+      createdAt: new Date('2024-01-09'),
+      updatedAt: new Date('2024-01-09')
     }
   ];
 

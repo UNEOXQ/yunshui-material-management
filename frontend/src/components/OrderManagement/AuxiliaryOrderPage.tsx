@@ -472,7 +472,8 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       'id-2038': 'AM',    // 5555 (新 AM 用戶)
       'id-2064': 'AM',    // Erica (修正為 AM)
       'id-2065': 'PM',    // LUKE
-      'id-2255': 'PM'     // 777 (根據輔材訂單判斷為 PM)
+      'id-2255': 'PM',    // 777 (根據輔材訂單判斷為 PM)
+      'id-2037': 'PM'     // Unknown User
     };
     
     if (staticRoleMap[userId]) {
