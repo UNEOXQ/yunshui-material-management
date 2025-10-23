@@ -435,9 +435,18 @@ export class MaterialModel {
 
   // Check if material exists
   static async exists(id: string): Promise<boolean> {
-    const query = 'SELECT 1 FROM materials WHERE id = $1';
-    const result = await pool.query(query, [id]);
-    return result.rows.length > 0;
+    try {
+      // 先嘗試內存數據庫
+      const materials = await memoryDb.getAllMaterials();
+      return materials.materials.some(m => m.id === id);
+    } catch (error) {
+      console.warn('Memory database failed, trying PostgreSQL:', error);
+      
+      // 回退到 PostgreSQL
+      const query = 'SELECT 1 FROM materials WHERE id = $1';
+      const result = await pool.query(query, [id]);
+      return result.rows.length > 0;
+    }
   }
 
   // Check if material has sufficient quantity
