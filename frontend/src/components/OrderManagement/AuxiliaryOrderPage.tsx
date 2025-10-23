@@ -322,6 +322,8 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   useEffect(() => {
     // 切換訂單類型時重置過濾器
     setOrderFilter('all');
+    // 清除用戶角色緩存以確保獲取最新角色
+    setUserRoleCache({});
     loadOrders();
     preloadUserRoles(); // 預載入用戶角色信息
   }, [selectedOrderType]); // 當選擇的訂單類型改變時重新載入
@@ -362,6 +364,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
             // 過濾出 PM 用戶和 ADMIN 創建的輔材訂單
             orders = allAuxiliaryOrders.filter(order => {
               const creatorRole = getRoleFromUserId(order.userId);
+              console.log(`🔍 訂單 ${order.id} 創建者 ${order.userId} 角色: ${creatorRole}`);
               return creatorRole === 'PM' || creatorRole === 'ADMIN';
             });
             console.log(`🔍 PM 輔材過濾: 從 ${allAuxiliaryOrders.length} 筆訂單中過濾出 ${orders.length} 筆 PM 訂單`);
@@ -451,6 +454,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   const getRoleFromUserId = (userId: string): string => {
     // 檢查緩存
     if (userRoleCache[userId]) {
+      console.log(`🔍 從緩存獲取用戶 ${userId} 角色: ${userRoleCache[userId]}`);
       return userRoleCache[userId];
     }
 
@@ -463,7 +467,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       'id-2032': 'ADMIN', // 系統管理員
       'id-2033': 'PM',    // Jeffrey
       'id-2034': 'AM',    // Miya (修正為 AM)
-      'id-2035': 'AM',    // Erica (修正為 AM)
+      // 'id-2035': 'AM',    // 舊的 Erica ID，已廢棄
       'id-2036': 'PM',    // LUKE
       'id-2038': 'AM',    // 5555 (新 AM 用戶)
       'id-2064': 'AM',    // Erica (修正為 AM)
@@ -472,6 +476,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
     };
     
     if (staticRoleMap[userId]) {
+      console.log(`🔍 從靜態映射獲取用戶 ${userId} 角色: ${staticRoleMap[userId]}`);
       return staticRoleMap[userId];
     }
 
