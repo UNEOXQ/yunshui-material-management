@@ -82,6 +82,7 @@ import errorRoutes from './routes/errorRoutes';
 import statusRoutes from './routes/statusRoutes';
 import backupRoutes from './routes/backup';
 import messageRoutes from './routes/messageRoutes';
+import { memoryDb } from './config/memory-database';
 import { githubBackupService } from './services/githubBackupService';
 import { githubRecoveryService } from './services/githubRecoveryService';
 
@@ -94,6 +95,20 @@ app.use('/api/errors', errorRoutes);
 app.use('/api/status', statusRoutes);
 app.use('/api/backup', backupRoutes);
 app.use('/api/messages', messageRoutes);
+
+// 圖片恢復端點
+app.post('/api/materials/restore-images', async (_req, res) => {
+  try {
+    const result = await memoryDb.restoreAllImageUrls();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: '恢復圖片失敗',
+      restoredCount: 0
+    });
+  }
+});
 
 // 404 處理
 app.use('*', (req, res) => {

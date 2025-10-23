@@ -425,14 +425,16 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
 
   const getRoleFromUserId = (userId: string): string => {
     // 映射真實用戶ID到角色
-    const roleMap = {
+    const roleMap: { [key: string]: string } = {
       'user-1': 'ADMIN',
       'user-2': 'PM',
-      'user-3': 'AM',
-      'user-4': 'WAREHOUSE'
+      'user-3': 'AM', 
+      'user-4': 'WAREHOUSE',
+      'id-2064': 'AM',
+      'id-2065': 'PM'
     };
     
-    return roleMap[userId as keyof typeof roleMap] || 'USER';
+    return roleMap[userId] || 'USER';
   };
 
   // 處理輔材訂單創建

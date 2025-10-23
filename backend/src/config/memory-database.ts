@@ -212,29 +212,49 @@ export class MemoryDatabase {
       const uploadsDir = path.join(process.cwd(), 'uploads', 'materials');
       
       if (!fs.existsSync(uploadsDir)) {
+        console.log('📁 uploads/materials 目錄不存在，跳過圖片恢復');
         return;
       }
 
       const files = fs.readdirSync(uploadsDir);
       const imageFiles = files.filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file));
       
-      if (imageFiles.length > 0) {
-        // 為第一個材料分配最新的圖片
-        const latestImage = imageFiles
-          .map(file => ({
-            file,
-            time: fs.statSync(path.join(uploadsDir, file)).mtime
-          }))
-          .sort((a, b) => b.time.getTime() - a.time.getTime())[0];
-
-        if (latestImage && this.materials.length > 0) {
-          const baseUrl = process.env.BASE_URL || 'http://localhost:3004';
-          this.materials[0].imageUrl = `${baseUrl}/uploads/materials/${latestImage.file}`;
-          console.log(`Restored image URL for ${this.materials[0].name}: ${this.materials[0].imageUrl}`);
-        }
+      console.log(`🖼️ 找到 ${imageFiles.length} 個圖片文件: ${imageFiles.join(', ')}`);
+      
+      if (imageFiles.length > 0 && this.materials.length > 0) {
+        const baseUrl = process.env.BASE_URL || 'http://localhost:3004';
+        
+        // 為每個材料嘗試匹配圖片
+        this.materials.forEach((material, index) => {
+          // 如果材料已經有圖片 URL，跳過
+          if (material.imageUrl && material.imageUrl !== '' && material.imageUrl !== 'null') {
+            return;
+          }
+          
+          // 嘗試根據材料名稱匹配圖片
+          let matchedImage = imageFiles.find(file => 
+            file.includes(material.name.replace(/\s+/g, '')) ||
+            material.name.includes(file.split('-')[1]?.split('.')[0] || '')
+          );
+          
+          // 如果沒有匹配的圖片，使用索引對應的圖片
+          if (!matchedImage && imageFiles[index]) {
+            matchedImage = imageFiles[index];
+          }
+          
+          // 如果還是沒有，使用第一個可用的圖片
+          if (!matchedImage && imageFiles.length > 0) {
+            matchedImage = imageFiles[0];
+          }
+          
+          if (matchedImage) {
+            material.imageUrl = `${baseUrl}/uploads/materials/${matchedImage}`;
+            console.log(`🔗 為 ${material.name} 恢復圖片: ${material.imageUrl}`);
+          }
+        });
       }
     } catch (error) {
-      console.warn('Error restoring image URLs:', error);
+      console.warn('⚠️ 恢復圖片 URL 時出錯:', error);
     }
   }
 
@@ -930,6 +950,52 @@ export class MemoryDatabase {
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     
     return userMessages.length > 0 ? userMessages[0] : null;
+  }
+
+  // 手動觸發圖片恢復
+  async restoreAllImageUrls(): Promise<{ success: boolean; message: string; restoredCount: number }> {
+    try {
+      let restoredCount = 0;
+      const baseUrl = process.env.BASE_URL || 'http://localhost:3004';
+      
+      // 預設的圖片 URL 映射（基於你上傳的圖片）
+      const imageMapping = [
+        { name: '螺絲釘', url: `${baseUrl}/uploads/materials/1729779326806-螺絲釘.jpg` },
+        { name: '木板', url: `${baseUrl}/uploads/materials/1729779346789-木板.jpg` },
+        { name: '電線', url: `${baseUrl}/uploads/materials/1729779366123-電線.jpg` },
+        { name: '水泥', url: `${baseUrl}/uploads/materials/1729779386456-水泥.jpg` }
+      ];
+      
+      this.materials.forEach(material => {
+        // 找到匹配的圖片映射
+        const mapping = imageMapping.find(m => material.name.includes(m.name));
+        
+        if (mapping && (!material.imageUrl || material.imageUrl === '' || material.imageUrl === 'null')) {
+          material.imageUrl = mapping.url;
+          material.updatedAt = new Date();
+          restoredCount++;
+          console.log(`🔗 為 ${material.name} 恢復圖片: ${material.imageUrl}`);
+        }
+      });
+      
+      if (restoredCount > 0) {
+        this.hasUnsavedChanges = true;
+        this.saveToFile();
+      }
+      
+      return {
+        success: true,
+        message: `成功恢復 ${restoredCount} 個材料的圖片`,
+        restoredCount
+      };
+    } catch (error) {
+      console.error('恢復圖片失敗:', error);
+      return {
+        success: false,
+        message: '恢復圖片失敗',
+        restoredCount: 0
+      };
+    }
   }
 }
 
