@@ -16,33 +16,72 @@ export class MessageController {
    */
   static async sendMessage(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
-      const { projectId, content } = req.body;
+      const { projectId, toUserId, content } = req.body;
       const userId = req.user!.userId;
       const username = req.user!.username;
 
-      if (!projectId || !content) {
+      if (!content) {
         res.status(400).json({
           success: false,
           error: 'Validation error',
-          message: 'Project ID and content are required'
+          message: 'Content is required'
         });
         return;
       }
 
-      // 創建留言
-      const message = await memoryDb.createMessage({
-        fromUserId: userId,
-        fromUsername: username,
-        toProjectId: projectId,
-        content: content.trim(),
-        messageType: 'PROJECT_MESSAGE'
-      });
+      // 檢查是專案留言還是用戶留言
+      if (projectId) {
+        // 專案留言
+        const message = await memoryDb.createMessage({
+          fromUserId: userId,
+          fromUsername: username,
+          toProjectId: projectId,
+          content: content.trim(),
+          messageType: 'PROJECT_MESSAGE'
+        });
 
-      res.json({
-        success: true,
-        data: { message },
-        message: 'Message sent successfully'
-      });
+        res.json({
+          success: true,
+          data: { message },
+          message: 'Project message sent successfully'
+        });
+      } else if (toUserId) {
+        // 用戶留言
+        // 獲取目標用戶信息
+        const targetUser = await memoryDb.getUserById(toUserId);
+        if (!targetUser) {
+          res.status(404).json({
+            success: false,
+            error: 'User not found',
+            message: 'Target user does not exist'
+          });
+          return;
+        }
+
+        // 刪除該用戶的所有舊留言（只保留一條最新的）
+        await memoryDb.deleteAllMessagesForUser(toUserId);
+
+        const message = await memoryDb.createMessage({
+          fromUserId: userId,
+          fromUsername: username,
+          toUserId: toUserId,
+          toUsername: targetUser.username,
+          content: content.trim(),
+          messageType: 'USER_MESSAGE'
+        });
+
+        res.json({
+          success: true,
+          data: { message },
+          message: 'User message sent successfully'
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          error: 'Validation error',
+          message: 'Either projectId or toUserId is required'
+        });
+      }
     } catch (error: any) {
       console.error('Send message error:', error);
       res.status(500).json({
@@ -55,9 +94,9 @@ export class MessageController {
 
   /**
    * 獲取專案的最新留言
-   * GET /api/messages/latest/:projectId
+   * GET /api/messages/latest/project/:projectId
    */
-  static async getLatestMessages(req: Request, res: Response): Promise<void> {
+  static async getLatestProjectMessages(req: Request, res: Response): Promise<void> {
     try {
       const { projectId } = req.params;
       const limit = parseInt(req.query.limit as string) || 10;
@@ -85,6 +124,41 @@ export class MessageController {
         success: false,
         error: 'Internal server error',
         message: 'Failed to retrieve messages'
+      });
+    }
+  }
+
+  /**
+   * 獲取發送給特定用戶的最新留言
+   * GET /api/messages/latest/:userId
+   */
+  static async getLatestUserMessage(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId } = req.params;
+
+      if (!userId) {
+        res.status(400).json({
+          success: false,
+          error: 'Validation error',
+          message: 'User ID is required'
+        });
+        return;
+      }
+
+      // 獲取發送給該用戶的最新留言
+      const message = await memoryDb.getLatestMessageForUser(userId);
+
+      res.json({
+        success: true,
+        data: message,
+        message: 'Latest message retrieved successfully'
+      });
+    } catch (error: any) {
+      console.error('Get latest user message error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Internal server error',
+        message: 'Failed to retrieve latest message'
       });
     }
   }

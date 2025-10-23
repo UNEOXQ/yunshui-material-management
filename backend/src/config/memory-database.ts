@@ -923,6 +923,14 @@ export class MemoryDatabase {
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       .slice(0, limit);
   }
+
+  async getLatestMessageForUser(userId: string): Promise<Message | null> {
+    const userMessages = this.messages
+      .filter(message => message.toUserId === userId)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    
+    return userMessages.length > 0 ? userMessages[0] : null;
+  }
 }
 
 // 單例實例
