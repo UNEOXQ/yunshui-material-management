@@ -405,7 +405,8 @@ class GitHubRecoveryService {
                 quantity: Number(material.quantity) || 0
               };
               
-              await memoryDb.createMaterial(materialData);
+              // 直接添加到材料數組，保持原始 ID
+              (memoryDb as any).materials.push(materialData);
               result.statistics.materialsRecovered++;
             } else {
               console.log(`⚠️ 跳過重複的材料: ${material.id}`);
@@ -421,8 +422,21 @@ class GitHubRecoveryService {
         console.log(`👥 恢復 ${data.users.length} 個用戶...`);
         for (const user of data.users) {
           try {
-            await memoryDb.createUser(user);
-            result.statistics.usersRecovered++;
+            // 檢查是否已存在相同的用戶（避免重複）
+            const existingUser = (memoryDb as any).users.find((u: any) => u.id === user.id);
+            
+            if (!existingUser) {
+              // 直接添加到用戶數組，保持原始 ID
+              const userData = {
+                ...user,
+                createdAt: new Date(user.createdAt),
+                updatedAt: new Date(user.updatedAt)
+              };
+              (memoryDb as any).users.push(userData);
+              result.statistics.usersRecovered++;
+            } else {
+              console.log(`⚠️ 跳過重複的用戶: ${user.id}`);
+            }
           } catch (error) {
             console.warn(`⚠️ 恢復用戶失敗:`, user.id, error);
           }
@@ -505,8 +519,20 @@ class GitHubRecoveryService {
         console.log(`💬 恢復 ${data.messages.length} 條消息...`);
         for (const message of data.messages) {
           try {
-            await memoryDb.createMessage(message);
-            result.statistics.messagesRecovered++;
+            // 檢查是否已存在相同的消息（避免重複）
+            const existingMessage = (memoryDb as any).messages.find((m: any) => m.id === message.id);
+            
+            if (!existingMessage) {
+              // 直接添加到消息數組，保持原始 ID
+              const messageData = {
+                ...message,
+                createdAt: new Date(message.createdAt)
+              };
+              (memoryDb as any).messages.push(messageData);
+              result.statistics.messagesRecovered++;
+            } else {
+              console.log(`⚠️ 跳過重複的消息: ${message.id}`);
+            }
           } catch (error) {
             console.warn(`⚠️ 恢復消息失敗:`, message.id, error);
           }
