@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T02:45:03.637Z",
+  "timestamp": "2025-10-23T02:51:18.239Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -21,11 +21,11 @@
         "category": "木材",
         "price": 45,
         "quantity": 191,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761178564194-281692953.jpg",
+        "imageUrl": "http://localhost:3004/uploads/materials/3-1761187841773-683366066.jpg",
         "supplier": "木材供應商B",
         "type": "FINISHED",
         "createdAt": "2025-10-23T02:45:00.572Z",
-        "updatedAt": "2025-10-23T02:45:00.572Z"
+        "updatedAt": "2025-10-23T02:50:41.781Z"
       },
       {
         "id": "id-2002",
@@ -33,11 +33,11 @@
         "category": "電氣材料",
         "price": 8.5,
         "quantity": 491,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761178568299-497165776.jpg",
+        "imageUrl": "http://localhost:3004/uploads/materials/2-1761187846589-666619379.jpg",
         "supplier": "電氣供應商C",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T02:45:00.572Z",
-        "updatedAt": "2025-10-23T02:45:00.572Z"
+        "updatedAt": "2025-10-23T02:50:46.591Z"
       },
       {
         "id": "id-2003",
@@ -45,11 +45,11 @@
         "category": "建材",
         "price": 180,
         "quantity": 91,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761178572428-966910452.jpg",
+        "imageUrl": "http://localhost:3004/uploads/materials/4-1761187851811-901514397.jpg",
         "supplier": "建材供應商D",
         "type": "FINISHED",
         "createdAt": "2025-10-23T02:45:00.573Z",
-        "updatedAt": "2025-10-23T02:45:00.573Z"
+        "updatedAt": "2025-10-23T02:50:51.812Z"
       },
       {
         "name": "好折凳",
@@ -58,10 +58,10 @@
         "quantity": 987,
         "supplier": "食神軍火",
         "type": "AUXILIARY",
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761178576187-171959358.jpg",
+        "imageUrl": "http://localhost:3004/uploads/materials/5-1761187856350-613135435.jpg",
         "id": "id-2004",
         "createdAt": "2025-10-23T02:45:00.574Z",
-        "updatedAt": "2025-10-23T02:45:00.574Z"
+        "updatedAt": "2025-10-23T02:50:56.352Z"
       }
     ],
     "orders": [
@@ -107,7 +107,7 @@
             "materialCategory": "電氣材料",
             "materialType": "AUXILIARY",
             "supplier": "電氣供應商C",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761178568299-497165776.jpg",
+            "imageUrl": "http://localhost:3004/uploads/materials/2-1761187846589-666619379.jpg",
             "material": {
               "id": "id-2002",
               "name": "電線 2.5mm²",
@@ -115,10 +115,10 @@
               "price": 8.5,
               "quantity": 491,
               "supplier": "電氣供應商C",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761178568299-497165776.jpg",
+              "imageUrl": "http://localhost:3004/uploads/materials/2-1761187846589-666619379.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T02:45:00.572Z",
-              "updatedAt": "2025-10-23T02:45:00.572Z"
+              "updatedAt": "2025-10-23T02:50:46.591Z"
             }
           }
         ]
