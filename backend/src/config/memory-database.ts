@@ -59,6 +59,15 @@ export class MemoryDatabase {
       passwordHash: '$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // default123
       createdAt: new Date('2024-01-06'),
       updatedAt: new Date('2024-01-06')
+    },
+    {
+      id: 'id-2255',
+      username: '777',
+      email: '777@yunshui.com',
+      role: 'PM', // 根據截圖，777 創建的是輔材訂單，所以應該是 PM
+      passwordHash: '$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // default123
+      createdAt: new Date('2024-01-07'),
+      updatedAt: new Date('2024-01-07')
     }
   ];
 
