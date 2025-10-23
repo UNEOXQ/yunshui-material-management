@@ -363,6 +363,10 @@ class GitHubRecoveryService {
     try {
       console.log('🔄 開始恢復數據到內存數據庫...');
 
+      // 🚨 重要：先清空現有數據，避免疊加
+      console.log('🗑️ 清空現有數據...');
+      await this.clearExistingData();
+
       // 恢復材料數據
       if (data.materials && Array.isArray(data.materials)) {
         console.log(`📦 恢復 ${data.materials.length} 個材料...`);
@@ -541,6 +545,34 @@ class GitHubRecoveryService {
    */
   getRecoveryStatus(): RecoveryStatus {
     return { ...this.recoveryStatus };
+  }
+
+  /**
+   * 清空現有數據（恢復前使用）
+   */
+  private async clearExistingData(): Promise<void> {
+    try {
+      console.log('🗑️ 清空現有數據以避免疊加...');
+      
+      // 直接清空內存數據庫的數組
+      // 注意：這是一個臨時解決方案，理想情況下應該在 memoryDb 中添加 clear 方法
+      (memoryDb as any).materials = [];
+      (memoryDb as any).orders = [];
+      (memoryDb as any).messages = [];
+      (memoryDb as any).statusUpdates = [];
+      
+      // 保留管理員用戶，清空其他用戶
+      const adminUsers = (memoryDb as any).users.filter((user: any) => user.role === 'ADMIN');
+      (memoryDb as any).users = adminUsers;
+      
+      // 重置 ID 計數器以避免衝突
+      (memoryDb as any).nextId = 2000;
+      
+      console.log('✅ 現有數據清空完成，保留管理員用戶');
+    } catch (error) {
+      console.error('❌ 清空現有數據失敗:', error);
+      throw error;
+    }
   }
 
   /**
