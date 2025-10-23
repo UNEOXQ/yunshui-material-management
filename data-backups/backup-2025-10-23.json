@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T00:14:37.336Z",
+  "timestamp": "2025-10-23T00:16:59.315Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -21,11 +21,11 @@
         "category": "木材",
         "price": 45,
         "quantity": 200,
-        "imageUrl": null,
+        "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
         "supplier": "木材供應商B",
         "type": "FINISHED",
         "createdAt": "2024-01-02T00:00:00.000Z",
-        "updatedAt": "2024-01-02T00:00:00.000Z"
+        "updatedAt": "2025-10-23T00:16:04.214Z"
       },
       {
         "id": "material-3",
@@ -33,11 +33,11 @@
         "category": "電氣材料",
         "price": 8.5,
         "quantity": 500,
-        "imageUrl": null,
+        "imageUrl": "http://localhost:3004/uploads/materials/2-1761178568299-497165776.jpg",
         "supplier": "電氣供應商C",
         "type": "AUXILIARY",
         "createdAt": "2024-01-03T00:00:00.000Z",
-        "updatedAt": "2024-01-03T00:00:00.000Z"
+        "updatedAt": "2025-10-23T00:16:08.301Z"
       },
       {
         "id": "material-4",
@@ -45,83 +45,23 @@
         "category": "建材",
         "price": 180,
         "quantity": 100,
-        "imageUrl": null,
+        "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
         "supplier": "建材供應商D",
         "type": "FINISHED",
         "createdAt": "2024-01-04T00:00:00.000Z",
-        "updatedAt": "2024-01-04T00:00:00.000Z"
+        "updatedAt": "2025-10-23T00:16:12.430Z"
       },
       {
-        "id": "id-2000",
-        "name": "螺絲釘 M6x20",
-        "category": "五金配件",
-        "price": 2.5,
-        "quantity": 1000,
-        "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
-        "supplier": "五金供應商A",
+        "name": "好折凳",
+        "category": "武器",
+        "price": 8777,
+        "quantity": 999,
+        "supplier": "食神軍火",
         "type": "AUXILIARY",
-        "createdAt": "2025-10-23T00:14:34.707Z",
-        "updatedAt": "2025-10-23T00:14:34.707Z"
-      },
-      {
-        "id": "id-2001",
-        "name": "木板 2x4x8",
-        "category": "木材",
-        "price": 45,
-        "quantity": 200,
-        "imageUrl": null,
-        "supplier": "木材供應商B",
-        "type": "FINISHED",
-        "createdAt": "2025-10-23T00:14:34.708Z",
-        "updatedAt": "2025-10-23T00:14:34.708Z"
-      },
-      {
-        "id": "id-2002",
-        "name": "電線 2.5mm²",
-        "category": "電氣材料",
-        "price": 8.5,
-        "quantity": 500,
-        "imageUrl": null,
-        "supplier": "電氣供應商C",
-        "type": "AUXILIARY",
-        "createdAt": "2025-10-23T00:14:34.708Z",
-        "updatedAt": "2025-10-23T00:14:34.708Z"
-      },
-      {
-        "id": "id-2003",
-        "name": "水泥 50kg",
-        "category": "建材",
-        "price": 180,
-        "quantity": 100,
-        "imageUrl": null,
-        "supplier": "建材供應商D",
-        "type": "FINISHED",
-        "createdAt": "2025-10-23T00:14:34.709Z",
-        "updatedAt": "2025-10-23T00:14:34.709Z"
-      },
-      {
-        "id": "id-2004",
-        "name": "螺絲釘 M6x2011",
-        "category": "五金配件",
-        "price": 2.5,
-        "quantity": 1000,
-        "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
-        "supplier": "五金供應商A",
-        "type": "AUXILIARY",
-        "createdAt": "2025-10-23T00:14:34.709Z",
-        "updatedAt": "2025-10-23T00:14:34.709Z"
-      },
-      {
-        "id": "id-2005",
-        "name": "木板 2x4x8",
-        "category": "木材",
-        "price": 45,
-        "quantity": 200,
-        "imageUrl": null,
-        "supplier": "木材供應商B",
-        "type": "FINISHED",
-        "createdAt": "2025-10-23T00:14:34.710Z",
-        "updatedAt": "2025-10-23T00:14:34.710Z"
+        "imageUrl": "http://localhost:3004/uploads/materials/5-1761178576187-171959358.jpg",
+        "id": "id-2011",
+        "createdAt": "2025-10-23T00:15:59.879Z",
+        "updatedAt": "2025-10-23T00:16:16.188Z"
       }
     ],
     "orders": [
@@ -159,82 +99,17 @@
             }
           }
         ]
-      },
-      {
-        "id": "order-2",
-        "userId": "user-1",
-        "status": "APPROVED",
-        "totalAmount": 90,
-        "name": "管理員測試訂單",
-        "createdAt": "2024-01-11T00:00:00.000Z",
-        "updatedAt": "2024-01-11T00:00:00.000Z",
-        "items": [
-          {
-            "id": "item-2",
-            "orderId": "order-2",
-            "materialId": "material-2",
-            "quantity": 2,
-            "unitPrice": 45,
-            "materialName": "木板 2x4x8",
-            "materialCategory": "木材",
-            "materialType": "FINISHED",
-            "supplier": "木材供應商B",
-            "imageUrl": "",
-            "material": {
-              "id": "material-2",
-              "name": "木板 2x4x8",
-              "category": "木材",
-              "price": 45,
-              "quantity": 200,
-              "supplier": "木材供應商B",
-              "imageUrl": "",
-              "type": "FINISHED",
-              "createdAt": "2024-01-02T00:00:00.000Z",
-              "updatedAt": "2024-01-02T00:00:00.000Z"
-            }
-          }
-        ]
-      },
-      {
-        "id": "order-3",
-        "userId": "user-3",
-        "status": "PENDING",
-        "totalAmount": 360,
-        "name": "Miya的完成材訂單",
-        "createdAt": "2024-01-12T00:00:00.000Z",
-        "updatedAt": "2024-01-12T00:00:00.000Z",
-        "items": []
-      },
-      {
-        "id": "order-4",
-        "userId": "id-2064",
-        "status": "COMPLETED",
-        "totalAmount": 180,
-        "name": "Erica的完成材訂單",
-        "createdAt": "2024-01-13T00:00:00.000Z",
-        "updatedAt": "2024-01-13T00:00:00.000Z",
-        "items": []
-      },
-      {
-        "id": "id-2010",
-        "userId": "user-2",
-        "status": "PENDING",
-        "totalAmount": 250,
-        "name": "Jeffrey的輔材訂單",
-        "createdAt": "2025-10-23T00:14:34.714Z",
-        "updatedAt": "2025-10-23T00:14:34.714Z",
-        "items": []
       }
     ],
     "users": [
       {
         "id": "user-1",
-        "username": "admin",
+        "username": "系統管理員",
         "email": "admin@yunshui.com",
         "role": "ADMIN",
         "passwordHash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.s5uIoO",
         "createdAt": "2024-01-01T00:00:00.000Z",
-        "updatedAt": "2024-01-01T00:00:00.000Z"
+        "updatedAt": "2025-10-23T00:16:29.503Z"
       },
       {
         "id": "user-2",
