@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T03:41:55.797Z",
+  "timestamp": "2025-10-23T03:52:09.394Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -8,12 +8,12 @@
         "name": "螺絲釘 M6x20",
         "category": "五金配件",
         "price": 2.5,
-        "quantity": 989,
+        "quantity": 988,
         "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
         "supplier": "五金供應商A",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T03:17:25.095Z",
-        "updatedAt": "2025-10-23T03:33:04.339Z"
+        "updatedAt": "2025-10-23T03:49:51.986Z"
       },
       {
         "id": "id-2028",
@@ -32,12 +32,12 @@
         "name": "電線 2.5mm²",
         "category": "電氣材料",
         "price": 8.5,
-        "quantity": 488,
+        "quantity": 487,
         "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
         "supplier": "電氣供應商C",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T03:17:25.096Z",
-        "updatedAt": "2025-10-23T03:33:04.343Z"
+        "updatedAt": "2025-10-23T03:49:51.987Z"
       },
       {
         "id": "id-2030",
@@ -90,12 +90,12 @@
               "name": "螺絲釘 M6x20",
               "category": "五金配件",
               "price": 2.5,
-              "quantity": 989,
+              "quantity": 988,
               "supplier": "五金供應商A",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T03:33:04.339Z"
+              "updatedAt": "2025-10-23T03:49:51.986Z"
             }
           },
           {
@@ -114,12 +114,12 @@
               "name": "電線 2.5mm²",
               "category": "電氣材料",
               "price": 8.5,
-              "quantity": 488,
+              "quantity": 487,
               "supplier": "電氣供應商C",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.096Z",
-              "updatedAt": "2025-10-23T03:33:04.343Z"
+              "updatedAt": "2025-10-23T03:49:51.987Z"
             }
           },
           {
@@ -232,12 +232,12 @@
               "name": "螺絲釘 M6x20",
               "category": "五金配件",
               "price": 2.5,
-              "quantity": 989,
+              "quantity": 988,
               "supplier": "五金供應商A",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T03:33:04.339Z"
+              "updatedAt": "2025-10-23T03:49:51.986Z"
             }
           },
           {
@@ -256,12 +256,12 @@
               "name": "電線 2.5mm²",
               "category": "電氣材料",
               "price": 8.5,
-              "quantity": 488,
+              "quantity": 487,
               "supplier": "電氣供應商C",
               "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.096Z",
-              "updatedAt": "2025-10-23T03:33:04.343Z"
+              "updatedAt": "2025-10-23T03:49:51.987Z"
             }
           },
           {
@@ -345,6 +345,64 @@
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.097Z",
               "updatedAt": "2025-10-23T03:33:25.367Z"
+            }
+          }
+        ]
+      },
+      {
+        "userId": "user-2",
+        "totalAmount": 11,
+        "status": "PENDING",
+        "id": "id-2066",
+        "createdAt": "2025-10-23T03:49:51.984Z",
+        "updatedAt": "2025-10-23T03:49:51.984Z",
+        "items": [
+          {
+            "orderId": "id-2066",
+            "materialId": "id-2027",
+            "quantity": 1,
+            "unitPrice": 2.5,
+            "id": "id-2067",
+            "materialName": "螺絲釘 M6x20",
+            "materialCategory": "五金配件",
+            "materialType": "AUXILIARY",
+            "supplier": "五金供應商A",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+            "material": {
+              "id": "id-2027",
+              "name": "螺絲釘 M6x20",
+              "category": "五金配件",
+              "price": 2.5,
+              "quantity": 988,
+              "supplier": "五金供應商A",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T03:17:25.095Z",
+              "updatedAt": "2025-10-23T03:49:51.986Z"
+            }
+          },
+          {
+            "orderId": "id-2066",
+            "materialId": "id-2029",
+            "quantity": 1,
+            "unitPrice": 8.5,
+            "id": "id-2068",
+            "materialName": "電線 2.5mm²",
+            "materialCategory": "電氣材料",
+            "materialType": "AUXILIARY",
+            "supplier": "電氣供應商C",
+            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
+            "material": {
+              "id": "id-2029",
+              "name": "電線 2.5mm²",
+              "category": "電氣材料",
+              "price": 8.5,
+              "quantity": 487,
+              "supplier": "電氣供應商C",
+              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T03:17:25.096Z",
+              "updatedAt": "2025-10-23T03:49:51.987Z"
             }
           }
         ]
@@ -486,6 +544,14 @@
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-23T03:33:25.368Z",
         "updatedAt": "2025-10-23T03:33:25.368Z"
+      },
+      {
+        "id": "id-2069",
+        "orderId": "id-2066",
+        "projectName": "輔材專案-2025-10-23-id-2066",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2025-10-23T03:49:51.989Z",
+        "updatedAt": "2025-10-23T03:49:51.989Z"
       }
     ],
     "orderItems": [
@@ -593,10 +659,81 @@
         "quantity": 2,
         "unitPrice": 180,
         "id": "id-2060"
+      },
+      {
+        "orderId": "id-2066",
+        "materialId": "id-2027",
+        "quantity": 1,
+        "unitPrice": 2.5,
+        "id": "id-2067"
+      },
+      {
+        "orderId": "id-2066",
+        "materialId": "id-2029",
+        "quantity": 1,
+        "unitPrice": 8.5,
+        "id": "id-2068"
       }
     ],
-    "statusUpdates": [],
+    "statusUpdates": [
+      {
+        "id": "id-2070",
+        "projectId": "id-2069",
+        "updatedBy": "user-2",
+        "statusType": "ORDER",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T03:49:51.989Z"
+      },
+      {
+        "id": "id-2071",
+        "projectId": "id-2069",
+        "updatedBy": "user-2",
+        "statusType": "PICKUP",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T03:49:51.990Z"
+      },
+      {
+        "id": "id-2072",
+        "projectId": "id-2069",
+        "updatedBy": "user-2",
+        "statusType": "DELIVERY",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T03:49:51.991Z"
+      },
+      {
+        "id": "id-2073",
+        "projectId": "id-2069",
+        "updatedBy": "user-2",
+        "statusType": "CHECK",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-23T03:49:51.992Z"
+      },
+      {
+        "id": "id-2074",
+        "projectId": "id-2069",
+        "updatedBy": "user-4",
+        "statusType": "PICKUP",
+        "statusValue": "Picked (B.T.W)",
+        "additionalData": {
+          "primaryStatus": "Picked",
+          "secondaryStatus": "(B.T.W)"
+        },
+        "createdAt": "2025-10-23T03:50:50.466Z"
+      },
+      {
+        "id": "id-2075",
+        "projectId": "id-2069",
+        "updatedBy": "user-4",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - Processing",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "Processing"
+        },
+        "createdAt": "2025-10-23T03:50:51.012Z"
+      }
+    ],
     "messages": [],
-    "nextId": 2066
+    "nextId": 2076
   }
 }
