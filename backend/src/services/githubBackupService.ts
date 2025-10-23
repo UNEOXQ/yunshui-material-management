@@ -8,6 +8,7 @@ interface BackupData {
     materials: any[];
     orders: any[];
     users: any[];
+    projects: any[];
     statusUpdates: any[];
     messages: any[];
   };
@@ -115,6 +116,7 @@ class GitHubBackupService {
         materials: (await memoryDb.getAllMaterials()).materials,
         orders: await memoryDb.getAllOrders(),
         users: await memoryDb.getAllUsers(),
+        projects: (memoryDb as any).projects || [], // 備份專案數據
         statusUpdates: (memoryDb as any).statusUpdates || [], // 直接訪問 statusUpdates 數組
         messages: await memoryDb.getAllMessages(),
       },
@@ -318,7 +320,7 @@ class GitHubBackupService {
       const backupData: BackupData = JSON.parse(backupContent);
 
       console.log(`📊 找到備份數據，時間戳: ${backupData.timestamp}`);
-      console.log(`📦 數據統計: ${backupData.data.materials.length} 材料, ${backupData.data.orders.length} 訂單, ${backupData.data.users.length} 用戶`);
+      console.log(`📦 數據統計: ${backupData.data.materials.length} 材料, ${backupData.data.orders.length} 訂單, ${backupData.data.users.length} 用戶, ${(backupData.data.projects || []).length} 專案`);
 
       // 恢復數據到內存數據庫
       await this.restoreDataToMemoryDb(backupData.data);
@@ -368,6 +370,15 @@ class GitHubBackupService {
         console.log(`🛒 恢復 ${data.orders.length} 個訂單...`);
         for (const order of data.orders) {
           await memoryDb.createOrder(order);
+        }
+      }
+
+      // 恢復專案數據
+      if (data.projects && data.projects.length > 0) {
+        console.log(`🏗️ 恢復 ${data.projects.length} 個專案...`);
+        for (const project of data.projects) {
+          // 直接將專案數據加入到內存數據庫
+          (memoryDb as any).projects.push(project);
         }
       }
 

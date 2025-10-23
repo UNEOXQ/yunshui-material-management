@@ -9,6 +9,7 @@ interface RecoveryResult {
     materialsRecovered: number;
     ordersRecovered: number;
     usersRecovered: number;
+    projectsRecovered: number;
     statusUpdatesRecovered: number;
     messagesRecovered: number;
   };
@@ -23,6 +24,7 @@ interface BackupInfo {
     materials: number;
     orders: number;
     users: number;
+    projects: number;
     statusUpdates: number;
     messages: number;
   };
@@ -117,7 +119,7 @@ class GitHubRecoveryService {
       
       if (result.success) {
         console.log('✅ 自動恢復完成');
-        console.log(`📊 恢復統計: ${result.statistics.materialsRecovered} 材料, ${result.statistics.ordersRecovered} 訂單, ${result.statistics.usersRecovered} 用戶`);
+        console.log(`📊 恢復統計: ${result.statistics.materialsRecovered} 材料, ${result.statistics.ordersRecovered} 訂單, ${result.statistics.usersRecovered} 用戶, ${result.statistics.projectsRecovered} 專案`);
       } else {
         console.log('❌ 自動恢復失敗');
       }
@@ -141,6 +143,7 @@ class GitHubRecoveryService {
           materialsRecovered: 0,
           ordersRecovered: 0,
           usersRecovered: 0,
+          projectsRecovered: 0,
           statusUpdatesRecovered: 0,
           messagesRecovered: 0,
         },
@@ -156,6 +159,7 @@ class GitHubRecoveryService {
           materialsRecovered: 0,
           ordersRecovered: 0,
           usersRecovered: 0,
+          projectsRecovered: 0,
           statusUpdatesRecovered: 0,
           messagesRecovered: 0,
         },
@@ -185,6 +189,7 @@ class GitHubRecoveryService {
           materialsRecovered: 0,
           ordersRecovered: 0,
           usersRecovered: 0,
+          projectsRecovered: 0,
           statusUpdatesRecovered: 0,
           messagesRecovered: 0,
         },
@@ -204,6 +209,7 @@ class GitHubRecoveryService {
         materialsRecovered: 0,
         ordersRecovered: 0,
         usersRecovered: 0,
+        projectsRecovered: 0,
         statusUpdatesRecovered: 0,
         messagesRecovered: 0,
       },
@@ -421,6 +427,20 @@ class GitHubRecoveryService {
         }
       }
 
+      // 恢復專案數據 - 這是關鍵修復！
+      if (data.projects && Array.isArray(data.projects)) {
+        console.log(`🏗️ 恢復 ${data.projects.length} 個專案...`);
+        for (const project of data.projects) {
+          try {
+            // 直接將專案數據加入到內存數據庫
+            (memoryDb as any).projects.push(project);
+            result.statistics.projectsRecovered++;
+          } catch (error) {
+            console.warn(`⚠️ 恢復專案失敗:`, project.id, error);
+          }
+        }
+      }
+
       // 恢復消息數據
       if (data.messages && Array.isArray(data.messages)) {
         console.log(`💬 恢復 ${data.messages.length} 條消息...`);
@@ -529,6 +549,7 @@ class GitHubRecoveryService {
                   materials: backupData.data?.materials?.length || 0,
                   orders: backupData.data?.orders?.length || 0,
                   users: backupData.data?.users?.length || 0,
+                  projects: backupData.data?.projects?.length || 0,
                   statusUpdates: backupData.data?.statusUpdates?.length || 0,
                   messages: backupData.data?.messages?.length || 0,
                 },
@@ -570,6 +591,7 @@ class GitHubRecoveryService {
       // 注意：這是一個臨時解決方案，理想情況下應該在 memoryDb 中添加 clear 方法
       (memoryDb as any).materials = [];
       (memoryDb as any).orders = [];
+      (memoryDb as any).projects = []; // 清空專案數據
       (memoryDb as any).messages = [];
       (memoryDb as any).statusUpdates = [];
       
@@ -579,7 +601,7 @@ class GitHubRecoveryService {
       // 重置 ID 計數器以避免衝突
       (memoryDb as any).nextId = 2000;
       
-      console.log('✅ 現有數據清空完成，保留管理員用戶');
+      console.log('✅ 現有數據清空完成');
     } catch (error) {
       console.error('❌ 清空現有數據失敗:', error);
       throw error;
