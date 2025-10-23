@@ -1,203 +1,152 @@
 {
-  "timestamp": "2025-10-23T00:50:55.880Z",
+  "timestamp": "2025-10-23T00:51:00.380Z",
   "version": "1.0.0",
   "data": {
     "materials": [
       {
-        "id": "material-1",
+        "id": "id-2000",
         "name": "螺絲釘 M6x20",
         "category": "五金配件",
         "price": 2.5,
-        "quantity": 1000,
+        "quantity": 998,
         "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
         "supplier": "五金供應商A",
         "type": "AUXILIARY",
-        "createdAt": "2024-01-01T00:00:00.000Z",
-        "updatedAt": "2024-01-01T00:00:00.000Z"
+        "createdAt": "2025-10-23T00:50:57.505Z",
+        "updatedAt": "2025-10-23T00:50:57.505Z"
       },
       {
-        "id": "material-2",
+        "id": "id-2001",
         "name": "木板 2x4x8",
         "category": "木材",
         "price": 45,
-        "quantity": 200,
-        "imageUrl": null,
+        "quantity": 197,
+        "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
         "supplier": "木材供應商B",
         "type": "FINISHED",
-        "createdAt": "2024-01-02T00:00:00.000Z",
-        "updatedAt": "2024-01-02T00:00:00.000Z"
+        "createdAt": "2025-10-23T00:50:57.506Z",
+        "updatedAt": "2025-10-23T00:50:57.506Z"
       },
       {
-        "id": "material-3",
+        "id": "id-2002",
         "name": "電線 2.5mm²",
         "category": "電氣材料",
         "price": 8.5,
-        "quantity": 500,
-        "imageUrl": null,
+        "quantity": 499,
+        "imageUrl": "http://localhost:3004/uploads/materials/2-1761178568299-497165776.jpg",
         "supplier": "電氣供應商C",
         "type": "AUXILIARY",
-        "createdAt": "2024-01-03T00:00:00.000Z",
-        "updatedAt": "2024-01-03T00:00:00.000Z"
+        "createdAt": "2025-10-23T00:50:57.506Z",
+        "updatedAt": "2025-10-23T00:50:57.506Z"
       },
       {
-        "id": "material-4",
+        "id": "id-2003",
         "name": "水泥 50kg",
         "category": "建材",
         "price": 180,
-        "quantity": 100,
-        "imageUrl": null,
+        "quantity": 97,
+        "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
         "supplier": "建材供應商D",
         "type": "FINISHED",
-        "createdAt": "2024-01-04T00:00:00.000Z",
-        "updatedAt": "2024-01-04T00:00:00.000Z"
+        "createdAt": "2025-10-23T00:50:57.506Z",
+        "updatedAt": "2025-10-23T00:50:57.506Z"
+      },
+      {
+        "name": "好折凳",
+        "category": "武器",
+        "price": 8777,
+        "quantity": 994,
+        "supplier": "食神軍火",
+        "type": "AUXILIARY",
+        "imageUrl": "http://localhost:3004/uploads/materials/5-1761178576187-171959358.jpg",
+        "id": "id-2004",
+        "createdAt": "2025-10-23T00:50:57.576Z",
+        "updatedAt": "2025-10-23T00:50:57.576Z"
       }
     ],
     "orders": [
       {
-        "id": "order-1",
-        "userId": "user-2",
+        "userId": "id-2009",
+        "totalAmount": 17567.5,
         "status": "PENDING",
-        "totalAmount": 250,
-        "name": "Jeffrey的輔材訂單",
-        "createdAt": "2024-01-10T00:00:00.000Z",
-        "updatedAt": "2024-01-10T00:00:00.000Z",
-        "items": [
-          {
-            "id": "item-1",
-            "orderId": "order-1",
-            "materialId": "material-1",
-            "quantity": 100,
-            "unitPrice": 2.5,
-            "materialName": "螺絲釘 M6x20",
-            "materialCategory": "五金配件",
-            "materialType": "AUXILIARY",
-            "supplier": "五金供應商A",
-            "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
-            "material": {
-              "id": "material-1",
-              "name": "螺絲釘 M6x20",
-              "category": "五金配件",
-              "price": 2.5,
-              "quantity": 1000,
-              "supplier": "五金供應商A",
-              "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2024-01-01T00:00:00.000Z",
-              "updatedAt": "2024-01-01T00:00:00.000Z"
-            }
-          }
-        ]
-      },
-      {
-        "id": "order-2",
-        "userId": "user-1",
-        "status": "APPROVED",
-        "totalAmount": 90,
-        "name": "管理員測試訂單",
-        "createdAt": "2024-01-11T00:00:00.000Z",
-        "updatedAt": "2024-01-11T00:00:00.000Z",
-        "items": [
-          {
-            "id": "item-2",
-            "orderId": "order-2",
-            "materialId": "material-2",
-            "quantity": 2,
-            "unitPrice": 45,
-            "materialName": "木板 2x4x8",
-            "materialCategory": "木材",
-            "materialType": "FINISHED",
-            "supplier": "木材供應商B",
-            "imageUrl": "",
-            "material": {
-              "id": "material-2",
-              "name": "木板 2x4x8",
-              "category": "木材",
-              "price": 45,
-              "quantity": 200,
-              "supplier": "木材供應商B",
-              "imageUrl": "",
-              "type": "FINISHED",
-              "createdAt": "2024-01-02T00:00:00.000Z",
-              "updatedAt": "2024-01-02T00:00:00.000Z"
-            }
-          }
-        ]
-      },
-      {
-        "id": "order-3",
-        "userId": "user-3",
-        "status": "PENDING",
-        "totalAmount": 360,
-        "name": "Miya的完成材訂單",
-        "createdAt": "2024-01-12T00:00:00.000Z",
-        "updatedAt": "2024-01-12T00:00:00.000Z",
+        "id": "id-2011",
+        "createdAt": "2025-10-23T00:50:57.580Z",
+        "updatedAt": "2025-10-23T00:50:57.580Z",
         "items": []
       },
       {
-        "id": "order-4",
-        "userId": "id-2064",
-        "status": "COMPLETED",
-        "totalAmount": 180,
-        "name": "Erica的完成材訂單",
-        "createdAt": "2024-01-13T00:00:00.000Z",
-        "updatedAt": "2024-01-13T00:00:00.000Z",
+        "userId": "id-2009",
+        "totalAmount": 26331,
+        "status": "PENDING",
+        "id": "id-2012",
+        "createdAt": "2025-10-23T00:50:57.580Z",
+        "updatedAt": "2025-10-23T00:50:57.580Z",
+        "items": []
+      },
+      {
+        "userId": "id-2010",
+        "totalAmount": 270,
+        "status": "PENDING",
+        "id": "id-2013",
+        "createdAt": "2025-10-23T00:50:57.580Z",
+        "updatedAt": "2025-10-23T00:50:57.580Z",
         "items": []
       }
     ],
     "users": [
       {
-        "id": "user-1",
+        "id": "id-2005",
         "username": "admin",
         "email": "admin@yunshui.com",
         "role": "ADMIN",
         "passwordHash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.s5uIoO",
-        "createdAt": "2024-01-01T00:00:00.000Z",
-        "updatedAt": "2024-01-01T00:00:00.000Z"
+        "createdAt": "2025-10-23T00:50:57.577Z",
+        "updatedAt": "2025-10-23T00:50:57.577Z"
       },
       {
-        "id": "user-2",
+        "id": "id-2006",
         "username": "Jeffrey",
         "email": "pm001@yunshui.com",
         "role": "PM",
         "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
-        "createdAt": "2024-01-02T00:00:00.000Z",
-        "updatedAt": "2024-01-02T00:00:00.000Z"
+        "createdAt": "2025-10-23T00:50:57.577Z",
+        "updatedAt": "2025-10-23T00:50:57.577Z"
       },
       {
-        "id": "user-3",
+        "id": "id-2007",
         "username": "Miya",
         "email": "am001@yunshui.com",
         "role": "AM",
         "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
-        "createdAt": "2024-01-03T00:00:00.000Z",
-        "updatedAt": "2024-01-03T00:00:00.000Z"
+        "createdAt": "2025-10-23T00:50:57.578Z",
+        "updatedAt": "2025-10-23T00:50:57.578Z"
       },
       {
-        "id": "user-4",
+        "id": "id-2008",
         "username": "Mark",
         "email": "warehouse001@yunshui.com",
         "role": "WAREHOUSE",
         "passwordHash": "$2b$12$6BNUHWuoAhHfufkBMy4MJ.qiAiHXVBFy4XGaGILoxN05oy01L9Hhm",
-        "createdAt": "2024-01-04T00:00:00.000Z",
-        "updatedAt": "2024-01-04T00:00:00.000Z"
+        "createdAt": "2025-10-23T00:50:57.578Z",
+        "updatedAt": "2025-10-23T00:50:57.578Z"
       },
       {
-        "id": "id-2064",
+        "id": "id-2009",
         "username": "Erica",
         "email": "Erica@yunshui.com",
         "role": "AM",
         "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
-        "createdAt": "2024-01-05T00:00:00.000Z",
-        "updatedAt": "2024-01-05T00:00:00.000Z"
+        "createdAt": "2025-10-23T00:50:57.578Z",
+        "updatedAt": "2025-10-23T00:50:57.578Z"
       },
       {
-        "id": "id-2065",
+        "id": "id-2010",
         "username": "LUKE",
         "email": "LUKE@yunshui.com",
         "role": "PM",
         "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
-        "createdAt": "2024-01-06T00:00:00.000Z",
-        "updatedAt": "2024-01-06T00:00:00.000Z"
+        "createdAt": "2025-10-23T00:50:57.579Z",
+        "updatedAt": "2025-10-23T00:50:57.579Z"
       }
     ],
     "statusUpdates": [],
