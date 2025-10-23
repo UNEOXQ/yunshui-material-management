@@ -33,9 +33,9 @@ export const MaterialList: React.FC<MaterialListProps> = ({
   };
 
   const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat('zh-TW', {
+    return new Intl.NumberFormat('en-CA', {
       style: 'currency',
-      currency: 'TWD',
+      currency: 'CAD',
       minimumFractionDigits: 0,
       maximumFractionDigits: 2
     }).format(price);

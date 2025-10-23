@@ -282,7 +282,7 @@ export const MaterialForm: React.FC<MaterialFormProps> = ({
 
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="price">價格 (TWD) *</label>
+              <label htmlFor="price">價格 (CAD) *</label>
               <input
                 type="number"
                 id="price"
