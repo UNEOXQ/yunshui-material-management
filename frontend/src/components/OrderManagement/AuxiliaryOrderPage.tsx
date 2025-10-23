@@ -340,33 +340,53 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       
       // 根據用戶角色載入不同類型的訂單
       let response;
+      let orders = [];
+      
       if (user.role === 'AM') {
         response = await orderService.getFinishedOrders();
+        if (response.success && response.data) {
+          orders = response.data.orders;
+        }
       } else if (user.role === 'WAREHOUSE' || user.role === 'ADMIN') {
         // 倉管用戶和管理員根據選擇的類型載入訂單
         if (selectedOrderType === 'AM') {
           response = await orderService.getFinishedOrders();
+          if (response.success && response.data) {
+            orders = response.data.orders;
+          }
         } else {
+          // PM-輔材：載入所有輔材訂單，然後過濾出 PM 用戶創建的
           response = await orderService.getAuxiliaryOrders();
+          if (response.success && response.data) {
+            const allAuxiliaryOrders = response.data.orders;
+            // 過濾出 PM 用戶創建的訂單
+            orders = allAuxiliaryOrders.filter(order => {
+              const creatorRole = getRoleFromUserId(order.userId);
+              return creatorRole === 'PM';
+            });
+            console.log(`🔍 PM 輔材過濾: 從 ${allAuxiliaryOrders.length} 筆訂單中過濾出 ${orders.length} 筆 PM 訂單`);
+          }
         }
       } else {
         response = await orderService.getAuxiliaryOrders();
+        if (response.success && response.data) {
+          orders = response.data.orders;
+        }
       }
       
       console.log('API 回應:', response);
       
-      if (response.success && response.data) {
-        console.log('成功載入訂單:', response.data.orders);
-        const loadedOrders = response.data.orders;
-        setAllOrders(loadedOrders);
+      if (orders.length >= 0) {
+        console.log('成功載入訂單:', orders);
+        setAllOrders(orders);
         
         // 應用當前過濾器
-        const filtered = filterOrders(loadedOrders, orderFilter);
+        const filtered = filterOrders(orders, orderFilter);
         setFilteredOrders(filtered);
         setOrders(filtered); // 保持向後兼容
       } else {
-        console.log('載入訂單失敗:', response.message);
-        setError(response.message || '載入訂單失敗');
+        console.log('載入訂單失敗:', response?.message || '未知錯誤');
+        setError(response?.message || '載入訂單失敗');
       }
     } catch (err) {
       console.error('載入訂單時發生錯誤:', err);
