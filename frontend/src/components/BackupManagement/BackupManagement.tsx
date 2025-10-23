@@ -146,8 +146,9 @@ export const BackupManagement: React.FC = () => {
       
       if (result.success) {
         alert('✅ 備份已成功完成！');
-        // 重新獲取狀態
+        // 重新獲取狀態和備份列表
         await fetchBackupStatus();
+        await fetchAvailableBackups(); // 重新獲取備份列表
       } else {
         setError(result.message || '備份失敗');
       }
@@ -204,6 +205,7 @@ export const BackupManagement: React.FC = () => {
         // 重新獲取狀態
         await fetchBackupStatus();
         await fetchRecoveryStatus();
+        await fetchAvailableBackups(); // 重新獲取備份列表
         
         // 建議用戶刷新頁面
         if (confirm('是否要刷新頁面以查看恢復的數據？')) {
