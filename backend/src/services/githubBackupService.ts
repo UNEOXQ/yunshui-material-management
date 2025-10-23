@@ -9,6 +9,7 @@ interface BackupData {
     orders: any[];
     users: any[];
     projects: any[];
+    orderItems: any[];
     statusUpdates: any[];
     messages: any[];
   };
@@ -117,6 +118,7 @@ class GitHubBackupService {
         orders: await memoryDb.getAllOrders(),
         users: await memoryDb.getAllUsers(),
         projects: (memoryDb as any).projects || [], // 備份專案數據
+        orderItems: (memoryDb as any).orderItems || [], // 備份訂單項目數據
         statusUpdates: (memoryDb as any).statusUpdates || [], // 直接訪問 statusUpdates 數組
         messages: await memoryDb.getAllMessages(),
       },
@@ -320,7 +322,7 @@ class GitHubBackupService {
       const backupData: BackupData = JSON.parse(backupContent);
 
       console.log(`📊 找到備份數據，時間戳: ${backupData.timestamp}`);
-      console.log(`📦 數據統計: ${backupData.data.materials.length} 材料, ${backupData.data.orders.length} 訂單, ${backupData.data.users.length} 用戶, ${(backupData.data.projects || []).length} 專案`);
+      console.log(`📦 數據統計: ${backupData.data.materials.length} 材料, ${backupData.data.orders.length} 訂單, ${backupData.data.users.length} 用戶, ${(backupData.data.projects || []).length} 專案, ${(backupData.data.orderItems || []).length} 訂單項目`);
 
       // 恢復數據到內存數據庫
       await this.restoreDataToMemoryDb(backupData.data);
@@ -379,6 +381,15 @@ class GitHubBackupService {
         for (const project of data.projects) {
           // 直接將專案數據加入到內存數據庫
           (memoryDb as any).projects.push(project);
+        }
+      }
+
+      // 恢復訂單項目數據
+      if (data.orderItems && data.orderItems.length > 0) {
+        console.log(`📋 恢復 ${data.orderItems.length} 個訂單項目...`);
+        for (const orderItem of data.orderItems) {
+          // 直接將訂單項目數據加入到內存數據庫
+          (memoryDb as any).orderItems.push(orderItem);
         }
       }
 

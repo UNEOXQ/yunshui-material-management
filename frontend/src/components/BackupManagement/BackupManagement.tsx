@@ -26,6 +26,7 @@ interface RecoveryResult {
     ordersRecovered: number;
     usersRecovered: number;
     projectsRecovered: number;
+    orderItemsRecovered: number;
     statusUpdatesRecovered: number;
     messagesRecovered: number;
   };
@@ -41,6 +42,7 @@ interface BackupInfo {
     orders: number;
     users: number;
     projects: number;
+    orderItems: number;
     statusUpdates: number;
     messages: number;
   };
@@ -197,6 +199,7 @@ export const BackupManagement: React.FC = () => {
           message += `• 材料: ${stats.materialsRecovered} 個\n`;
           message += `• 訂單: ${stats.ordersRecovered} 個\n`;
           message += `• 專案: ${stats.projectsRecovered} 個\n`;
+          message += `• 訂單項目: ${stats.orderItemsRecovered} 個\n`;
           message += `• 用戶: ${stats.usersRecovered} 個\n`;
           message += `• 狀態更新: ${stats.statusUpdatesRecovered} 個\n`;
           message += `• 消息: ${stats.messagesRecovered} 條\n\n`;
@@ -368,6 +371,10 @@ export const BackupManagement: React.FC = () => {
                             <span className="stat-label">專案</span>
                           </div>
                           <div className="stat-item">
+                            <span className="stat-number">{recoveryStatus.lastRecoveryResult.statistics.orderItemsRecovered}</span>
+                            <span className="stat-label">訂單項目</span>
+                          </div>
+                          <div className="stat-item">
                             <span className="stat-number">{recoveryStatus.lastRecoveryResult.statistics.messagesRecovered}</span>
                             <span className="stat-label">消息</span>
                           </div>
@@ -456,7 +463,7 @@ export const BackupManagement: React.FC = () => {
                         {availableBackups.map((backup) => (
                           <option key={backup.date} value={backup.date}>
                             {backup.date} - {new Date(backup.timestamp).toLocaleString('zh-TW')}
-                            {' '}({backup.dataCount.materials}材料, {backup.dataCount.orders}訂單, {backup.dataCount.projects}專案)
+                            {' '}({backup.dataCount.materials}材料, {backup.dataCount.orders}訂單, {backup.dataCount.projects}專案, {backup.dataCount.orderItems}項目)
                           </option>
                         ))}
                       </select>
