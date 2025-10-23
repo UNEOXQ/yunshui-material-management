@@ -520,6 +520,16 @@ class GitHubRecoveryService {
         // 狀態更新通常直接存儲在內存中，這裡可能需要特殊處理
       }
 
+      // 恢復 nextId - 關鍵修復！
+      if (data.nextId && typeof data.nextId === 'number') {
+        console.log(`🔢 恢復 nextId: ${data.nextId}`);
+        (memoryDb as any).nextId = data.nextId;
+      } else {
+        // 如果沒有 nextId，計算一個安全的值
+        console.log('🔢 計算安全的 nextId...');
+        (memoryDb as any).updateNextId();
+      }
+
       console.log('✅ 所有數據已恢復到內存數據庫');
 
     } catch (error) {
@@ -659,8 +669,7 @@ class GitHubRecoveryService {
       // 清空所有用戶（包括管理員），讓備份數據完全恢復
       (memoryDb as any).users = [];
       
-      // 重置 ID 計數器以避免衝突
-      (memoryDb as any).nextId = 2000;
+      // 注意：不重置 nextId，將在恢復數據時設置正確的值
       
       console.log('✅ 現有數據清空完成');
     } catch (error) {

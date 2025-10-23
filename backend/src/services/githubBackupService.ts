@@ -12,6 +12,7 @@ interface BackupData {
     orderItems: any[];
     statusUpdates: any[];
     messages: any[];
+    nextId: number;
   };
 }
 
@@ -121,6 +122,7 @@ class GitHubBackupService {
         orderItems: (memoryDb as any).orderItems || [], // 備份訂單項目數據
         statusUpdates: (memoryDb as any).statusUpdates || [], // 直接訪問 statusUpdates 數組
         messages: await memoryDb.getAllMessages(),
+        nextId: (memoryDb as any).nextId || 2000, // 備份 nextId
       },
     };
   }
