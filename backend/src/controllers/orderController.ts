@@ -154,11 +154,12 @@ export class OrderController {
       const project = await ProjectModel.create(newOrder.id, projectName);
 
       // Initialize four status columns (requirement 2.5)
+      // 只有叫貨狀態預設為 PENDING，其他狀態為空白以避免覆蓋問題
       const statusInitializations = [
         { statusType: 'ORDER' as const, statusValue: 'PENDING' },
-        { statusType: 'PICKUP' as const, statusValue: 'PENDING' },
-        { statusType: 'DELIVERY' as const, statusValue: 'PENDING' },
-        { statusType: 'CHECK' as const, statusValue: 'PENDING' }
+        { statusType: 'PICKUP' as const, statusValue: '' },
+        { statusType: 'DELIVERY' as const, statusValue: '' },
+        { statusType: 'CHECK' as const, statusValue: '' }
       ];
 
       for (const statusInit of statusInitializations) {
@@ -296,11 +297,12 @@ export class OrderController {
       const project = await ProjectModel.create(newOrder.id, projectName);
 
       // Initialize four status columns (requirement 3.5)
+      // 只有叫貨狀態預設為 PENDING，其他狀態為空白以避免覆蓋問題
       const statusInitializations = [
         { statusType: 'ORDER' as const, statusValue: 'PENDING' },
-        { statusType: 'PICKUP' as const, statusValue: 'PENDING' },
-        { statusType: 'DELIVERY' as const, statusValue: 'PENDING' },
-        { statusType: 'CHECK' as const, statusValue: 'PENDING' }
+        { statusType: 'PICKUP' as const, statusValue: '' },
+        { statusType: 'DELIVERY' as const, statusValue: '' },
+        { statusType: 'CHECK' as const, statusValue: '' }
       ];
 
       for (const statusInit of statusInitializations) {
@@ -419,11 +421,12 @@ export class OrderController {
       const project = await ProjectModel.create(newOrder.id, projectName);
 
       // Initialize four status columns
+      // 只有叫貨狀態預設為 PENDING，其他狀態為空白以避免覆蓋問題
       const statusInitializations = [
         { statusType: 'ORDER' as const, statusValue: 'PENDING' },
-        { statusType: 'PICKUP' as const, statusValue: 'PENDING' },
-        { statusType: 'DELIVERY' as const, statusValue: 'PENDING' },
-        { statusType: 'CHECK' as const, statusValue: 'PENDING' }
+        { statusType: 'PICKUP' as const, statusValue: '' },
+        { statusType: 'DELIVERY' as const, statusValue: '' },
+        { statusType: 'CHECK' as const, statusValue: '' }
       ];
 
       for (const statusInit of statusInitializations) {
