@@ -384,8 +384,25 @@ class GitHubRecoveryService {
         console.log(`📦 恢復 ${data.materials.length} 個材料...`);
         for (const material of data.materials) {
           try {
-            await memoryDb.createMaterial(material);
-            result.statistics.materialsRecovered++;
+            // 檢查是否已存在相同的材料（避免重複）
+            const existingMaterial = (memoryDb as any).materials.find((m: any) => m.id === material.id);
+            
+            if (!existingMaterial) {
+              // 確保材料數據格式正確
+              const materialData = {
+                ...material,
+                createdAt: new Date(material.createdAt),
+                updatedAt: new Date(material.updatedAt),
+                imageUrl: material.imageUrl || '', // 確保 imageUrl 不是 undefined
+                price: Number(material.price) || 0,
+                quantity: Number(material.quantity) || 0
+              };
+              
+              await memoryDb.createMaterial(materialData);
+              result.statistics.materialsRecovered++;
+            } else {
+              console.log(`⚠️ 跳過重複的材料: ${material.id}`);
+            }
           } catch (error) {
             console.warn(`⚠️ 恢復材料失敗:`, material.id, error);
           }
@@ -420,12 +437,17 @@ class GitHubRecoveryService {
         }
       }
 
-      // 恢復訂單數據
+      // 恢復訂單數據（不包含項目，避免重複）
       if (data.orders && Array.isArray(data.orders)) {
         console.log(`🛒 恢復 ${data.orders.length} 個訂單...`);
         for (const order of data.orders) {
           try {
-            await memoryDb.createOrder(order);
+            // 直接添加到內存數據庫，避免調用 createOrder 方法（會重複創建項目）
+            (memoryDb as any).orders.push({
+              ...order,
+              createdAt: new Date(order.createdAt),
+              updatedAt: new Date(order.updatedAt)
+            });
             result.statistics.ordersRecovered++;
           } catch (error) {
             console.warn(`⚠️ 恢復訂單失敗:`, order.id, error);
@@ -452,9 +474,19 @@ class GitHubRecoveryService {
         console.log(`📋 恢復 ${data.orderItems.length} 個訂單項目...`);
         for (const orderItem of data.orderItems) {
           try {
-            // 直接將訂單項目數據加入到內存數據庫
-            (memoryDb as any).orderItems.push(orderItem);
-            result.statistics.orderItemsRecovered++;
+            // 檢查是否已存在相同的訂單項目（避免重複）
+            const existingItem = (memoryDb as any).orderItems.find((item: any) => 
+              item.id === orderItem.id || 
+              (item.orderId === orderItem.orderId && item.materialId === orderItem.materialId)
+            );
+            
+            if (!existingItem) {
+              // 直接將訂單項目數據加入到內存數據庫
+              (memoryDb as any).orderItems.push(orderItem);
+              result.statistics.orderItemsRecovered++;
+            } else {
+              console.log(`⚠️ 跳過重複的訂單項目: ${orderItem.id}`);
+            }
           } catch (error) {
             console.warn(`⚠️ 恢復訂單項目失敗:`, orderItem.id, error);
           }
