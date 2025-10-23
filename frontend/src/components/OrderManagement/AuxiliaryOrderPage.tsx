@@ -359,10 +359,10 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
           response = await orderService.getAuxiliaryOrders();
           if (response.success && response.data) {
             const allAuxiliaryOrders = response.data.orders;
-            // 過濾出 PM 用戶創建的訂單
+            // 過濾出 PM 用戶和 ADMIN 創建的輔材訂單
             orders = allAuxiliaryOrders.filter(order => {
               const creatorRole = getRoleFromUserId(order.userId);
-              return creatorRole === 'PM';
+              return creatorRole === 'PM' || creatorRole === 'ADMIN';
             });
             console.log(`🔍 PM 輔材過濾: 從 ${allAuxiliaryOrders.length} 筆訂單中過濾出 ${orders.length} 筆 PM 訂單`);
           }
@@ -460,7 +460,8 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       'user-2': 'PM',
       'user-3': 'AM', 
       'user-4': 'WAREHOUSE',
-      'id-2033': 'PM',  // Jeffrey 的新用戶 ID
+      'id-2032': 'ADMIN', // 系統管理員
+      'id-2033': 'PM',    // Jeffrey 的新用戶 ID
       'id-2064': 'AM',
       'id-2065': 'PM'
     };
