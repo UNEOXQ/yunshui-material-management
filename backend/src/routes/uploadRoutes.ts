@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { UploadController } from '../controllers/uploadController';
 import { authenticateToken, requireRole } from '../middleware/auth';
-import { uploadSingle, handleUploadError } from '../middleware/upload';
+// import { uploadSingle, handleUploadError } from '../middleware/upload'; // 保留作為備用
+import { uploadSingleToCloudinary, handleCloudinaryUploadError } from '../middleware/cloudinaryUpload';
 
 const router = Router();
 
@@ -15,8 +16,8 @@ router.post(
   '/material/:id/image',
   authenticateToken,
   requireRole('ADMIN'),
-  uploadSingle('image'),
-  handleUploadError,
+  uploadSingleToCloudinary,
+  handleCloudinaryUploadError,
   UploadController.uploadMaterialImage
 );
 

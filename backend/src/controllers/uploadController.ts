@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { AuthenticatedRequest } from '../types';
 import { MaterialModel } from '../models/Material';
 import { getFileUrl, deleteUploadedFile } from '../middleware/upload';
+import { deleteCloudinaryFile } from '../middleware/cloudinaryUpload';
 import path from 'path';
 import fs from 'fs';
 
@@ -69,17 +70,27 @@ export class UploadController {
         return;
       }
 
-      // Generate file URL
-      const imageUrl = getFileUrl(req.file.filename, 'material');
+      // Generate file URL (Cloudinary provides the full URL)
+      const imageUrl = (req.file as any).path || getFileUrl(req.file.filename, 'material');
 
       // Delete old image if exists
       if (material.imageUrl) {
         try {
-          const oldImagePath = material.imageUrl.replace(
-            process.env.BASE_URL || 'http://localhost:3000',
-            process.cwd()
-          );
-          await deleteUploadedFile(oldImagePath);
+          // Check if it's a Cloudinary URL
+          if (material.imageUrl.includes('cloudinary.com')) {
+            // Extract public_id from Cloudinary URL
+            const urlParts = material.imageUrl.split('/');
+            const publicIdWithExtension = urlParts[urlParts.length - 1];
+            const publicId = `yunshui-materials/${publicIdWithExtension.split('.')[0]}`;
+            await deleteCloudinaryFile(publicId);
+          } else {
+            // Handle local file deletion
+            const oldImagePath = material.imageUrl.replace(
+              process.env.BASE_URL || 'http://localhost:3000',
+              process.cwd()
+            );
+            await deleteUploadedFile(oldImagePath);
+          }
         } catch (error) {
           console.warn('Failed to delete old image:', error);
         }
