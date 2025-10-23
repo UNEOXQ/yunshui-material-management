@@ -141,6 +141,7 @@ class GitHubBackupService {
 
       // 導出數據
       const backupData = await this.exportCurrentData();
+      console.log(`📊 備份數據統計: ${backupData.data.materials.length} 材料, ${backupData.data.orders.length} 訂單, ${backupData.data.statusUpdates.length} 狀態更新`);
       const content = JSON.stringify(backupData, null, 2);
       const fileName = `backup-${new Date().toISOString().split('T')[0]}.json`;
 

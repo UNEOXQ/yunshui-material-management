@@ -542,8 +542,37 @@ class GitHubRecoveryService {
       // 恢復狀態更新數據
       if (data.statusUpdates && Array.isArray(data.statusUpdates)) {
         console.log(`📊 恢復 ${data.statusUpdates.length} 個狀態更新...`);
-        result.statistics.statusUpdatesRecovered = data.statusUpdates.length;
-        // 狀態更新通常直接存儲在內存中，這裡可能需要特殊處理
+        console.log(`📊 狀態更新數據樣本:`, data.statusUpdates.slice(0, 2));
+        result.statistics.statusUpdatesRecovered = 0; // 重置計數器
+        
+        for (const statusUpdate of data.statusUpdates) {
+          try {
+            // 檢查是否已存在相同的狀態更新（避免重複）
+            const existingUpdate = (memoryDb as any).statusUpdates.find((su: any) => su.id === statusUpdate.id);
+            
+            if (!existingUpdate) {
+              // 確保狀態更新數據格式正確
+              const statusUpdateData = {
+                ...statusUpdate,
+                createdAt: new Date(statusUpdate.createdAt),
+                updatedAt: statusUpdate.updatedAt ? new Date(statusUpdate.updatedAt) : new Date(statusUpdate.createdAt)
+              };
+              
+              // 直接添加到狀態更新數組
+              (memoryDb as any).statusUpdates.push(statusUpdateData);
+              result.statistics.statusUpdatesRecovered++;
+              console.log(`✅ 恢復狀態更新: ${statusUpdate.id} (${statusUpdate.statusType}: ${statusUpdate.statusValue})`);
+            } else {
+              console.log(`⚠️ 跳過重複的狀態更新: ${statusUpdate.id}`);
+            }
+          } catch (error) {
+            console.warn(`⚠️ 恢復狀態更新失敗:`, statusUpdate.id, error);
+          }
+        }
+        console.log(`✅ 成功恢復 ${result.statistics.statusUpdatesRecovered} 個狀態更新`);
+        console.log(`📊 恢復後內存數據庫中的狀態更新數量: ${(memoryDb as any).statusUpdates.length}`);
+      } else {
+        console.log(`⚠️ 備份數據中沒有狀態更新數據`);
       }
 
       // 恢復 nextId - 關鍵修復！
