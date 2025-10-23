@@ -206,12 +206,12 @@ export class OrderController {
     try {
       const userRole = req.user!.role;
       
-      // Only AM users can create finished material orders
-      if (userRole !== 'AM') {
+      // Only AM users and ADMIN can create finished material orders
+      if (userRole !== 'AM' && userRole !== 'ADMIN') {
         res.status(403).json({
           success: false,
           error: 'Forbidden',
-          message: 'Only AM users can create finished material orders'
+          message: 'Only AM users and administrators can create finished material orders'
         });
         return;
       }
