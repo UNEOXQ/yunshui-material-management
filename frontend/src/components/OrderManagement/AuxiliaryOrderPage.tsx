@@ -458,7 +458,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       return userRoleCache[userId];
     }
 
-    // 靜態映射表（作為後備）
+    // 靜態映射表（完整版本，不依賴後端 API）
     const staticRoleMap: { [key: string]: string } = {
       'user-1': 'ADMIN',
       'user-2': 'PM',
@@ -466,18 +466,20 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       'user-4': 'WAREHOUSE',
       'id-2032': 'ADMIN', // 系統管理員
       'id-2033': 'PM',    // Jeffrey
-      'id-2034': 'AM',    // Miya (修正為 AM)
-      // 'id-2035': 'AM',    // 舊的 Erica ID，已廢棄
-      'id-2036': 'AM',    // Erica 的另一個 ID (修正為 AM)
-      'id-2038': 'AM',    // 5555 (新 AM 用戶)
-      'id-2064': 'AM',    // Erica (修正為 AM)
+      'id-2034': 'AM',    // Miya
+      'id-2035': 'WAREHOUSE', // Mark (倉管)
+      'id-2036': 'AM',    // Erica (修正為 AM)
+      'id-2037': 'PM',    // Unknown User
+      'id-2038': 'AM',    // 5555
+      'id-2064': 'AM',    // Erica (另一個 ID)
       'id-2065': 'PM',    // LUKE
-      'id-2255': 'PM',    // 777 (根據輔材訂單判斷為 PM)
-      'id-2037': 'PM'     // Unknown User
+      'id-2255': 'PM',    // 777
     };
     
     if (staticRoleMap[userId]) {
       console.log(`🔍 從靜態映射獲取用戶 ${userId} 角色: ${staticRoleMap[userId]}`);
+      // 直接設置到緩存，避免重複查詢
+      setUserRoleCache(prev => ({ ...prev, [userId]: staticRoleMap[userId] }));
       return staticRoleMap[userId];
     }
 
@@ -492,14 +494,6 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
         return 'WAREHOUSE';
       }
     }
-
-    // 嘗試動態獲取用戶角色（異步）
-    fetchUserRole(userId).then(role => {
-      if (role) {
-        // 強制重新渲染以顯示正確的角色
-        setUserRoleCache(prev => ({ ...prev, [userId]: role }));
-      }
-    });
 
     // 如果找不到映射，記錄日誌並返回默認值
     console.log(`⚠️ 未找到用戶 ID ${userId} 的角色映射，返回 USER`);
