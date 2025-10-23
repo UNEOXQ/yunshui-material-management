@@ -65,12 +65,12 @@ export class OrderController {
     try {
       const userRole = req.user!.role;
       
-      // Only PM users can create auxiliary material orders
-      if (userRole !== 'PM') {
+      // Only PM users and ADMIN can create auxiliary material orders
+      if (userRole !== 'PM' && userRole !== 'ADMIN') {
         res.status(403).json({
           success: false,
           error: 'Forbidden',
-          message: 'Only PM users can create auxiliary material orders'
+          message: 'Only PM users and administrators can create auxiliary material orders'
         });
         return;
       }
