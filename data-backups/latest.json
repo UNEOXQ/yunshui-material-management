@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T00:27:53.095Z",
+  "timestamp": "2025-10-23T00:38:18.987Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -50,66 +50,6 @@
         "type": "FINISHED",
         "createdAt": "2024-01-04T00:00:00.000Z",
         "updatedAt": "2024-01-04T00:00:00.000Z"
-      },
-      {
-        "id": "id-2000",
-        "name": "螺絲釘 M6x20",
-        "category": "五金配件",
-        "price": 2.5,
-        "quantity": 1000,
-        "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
-        "supplier": "五金供應商A",
-        "type": "AUXILIARY",
-        "createdAt": "2025-10-23T00:27:50.497Z",
-        "updatedAt": "2025-10-23T00:27:50.497Z"
-      },
-      {
-        "id": "id-2001",
-        "name": "木板 2x4x8",
-        "category": "木材",
-        "price": 45,
-        "quantity": 199,
-        "imageUrl": "http://localhost:3004/uploads/materials/3-1761178564194-281692953.jpg",
-        "supplier": "木材供應商B",
-        "type": "FINISHED",
-        "createdAt": "2025-10-23T00:27:50.497Z",
-        "updatedAt": "2025-10-23T00:27:50.497Z"
-      },
-      {
-        "id": "id-2002",
-        "name": "電線 2.5mm²",
-        "category": "電氣材料",
-        "price": 8.5,
-        "quantity": 500,
-        "imageUrl": "http://localhost:3004/uploads/materials/2-1761178568299-497165776.jpg",
-        "supplier": "電氣供應商C",
-        "type": "AUXILIARY",
-        "createdAt": "2025-10-23T00:27:50.497Z",
-        "updatedAt": "2025-10-23T00:27:50.497Z"
-      },
-      {
-        "id": "id-2003",
-        "name": "水泥 50kg",
-        "category": "建材",
-        "price": 180,
-        "quantity": 98,
-        "imageUrl": "http://localhost:3004/uploads/materials/4-1761178572428-966910452.jpg",
-        "supplier": "建材供應商D",
-        "type": "FINISHED",
-        "createdAt": "2025-10-23T00:27:50.498Z",
-        "updatedAt": "2025-10-23T00:27:50.498Z"
-      },
-      {
-        "name": "好折凳",
-        "category": "武器",
-        "price": 8777,
-        "quantity": 999,
-        "supplier": "食神軍火",
-        "type": "AUXILIARY",
-        "imageUrl": "http://localhost:3004/uploads/materials/5-1761178576187-171959358.jpg",
-        "id": "id-2004",
-        "createdAt": "2025-10-23T00:27:50.498Z",
-        "updatedAt": "2025-10-23T00:27:50.498Z"
       }
     ],
     "orders": [
@@ -201,25 +141,6 @@
         "name": "Erica的完成材訂單",
         "createdAt": "2024-01-13T00:00:00.000Z",
         "updatedAt": "2024-01-13T00:00:00.000Z",
-        "items": []
-      },
-      {
-        "id": "id-2005",
-        "userId": "user-2",
-        "status": "PENDING",
-        "totalAmount": 250,
-        "name": "Jeffrey的輔材訂單",
-        "createdAt": "2025-10-23T00:27:50.499Z",
-        "updatedAt": "2025-10-23T00:27:50.499Z",
-        "items": []
-      },
-      {
-        "userId": "user-3",
-        "totalAmount": 405,
-        "status": "PENDING",
-        "id": "id-2006",
-        "createdAt": "2025-10-23T00:27:50.499Z",
-        "updatedAt": "2025-10-23T00:27:50.499Z",
         "items": []
       }
     ],
