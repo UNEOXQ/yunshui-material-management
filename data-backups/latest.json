@@ -1,602 +1,249 @@
 {
-  "timestamp": "2025-10-23T05:19:39.836Z",
+  "timestamp": "2025-10-23T05:22:50.749Z",
   "version": "1.0.0",
   "data": {
     "materials": [
       {
-        "id": "id-2027",
+        "id": "material-1",
         "name": "螺絲釘 M6x20",
         "category": "五金配件",
         "price": 2.5,
-        "quantity": 987,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+        "quantity": 1000,
+        "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
         "supplier": "五金供應商A",
         "type": "AUXILIARY",
-        "createdAt": "2025-10-23T03:17:25.095Z",
-        "updatedAt": "2025-10-23T04:01:06.857Z"
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
       },
       {
-        "id": "id-2028",
+        "id": "material-2",
         "name": "木板 2x4x8",
         "category": "木材",
         "price": 45,
-        "quantity": 186,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761187841773-683366066.jpg",
+        "quantity": 200,
+        "imageUrl": null,
         "supplier": "木材供應商B",
         "type": "FINISHED",
-        "createdAt": "2025-10-23T03:17:25.095Z",
-        "updatedAt": "2025-10-23T03:33:25.365Z"
+        "createdAt": "2024-01-02T00:00:00.000Z",
+        "updatedAt": "2024-01-02T00:00:00.000Z"
       },
       {
-        "id": "id-2029",
+        "id": "material-3",
         "name": "電線 2.5mm²",
         "category": "電氣材料",
         "price": 8.5,
-        "quantity": 487,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
+        "quantity": 500,
+        "imageUrl": null,
         "supplier": "電氣供應商C",
         "type": "AUXILIARY",
-        "createdAt": "2025-10-23T03:17:25.096Z",
-        "updatedAt": "2025-10-23T03:49:51.987Z"
+        "createdAt": "2024-01-03T00:00:00.000Z",
+        "updatedAt": "2024-01-03T00:00:00.000Z"
       },
       {
-        "id": "id-2030",
+        "id": "material-4",
         "name": "水泥 50kg",
         "category": "建材",
         "price": 180,
-        "quantity": 86,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761187851811-901514397.jpg",
+        "quantity": 100,
+        "imageUrl": null,
         "supplier": "建材供應商D",
         "type": "FINISHED",
-        "createdAt": "2025-10-23T03:17:25.097Z",
-        "updatedAt": "2025-10-23T03:33:25.367Z"
-      },
-      {
-        "name": "好折凳",
-        "category": "武器",
-        "price": 8777,
-        "quantity": 982,
-        "supplier": "食神軍火",
-        "type": "AUXILIARY",
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
-        "id": "id-2031",
-        "createdAt": "2025-10-23T03:17:25.098Z",
-        "updatedAt": "2025-10-23T03:33:04.350Z"
+        "createdAt": "2024-01-04T00:00:00.000Z",
+        "updatedAt": "2024-01-04T00:00:00.000Z"
       }
     ],
     "orders": [
       {
+        "id": "order-1",
         "userId": "user-2",
-        "totalAmount": 8788,
         "status": "PENDING",
-        "id": "id-2027",
-        "createdAt": "2025-10-23T03:17:49.388Z",
-        "updatedAt": "2025-10-23T04:58:50.774Z",
-        "name": "阿揪馬的浴室",
+        "totalAmount": 250,
+        "name": "Jeffrey的輔材訂單",
+        "createdAt": "2024-01-10T00:00:00.000Z",
+        "updatedAt": "2024-01-10T00:00:00.000Z",
         "items": [
           {
-            "orderId": "id-2027",
-            "materialId": "id-2027",
-            "quantity": 1,
+            "id": "item-1",
+            "orderId": "order-1",
+            "materialId": "material-1",
+            "quantity": 100,
             "unitPrice": 2.5,
-            "id": "id-2028",
             "materialName": "螺絲釘 M6x20",
             "materialCategory": "五金配件",
             "materialType": "AUXILIARY",
             "supplier": "五金供應商A",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+            "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
             "material": {
-              "id": "id-2027",
+              "id": "material-1",
               "name": "螺絲釘 M6x20",
               "category": "五金配件",
               "price": 2.5,
-              "quantity": 987,
+              "quantity": 1000,
               "supplier": "五金供應商A",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+              "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
               "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T04:01:06.857Z"
-            }
-          },
-          {
-            "orderId": "id-2027",
-            "materialId": "id-2029",
-            "quantity": 1,
-            "unitPrice": 8.5,
-            "id": "id-2029",
-            "materialName": "電線 2.5mm²",
-            "materialCategory": "電氣材料",
-            "materialType": "AUXILIARY",
-            "supplier": "電氣供應商C",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
-            "material": {
-              "id": "id-2029",
-              "name": "電線 2.5mm²",
-              "category": "電氣材料",
-              "price": 8.5,
-              "quantity": 487,
-              "supplier": "電氣供應商C",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.096Z",
-              "updatedAt": "2025-10-23T03:49:51.987Z"
-            }
-          },
-          {
-            "orderId": "id-2027",
-            "materialId": "id-2031",
-            "quantity": 1,
-            "unitPrice": 8777,
-            "id": "id-2030",
-            "materialName": "好折凳",
-            "materialCategory": "武器",
-            "materialType": "AUXILIARY",
-            "supplier": "食神軍火",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
-            "material": {
-              "id": "id-2031",
-              "name": "好折凳",
-              "category": "武器",
-              "price": 8777,
-              "quantity": 982,
-              "supplier": "食神軍火",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-23T03:33:04.350Z"
+              "createdAt": "2024-01-01T00:00:00.000Z",
+              "updatedAt": "2024-01-01T00:00:00.000Z"
             }
           }
         ]
       },
       {
-        "userId": "user-3",
-        "totalAmount": 225,
-        "status": "PENDING",
-        "id": "id-2036",
-        "createdAt": "2025-10-23T03:18:04.744Z",
-        "updatedAt": "2025-10-23T04:59:45.701Z",
-        "name": "小齊哥的閨房",
+        "id": "order-2",
+        "userId": "user-1",
+        "status": "APPROVED",
+        "totalAmount": 90,
+        "name": "管理員測試訂單",
+        "createdAt": "2024-01-11T00:00:00.000Z",
+        "updatedAt": "2024-01-11T00:00:00.000Z",
         "items": [
           {
-            "orderId": "id-2036",
-            "materialId": "id-2028",
-            "quantity": 1,
+            "id": "item-2",
+            "orderId": "order-2",
+            "materialId": "material-2",
+            "quantity": 2,
             "unitPrice": 45,
-            "id": "id-2037",
             "materialName": "木板 2x4x8",
             "materialCategory": "木材",
             "materialType": "FINISHED",
             "supplier": "木材供應商B",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761187841773-683366066.jpg",
+            "imageUrl": "",
             "material": {
-              "id": "id-2028",
+              "id": "material-2",
               "name": "木板 2x4x8",
               "category": "木材",
               "price": 45,
-              "quantity": 186,
+              "quantity": 200,
               "supplier": "木材供應商B",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761187841773-683366066.jpg",
+              "imageUrl": "",
               "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T03:33:25.365Z"
-            }
-          },
-          {
-            "orderId": "id-2036",
-            "materialId": "id-2030",
-            "quantity": 1,
-            "unitPrice": 180,
-            "id": "id-2038",
-            "materialName": "水泥 50kg",
-            "materialCategory": "建材",
-            "materialType": "FINISHED",
-            "supplier": "建材供應商D",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761187851811-901514397.jpg",
-            "material": {
-              "id": "id-2030",
-              "name": "水泥 50kg",
-              "category": "建材",
-              "price": 180,
-              "quantity": 86,
-              "supplier": "建材供應商D",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761187851811-901514397.jpg",
-              "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-23T03:33:25.367Z"
+              "createdAt": "2024-01-02T00:00:00.000Z",
+              "updatedAt": "2024-01-02T00:00:00.000Z"
             }
           }
         ]
       },
       {
-        "userId": "user-2",
-        "totalAmount": 35127.5,
-        "status": "PENDING",
-        "id": "id-2049",
-        "createdAt": "2025-10-23T03:33:04.319Z",
-        "updatedAt": "2025-10-23T04:58:31.282Z",
-        "name": "玉面小猴的訂單",
-        "items": [
-          {
-            "orderId": "id-2049",
-            "materialId": "id-2027",
-            "quantity": 1,
-            "unitPrice": 2.5,
-            "id": "id-2050",
-            "materialName": "螺絲釘 M6x20",
-            "materialCategory": "五金配件",
-            "materialType": "AUXILIARY",
-            "supplier": "五金供應商A",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
-            "material": {
-              "id": "id-2027",
-              "name": "螺絲釘 M6x20",
-              "category": "五金配件",
-              "price": 2.5,
-              "quantity": 987,
-              "supplier": "五金供應商A",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T04:01:06.857Z"
-            }
-          },
-          {
-            "orderId": "id-2049",
-            "materialId": "id-2029",
-            "quantity": 2,
-            "unitPrice": 8.5,
-            "id": "id-2051",
-            "materialName": "電線 2.5mm²",
-            "materialCategory": "電氣材料",
-            "materialType": "AUXILIARY",
-            "supplier": "電氣供應商C",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
-            "material": {
-              "id": "id-2029",
-              "name": "電線 2.5mm²",
-              "category": "電氣材料",
-              "price": 8.5,
-              "quantity": 487,
-              "supplier": "電氣供應商C",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761187846589-666619379.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.096Z",
-              "updatedAt": "2025-10-23T03:49:51.987Z"
-            }
-          },
-          {
-            "orderId": "id-2049",
-            "materialId": "id-2031",
-            "quantity": 4,
-            "unitPrice": 8777,
-            "id": "id-2052",
-            "materialName": "好折凳",
-            "materialCategory": "武器",
-            "materialType": "AUXILIARY",
-            "supplier": "食神軍火",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
-            "material": {
-              "id": "id-2031",
-              "name": "好折凳",
-              "category": "武器",
-              "price": 8777,
-              "quantity": 982,
-              "supplier": "食神軍火",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761187856350-613135435.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-23T03:33:04.350Z"
-            }
-          }
-        ]
-      },
-      {
+        "id": "order-3",
         "userId": "user-3",
-        "totalAmount": 450,
         "status": "PENDING",
-        "id": "id-2058",
-        "createdAt": "2025-10-23T03:33:25.363Z",
-        "updatedAt": "2025-10-23T04:59:21.315Z",
-        "name": "海綿寶寶的臥室",
-        "items": [
-          {
-            "orderId": "id-2058",
-            "materialId": "id-2028",
-            "quantity": 2,
-            "unitPrice": 45,
-            "id": "id-2059",
-            "materialName": "木板 2x4x8",
-            "materialCategory": "木材",
-            "materialType": "FINISHED",
-            "supplier": "木材供應商B",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761187841773-683366066.jpg",
-            "material": {
-              "id": "id-2028",
-              "name": "木板 2x4x8",
-              "category": "木材",
-              "price": 45,
-              "quantity": 186,
-              "supplier": "木材供應商B",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761187841773-683366066.jpg",
-              "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T03:33:25.365Z"
-            }
-          },
-          {
-            "orderId": "id-2058",
-            "materialId": "id-2030",
-            "quantity": 2,
-            "unitPrice": 180,
-            "id": "id-2060",
-            "materialName": "水泥 50kg",
-            "materialCategory": "建材",
-            "materialType": "FINISHED",
-            "supplier": "建材供應商D",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761187851811-901514397.jpg",
-            "material": {
-              "id": "id-2030",
-              "name": "水泥 50kg",
-              "category": "建材",
-              "price": 180,
-              "quantity": 86,
-              "supplier": "建材供應商D",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761187851811-901514397.jpg",
-              "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-23T03:33:25.367Z"
-            }
-          }
-        ]
+        "totalAmount": 360,
+        "name": "Miya的完成材訂單",
+        "createdAt": "2024-01-12T00:00:00.000Z",
+        "updatedAt": "2024-01-12T00:00:00.000Z",
+        "items": []
+      },
+      {
+        "id": "order-4",
+        "userId": "id-2064",
+        "status": "COMPLETED",
+        "totalAmount": 180,
+        "name": "Erica的完成材訂單",
+        "createdAt": "2024-01-13T00:00:00.000Z",
+        "updatedAt": "2024-01-13T00:00:00.000Z",
+        "items": []
       }
     ],
     "users": [
       {
-        "id": "id-2032",
-        "username": "系統管理員",
+        "id": "user-1",
+        "username": "admin",
         "email": "admin@yunshui.com",
         "role": "ADMIN",
         "passwordHash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.s5uIoO",
-        "createdAt": "2025-10-23T03:17:25.099Z",
-        "updatedAt": "2025-10-23T03:17:25.099Z"
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
       },
       {
-        "id": "id-2033",
+        "id": "user-2",
         "username": "Jeffrey",
         "email": "pm001@yunshui.com",
         "role": "PM",
         "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
-        "createdAt": "2025-10-23T03:17:25.100Z",
-        "updatedAt": "2025-10-23T03:17:25.100Z"
+        "createdAt": "2024-01-02T00:00:00.000Z",
+        "updatedAt": "2024-01-02T00:00:00.000Z"
       },
       {
-        "id": "id-2034",
+        "id": "user-3",
         "username": "Miya",
         "email": "am001@yunshui.com",
         "role": "AM",
         "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
-        "createdAt": "2025-10-23T03:17:25.101Z",
-        "updatedAt": "2025-10-23T03:17:25.101Z"
+        "createdAt": "2024-01-03T00:00:00.000Z",
+        "updatedAt": "2024-01-03T00:00:00.000Z"
       },
       {
-        "id": "id-2035",
+        "id": "user-4",
         "username": "Mark",
         "email": "warehouse001@yunshui.com",
         "role": "WAREHOUSE",
         "passwordHash": "$2b$12$6BNUHWuoAhHfufkBMy4MJ.qiAiHXVBFy4XGaGILoxN05oy01L9Hhm",
-        "createdAt": "2025-10-23T03:17:25.102Z",
-        "updatedAt": "2025-10-23T03:17:25.102Z"
+        "createdAt": "2024-01-04T00:00:00.000Z",
+        "updatedAt": "2024-01-04T00:00:00.000Z"
       },
       {
-        "id": "id-2036",
+        "id": "id-2064",
         "username": "Erica",
         "email": "Erica@yunshui.com",
         "role": "AM",
         "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
-        "createdAt": "2025-10-23T03:17:25.103Z",
-        "updatedAt": "2025-10-23T03:17:25.103Z"
+        "createdAt": "2024-01-05T00:00:00.000Z",
+        "updatedAt": "2024-01-05T00:00:00.000Z"
       },
       {
-        "id": "id-2037",
+        "id": "id-2065",
         "username": "LUKE",
         "email": "LUKE@yunshui.com",
         "role": "PM",
         "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
-        "createdAt": "2025-10-23T03:17:25.104Z",
-        "updatedAt": "2025-10-23T03:17:25.104Z"
+        "createdAt": "2024-01-06T00:00:00.000Z",
+        "updatedAt": "2024-01-06T00:00:00.000Z"
       }
     ],
     "projects": [
       {
-        "id": "id-2018",
-        "orderId": "id-2014",
-        "projectName": "輔材專案-2025-10-23-id-2014",
+        "id": "project-1",
+        "orderId": "order-1",
+        "projectName": "輔材專案-2024-01-10-order-1",
         "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:20:27.749Z",
-        "updatedAt": "2025-10-23T01:20:27.749Z"
+        "createdAt": "2024-01-10T00:00:00.000Z",
+        "updatedAt": "2024-01-10T00:00:00.000Z"
       },
       {
-        "id": "id-2026",
-        "orderId": "id-2023",
-        "projectName": "完成材專案-2025-10-23-id-2023",
+        "id": "project-2",
+        "orderId": "order-2",
+        "projectName": "輔材專案-2024-01-11-order-2",
         "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:20:37.522Z",
-        "updatedAt": "2025-10-23T01:20:37.522Z"
+        "createdAt": "2024-01-11T00:00:00.000Z",
+        "updatedAt": "2024-01-11T00:00:00.000Z"
       },
       {
-        "id": "id-2017",
-        "orderId": "id-2013",
-        "projectName": "輔材專案-2025-10-23-id-2013",
+        "id": "project-1002",
+        "orderId": "id-1002",
+        "projectName": "輔材專案-2024-01-12-id-1002",
         "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:29:29.533Z",
-        "updatedAt": "2025-10-23T01:29:29.533Z"
-      },
-      {
-        "id": "id-2025",
-        "orderId": "id-2022",
-        "projectName": "完成材專案-2025-10-23-id-2022",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:29:40.001Z",
-        "updatedAt": "2025-10-23T01:29:40.001Z"
-      },
-      {
-        "id": "id-2017",
-        "orderId": "id-2013",
-        "projectName": "輔材專案-2025-10-23-id-2013",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:38:16.995Z",
-        "updatedAt": "2025-10-23T01:38:16.995Z"
-      },
-      {
-        "id": "id-2025",
-        "orderId": "id-2022",
-        "projectName": "完成材專案-2025-10-23-id-2022",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:38:25.106Z",
-        "updatedAt": "2025-10-23T01:38:25.106Z"
-      },
-      {
-        "id": "id-2031",
-        "orderId": "id-2027",
-        "projectName": "輔材專案-2025-10-23-id-2027",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T03:17:49.391Z",
-        "updatedAt": "2025-10-23T03:17:49.391Z"
-      },
-      {
-        "id": "id-2039",
-        "orderId": "id-2036",
-        "projectName": "完成材專案-2025-10-23-id-2036",
-        "overallStatus": "COMPLETED",
-        "createdAt": "2025-10-23T03:18:04.746Z",
-        "updatedAt": "2025-10-23T03:18:38.571Z"
-      },
-      {
-        "id": "id-2053",
-        "orderId": "id-2049",
-        "projectName": "輔材專案-2025-10-23-id-2049",
-        "overallStatus": "COMPLETED",
-        "createdAt": "2025-10-23T03:33:04.357Z",
-        "updatedAt": "2025-10-23T05:03:53.703Z"
-      },
-      {
-        "id": "id-2061",
-        "orderId": "id-2058",
-        "projectName": "完成材專案-2025-10-23-id-2058",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T03:33:25.368Z",
-        "updatedAt": "2025-10-23T03:33:25.368Z"
+        "createdAt": "2024-01-12T00:00:00.000Z",
+        "updatedAt": "2024-01-12T00:00:00.000Z"
       }
     ],
     "orderItems": [
       {
-        "orderId": "id-2013",
-        "materialId": "id-2000",
+        "id": "item-1",
+        "orderId": "order-1",
+        "materialId": "material-1",
+        "quantity": 100,
+        "unitPrice": 2.5
+      },
+      {
+        "id": "item-2",
+        "orderId": "order-2",
+        "materialId": "material-2",
         "quantity": 2,
-        "unitPrice": 2.5,
-        "id": "id-2014"
-      },
-      {
-        "orderId": "id-2013",
-        "materialId": "id-2002",
-        "quantity": 2,
-        "unitPrice": 8.5,
-        "id": "id-2015"
-      },
-      {
-        "orderId": "id-2013",
-        "materialId": "id-2004",
-        "quantity": 2,
-        "unitPrice": 8777,
-        "id": "id-2016"
-      },
-      {
-        "orderId": "id-2022",
-        "materialId": "id-2001",
-        "quantity": 3,
-        "unitPrice": 45,
-        "id": "id-2023"
-      },
-      {
-        "orderId": "id-2022",
-        "materialId": "id-2003",
-        "quantity": 2,
-        "unitPrice": 180,
-        "id": "id-2024"
-      },
-      {
-        "orderId": "id-2027",
-        "materialId": "id-2027",
-        "quantity": 1,
-        "unitPrice": 2.5,
-        "id": "id-2028"
-      },
-      {
-        "orderId": "id-2027",
-        "materialId": "id-2029",
-        "quantity": 1,
-        "unitPrice": 8.5,
-        "id": "id-2029"
-      },
-      {
-        "orderId": "id-2027",
-        "materialId": "id-2031",
-        "quantity": 1,
-        "unitPrice": 8777,
-        "id": "id-2030"
-      },
-      {
-        "orderId": "id-2036",
-        "materialId": "id-2028",
-        "quantity": 1,
-        "unitPrice": 45,
-        "id": "id-2037"
-      },
-      {
-        "orderId": "id-2036",
-        "materialId": "id-2030",
-        "quantity": 1,
-        "unitPrice": 180,
-        "id": "id-2038"
-      },
-      {
-        "orderId": "id-2049",
-        "materialId": "id-2027",
-        "quantity": 1,
-        "unitPrice": 2.5,
-        "id": "id-2050"
-      },
-      {
-        "orderId": "id-2049",
-        "materialId": "id-2029",
-        "quantity": 2,
-        "unitPrice": 8.5,
-        "id": "id-2051"
-      },
-      {
-        "orderId": "id-2049",
-        "materialId": "id-2031",
-        "quantity": 4,
-        "unitPrice": 8777,
-        "id": "id-2052"
-      },
-      {
-        "orderId": "id-2058",
-        "materialId": "id-2028",
-        "quantity": 2,
-        "unitPrice": 45,
-        "id": "id-2059"
-      },
-      {
-        "orderId": "id-2058",
-        "materialId": "id-2030",
-        "quantity": 2,
-        "unitPrice": 180,
-        "id": "id-2060"
+        "unitPrice": 45
       }
     ],
     "statusUpdates": [],
     "messages": [],
-    "nextId": 2097
+    "nextId": 2000
   }
 }
