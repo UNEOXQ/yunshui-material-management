@@ -819,22 +819,23 @@ export class MemoryDatabase {
   async createMessage(messageData: {
     fromUserId: string;
     fromUsername: string;
-    toUserId: string;
-    toUsername: string;
+    toUserId?: string;
+    toUsername?: string;
+    toProjectId?: string;
     content: string;
-    isRead: boolean;
+    messageType: 'USER_MESSAGE' | 'PROJECT_MESSAGE';
+    isRead?: boolean;
   }): Promise<Message> {
-    // 刪除該用戶的所有舊留言（只保留一條最新的）
-    this.messages = this.messages.filter(msg => msg.toUserId !== messageData.toUserId);
-    
     const newMessage: Message = {
       id: this.generateId(),
       fromUserId: messageData.fromUserId,
       fromUsername: messageData.fromUsername,
-      toUserId: messageData.toUserId,
-      toUsername: messageData.toUsername,
+      ...(messageData.toUserId && { toUserId: messageData.toUserId }),
+      ...(messageData.toUsername && { toUsername: messageData.toUsername }),
+      ...(messageData.toProjectId && { toProjectId: messageData.toProjectId }),
       content: messageData.content,
-      isRead: messageData.isRead,
+      isRead: messageData.isRead || false,
+      messageType: messageData.messageType,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -914,6 +915,13 @@ export class MemoryDatabase {
       return this.messages.filter(msg => msg.toUserId === userId || msg.fromUserId === userId);
     }
     return [...this.messages];
+  }
+
+  async getMessagesByProjectId(projectId: string, limit: number = 10): Promise<Message[]> {
+    return this.messages
+      .filter(message => message.toProjectId === projectId)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, limit);
   }
 }
 

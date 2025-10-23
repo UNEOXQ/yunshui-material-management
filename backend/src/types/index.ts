@@ -86,10 +86,12 @@ export interface Message {
   id: string;
   fromUserId: string;
   fromUsername: string;
-  toUserId: string;
-  toUsername: string;
+  toUserId?: string;
+  toUsername?: string;
+  toProjectId?: string;
   content: string;
   isRead: boolean;
+  messageType: 'USER_MESSAGE' | 'PROJECT_MESSAGE';
   createdAt: Date;
   updatedAt: Date;
 }

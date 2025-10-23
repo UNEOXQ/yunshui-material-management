@@ -81,6 +81,7 @@ import uploadRoutes from './routes/uploadRoutes';
 import errorRoutes from './routes/errorRoutes';
 import statusRoutes from './routes/statusRoutes';
 import backupRoutes from './routes/backup';
+import messageRoutes from './routes/messageRoutes';
 import { githubBackupService } from './services/githubBackupService';
 import { githubRecoveryService } from './services/githubRecoveryService';
 
@@ -92,6 +93,7 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/errors', errorRoutes);
 app.use('/api/status', statusRoutes);
 app.use('/api/backup', backupRoutes);
+app.use('/api/messages', messageRoutes);
 
 // 404 處理
 app.use('*', (req, res) => {
@@ -124,6 +126,7 @@ if (process.env.NODE_ENV !== 'test') {
     console.log(`❌ Error API: http://localhost:${PORT}/api/errors`);
     console.log(`📊 Status API: http://localhost:${PORT}/api/status`);
     console.log(`💾 Backup API: http://localhost:${PORT}/api/backup`);
+    console.log(`💬 Messages API: http://localhost:${PORT}/api/messages`);
     console.log(`🖼️  Static files: http://localhost:${PORT}/uploads`);
     console.log('');
     console.log('✅ 服務器啟動成功！使用內存數據庫模式 - 測試自動恢復功能');

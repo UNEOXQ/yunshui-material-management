@@ -11,7 +11,7 @@ import uploadRoutes from './routes/uploadRoutes';
 import orderRoutes from './routes/orderRoutes';
 import statusRoutes from './routes/statusRoutes';
 import errorRoutes from './routes/errorRoutes';
-import messageRoutes from './routes/messages';
+import messageRoutes from './routes/messageRoutes';
 import { initializeWebSocketService } from './services/websocketService';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import path from 'path';

@@ -61,12 +61,12 @@
       "name": "螺絲釘 M6x20",
       "category": "五金配件",
       "price": 2.5,
-      "quantity": 999,
+      "quantity": 979,
       "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
       "supplier": "五金供應商A",
       "type": "AUXILIARY",
       "createdAt": "2024-01-01T00:00:00.000Z",
-      "updatedAt": "2025-10-20T23:22:53.733Z"
+      "updatedAt": "2025-10-23T01:10:24.040Z"
     },
     {
       "id": "material-2",
@@ -140,6 +140,22 @@
       "id": "id-2056",
       "createdAt": "2025-10-20T22:16:41.405Z",
       "updatedAt": "2025-10-20T22:16:41.405Z"
+    },
+    {
+      "userId": "user-2",
+      "totalAmount": 25,
+      "status": "PENDING",
+      "id": "id-2074",
+      "createdAt": "2025-10-23T01:09:28.890Z",
+      "updatedAt": "2025-10-23T01:09:28.890Z"
+    },
+    {
+      "userId": "user-2",
+      "totalAmount": 25,
+      "status": "PENDING",
+      "id": "id-2081",
+      "createdAt": "2025-10-23T01:10:24.037Z",
+      "updatedAt": "2025-10-23T01:10:24.037Z"
     }
   ],
   "orderItems": [
@@ -191,6 +207,20 @@
       "quantity": 2,
       "unitPrice": 8.5,
       "id": "id-2058"
+    },
+    {
+      "orderId": "id-2074",
+      "materialId": "material-1",
+      "quantity": 10,
+      "unitPrice": 2.5,
+      "id": "id-2075"
+    },
+    {
+      "orderId": "id-2081",
+      "materialId": "material-1",
+      "quantity": 10,
+      "unitPrice": 2.5,
+      "id": "id-2082"
     }
   ],
   "projects": [
@@ -225,6 +255,22 @@
       "overallStatus": "ACTIVE",
       "createdAt": "2025-10-20T22:16:41.406Z",
       "updatedAt": "2025-10-20T22:16:41.406Z"
+    },
+    {
+      "id": "id-2076",
+      "orderId": "id-2074",
+      "projectName": "專案-2025-10-23-id-2074",
+      "overallStatus": "ACTIVE",
+      "createdAt": "2025-10-23T01:09:28.894Z",
+      "updatedAt": "2025-10-23T01:09:28.894Z"
+    },
+    {
+      "id": "id-2083",
+      "orderId": "id-2081",
+      "projectName": "專案-2025-10-23-id-2081",
+      "overallStatus": "ACTIVE",
+      "createdAt": "2025-10-23T01:10:24.042Z",
+      "updatedAt": "2025-10-23T01:10:24.042Z"
     }
   ],
   "statusUpdates": [
@@ -509,6 +555,82 @@
       "statusType": "CHECK",
       "statusValue": "PENDING",
       "createdAt": "2025-10-20T22:16:41.413Z"
+    },
+    {
+      "id": "id-2077",
+      "projectId": "id-2076",
+      "updatedBy": "user-2",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-23T01:09:28.894Z"
+    },
+    {
+      "id": "id-2078",
+      "projectId": "id-2076",
+      "updatedBy": "user-2",
+      "statusType": "PICKUP",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-23T01:09:28.896Z"
+    },
+    {
+      "id": "id-2079",
+      "projectId": "id-2076",
+      "updatedBy": "user-2",
+      "statusType": "DELIVERY",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-23T01:09:28.899Z"
+    },
+    {
+      "id": "id-2080",
+      "projectId": "id-2076",
+      "updatedBy": "user-2",
+      "statusType": "CHECK",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-23T01:09:28.900Z"
+    },
+    {
+      "id": "id-2084",
+      "projectId": "id-2083",
+      "updatedBy": "user-2",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-23T01:10:24.042Z"
+    },
+    {
+      "id": "id-2085",
+      "projectId": "id-2083",
+      "updatedBy": "user-2",
+      "statusType": "PICKUP",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-23T01:10:24.044Z"
+    },
+    {
+      "id": "id-2086",
+      "projectId": "id-2083",
+      "updatedBy": "user-2",
+      "statusType": "DELIVERY",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-23T01:10:24.046Z"
+    },
+    {
+      "id": "id-2087",
+      "projectId": "id-2083",
+      "updatedBy": "user-2",
+      "statusType": "CHECK",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-23T01:10:24.048Z"
+    },
+    {
+      "id": "id-2088",
+      "projectId": "id-2083",
+      "updatedBy": "user-2",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - Processing",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "Processing"
+      },
+      "createdAt": "2025-10-23T01:10:50.404Z"
     }
   ],
   "messages": [
@@ -601,6 +723,6 @@
       "updatedAt": "2025-10-21T00:58:48.326Z"
     }
   ],
-  "nextId": 2074,
-  "lastSaved": "2025-10-21T00:58:48.326Z"
+  "nextId": 2089,
+  "lastSaved": "2025-10-23T01:10:50.404Z"
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>測試用戶名稱映射</title>
+</head>
+<body>
+    <h1>用戶名稱映射測試</h1>
+    <div id="results"></div>
+
+    <script>
+        // 模擬用戶名稱映射函數
+        function mapUsernameToDisplayName(username) {
+            const displayNameMap = {
+                'pm001': 'Jeffrey',
+                'am001': 'Miya', 
+                'warehouse001': 'Mark',
+                'admin': '系統管理員'
+            };
+            
+            return displayNameMap[username] || username;
+        }
+
+        // 測試映射
+        const testUsers = ['pm001', 'am001', 'warehouse001', 'admin', 'unknown'];
+        const results = document.getElementById('results');
+        
+        testUsers.forEach(username => {
+            const mapped = mapUsernameToDisplayName(username);
+            results.innerHTML += `<p>${username} → ${mapped}</p>`;
+        });
+
+        // 測試前端是否正確載入
+        console.log('用戶名稱映射測試：');
+        console.log('pm001 →', mapUsernameToDisplayName('pm001'));
+        console.log('am001 →', mapUsernameToDisplayName('am001'));
+    </script>
+</body>
+</html>
