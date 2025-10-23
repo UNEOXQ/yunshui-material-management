@@ -443,18 +443,23 @@ class GitHubRecoveryService {
       const orders = await memoryDb.getAllOrders();
       const users = await memoryDb.getAllUsers();
       
-      // 如果材料或訂單數據很少，可能需要恢復
-      const hasMinimalData = materials.materials.length <= 4 && orders.length === 0;
+      console.log(`🔍 當前數據狀態: ${materials.materials.length} 材料, ${orders.length} 訂單, ${users.length} 用戶`);
       
-      // 檢查用戶數據（除了默認管理員用戶）
-      const nonAdminUsers = users.filter(user => user.role !== 'ADMIN');
-      const hasMinimalUsers = nonAdminUsers.length === 0;
+      // 更寬鬆的恢復條件：如果材料很少或訂單很少，就恢復
+      const hasMinimalMaterials = materials.materials.length <= 4;
+      const hasMinimalOrders = orders.length <= 2;
+      const hasMinimalUsers = users.length <= 4; // 默認應該有更多用戶
       
-      if (hasMinimalData || hasMinimalUsers) {
-        console.log('🔍 檢測到最小數據集，需要從備份恢復');
+      // 任何一個條件滿足就恢復
+      if (hasMinimalMaterials || hasMinimalOrders || hasMinimalUsers) {
+        console.log('🔍 檢測到數據不足，需要從備份恢復');
+        console.log(`   - 材料數量: ${materials.materials.length} (≤4 觸發恢復)`);
+        console.log(`   - 訂單數量: ${orders.length} (≤2 觸發恢復)`);
+        console.log(`   - 用戶數量: ${users.length} (≤4 觸發恢復)`);
         return true;
       }
       
+      console.log('✅ 數據充足，跳過自動恢復');
       return false;
     } catch (error) {
       console.error('檢查恢復條件失敗:', error);
