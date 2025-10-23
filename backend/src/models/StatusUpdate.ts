@@ -463,14 +463,14 @@ export class StatusUpdateModel {
 
             case 'DELIVERY':
                 // Delivery status validation
-                if (newValue === 'Delivered') {
+                if (newValue === 'Delivered' || newValue === '') {
                     return { valid: true };
                 }
                 return { valid: false, message: 'Invalid delivery status value' };
 
             case 'CHECK':
                 // Check status validation
-                const validCheckValues = ['Check and sign(C.B/PM)', '(C.B)', 'WH)'];
+                const validCheckValues = ['Check and sign(C.B/PM)', '(C.B)', 'WH)', ''];
                 if (!validCheckValues.includes(newValue)) {
                     return { valid: false, message: 'Invalid check status value' };
                 }
