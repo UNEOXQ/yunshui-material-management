@@ -468,7 +468,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       'id-2033': 'PM',    // Jeffrey
       'id-2034': 'AM',    // Miya (修正為 AM)
       // 'id-2035': 'AM',    // 舊的 Erica ID，已廢棄
-      'id-2036': 'PM',    // LUKE
+      'id-2036': 'AM',    // Erica 的另一個 ID (修正為 AM)
       'id-2038': 'AM',    // 5555 (新 AM 用戶)
       'id-2064': 'AM',    // Erica (修正為 AM)
       'id-2065': 'PM',    // LUKE
