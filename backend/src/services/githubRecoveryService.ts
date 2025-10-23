@@ -380,19 +380,34 @@ class GitHubRecoveryService {
         }
       }
 
-      // 恢復用戶數據（跳過已存在的用戶）
+      // 恢復用戶數據（包括管理員）
       if (data.users && Array.isArray(data.users)) {
         console.log(`👥 恢復 ${data.users.length} 個用戶...`);
         for (const user of data.users) {
           try {
-            const existingUser = await memoryDb.getUserById(user.id);
-            if (!existingUser) {
-              await memoryDb.createUser(user);
-              result.statistics.usersRecovered++;
-            }
+            await memoryDb.createUser(user);
+            result.statistics.usersRecovered++;
           } catch (error) {
             console.warn(`⚠️ 恢復用戶失敗:`, user.id, error);
           }
+        }
+        
+        // 安全檢查：確保至少有一個管理員用戶
+        const restoredUsers = await memoryDb.getAllUsers();
+        const hasAdmin = restoredUsers.some(user => user.role === 'ADMIN');
+        
+        if (!hasAdmin) {
+          console.warn('⚠️ 備份中沒有管理員用戶，創建默認管理員...');
+          await memoryDb.createUser({
+            id: 'user-1',
+            username: '系統管理員',
+            email: 'admin@yunshui.com',
+            passwordHash: '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj6hsxq5S/kS', // admin123
+            role: 'ADMIN' as any,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          });
+          console.log('✅ 默認管理員用戶已創建');
         }
       }
 
@@ -561,9 +576,8 @@ class GitHubRecoveryService {
       (memoryDb as any).messages = [];
       (memoryDb as any).statusUpdates = [];
       
-      // 保留管理員用戶，清空其他用戶
-      const adminUsers = (memoryDb as any).users.filter((user: any) => user.role === 'ADMIN');
-      (memoryDb as any).users = adminUsers;
+      // 清空所有用戶（包括管理員），讓備份數據完全恢復
+      (memoryDb as any).users = [];
       
       // 重置 ID 計數器以避免衝突
       (memoryDb as any).nextId = 2000;
