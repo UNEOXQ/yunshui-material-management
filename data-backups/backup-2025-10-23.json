@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-23T05:00:11.218Z",
+  "timestamp": "2025-10-23T05:10:53.762Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -475,9 +475,9 @@
         "id": "id-2053",
         "orderId": "id-2049",
         "projectName": "輔材專案-2025-10-23-id-2049",
-        "overallStatus": "ACTIVE",
+        "overallStatus": "COMPLETED",
         "createdAt": "2025-10-23T03:33:04.357Z",
-        "updatedAt": "2025-10-23T03:33:04.357Z"
+        "updatedAt": "2025-10-23T05:03:53.703Z"
       },
       {
         "id": "id-2061",
@@ -595,8 +595,177 @@
         "id": "id-2060"
       }
     ],
-    "statusUpdates": [],
+    "statusUpdates": [
+      {
+        "id": "id-2083",
+        "projectId": "id-2061",
+        "updatedBy": "user-4",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - Processing",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "Processing"
+        },
+        "createdAt": "2025-10-23T05:00:34.998Z"
+      },
+      {
+        "id": "id-2084",
+        "projectId": "id-2061",
+        "updatedBy": "user-4",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - Processing",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "Processing"
+        },
+        "createdAt": "2025-10-23T05:00:47.228Z"
+      },
+      {
+        "id": "id-2085",
+        "projectId": "id-2061",
+        "updatedBy": "user-4",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - Processing",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "Processing"
+        },
+        "createdAt": "2025-10-23T05:00:50.369Z"
+      },
+      {
+        "id": "id-2086",
+        "projectId": "id-2061",
+        "updatedBy": "user-4",
+        "statusType": "PICKUP",
+        "statusValue": "Picked (D.T.S)",
+        "additionalData": {
+          "primaryStatus": "Picked",
+          "secondaryStatus": "(D.T.S)"
+        },
+        "createdAt": "2025-10-23T05:00:50.395Z"
+      },
+      {
+        "id": "id-2087",
+        "projectId": "id-2061",
+        "updatedBy": "user-4",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - Processing",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "Processing"
+        },
+        "createdAt": "2025-10-23T05:01:36.522Z"
+      },
+      {
+        "id": "id-2088",
+        "projectId": "id-2061",
+        "updatedBy": "user-4",
+        "statusType": "PICKUP",
+        "statusValue": "Picked (D.T.S)",
+        "additionalData": {
+          "primaryStatus": "Picked",
+          "secondaryStatus": "(D.T.S)"
+        },
+        "createdAt": "2025-10-23T05:01:36.532Z"
+      },
+      {
+        "id": "id-2089",
+        "projectId": "id-2061",
+        "updatedBy": "user-4",
+        "statusType": "DELIVERY",
+        "statusValue": "Delivered",
+        "additionalData": {
+          "time": "2025.01.08",
+          "address": "9455 156ST",
+          "po": "V3N 3B5",
+          "deliveredBy": "馬克超人"
+        },
+        "createdAt": "2025-10-23T05:01:36.583Z"
+      },
+      {
+        "id": "id-2090",
+        "projectId": "id-2053",
+        "updatedBy": "user-4",
+        "statusType": "CHECK",
+        "statusValue": "Check and sign(C.B/PM)",
+        "createdAt": "2025-10-23T05:03:53.702Z"
+      },
+      {
+        "id": "id-2091",
+        "projectId": "id-2053",
+        "updatedBy": "user-4",
+        "statusType": "DELIVERY",
+        "statusValue": "Delivered",
+        "additionalData": {
+          "time": "2025.0708 15:35",
+          "address": "1850 165A ST",
+          "po": "V5S 67A",
+          "deliveredBy": "耶格小飛狗"
+        },
+        "createdAt": "2025-10-23T05:03:53.744Z"
+      },
+      {
+        "id": "id-2092",
+        "projectId": "id-2053",
+        "updatedBy": "user-4",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - Processing",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "Processing"
+        },
+        "createdAt": "2025-10-23T05:03:53.761Z"
+      },
+      {
+        "id": "id-2093",
+        "projectId": "id-2053",
+        "updatedBy": "user-4",
+        "statusType": "PICKUP",
+        "statusValue": "Picked (D.T.S/MP)",
+        "additionalData": {
+          "primaryStatus": "Picked",
+          "secondaryStatus": "(D.T.S/MP)"
+        },
+        "createdAt": "2025-10-23T05:03:54.083Z"
+      },
+      {
+        "id": "id-2094",
+        "projectId": "id-2039",
+        "updatedBy": "user-4",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - waiting for pick",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "waiting for pick"
+        },
+        "createdAt": "2025-10-23T05:04:12.140Z"
+      },
+      {
+        "id": "id-2095",
+        "projectId": "id-2031",
+        "updatedBy": "user-4",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - pending",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "pending"
+        },
+        "createdAt": "2025-10-23T05:04:22.068Z"
+      },
+      {
+        "id": "id-2096",
+        "projectId": "id-2031",
+        "updatedBy": "user-4",
+        "statusType": "PICKUP",
+        "statusValue": "Failed (E.S)",
+        "additionalData": {
+          "primaryStatus": "Failed",
+          "secondaryStatus": "(E.S)"
+        },
+        "createdAt": "2025-10-23T05:04:22.123Z"
+      }
+    ],
     "messages": [],
-    "nextId": 2083
+    "nextId": 2097
   }
 }
