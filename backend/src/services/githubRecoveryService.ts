@@ -388,12 +388,19 @@ class GitHubRecoveryService {
             const existingMaterial = (memoryDb as any).materials.find((m: any) => m.id === material.id);
             
             if (!existingMaterial) {
-              // 確保材料數據格式正確
+              // 確保材料數據格式正確，並修復圖片 URL
+              let imageUrl = material.imageUrl || '';
+              
+              // 修復圖片 URL：將 localhost URL 轉換為生產環境 URL
+              if (imageUrl && imageUrl.includes('localhost:3004')) {
+                imageUrl = imageUrl.replace('http://localhost:3004', 'https://yunshui-backend1.onrender.com');
+              }
+              
               const materialData = {
                 ...material,
                 createdAt: new Date(material.createdAt),
                 updatedAt: new Date(material.updatedAt),
-                imageUrl: material.imageUrl || '', // 確保 imageUrl 不是 undefined
+                imageUrl: imageUrl,
                 price: Number(material.price) || 0,
                 quantity: Number(material.quantity) || 0
               };
