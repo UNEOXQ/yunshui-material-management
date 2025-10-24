@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-24T19:49:13.997Z",
+  "timestamp": "2025-10-24T20:19:08.997Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -62,6 +62,18 @@
         "id": "id-2031",
         "createdAt": "2025-10-23T03:17:25.098Z",
         "updatedAt": "2025-10-24T00:08:28.654Z"
+      },
+      {
+        "name": "qqdgbdfbg",
+        "category": "1",
+        "price": 1,
+        "quantity": 1,
+        "supplier": "1",
+        "type": "AUXILIARY",
+        "imageUrl": "",
+        "id": "id-2274",
+        "createdAt": "2025-10-24T19:52:54.983Z",
+        "updatedAt": "2025-10-24T19:52:54.983Z"
       }
     ],
     "orders": [
@@ -1238,6 +1250,6 @@
         "updatedAt": "2025-10-23T21:29:33.306Z"
       }
     ],
-    "nextId": 2274
+    "nextId": 2275
   }
 }
