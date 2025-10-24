@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-24T00:08:04.192Z",
+  "timestamp": "2025-10-24T00:09:32.605Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -21,11 +21,11 @@
         "category": "木材",
         "price": 45,
         "quantity": 179,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761245261293-545221039.jpg",
+        "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
         "supplier": "木材供應商B",
         "type": "FINISHED",
         "createdAt": "2025-10-23T03:17:25.095Z",
-        "updatedAt": "2025-10-23T23:27:41.415Z"
+        "updatedAt": "2025-10-24T00:09:08.398Z"
       },
       {
         "id": "id-2029",
@@ -33,11 +33,11 @@
         "category": "電氣材料",
         "price": 8.5,
         "quantity": 475,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761245265749-459142862.jpg",
+        "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
         "supplier": "電氣供應商C",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T03:17:25.096Z",
-        "updatedAt": "2025-10-23T23:43:05.906Z"
+        "updatedAt": "2025-10-24T00:09:03.097Z"
       },
       {
         "id": "id-2030",
@@ -45,11 +45,11 @@
         "category": "建材",
         "price": 180,
         "quantity": 71,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761245271807-88180889.jpg",
+        "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
         "supplier": "建材供應商D",
         "type": "FINISHED",
         "createdAt": "2025-10-23T03:17:25.097Z",
-        "updatedAt": "2025-10-23T23:27:41.415Z"
+        "updatedAt": "2025-10-24T00:08:58.196Z"
       },
       {
         "name": "好折凳",
@@ -58,10 +58,10 @@
         "quantity": 970,
         "supplier": "食神軍火",
         "type": "AUXILIARY",
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761245276797-191717424.jpg",
+        "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
         "id": "id-2031",
         "createdAt": "2025-10-23T03:17:25.098Z",
-        "updatedAt": "2025-10-23T23:43:05.910Z"
+        "updatedAt": "2025-10-24T00:08:28.654Z"
       }
     ],
     "orders": [
@@ -107,7 +107,7 @@
             "materialCategory": "電氣材料",
             "materialType": "AUXILIARY",
             "supplier": "電氣供應商C",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761245265749-459142862.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
             "material": {
               "id": "id-2029",
               "name": "電線 2.5mm²",
@@ -115,10 +115,10 @@
               "price": 8.5,
               "quantity": 475,
               "supplier": "電氣供應商C",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761245265749-459142862.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.096Z",
-              "updatedAt": "2025-10-23T23:43:05.906Z"
+              "updatedAt": "2025-10-24T00:09:03.097Z"
             }
           },
           {
@@ -131,7 +131,7 @@
             "materialCategory": "武器",
             "materialType": "AUXILIARY",
             "supplier": "食神軍火",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761245276797-191717424.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
             "material": {
               "id": "id-2031",
               "name": "好折凳",
@@ -139,10 +139,10 @@
               "price": 8777,
               "quantity": 970,
               "supplier": "食神軍火",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761245276797-191717424.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-23T23:43:05.910Z"
+              "updatedAt": "2025-10-24T00:08:28.654Z"
             }
           }
         ],
@@ -167,7 +167,7 @@
             "materialCategory": "木材",
             "materialType": "FINISHED",
             "supplier": "木材供應商B",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761245261293-545221039.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
             "material": {
               "id": "id-2028",
               "name": "木板 2x4x8",
@@ -175,10 +175,10 @@
               "price": 45,
               "quantity": 179,
               "supplier": "木材供應商B",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761245261293-545221039.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T23:27:41.415Z"
+              "updatedAt": "2025-10-24T00:09:08.398Z"
             }
           },
           {
@@ -191,7 +191,7 @@
             "materialCategory": "建材",
             "materialType": "FINISHED",
             "supplier": "建材供應商D",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761245271807-88180889.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
             "material": {
               "id": "id-2030",
               "name": "水泥 50kg",
@@ -199,10 +199,10 @@
               "price": 180,
               "quantity": 71,
               "supplier": "建材供應商D",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761245271807-88180889.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-23T23:27:41.415Z"
+              "updatedAt": "2025-10-24T00:08:58.196Z"
             }
           }
         ]
@@ -226,7 +226,7 @@
             "materialCategory": "武器",
             "materialType": "AUXILIARY",
             "supplier": "食神軍火",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761245276797-191717424.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
             "material": {
               "id": "id-2031",
               "name": "好折凳",
@@ -234,10 +234,10 @@
               "price": 8777,
               "quantity": 970,
               "supplier": "食神軍火",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761245276797-191717424.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-23T23:43:05.910Z"
+              "updatedAt": "2025-10-24T00:08:28.654Z"
             }
           }
         ]
@@ -261,7 +261,7 @@
             "materialCategory": "木材",
             "materialType": "FINISHED",
             "supplier": "木材供應商B",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761245261293-545221039.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
             "material": {
               "id": "id-2028",
               "name": "木板 2x4x8",
@@ -269,10 +269,10 @@
               "price": 45,
               "quantity": 179,
               "supplier": "木材供應商B",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761245261293-545221039.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T23:27:41.415Z"
+              "updatedAt": "2025-10-24T00:09:08.398Z"
             }
           },
           {
@@ -285,7 +285,7 @@
             "materialCategory": "建材",
             "materialType": "FINISHED",
             "supplier": "建材供應商D",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761245271807-88180889.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
             "material": {
               "id": "id-2030",
               "name": "水泥 50kg",
@@ -293,10 +293,10 @@
               "price": 180,
               "quantity": 71,
               "supplier": "建材供應商D",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761245271807-88180889.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-23T23:27:41.415Z"
+              "updatedAt": "2025-10-24T00:08:58.196Z"
             }
           }
         ]
@@ -320,7 +320,7 @@
             "materialCategory": "建材",
             "materialType": "FINISHED",
             "supplier": "建材供應商D",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761245271807-88180889.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
             "material": {
               "id": "id-2030",
               "name": "水泥 50kg",
@@ -328,10 +328,10 @@
               "price": 180,
               "quantity": 71,
               "supplier": "建材供應商D",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/4-1761245271807-88180889.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-23T23:27:41.415Z"
+              "updatedAt": "2025-10-24T00:08:58.196Z"
             }
           },
           {
@@ -344,7 +344,7 @@
             "materialCategory": "木材",
             "materialType": "FINISHED",
             "supplier": "木材供應商B",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761245261293-545221039.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
             "material": {
               "id": "id-2028",
               "name": "木板 2x4x8",
@@ -352,10 +352,10 @@
               "price": 45,
               "quantity": 179,
               "supplier": "木材供應商B",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/3-1761245261293-545221039.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T23:27:41.415Z"
+              "updatedAt": "2025-10-24T00:09:08.398Z"
             }
           }
         ]
@@ -403,7 +403,7 @@
             "materialCategory": "電氣材料",
             "materialType": "AUXILIARY",
             "supplier": "電氣供應商C",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761245265749-459142862.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
             "material": {
               "id": "id-2029",
               "name": "電線 2.5mm²",
@@ -411,10 +411,10 @@
               "price": 8.5,
               "quantity": 475,
               "supplier": "電氣供應商C",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/2-1761245265749-459142862.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.096Z",
-              "updatedAt": "2025-10-23T23:43:05.906Z"
+              "updatedAt": "2025-10-24T00:09:03.097Z"
             }
           },
           {
@@ -427,7 +427,7 @@
             "materialCategory": "武器",
             "materialType": "AUXILIARY",
             "supplier": "食神軍火",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761245276797-191717424.jpg",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
             "material": {
               "id": "id-2031",
               "name": "好折凳",
@@ -435,10 +435,10 @@
               "price": 8777,
               "quantity": 970,
               "supplier": "食神軍火",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/5-1761245276797-191717424.jpg",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-23T23:43:05.910Z"
+              "updatedAt": "2025-10-24T00:08:28.654Z"
             }
           }
         ]
