@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-24T23:03:45.806Z",
+  "timestamp": "2025-10-24T23:33:45.808Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -20,12 +20,12 @@
         "name": "木板 2x4x8",
         "category": "木材",
         "price": 45,
-        "quantity": 179,
+        "quantity": 177,
         "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
         "supplier": "木材供應商B",
         "type": "FINISHED",
         "createdAt": "2025-10-23T03:17:25.095Z",
-        "updatedAt": "2025-10-24T00:09:08.398Z"
+        "updatedAt": "2025-10-24T23:28:02.626Z"
       },
       {
         "id": "id-2029",
@@ -44,12 +44,12 @@
         "name": "水泥 50kg",
         "category": "建材",
         "price": 180,
-        "quantity": 71,
+        "quantity": 69,
         "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
         "supplier": "建材供應商D",
         "type": "FINISHED",
         "createdAt": "2025-10-23T03:17:25.097Z",
-        "updatedAt": "2025-10-24T00:08:58.196Z"
+        "updatedAt": "2025-10-24T23:28:02.627Z"
       },
       {
         "name": "好折凳",
@@ -173,12 +173,12 @@
               "name": "木板 2x4x8",
               "category": "木材",
               "price": 45,
-              "quantity": 179,
+              "quantity": 177,
               "supplier": "木材供應商B",
               "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-24T00:09:08.398Z"
+              "updatedAt": "2025-10-24T23:28:02.626Z"
             }
           },
           {
@@ -197,12 +197,12 @@
               "name": "水泥 50kg",
               "category": "建材",
               "price": 180,
-              "quantity": 71,
+              "quantity": 69,
               "supplier": "建材供應商D",
               "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-24T00:08:58.196Z"
+              "updatedAt": "2025-10-24T23:28:02.627Z"
             }
           }
         ]
@@ -267,12 +267,12 @@
               "name": "木板 2x4x8",
               "category": "木材",
               "price": 45,
-              "quantity": 179,
+              "quantity": 177,
               "supplier": "木材供應商B",
               "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-24T00:09:08.398Z"
+              "updatedAt": "2025-10-24T23:28:02.626Z"
             }
           },
           {
@@ -291,12 +291,12 @@
               "name": "水泥 50kg",
               "category": "建材",
               "price": 180,
-              "quantity": 71,
+              "quantity": 69,
               "supplier": "建材供應商D",
               "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-24T00:08:58.196Z"
+              "updatedAt": "2025-10-24T23:28:02.627Z"
             }
           }
         ]
@@ -326,12 +326,12 @@
               "name": "水泥 50kg",
               "category": "建材",
               "price": 180,
-              "quantity": 71,
+              "quantity": 69,
               "supplier": "建材供應商D",
               "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-24T00:08:58.196Z"
+              "updatedAt": "2025-10-24T23:28:02.627Z"
             }
           },
           {
@@ -350,12 +350,12 @@
               "name": "木板 2x4x8",
               "category": "木材",
               "price": 45,
-              "quantity": 179,
+              "quantity": 177,
               "supplier": "木材供應商B",
               "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
               "type": "FINISHED",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-24T00:09:08.398Z"
+              "updatedAt": "2025-10-24T23:28:02.626Z"
             }
           }
         ]
@@ -439,6 +439,64 @@
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.098Z",
               "updatedAt": "2025-10-24T00:08:28.654Z"
+            }
+          }
+        ]
+      },
+      {
+        "userId": "id-2034",
+        "totalAmount": 450,
+        "status": "PENDING",
+        "id": "id-2275",
+        "createdAt": "2025-10-24T23:28:02.622Z",
+        "updatedAt": "2025-10-24T23:28:02.622Z",
+        "items": [
+          {
+            "orderId": "id-2275",
+            "materialId": "id-2028",
+            "quantity": 2,
+            "unitPrice": 45,
+            "id": "id-2276",
+            "materialName": "木板 2x4x8",
+            "materialCategory": "木材",
+            "materialType": "FINISHED",
+            "supplier": "木材供應商B",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
+            "material": {
+              "id": "id-2028",
+              "name": "木板 2x4x8",
+              "category": "木材",
+              "price": 45,
+              "quantity": 177,
+              "supplier": "木材供應商B",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T03:17:25.095Z",
+              "updatedAt": "2025-10-24T23:28:02.626Z"
+            }
+          },
+          {
+            "orderId": "id-2275",
+            "materialId": "id-2030",
+            "quantity": 2,
+            "unitPrice": 180,
+            "id": "id-2277",
+            "materialName": "水泥 50kg",
+            "materialCategory": "建材",
+            "materialType": "FINISHED",
+            "supplier": "建材供應商D",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
+            "material": {
+              "id": "id-2030",
+              "name": "水泥 50kg",
+              "category": "建材",
+              "price": 180,
+              "quantity": 69,
+              "supplier": "建材供應商D",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T03:17:25.097Z",
+              "updatedAt": "2025-10-24T23:28:02.627Z"
             }
           }
         ]
@@ -596,6 +654,14 @@
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-23T23:43:05.911Z",
         "updatedAt": "2025-10-23T23:43:05.911Z"
+      },
+      {
+        "id": "id-2278",
+        "orderId": "id-2275",
+        "projectName": "完成材專案-2025-10-24-id-2275",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2025-10-24T23:28:02.629Z",
+        "updatedAt": "2025-10-24T23:28:02.629Z"
       }
     ],
     "orderItems": [
@@ -724,6 +790,20 @@
         "quantity": 1,
         "unitPrice": 8777,
         "id": "id-2268"
+      },
+      {
+        "orderId": "id-2275",
+        "materialId": "id-2028",
+        "quantity": 2,
+        "unitPrice": 45,
+        "id": "id-2276"
+      },
+      {
+        "orderId": "id-2275",
+        "materialId": "id-2030",
+        "quantity": 2,
+        "unitPrice": 180,
+        "id": "id-2277"
       }
     ],
     "statusUpdates": [
@@ -1222,6 +1302,38 @@
         "statusValue": "",
         "createdAt": "2025-10-23T23:43:05.921Z",
         "updatedAt": "2025-10-23T23:43:05.921Z"
+      },
+      {
+        "id": "id-2279",
+        "projectId": "id-2278",
+        "updatedBy": "id-2034",
+        "statusType": "ORDER",
+        "statusValue": "PENDING",
+        "createdAt": "2025-10-24T23:28:02.629Z"
+      },
+      {
+        "id": "id-2280",
+        "projectId": "id-2278",
+        "updatedBy": "id-2034",
+        "statusType": "PICKUP",
+        "statusValue": "",
+        "createdAt": "2025-10-24T23:28:02.630Z"
+      },
+      {
+        "id": "id-2281",
+        "projectId": "id-2278",
+        "updatedBy": "id-2034",
+        "statusType": "DELIVERY",
+        "statusValue": "",
+        "createdAt": "2025-10-24T23:28:02.704Z"
+      },
+      {
+        "id": "id-2282",
+        "projectId": "id-2278",
+        "updatedBy": "id-2034",
+        "statusType": "CHECK",
+        "statusValue": "",
+        "createdAt": "2025-10-24T23:28:02.705Z"
       }
     ],
     "messages": [
@@ -1238,6 +1350,6 @@
         "updatedAt": "2025-10-23T21:29:33.306Z"
       }
     ],
-    "nextId": 2275
+    "nextId": 2283
   }
 }
