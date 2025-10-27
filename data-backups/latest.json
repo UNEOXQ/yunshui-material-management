@@ -1,19 +1,19 @@
 {
-  "timestamp": "2025-10-27T18:13:11.340Z",
+  "timestamp": "2025-10-27T18:43:06.340Z",
   "version": "1.0.0",
   "data": {
     "materials": [
       {
         "id": "id-2027",
-        "name": "螺絲釘 M6x20",
-        "category": "五金配件",
-        "price": 2.5,
-        "quantity": 977,
-        "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
-        "supplier": "五金供應商A",
+        "name": "灰板黑螺絲-1-1/4-box",
+        "category": "建材",
+        "price": 56.99,
+        "quantity": 1,
+        "imageUrl": "",
+        "supplier": "CBS",
         "type": "AUXILIARY",
         "createdAt": "2025-10-23T03:17:25.095Z",
-        "updatedAt": "2025-10-23T23:43:05.904Z"
+        "updatedAt": "2025-10-27T18:37:56.981Z"
       },
       {
         "id": "id-2028",
@@ -62,6 +62,18 @@
         "id": "id-2031",
         "createdAt": "2025-10-23T03:17:25.098Z",
         "updatedAt": "2025-10-24T00:08:28.654Z"
+      },
+      {
+        "name": "灰板 4x8-1/2",
+        "category": "建材",
+        "price": 14.66,
+        "quantity": 1,
+        "supplier": "CBS",
+        "type": "AUXILIARY",
+        "imageUrl": "",
+        "id": "id-2283",
+        "createdAt": "2025-10-27T18:32:48.832Z",
+        "updatedAt": "2025-10-27T18:32:48.832Z"
       }
     ],
     "orders": [
@@ -79,22 +91,22 @@
             "quantity": 2,
             "unitPrice": 2.5,
             "id": "id-2115",
-            "materialName": "螺絲釘 M6x20",
-            "materialCategory": "五金配件",
+            "materialName": "灰板黑螺絲-1-1/4-box",
+            "materialCategory": "建材",
             "materialType": "AUXILIARY",
-            "supplier": "五金供應商A",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+            "supplier": "CBS",
+            "imageUrl": "",
             "material": {
               "id": "id-2027",
-              "name": "螺絲釘 M6x20",
-              "category": "五金配件",
-              "price": 2.5,
-              "quantity": 977,
-              "supplier": "五金供應商A",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+              "name": "灰板黑螺絲-1-1/4-box",
+              "category": "建材",
+              "price": 56.99,
+              "quantity": 1,
+              "supplier": "CBS",
+              "imageUrl": "",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T23:43:05.904Z"
+              "updatedAt": "2025-10-27T18:37:56.981Z"
             }
           },
           {
@@ -375,22 +387,22 @@
             "quantity": 1,
             "unitPrice": 2.5,
             "id": "id-2266",
-            "materialName": "螺絲釘 M6x20",
-            "materialCategory": "五金配件",
+            "materialName": "灰板黑螺絲-1-1/4-box",
+            "materialCategory": "建材",
             "materialType": "AUXILIARY",
-            "supplier": "五金供應商A",
-            "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+            "supplier": "CBS",
+            "imageUrl": "",
             "material": {
               "id": "id-2027",
-              "name": "螺絲釘 M6x20",
-              "category": "五金配件",
-              "price": 2.5,
-              "quantity": 977,
-              "supplier": "五金供應商A",
-              "imageUrl": "https://yunshui-backend1.onrender.com/uploads/materials/1-1761002573730-540964348.jpg",
+              "name": "灰板黑螺絲-1-1/4-box",
+              "category": "建材",
+              "price": 56.99,
+              "quantity": 1,
+              "supplier": "CBS",
+              "imageUrl": "",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-23T23:43:05.904Z"
+              "updatedAt": "2025-10-27T18:37:56.981Z"
             }
           },
           {
@@ -1354,6 +1366,6 @@
         "updatedAt": "2025-10-23T21:29:33.306Z"
       }
     ],
-    "nextId": 2283
+    "nextId": 2284
   }
 }
