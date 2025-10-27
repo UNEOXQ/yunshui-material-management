@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-27T22:39:25.752Z",
+  "timestamp": "2025-10-27T22:46:24.179Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -54,14 +54,14 @@
       {
         "name": "好折凳",
         "category": "武器",
-        "price": 8777,
-        "quantity": 970,
+        "price": 8777.8547,
+        "quantity": 0,
         "supplier": "食神軍火",
         "type": "AUXILIARY",
         "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
         "id": "id-2031",
         "createdAt": "2025-10-23T03:17:25.098Z",
-        "updatedAt": "2025-10-24T00:08:28.654Z"
+        "updatedAt": "2025-10-27T22:46:19.342Z"
       },
       {
         "name": "灰板 4x8-1/2",
@@ -148,13 +148,13 @@
               "id": "id-2031",
               "name": "好折凳",
               "category": "武器",
-              "price": 8777,
-              "quantity": 970,
+              "price": 8777.8547,
+              "quantity": 0,
               "supplier": "食神軍火",
               "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-24T00:08:28.654Z"
+              "updatedAt": "2025-10-27T22:46:19.342Z"
             }
           }
         ],
@@ -243,13 +243,13 @@
               "id": "id-2031",
               "name": "好折凳",
               "category": "武器",
-              "price": 8777,
-              "quantity": 970,
+              "price": 8777.8547,
+              "quantity": 0,
               "supplier": "食神軍火",
               "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-24T00:08:28.654Z"
+              "updatedAt": "2025-10-27T22:46:19.342Z"
             }
           }
         ]
@@ -444,13 +444,13 @@
               "id": "id-2031",
               "name": "好折凳",
               "category": "武器",
-              "price": 8777,
-              "quantity": 970,
+              "price": 8777.8547,
+              "quantity": 0,
               "supplier": "食神軍火",
               "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
               "type": "AUXILIARY",
               "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-24T00:08:28.654Z"
+              "updatedAt": "2025-10-27T22:46:19.342Z"
             }
           }
         ]
