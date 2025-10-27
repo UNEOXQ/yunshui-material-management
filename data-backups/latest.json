@@ -1,1371 +1,276 @@
 {
-  "timestamp": "2025-10-27T20:57:35.275Z",
+  "timestamp": "2025-10-27T21:02:32.140Z",
   "version": "1.0.0",
   "data": {
     "materials": [
       {
-        "id": "id-2027",
-        "name": "灰板黑螺絲-1-1/4-box",
-        "category": "建材",
-        "price": 56.99,
-        "quantity": 1,
-        "imageUrl": "",
-        "supplier": "CBS",
+        "id": "material-1",
+        "name": "螺絲釘 M6x20",
+        "category": "五金配件",
+        "price": 2.5,
+        "quantity": 1000,
+        "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
+        "supplier": "五金供應商A",
         "type": "AUXILIARY",
-        "createdAt": "2025-10-23T03:17:25.095Z",
-        "updatedAt": "2025-10-27T18:37:56.981Z"
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
       },
       {
-        "id": "id-2028",
+        "id": "material-2",
         "name": "木板 2x4x8",
         "category": "木材",
         "price": 45,
-        "quantity": 177,
-        "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
+        "quantity": 200,
+        "imageUrl": "http://localhost:3004/uploads/materials/2-1761002566198-901414729.jpg",
         "supplier": "木材供應商B",
         "type": "FINISHED",
-        "createdAt": "2025-10-23T03:17:25.095Z",
-        "updatedAt": "2025-10-24T23:28:02.626Z"
+        "createdAt": "2024-01-02T00:00:00.000Z",
+        "updatedAt": "2024-01-02T00:00:00.000Z"
       },
       {
-        "id": "id-2029",
+        "id": "material-3",
         "name": "電線 2.5mm²",
         "category": "電氣材料",
         "price": 8.5,
-        "quantity": 475,
-        "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
+        "quantity": 500,
+        "imageUrl": "http://localhost:3004/uploads/materials/3-1761002652944-431354883.jpg",
         "supplier": "電氣供應商C",
         "type": "AUXILIARY",
-        "createdAt": "2025-10-23T03:17:25.096Z",
-        "updatedAt": "2025-10-24T00:09:03.097Z"
+        "createdAt": "2024-01-03T00:00:00.000Z",
+        "updatedAt": "2024-01-03T00:00:00.000Z"
       },
       {
-        "id": "id-2030",
+        "id": "material-4",
         "name": "水泥 50kg",
         "category": "建材",
         "price": 180,
-        "quantity": 69,
-        "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
+        "quantity": 100,
+        "imageUrl": "http://localhost:3004/uploads/materials/4-1761002648362-880965179.jpg",
         "supplier": "建材供應商D",
         "type": "FINISHED",
-        "createdAt": "2025-10-23T03:17:25.097Z",
-        "updatedAt": "2025-10-24T23:28:02.627Z"
-      },
-      {
-        "name": "好折凳",
-        "category": "武器",
-        "price": 8777,
-        "quantity": 970,
-        "supplier": "食神軍火",
-        "type": "AUXILIARY",
-        "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
-        "id": "id-2031",
-        "createdAt": "2025-10-23T03:17:25.098Z",
-        "updatedAt": "2025-10-24T00:08:28.654Z"
-      },
-      {
-        "name": "灰板 4x8-1/2",
-        "category": "建材",
-        "price": 14.66,
-        "quantity": 1,
-        "supplier": "CBS",
-        "type": "AUXILIARY",
-        "imageUrl": "",
-        "id": "id-2283",
-        "createdAt": "2025-10-27T18:32:48.832Z",
-        "updatedAt": "2025-10-27T18:32:48.832Z"
+        "createdAt": "2024-01-04T00:00:00.000Z",
+        "updatedAt": "2024-01-04T00:00:00.000Z"
       }
     ],
     "orders": [
       {
-        "userId": "id-2033",
-        "totalAmount": 8799,
+        "id": "order-1",
+        "userId": "user-2",
         "status": "PENDING",
-        "id": "id-2114",
-        "createdAt": "2025-10-23T18:26:42.361Z",
-        "updatedAt": "2025-10-23T22:06:26.961Z",
+        "totalAmount": 250,
+        "name": "Jeffrey的輔材訂單",
+        "createdAt": "2024-01-10T00:00:00.000Z",
+        "updatedAt": "2024-01-10T00:00:00.000Z",
         "items": [
           {
-            "orderId": "id-2114",
-            "materialId": "id-2027",
-            "quantity": 2,
+            "id": "item-1",
+            "orderId": "order-1",
+            "materialId": "material-1",
+            "quantity": 100,
             "unitPrice": 2.5,
-            "id": "id-2115",
-            "materialName": "灰板黑螺絲-1-1/4-box",
-            "materialCategory": "建材",
+            "materialName": "螺絲釘 M6x20",
+            "materialCategory": "五金配件",
             "materialType": "AUXILIARY",
-            "supplier": "CBS",
-            "imageUrl": "",
+            "supplier": "五金供應商A",
+            "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
             "material": {
-              "id": "id-2027",
-              "name": "灰板黑螺絲-1-1/4-box",
-              "category": "建材",
-              "price": 56.99,
-              "quantity": 1,
-              "supplier": "CBS",
-              "imageUrl": "",
+              "id": "material-1",
+              "name": "螺絲釘 M6x20",
+              "category": "五金配件",
+              "price": 2.5,
+              "quantity": 1000,
+              "supplier": "五金供應商A",
+              "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
               "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-27T18:37:56.981Z"
-            }
-          },
-          {
-            "orderId": "id-2114",
-            "materialId": "id-2029",
-            "quantity": 2,
-            "unitPrice": 8.5,
-            "id": "id-2116",
-            "materialName": "電線 2.5mm²",
-            "materialCategory": "電氣材料",
-            "materialType": "AUXILIARY",
-            "supplier": "電氣供應商C",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
-            "material": {
-              "id": "id-2029",
-              "name": "電線 2.5mm²",
-              "category": "電氣材料",
-              "price": 8.5,
-              "quantity": 475,
-              "supplier": "電氣供應商C",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.096Z",
-              "updatedAt": "2025-10-24T00:09:03.097Z"
-            }
-          },
-          {
-            "orderId": "id-2114",
-            "materialId": "id-2031",
-            "quantity": 1,
-            "unitPrice": 8777,
-            "id": "id-2117",
-            "materialName": "好折凳",
-            "materialCategory": "武器",
-            "materialType": "AUXILIARY",
-            "supplier": "食神軍火",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
-            "material": {
-              "id": "id-2031",
-              "name": "好折凳",
-              "category": "武器",
-              "price": 8777,
-              "quantity": 970,
-              "supplier": "食神軍火",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-24T00:08:28.654Z"
+              "createdAt": "2024-01-01T00:00:00.000Z",
+              "updatedAt": "2024-01-01T00:00:00.000Z"
             }
           }
-        ],
-        "name": "玉面大魔王的訂單"
+        ]
       },
       {
-        "userId": "id-2034",
-        "totalAmount": 450,
-        "status": "PENDING",
-        "id": "id-2215",
-        "createdAt": "2025-10-23T22:12:47.239Z",
-        "updatedAt": "2025-10-23T22:13:15.513Z",
-        "name": "小齊哥的閨房",
+        "id": "order-2",
+        "userId": "user-1",
+        "status": "APPROVED",
+        "totalAmount": 90,
+        "name": "管理員測試訂單",
+        "createdAt": "2024-01-11T00:00:00.000Z",
+        "updatedAt": "2024-01-11T00:00:00.000Z",
         "items": [
           {
-            "orderId": "id-2215",
-            "materialId": "id-2028",
+            "id": "item-2",
+            "orderId": "order-2",
+            "materialId": "material-2",
             "quantity": 2,
             "unitPrice": 45,
-            "id": "id-2216",
             "materialName": "木板 2x4x8",
             "materialCategory": "木材",
             "materialType": "FINISHED",
             "supplier": "木材供應商B",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
+            "imageUrl": "http://localhost:3004/uploads/materials/2-1761002566198-901414729.jpg",
             "material": {
-              "id": "id-2028",
+              "id": "material-2",
               "name": "木板 2x4x8",
               "category": "木材",
               "price": 45,
-              "quantity": 177,
+              "quantity": 200,
               "supplier": "木材供應商B",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
+              "imageUrl": "http://localhost:3004/uploads/materials/2-1761002566198-901414729.jpg",
               "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-24T23:28:02.626Z"
-            }
-          },
-          {
-            "orderId": "id-2215",
-            "materialId": "id-2030",
-            "quantity": 2,
-            "unitPrice": 180,
-            "id": "id-2217",
-            "materialName": "水泥 50kg",
-            "materialCategory": "建材",
-            "materialType": "FINISHED",
-            "supplier": "建材供應商D",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
-            "material": {
-              "id": "id-2030",
-              "name": "水泥 50kg",
-              "category": "建材",
-              "price": 180,
-              "quantity": 69,
-              "supplier": "建材供應商D",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
-              "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-24T23:28:02.627Z"
+              "createdAt": "2024-01-02T00:00:00.000Z",
+              "updatedAt": "2024-01-02T00:00:00.000Z"
             }
           }
         ]
       },
       {
-        "userId": "id-2037",
-        "totalAmount": 52662,
+        "id": "order-3",
+        "userId": "user-3",
         "status": "PENDING",
-        "id": "id-2232",
-        "createdAt": "2025-10-23T22:24:32.834Z",
-        "updatedAt": "2025-10-23T22:24:52.762Z",
-        "name": "烙人打架的訂單",
-        "items": [
-          {
-            "orderId": "id-2232",
-            "materialId": "id-2031",
-            "quantity": 6,
-            "unitPrice": 8777,
-            "id": "id-2233",
-            "materialName": "好折凳",
-            "materialCategory": "武器",
-            "materialType": "AUXILIARY",
-            "supplier": "食神軍火",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
-            "material": {
-              "id": "id-2031",
-              "name": "好折凳",
-              "category": "武器",
-              "price": 8777,
-              "quantity": 970,
-              "supplier": "食神軍火",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-24T00:08:28.654Z"
-            }
-          }
-        ]
+        "totalAmount": 360,
+        "name": "Miya的完成材訂單",
+        "createdAt": "2024-01-12T00:00:00.000Z",
+        "updatedAt": "2024-01-12T00:00:00.000Z",
+        "items": []
       },
       {
-        "userId": "id-2036",
-        "totalAmount": 765,
-        "status": "PENDING",
-        "id": "id-2239",
-        "createdAt": "2025-10-23T22:25:49.277Z",
-        "updatedAt": "2025-10-23T22:26:01.616Z",
-        "name": "二妹的水泥",
-        "items": [
-          {
-            "orderId": "id-2239",
-            "materialId": "id-2028",
-            "quantity": 1,
-            "unitPrice": 45,
-            "id": "id-2240",
-            "materialName": "木板 2x4x8",
-            "materialCategory": "木材",
-            "materialType": "FINISHED",
-            "supplier": "木材供應商B",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
-            "material": {
-              "id": "id-2028",
-              "name": "木板 2x4x8",
-              "category": "木材",
-              "price": 45,
-              "quantity": 177,
-              "supplier": "木材供應商B",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
-              "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-24T23:28:02.626Z"
-            }
-          },
-          {
-            "orderId": "id-2239",
-            "materialId": "id-2030",
-            "quantity": 4,
-            "unitPrice": 180,
-            "id": "id-2241",
-            "materialName": "水泥 50kg",
-            "materialCategory": "建材",
-            "materialType": "FINISHED",
-            "supplier": "建材供應商D",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
-            "material": {
-              "id": "id-2030",
-              "name": "水泥 50kg",
-              "category": "建材",
-              "price": 180,
-              "quantity": 69,
-              "supplier": "建材供應商D",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
-              "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-24T23:28:02.627Z"
-            }
-          }
-        ]
-      },
-      {
-        "userId": "id-2036",
-        "totalAmount": 585,
-        "status": "PENDING",
-        "id": "id-2247",
-        "createdAt": "2025-10-23T23:27:41.413Z",
-        "updatedAt": "2025-10-23T23:27:58.758Z",
-        "name": "耶格的小狗屋",
-        "items": [
-          {
-            "orderId": "id-2247",
-            "materialId": "id-2030",
-            "quantity": 3,
-            "unitPrice": 180,
-            "id": "id-2248",
-            "materialName": "水泥 50kg",
-            "materialCategory": "建材",
-            "materialType": "FINISHED",
-            "supplier": "建材供應商D",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
-            "material": {
-              "id": "id-2030",
-              "name": "水泥 50kg",
-              "category": "建材",
-              "price": 180,
-              "quantity": 69,
-              "supplier": "建材供應商D",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
-              "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-24T23:28:02.627Z"
-            }
-          },
-          {
-            "orderId": "id-2247",
-            "materialId": "id-2028",
-            "quantity": 1,
-            "unitPrice": 45,
-            "id": "id-2249",
-            "materialName": "木板 2x4x8",
-            "materialCategory": "木材",
-            "materialType": "FINISHED",
-            "supplier": "木材供應商B",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
-            "material": {
-              "id": "id-2028",
-              "name": "木板 2x4x8",
-              "category": "木材",
-              "price": 45,
-              "quantity": 177,
-              "supplier": "木材供應商B",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
-              "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-24T23:28:02.626Z"
-            }
-          }
-        ]
-      },
-      {
-        "userId": "id-2033",
-        "totalAmount": 8796.5,
-        "status": "PENDING",
-        "id": "id-2265",
-        "createdAt": "2025-10-23T23:43:05.900Z",
-        "updatedAt": "2025-10-23T23:43:32.448Z",
-        "name": "耶格的老爺車",
-        "items": [
-          {
-            "orderId": "id-2265",
-            "materialId": "id-2027",
-            "quantity": 1,
-            "unitPrice": 2.5,
-            "id": "id-2266",
-            "materialName": "灰板黑螺絲-1-1/4-box",
-            "materialCategory": "建材",
-            "materialType": "AUXILIARY",
-            "supplier": "CBS",
-            "imageUrl": "",
-            "material": {
-              "id": "id-2027",
-              "name": "灰板黑螺絲-1-1/4-box",
-              "category": "建材",
-              "price": 56.99,
-              "quantity": 1,
-              "supplier": "CBS",
-              "imageUrl": "",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-27T18:37:56.981Z"
-            }
-          },
-          {
-            "orderId": "id-2265",
-            "materialId": "id-2029",
-            "quantity": 2,
-            "unitPrice": 8.5,
-            "id": "id-2267",
-            "materialName": "電線 2.5mm²",
-            "materialCategory": "電氣材料",
-            "materialType": "AUXILIARY",
-            "supplier": "電氣供應商C",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
-            "material": {
-              "id": "id-2029",
-              "name": "電線 2.5mm²",
-              "category": "電氣材料",
-              "price": 8.5,
-              "quantity": 475,
-              "supplier": "電氣供應商C",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.096Z",
-              "updatedAt": "2025-10-24T00:09:03.097Z"
-            }
-          },
-          {
-            "orderId": "id-2265",
-            "materialId": "id-2031",
-            "quantity": 1,
-            "unitPrice": 8777,
-            "id": "id-2268",
-            "materialName": "好折凳",
-            "materialCategory": "武器",
-            "materialType": "AUXILIARY",
-            "supplier": "食神軍火",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
-            "material": {
-              "id": "id-2031",
-              "name": "好折凳",
-              "category": "武器",
-              "price": 8777,
-              "quantity": 970,
-              "supplier": "食神軍火",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264508/yunshui-materials/kmr27qmttkiytnllwd47.jpg",
-              "type": "AUXILIARY",
-              "createdAt": "2025-10-23T03:17:25.098Z",
-              "updatedAt": "2025-10-24T00:08:28.654Z"
-            }
-          }
-        ]
-      },
-      {
-        "userId": "id-2034",
-        "totalAmount": 450,
-        "status": "PENDING",
-        "id": "id-2275",
-        "createdAt": "2025-10-24T23:28:02.622Z",
-        "updatedAt": "2025-10-24T23:28:02.622Z",
-        "items": [
-          {
-            "orderId": "id-2275",
-            "materialId": "id-2028",
-            "quantity": 2,
-            "unitPrice": 45,
-            "id": "id-2276",
-            "materialName": "木板 2x4x8",
-            "materialCategory": "木材",
-            "materialType": "FINISHED",
-            "supplier": "木材供應商B",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
-            "material": {
-              "id": "id-2028",
-              "name": "木板 2x4x8",
-              "category": "木材",
-              "price": 45,
-              "quantity": 177,
-              "supplier": "木材供應商B",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
-              "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.095Z",
-              "updatedAt": "2025-10-24T23:28:02.626Z"
-            }
-          },
-          {
-            "orderId": "id-2275",
-            "materialId": "id-2030",
-            "quantity": 2,
-            "unitPrice": 180,
-            "id": "id-2277",
-            "materialName": "水泥 50kg",
-            "materialCategory": "建材",
-            "materialType": "FINISHED",
-            "supplier": "建材供應商D",
-            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
-            "material": {
-              "id": "id-2030",
-              "name": "水泥 50kg",
-              "category": "建材",
-              "price": 180,
-              "quantity": 69,
-              "supplier": "建材供應商D",
-              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264537/yunshui-materials/ynosbqfuaeu5b9szkqts.jpg",
-              "type": "FINISHED",
-              "createdAt": "2025-10-23T03:17:25.097Z",
-              "updatedAt": "2025-10-24T23:28:02.627Z"
-            }
-          }
-        ]
+        "id": "order-4",
+        "userId": "id-2064",
+        "status": "COMPLETED",
+        "totalAmount": 180,
+        "name": "Erica的完成材訂單",
+        "createdAt": "2024-01-13T00:00:00.000Z",
+        "updatedAt": "2024-01-13T00:00:00.000Z",
+        "items": []
       }
     ],
     "users": [
       {
-        "id": "id-2032",
-        "username": "系統管理員",
+        "id": "user-1",
+        "username": "admin",
         "email": "admin@yunshui.com",
         "role": "ADMIN",
         "passwordHash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.s5uIoO",
-        "createdAt": "2025-10-23T03:17:25.099Z",
-        "updatedAt": "2025-10-23T03:17:25.099Z"
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
       },
       {
-        "id": "id-2033",
+        "id": "user-2",
         "username": "Jeffrey",
         "email": "pm001@yunshui.com",
         "role": "PM",
         "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
-        "createdAt": "2025-10-23T03:17:25.100Z",
-        "updatedAt": "2025-10-23T03:17:25.100Z"
+        "createdAt": "2024-01-02T00:00:00.000Z",
+        "updatedAt": "2024-01-02T00:00:00.000Z"
       },
       {
-        "id": "id-2034",
+        "id": "user-3",
         "username": "Miya",
         "email": "am001@yunshui.com",
         "role": "AM",
         "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
-        "createdAt": "2025-10-23T03:17:25.101Z",
-        "updatedAt": "2025-10-23T03:17:25.101Z"
+        "createdAt": "2024-01-03T00:00:00.000Z",
+        "updatedAt": "2024-01-03T00:00:00.000Z"
       },
       {
-        "id": "id-2035",
+        "id": "user-4",
         "username": "Mark",
         "email": "warehouse001@yunshui.com",
         "role": "WAREHOUSE",
         "passwordHash": "$2b$12$6BNUHWuoAhHfufkBMy4MJ.qiAiHXVBFy4XGaGILoxN05oy01L9Hhm",
-        "createdAt": "2025-10-23T03:17:25.102Z",
-        "updatedAt": "2025-10-23T03:17:25.102Z"
+        "createdAt": "2024-01-04T00:00:00.000Z",
+        "updatedAt": "2024-01-04T00:00:00.000Z"
       },
       {
-        "id": "id-2036",
+        "id": "id-2064",
         "username": "Erica",
         "email": "Erica@yunshui.com",
         "role": "AM",
         "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
-        "createdAt": "2025-10-23T03:17:25.103Z",
-        "updatedAt": "2025-10-23T03:17:25.103Z"
+        "createdAt": "2024-01-05T00:00:00.000Z",
+        "updatedAt": "2024-01-05T00:00:00.000Z"
       },
       {
-        "id": "id-2037",
+        "id": "id-2065",
         "username": "LUKE",
         "email": "LUKE@yunshui.com",
         "role": "PM",
         "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
-        "createdAt": "2025-10-23T03:17:25.104Z",
-        "updatedAt": "2025-10-23T03:17:25.104Z"
+        "createdAt": "2024-01-06T00:00:00.000Z",
+        "updatedAt": "2024-01-06T00:00:00.000Z"
+      },
+      {
+        "id": "id-2255",
+        "username": "777",
+        "email": "777@yunshui.com",
+        "role": "PM",
+        "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+        "createdAt": "2024-01-07T00:00:00.000Z",
+        "updatedAt": "2024-01-07T00:00:00.000Z"
+      },
+      {
+        "id": "id-2036",
+        "username": "Erica",
+        "email": "erica2@yunshui.com",
+        "role": "AM",
+        "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
+        "createdAt": "2024-01-08T00:00:00.000Z",
+        "updatedAt": "2024-01-08T00:00:00.000Z"
+      },
+      {
+        "id": "id-2037",
+        "username": "Unknown User",
+        "email": "unknown@yunshui.com",
+        "role": "PM",
+        "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+        "createdAt": "2024-01-09T00:00:00.000Z",
+        "updatedAt": "2024-01-09T00:00:00.000Z"
       }
     ],
     "projects": [
       {
-        "id": "id-2018",
-        "orderId": "id-2014",
-        "projectName": "輔材專案-2025-10-23-id-2014",
+        "id": "project-1",
+        "orderId": "order-1",
+        "projectName": "輔材專案-2024-01-10-order-1",
         "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:20:27.749Z",
-        "updatedAt": "2025-10-23T01:20:27.749Z"
+        "createdAt": "2024-01-10T00:00:00.000Z",
+        "updatedAt": "2024-01-10T00:00:00.000Z"
       },
       {
-        "id": "id-2026",
-        "orderId": "id-2023",
-        "projectName": "完成材專案-2025-10-23-id-2023",
+        "id": "project-2",
+        "orderId": "order-2",
+        "projectName": "輔材專案-2024-01-11-order-2",
         "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:20:37.522Z",
-        "updatedAt": "2025-10-23T01:20:37.522Z"
+        "createdAt": "2024-01-11T00:00:00.000Z",
+        "updatedAt": "2024-01-11T00:00:00.000Z"
       },
       {
-        "id": "id-2017",
-        "orderId": "id-2013",
-        "projectName": "輔材專案-2025-10-23-id-2013",
+        "id": "project-1002",
+        "orderId": "id-1002",
+        "projectName": "輔材專案-2024-01-12-id-1002",
         "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:29:29.533Z",
-        "updatedAt": "2025-10-23T01:29:29.533Z"
-      },
-      {
-        "id": "id-2025",
-        "orderId": "id-2022",
-        "projectName": "完成材專案-2025-10-23-id-2022",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:29:40.001Z",
-        "updatedAt": "2025-10-23T01:29:40.001Z"
-      },
-      {
-        "id": "id-2017",
-        "orderId": "id-2013",
-        "projectName": "輔材專案-2025-10-23-id-2013",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:38:16.995Z",
-        "updatedAt": "2025-10-23T01:38:16.995Z"
-      },
-      {
-        "id": "id-2025",
-        "orderId": "id-2022",
-        "projectName": "完成材專案-2025-10-23-id-2022",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:38:25.106Z",
-        "updatedAt": "2025-10-23T01:38:25.106Z"
-      },
-      {
-        "id": "id-2118",
-        "orderId": "id-2114",
-        "projectName": "輔材專案-2025-10-23-id-2114",
-        "overallStatus": "COMPLETED",
-        "createdAt": "2025-10-23T18:26:42.366Z",
-        "updatedAt": "2025-10-23T23:30:45.975Z"
-      },
-      {
-        "id": "id-2218",
-        "orderId": "id-2215",
-        "projectName": "完成材專案-2025-10-23-id-2215",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T22:12:47.242Z",
-        "updatedAt": "2025-10-23T22:12:47.242Z"
-      },
-      {
-        "id": "id-2234",
-        "orderId": "id-2232",
-        "projectName": "輔材專案-2025-10-23-id-2232",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T22:24:32.837Z",
-        "updatedAt": "2025-10-23T22:24:32.837Z"
-      },
-      {
-        "id": "id-2242",
-        "orderId": "id-2239",
-        "projectName": "完成材專案-2025-10-23-id-2239",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T22:25:49.280Z",
-        "updatedAt": "2025-10-23T22:25:49.280Z"
-      },
-      {
-        "id": "id-2250",
-        "orderId": "id-2247",
-        "projectName": "完成材專案-2025-10-23-id-2247",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T23:27:41.416Z",
-        "updatedAt": "2025-10-23T23:27:41.416Z"
-      },
-      {
-        "id": "id-2269",
-        "orderId": "id-2265",
-        "projectName": "輔材專案-2025-10-23-id-2265",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T23:43:05.911Z",
-        "updatedAt": "2025-10-23T23:43:05.911Z"
-      },
-      {
-        "id": "id-2278",
-        "orderId": "id-2275",
-        "projectName": "完成材專案-2025-10-24-id-2275",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-24T23:28:02.629Z",
-        "updatedAt": "2025-10-24T23:28:02.629Z"
+        "createdAt": "2024-01-12T00:00:00.000Z",
+        "updatedAt": "2024-01-12T00:00:00.000Z"
       }
     ],
     "orderItems": [
       {
-        "orderId": "id-2013",
-        "materialId": "id-2000",
+        "id": "item-1",
+        "orderId": "order-1",
+        "materialId": "material-1",
+        "quantity": 100,
+        "unitPrice": 2.5
+      },
+      {
+        "id": "item-2",
+        "orderId": "order-2",
+        "materialId": "material-2",
         "quantity": 2,
-        "unitPrice": 2.5,
-        "id": "id-2014"
-      },
-      {
-        "orderId": "id-2013",
-        "materialId": "id-2002",
-        "quantity": 2,
-        "unitPrice": 8.5,
-        "id": "id-2015"
-      },
-      {
-        "orderId": "id-2013",
-        "materialId": "id-2004",
-        "quantity": 2,
-        "unitPrice": 8777,
-        "id": "id-2016"
-      },
-      {
-        "orderId": "id-2022",
-        "materialId": "id-2001",
-        "quantity": 3,
-        "unitPrice": 45,
-        "id": "id-2023"
-      },
-      {
-        "orderId": "id-2022",
-        "materialId": "id-2003",
-        "quantity": 2,
-        "unitPrice": 180,
-        "id": "id-2024"
-      },
-      {
-        "orderId": "id-2114",
-        "materialId": "id-2027",
-        "quantity": 2,
-        "unitPrice": 2.5,
-        "id": "id-2115"
-      },
-      {
-        "orderId": "id-2114",
-        "materialId": "id-2029",
-        "quantity": 2,
-        "unitPrice": 8.5,
-        "id": "id-2116"
-      },
-      {
-        "orderId": "id-2114",
-        "materialId": "id-2031",
-        "quantity": 1,
-        "unitPrice": 8777,
-        "id": "id-2117"
-      },
-      {
-        "orderId": "id-2215",
-        "materialId": "id-2028",
-        "quantity": 2,
-        "unitPrice": 45,
-        "id": "id-2216"
-      },
-      {
-        "orderId": "id-2215",
-        "materialId": "id-2030",
-        "quantity": 2,
-        "unitPrice": 180,
-        "id": "id-2217"
-      },
-      {
-        "orderId": "id-2232",
-        "materialId": "id-2031",
-        "quantity": 6,
-        "unitPrice": 8777,
-        "id": "id-2233"
-      },
-      {
-        "orderId": "id-2239",
-        "materialId": "id-2028",
-        "quantity": 1,
-        "unitPrice": 45,
-        "id": "id-2240"
-      },
-      {
-        "orderId": "id-2239",
-        "materialId": "id-2030",
-        "quantity": 4,
-        "unitPrice": 180,
-        "id": "id-2241"
-      },
-      {
-        "orderId": "id-2247",
-        "materialId": "id-2030",
-        "quantity": 3,
-        "unitPrice": 180,
-        "id": "id-2248"
-      },
-      {
-        "orderId": "id-2247",
-        "materialId": "id-2028",
-        "quantity": 1,
-        "unitPrice": 45,
-        "id": "id-2249"
-      },
-      {
-        "orderId": "id-2265",
-        "materialId": "id-2027",
-        "quantity": 1,
-        "unitPrice": 2.5,
-        "id": "id-2266"
-      },
-      {
-        "orderId": "id-2265",
-        "materialId": "id-2029",
-        "quantity": 2,
-        "unitPrice": 8.5,
-        "id": "id-2267"
-      },
-      {
-        "orderId": "id-2265",
-        "materialId": "id-2031",
-        "quantity": 1,
-        "unitPrice": 8777,
-        "id": "id-2268"
-      },
-      {
-        "orderId": "id-2275",
-        "materialId": "id-2028",
-        "quantity": 2,
-        "unitPrice": 45,
-        "id": "id-2276"
-      },
-      {
-        "orderId": "id-2275",
-        "materialId": "id-2030",
-        "quantity": 2,
-        "unitPrice": 180,
-        "id": "id-2277"
+        "unitPrice": 45
       }
     ],
-    "statusUpdates": [
-      {
-        "id": "id-2123",
-        "projectId": "id-2118",
-        "updatedBy": "id-2035",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - Processing",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "Processing"
-        },
-        "createdAt": "2025-10-23T20:31:32.301Z",
-        "updatedAt": "2025-10-23T20:31:32.301Z"
-      },
-      {
-        "id": "id-2124",
-        "projectId": "id-2118",
-        "updatedBy": "id-2035",
-        "statusType": "PICKUP",
-        "statusValue": "Failed (E.S)",
-        "additionalData": {
-          "primaryStatus": "Failed",
-          "secondaryStatus": "(E.S)"
-        },
-        "createdAt": "2025-10-23T20:31:32.364Z",
-        "updatedAt": "2025-10-23T20:31:32.364Z"
-      },
-      {
-        "id": "id-2125",
-        "projectId": "id-2118",
-        "updatedBy": "id-2035",
-        "statusType": "DELIVERY",
-        "statusValue": "Delivered",
-        "additionalData": {
-          "time": "1",
-          "address": "2",
-          "po": "3",
-          "deliveredBy": "4"
-        },
-        "createdAt": "2025-10-23T20:31:32.370Z",
-        "updatedAt": "2025-10-23T20:31:32.370Z"
-      },
-      {
-        "id": "id-2126",
-        "projectId": "id-2118",
-        "updatedBy": "id-2035",
-        "statusType": "PICKUP",
-        "statusValue": "Failed (E.S)",
-        "additionalData": {
-          "primaryStatus": "Failed",
-          "secondaryStatus": "(E.S)"
-        },
-        "createdAt": "2025-10-23T20:31:38.366Z",
-        "updatedAt": "2025-10-23T20:31:38.366Z"
-      },
-      {
-        "id": "id-2127",
-        "projectId": "id-2118",
-        "updatedBy": "id-2035",
-        "statusType": "PICKUP",
-        "statusValue": "Failed (E.S)",
-        "additionalData": {
-          "primaryStatus": "Failed",
-          "secondaryStatus": "(E.S)"
-        },
-        "createdAt": "2025-10-23T20:31:43.757Z",
-        "updatedAt": "2025-10-23T20:31:43.757Z"
-      },
-      {
-        "id": "id-2128",
-        "projectId": "id-2118",
-        "updatedBy": "id-2035",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - Processing",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "Processing"
-        },
-        "createdAt": "2025-10-23T20:31:43.777Z",
-        "updatedAt": "2025-10-23T20:31:43.777Z"
-      },
-      {
-        "id": "id-2129",
-        "projectId": "id-2118",
-        "updatedBy": "id-2035",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - Processing",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "Processing"
-        },
-        "createdAt": "2025-10-23T20:31:52.164Z",
-        "updatedAt": "2025-10-23T20:31:52.164Z"
-      },
-      {
-        "id": "id-2130",
-        "projectId": "id-2118",
-        "updatedBy": "id-2035",
-        "statusType": "PICKUP",
-        "statusValue": "Failed (E.S)",
-        "additionalData": {
-          "primaryStatus": "Failed",
-          "secondaryStatus": "(E.S)"
-        },
-        "createdAt": "2025-10-23T20:31:52.168Z",
-        "updatedAt": "2025-10-23T20:31:52.168Z"
-      },
-      {
-        "id": "id-2131",
-        "projectId": "id-2118",
-        "updatedBy": "id-2035",
-        "statusType": "DELIVERY",
-        "statusValue": "Delivered",
-        "additionalData": {
-          "time": "1",
-          "address": "2",
-          "po": "3",
-          "deliveredBy": "4"
-        },
-        "createdAt": "2025-10-23T20:31:52.173Z",
-        "updatedAt": "2025-10-23T20:31:52.173Z"
-      },
-      {
-        "id": "id-2219",
-        "projectId": "id-2218",
-        "updatedBy": "id-2034",
-        "statusType": "ORDER",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:12:47.242Z",
-        "updatedAt": "2025-10-23T22:12:47.242Z"
-      },
-      {
-        "id": "id-2220",
-        "projectId": "id-2218",
-        "updatedBy": "id-2034",
-        "statusType": "PICKUP",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:12:47.243Z",
-        "updatedAt": "2025-10-23T22:12:47.243Z"
-      },
-      {
-        "id": "id-2221",
-        "projectId": "id-2218",
-        "updatedBy": "id-2034",
-        "statusType": "DELIVERY",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:12:47.243Z",
-        "updatedAt": "2025-10-23T22:12:47.243Z"
-      },
-      {
-        "id": "id-2222",
-        "projectId": "id-2218",
-        "updatedBy": "id-2034",
-        "statusType": "CHECK",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:12:47.244Z",
-        "updatedAt": "2025-10-23T22:12:47.244Z"
-      },
-      {
-        "id": "id-2223",
-        "projectId": "id-2218",
-        "updatedBy": "user-1",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - Processing",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "Processing"
-        },
-        "createdAt": "2025-10-23T22:13:31.628Z",
-        "updatedAt": "2025-10-23T22:13:31.628Z"
-      },
-      {
-        "id": "id-2224",
-        "projectId": "id-2218",
-        "updatedBy": "user-1",
-        "statusType": "PICKUP",
-        "statusValue": "Failed (E.S)",
-        "additionalData": {
-          "primaryStatus": "Failed",
-          "secondaryStatus": "(E.S)"
-        },
-        "createdAt": "2025-10-23T22:13:36.982Z",
-        "updatedAt": "2025-10-23T22:13:36.982Z"
-      },
-      {
-        "id": "id-2225",
-        "projectId": "id-2218",
-        "updatedBy": "user-1",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - Processing",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "Processing"
-        },
-        "createdAt": "2025-10-23T22:13:37.004Z",
-        "updatedAt": "2025-10-23T22:13:37.004Z"
-      },
-      {
-        "id": "id-2226",
-        "projectId": "id-2218",
-        "updatedBy": "id-2035",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - waiting for pick",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "waiting for pick"
-        },
-        "createdAt": "2025-10-23T22:14:01.783Z",
-        "updatedAt": "2025-10-23T22:14:01.783Z"
-      },
-      {
-        "id": "id-2227",
-        "projectId": "id-2218",
-        "updatedBy": "id-2035",
-        "statusType": "DELIVERY",
-        "statusValue": "",
-        "createdAt": "2025-10-23T22:14:07.559Z",
-        "updatedAt": "2025-10-23T22:14:07.559Z"
-      },
-      {
-        "id": "id-2228",
-        "projectId": "id-2218",
-        "updatedBy": "id-2035",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - waiting for pick",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "waiting for pick"
-        },
-        "createdAt": "2025-10-23T22:14:07.565Z",
-        "updatedAt": "2025-10-23T22:14:07.565Z"
-      },
-      {
-        "id": "id-2229",
-        "projectId": "id-2218",
-        "updatedBy": "id-2032",
-        "statusType": "CHECK",
-        "statusValue": "",
-        "createdAt": "2025-10-23T22:14:19.927Z",
-        "updatedAt": "2025-10-23T22:14:19.927Z"
-      },
-      {
-        "id": "id-2231",
-        "projectId": "id-2118",
-        "updatedBy": "id-2032",
-        "statusType": "DELIVERY",
-        "statusValue": "Delivered",
-        "additionalData": {
-          "time": "2025.07.31",
-          "address": "9455 155ST",
-          "po": "V4A 3S8",
-          "deliveredBy": "馬克小超人"
-        },
-        "createdAt": "2025-10-23T22:19:44.603Z",
-        "updatedAt": "2025-10-23T22:19:44.603Z"
-      },
-      {
-        "id": "id-2235",
-        "projectId": "id-2234",
-        "updatedBy": "id-2037",
-        "statusType": "ORDER",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:24:32.837Z",
-        "updatedAt": "2025-10-23T22:24:32.837Z"
-      },
-      {
-        "id": "id-2236",
-        "projectId": "id-2234",
-        "updatedBy": "id-2037",
-        "statusType": "PICKUP",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:24:32.838Z",
-        "updatedAt": "2025-10-23T22:24:32.838Z"
-      },
-      {
-        "id": "id-2237",
-        "projectId": "id-2234",
-        "updatedBy": "id-2037",
-        "statusType": "DELIVERY",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:24:32.839Z",
-        "updatedAt": "2025-10-23T22:24:32.839Z"
-      },
-      {
-        "id": "id-2238",
-        "projectId": "id-2234",
-        "updatedBy": "id-2037",
-        "statusType": "CHECK",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:24:32.841Z",
-        "updatedAt": "2025-10-23T22:24:32.841Z"
-      },
-      {
-        "id": "id-2243",
-        "projectId": "id-2242",
-        "updatedBy": "id-2036",
-        "statusType": "ORDER",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:25:49.280Z",
-        "updatedAt": "2025-10-23T22:25:49.280Z"
-      },
-      {
-        "id": "id-2244",
-        "projectId": "id-2242",
-        "updatedBy": "id-2036",
-        "statusType": "PICKUP",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:25:49.281Z",
-        "updatedAt": "2025-10-23T22:25:49.281Z"
-      },
-      {
-        "id": "id-2245",
-        "projectId": "id-2242",
-        "updatedBy": "id-2036",
-        "statusType": "DELIVERY",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:25:49.282Z",
-        "updatedAt": "2025-10-23T22:25:49.282Z"
-      },
-      {
-        "id": "id-2246",
-        "projectId": "id-2242",
-        "updatedBy": "id-2036",
-        "statusType": "CHECK",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:25:49.282Z",
-        "updatedAt": "2025-10-23T22:25:49.282Z"
-      },
-      {
-        "id": "id-2251",
-        "projectId": "id-2250",
-        "updatedBy": "id-2036",
-        "statusType": "ORDER",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T23:27:41.417Z",
-        "updatedAt": "2025-10-23T23:27:41.417Z"
-      },
-      {
-        "id": "id-2252",
-        "projectId": "id-2250",
-        "updatedBy": "id-2036",
-        "statusType": "PICKUP",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:27:41.417Z",
-        "updatedAt": "2025-10-23T23:27:41.417Z"
-      },
-      {
-        "id": "id-2253",
-        "projectId": "id-2250",
-        "updatedBy": "id-2036",
-        "statusType": "DELIVERY",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:27:41.418Z",
-        "updatedAt": "2025-10-23T23:27:41.418Z"
-      },
-      {
-        "id": "id-2254",
-        "projectId": "id-2250",
-        "updatedBy": "id-2036",
-        "statusType": "CHECK",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:27:41.419Z",
-        "updatedAt": "2025-10-23T23:27:41.419Z"
-      },
-      {
-        "id": "id-2255",
-        "projectId": "id-2242",
-        "updatedBy": "id-2035",
-        "statusType": "CHECK",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:28:23.242Z",
-        "updatedAt": "2025-10-23T23:28:23.242Z"
-      },
-      {
-        "id": "id-2256",
-        "projectId": "id-2242",
-        "updatedBy": "id-2035",
-        "statusType": "DELIVERY",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:28:23.271Z",
-        "updatedAt": "2025-10-23T23:28:23.271Z"
-      },
-      {
-        "id": "id-2257",
-        "projectId": "id-2250",
-        "updatedBy": "id-2035",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - Processing",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "Processing"
-        },
-        "createdAt": "2025-10-23T23:28:26.754Z",
-        "updatedAt": "2025-10-23T23:28:26.754Z"
-      },
-      {
-        "id": "id-2258",
-        "projectId": "id-2250",
-        "updatedBy": "id-2035",
-        "statusType": "PICKUP",
-        "statusValue": "Failed (E.S)",
-        "additionalData": {
-          "primaryStatus": "Failed",
-          "secondaryStatus": "(E.S)"
-        },
-        "createdAt": "2025-10-23T23:28:26.760Z",
-        "updatedAt": "2025-10-23T23:28:26.760Z"
-      },
-      {
-        "id": "id-2259",
-        "projectId": "id-2250",
-        "updatedBy": "id-2035",
-        "statusType": "PICKUP",
-        "statusValue": "Failed (E.H)",
-        "additionalData": {
-          "primaryStatus": "Failed",
-          "secondaryStatus": "(E.H)"
-        },
-        "createdAt": "2025-10-23T23:28:33.969Z",
-        "updatedAt": "2025-10-23T23:28:33.969Z"
-      },
-      {
-        "id": "id-2260",
-        "projectId": "id-2250",
-        "updatedBy": "id-2035",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - Processing",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "Processing"
-        },
-        "createdAt": "2025-10-23T23:28:34.091Z",
-        "updatedAt": "2025-10-23T23:28:34.091Z"
-      },
-      {
-        "id": "id-2261",
-        "projectId": "id-2234",
-        "updatedBy": "id-2032",
-        "statusType": "DELIVERY",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:28:54.652Z",
-        "updatedAt": "2025-10-23T23:28:54.652Z"
-      },
-      {
-        "id": "id-2262",
-        "projectId": "id-2234",
-        "updatedBy": "id-2032",
-        "statusType": "CHECK",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:28:54.669Z",
-        "updatedAt": "2025-10-23T23:28:54.669Z"
-      },
-      {
-        "id": "id-2264",
-        "projectId": "id-2118",
-        "updatedBy": "id-2035",
-        "statusType": "CHECK",
-        "statusValue": "(C.B)",
-        "createdAt": "2025-10-23T23:30:45.974Z",
-        "updatedAt": "2025-10-23T23:30:45.974Z"
-      },
-      {
-        "id": "id-2270",
-        "projectId": "id-2269",
-        "updatedBy": "id-2033",
-        "statusType": "ORDER",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T23:43:05.911Z",
-        "updatedAt": "2025-10-23T23:43:05.911Z"
-      },
-      {
-        "id": "id-2271",
-        "projectId": "id-2269",
-        "updatedBy": "id-2033",
-        "statusType": "PICKUP",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:43:05.916Z",
-        "updatedAt": "2025-10-23T23:43:05.916Z"
-      },
-      {
-        "id": "id-2272",
-        "projectId": "id-2269",
-        "updatedBy": "id-2033",
-        "statusType": "DELIVERY",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:43:05.920Z",
-        "updatedAt": "2025-10-23T23:43:05.920Z"
-      },
-      {
-        "id": "id-2273",
-        "projectId": "id-2269",
-        "updatedBy": "id-2033",
-        "statusType": "CHECK",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:43:05.921Z",
-        "updatedAt": "2025-10-23T23:43:05.921Z"
-      },
-      {
-        "id": "id-2279",
-        "projectId": "id-2278",
-        "updatedBy": "id-2034",
-        "statusType": "ORDER",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-24T23:28:02.629Z",
-        "updatedAt": "2025-10-24T23:28:02.629Z"
-      },
-      {
-        "id": "id-2280",
-        "projectId": "id-2278",
-        "updatedBy": "id-2034",
-        "statusType": "PICKUP",
-        "statusValue": "",
-        "createdAt": "2025-10-24T23:28:02.630Z",
-        "updatedAt": "2025-10-24T23:28:02.630Z"
-      },
-      {
-        "id": "id-2281",
-        "projectId": "id-2278",
-        "updatedBy": "id-2034",
-        "statusType": "DELIVERY",
-        "statusValue": "",
-        "createdAt": "2025-10-24T23:28:02.704Z",
-        "updatedAt": "2025-10-24T23:28:02.704Z"
-      },
-      {
-        "id": "id-2282",
-        "projectId": "id-2278",
-        "updatedBy": "id-2034",
-        "statusType": "CHECK",
-        "statusValue": "",
-        "createdAt": "2025-10-24T23:28:02.705Z",
-        "updatedAt": "2025-10-24T23:28:02.705Z"
-      }
-    ],
-    "messages": [
-      {
-        "id": "id-2132",
-        "fromUserId": "id-2032",
-        "fromUsername": "系統管理員",
-        "toUserId": "id-2033",
-        "toUsername": "Jeffrey",
-        "content": "你最讚!",
-        "isRead": false,
-        "messageType": "USER_MESSAGE",
-        "createdAt": "2025-10-23T21:29:33.306Z",
-        "updatedAt": "2025-10-23T21:29:33.306Z"
-      }
-    ],
-    "nextId": 2284
+    "statusUpdates": [],
+    "messages": [],
+    "nextId": 2000
   }
 }
