@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Material } from '../../types';
 import { materialService } from '../../services/materialService';
+import { validatePriceFormat } from '../../utils/priceUtils';
 
 interface MaterialFormProps {
   material: Material | null;
@@ -99,14 +100,10 @@ export const MaterialForm: React.FC<MaterialFormProps> = ({
       newErrors.category = '分類不能超過100個字元';
     }
 
-    // Price validation
-    const price = parseFloat(formData.price);
-    if (!formData.price.trim()) {
-      newErrors.price = '價格為必填項目';
-    } else if (isNaN(price) || price <= 0) {
-      newErrors.price = '價格必須為正數';
-    } else if (price > 999999.99) {
-      newErrors.price = '價格不能超過999,999.99';
+    // Price validation using utility function
+    const priceValidation = validatePriceFormat(formData.price);
+    if (!priceValidation.isValid) {
+      newErrors.price = priceValidation.error;
     }
 
     // Quantity validation
@@ -114,7 +111,7 @@ export const MaterialForm: React.FC<MaterialFormProps> = ({
     if (!formData.quantity.trim()) {
       newErrors.quantity = '數量為必填項目';
     } else if (isNaN(quantity) || quantity < 0) {
-      newErrors.quantity = '數量必須為非負整數';
+      newErrors.quantity = '數量必須為0或正整數';
     } else if (quantity > 999999) {
       newErrors.quantity = '數量不能超過999,999';
     }
@@ -159,6 +156,11 @@ export const MaterialForm: React.FC<MaterialFormProps> = ({
     setIsSubmitting(true);
 
     try {
+      // 調試：檢查原始表單數據
+      console.log('原始表單價格字符串:', formData.price);
+      console.log('parseFloat 結果:', parseFloat(formData.price));
+      console.log('parseFloat 結果類型:', typeof parseFloat(formData.price));
+      
       const submitData = {
         name: formData.name.trim(),
         category: formData.category.trim(),
@@ -168,6 +170,7 @@ export const MaterialForm: React.FC<MaterialFormProps> = ({
         type: formData.type
       };
 
+      console.log('提交的數據:', submitData);
       await onSubmit(submitData);
     } catch (error) {
       console.error('Form submission error:', error);
@@ -290,9 +293,9 @@ export const MaterialForm: React.FC<MaterialFormProps> = ({
                 value={formData.price}
                 onChange={handleInputChange}
                 className={errors.price ? 'error' : ''}
-                placeholder="0.00"
+                placeholder="0.0000"
                 min="0"
-                step="0.01"
+                step="0.0001"
               />
               {errors.price && (
                 <span className="error-text">{errors.price}</span>

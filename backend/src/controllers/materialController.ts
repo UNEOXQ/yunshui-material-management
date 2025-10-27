@@ -34,11 +34,11 @@ const createMaterialSchema = Joi.object({
     }),
   price: Joi.number()
     .positive()
-    .precision(2)
+    .precision(4)
     .required()
     .messages({
       'number.positive': 'Price must be a positive number',
-      'number.precision': 'Price cannot have more than 2 decimal places',
+      'number.precision': 'Price cannot have more than 4 decimal places',
       'any.required': 'Price is required'
     }),
   quantity: Joi.number()
@@ -88,10 +88,10 @@ const updateMaterialSchema = Joi.object({
     }),
   price: Joi.number()
     .positive()
-    .precision(2)
+    .precision(4)
     .messages({
       'number.positive': 'Price must be a positive number',
-      'number.precision': 'Price cannot have more than 2 decimal places'
+      'number.precision': 'Price cannot have more than 4 decimal places'
     }),
   quantity: Joi.number()
     .integer()

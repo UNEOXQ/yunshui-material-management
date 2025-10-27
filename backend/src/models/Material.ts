@@ -25,11 +25,11 @@ export const createMaterialSchema = Joi.object({
     }),
   price: Joi.number()
     .positive()
-    .precision(2)
+    .precision(4)
     .required()
     .messages({
       'number.positive': 'Price must be a positive number',
-      'number.precision': 'Price cannot have more than 2 decimal places',
+      'number.precision': 'Price cannot have more than 4 decimal places',
       'any.required': 'Price is required'
     }),
   quantity: Joi.number()
@@ -38,7 +38,7 @@ export const createMaterialSchema = Joi.object({
     .required()
     .messages({
       'number.integer': 'Quantity must be an integer',
-      'number.min': 'Quantity cannot be negative',
+      'number.min': 'Quantity must be 0 or greater',
       'any.required': 'Quantity is required'
     }),
   supplier: Joi.string()
@@ -78,17 +78,17 @@ export const updateMaterialSchema = Joi.object({
     }),
   price: Joi.number()
     .positive()
-    .precision(2)
+    .precision(4)
     .messages({
       'number.positive': 'Price must be a positive number',
-      'number.precision': 'Price cannot have more than 2 decimal places'
+      'number.precision': 'Price cannot have more than 4 decimal places'
     }),
   quantity: Joi.number()
     .integer()
     .min(0)
     .messages({
       'number.integer': 'Quantity must be an integer',
-      'number.min': 'Quantity cannot be negative'
+      'number.min': 'Quantity must be 0 or greater'
     }),
   supplier: Joi.string()
     .max(255)

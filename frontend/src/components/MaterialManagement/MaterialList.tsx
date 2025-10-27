@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Material } from '../../types';
 import { ImageUpload } from './ImageUpload';
 import { processImageUrl } from '../../utils/imageUtils';
+import { formatPrice } from '../../utils/priceUtils';
 
 interface MaterialListProps {
   materials: Material[];
@@ -32,13 +33,17 @@ export const MaterialList: React.FC<MaterialListProps> = ({
     return type === 'AUXILIARY' ? 'auxiliary' : 'finished';
   };
 
-  const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    }).format(price);
+  // 修復：直接在組件中定義格式化函數（支援4位小數）
+  const formatPriceFixed = (price: number): string => {
+    console.log('MaterialList formatPriceFixed called with:', price);
+    if (typeof price !== 'number' || isNaN(price)) {
+      return 'CAD $0.00';
+    }
+    const formattedNumber = price.toFixed(4).replace(/\.?0+$/, '');
+    const finalNumber = formattedNumber.includes('.') ? formattedNumber : `${formattedNumber}.00`;
+    const result = `CAD $${finalNumber}`;
+    console.log('MaterialList formatPriceFixed result:', result);
+    return result;
   };
 
   const formatDate = (date: Date): string => {
@@ -162,7 +167,7 @@ export const MaterialList: React.FC<MaterialListProps> = ({
                     {getTypeDisplayName(material.type)}
                   </span>
                 </td>
-                <td className="price-cell">{formatPrice(material.price)}</td>
+                <td className="price-cell">{formatPriceFixed(material.price)}</td>
                 <td className="quantity-cell">
                   {editingQuantity === material.id ? (
                     <div className="quantity-edit">

@@ -16,12 +16,10 @@ export const MaterialCard: React.FC<MaterialCardProps> = ({
   const [isAdding, setIsAdding] = useState(false);
 
   const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    }).format(price);
+    // 自定義格式化以確保顯示完整的4位小數（如果有的話）
+    const formattedNumber = price.toFixed(4).replace(/\.?0+$/, '');
+    const finalNumber = formattedNumber.includes('.') ? formattedNumber : `${formattedNumber}.00`;
+    return `CAD $${finalNumber}`;
   };
 
   const getTypeDisplayName = (type: Material['type']): string => {
