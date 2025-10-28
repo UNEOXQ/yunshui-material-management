@@ -1,0 +1,276 @@
+{
+  "timestamp": "2025-10-28T16:19:58.052Z",
+  "version": "1.0.0",
+  "data": {
+    "materials": [
+      {
+        "id": "material-1",
+        "name": "螺絲釘 M6x20",
+        "category": "五金配件",
+        "price": 2.5,
+        "quantity": 1000,
+        "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
+        "supplier": "五金供應商A",
+        "type": "AUXILIARY",
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
+      },
+      {
+        "id": "material-2",
+        "name": "木板 2x4x8",
+        "category": "木材",
+        "price": 45,
+        "quantity": 200,
+        "imageUrl": "http://localhost:3004/uploads/materials/2-1761002566198-901414729.jpg",
+        "supplier": "木材供應商B",
+        "type": "FINISHED",
+        "createdAt": "2024-01-02T00:00:00.000Z",
+        "updatedAt": "2024-01-02T00:00:00.000Z"
+      },
+      {
+        "id": "material-3",
+        "name": "電線 2.5mm²",
+        "category": "電氣材料",
+        "price": 8.5,
+        "quantity": 500,
+        "imageUrl": "http://localhost:3004/uploads/materials/3-1761002652944-431354883.jpg",
+        "supplier": "電氣供應商C",
+        "type": "AUXILIARY",
+        "createdAt": "2024-01-03T00:00:00.000Z",
+        "updatedAt": "2024-01-03T00:00:00.000Z"
+      },
+      {
+        "id": "material-4",
+        "name": "水泥 50kg",
+        "category": "建材",
+        "price": 180,
+        "quantity": 100,
+        "imageUrl": "http://localhost:3004/uploads/materials/4-1761002648362-880965179.jpg",
+        "supplier": "建材供應商D",
+        "type": "FINISHED",
+        "createdAt": "2024-01-04T00:00:00.000Z",
+        "updatedAt": "2024-01-04T00:00:00.000Z"
+      }
+    ],
+    "orders": [
+      {
+        "id": "order-1",
+        "userId": "user-2",
+        "status": "PENDING",
+        "totalAmount": 250,
+        "name": "Jeffrey的輔材訂單",
+        "createdAt": "2024-01-10T00:00:00.000Z",
+        "updatedAt": "2024-01-10T00:00:00.000Z",
+        "items": [
+          {
+            "id": "item-1",
+            "orderId": "order-1",
+            "materialId": "material-1",
+            "quantity": 100,
+            "unitPrice": 2.5,
+            "materialName": "螺絲釘 M6x20",
+            "materialCategory": "五金配件",
+            "materialType": "AUXILIARY",
+            "supplier": "五金供應商A",
+            "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
+            "material": {
+              "id": "material-1",
+              "name": "螺絲釘 M6x20",
+              "category": "五金配件",
+              "price": 2.5,
+              "quantity": 1000,
+              "supplier": "五金供應商A",
+              "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2024-01-01T00:00:00.000Z",
+              "updatedAt": "2024-01-01T00:00:00.000Z"
+            }
+          }
+        ]
+      },
+      {
+        "id": "order-2",
+        "userId": "user-1",
+        "status": "APPROVED",
+        "totalAmount": 90,
+        "name": "管理員測試訂單",
+        "createdAt": "2024-01-11T00:00:00.000Z",
+        "updatedAt": "2024-01-11T00:00:00.000Z",
+        "items": [
+          {
+            "id": "item-2",
+            "orderId": "order-2",
+            "materialId": "material-2",
+            "quantity": 2,
+            "unitPrice": 45,
+            "materialName": "木板 2x4x8",
+            "materialCategory": "木材",
+            "materialType": "FINISHED",
+            "supplier": "木材供應商B",
+            "imageUrl": "http://localhost:3004/uploads/materials/2-1761002566198-901414729.jpg",
+            "material": {
+              "id": "material-2",
+              "name": "木板 2x4x8",
+              "category": "木材",
+              "price": 45,
+              "quantity": 200,
+              "supplier": "木材供應商B",
+              "imageUrl": "http://localhost:3004/uploads/materials/2-1761002566198-901414729.jpg",
+              "type": "FINISHED",
+              "createdAt": "2024-01-02T00:00:00.000Z",
+              "updatedAt": "2024-01-02T00:00:00.000Z"
+            }
+          }
+        ]
+      },
+      {
+        "id": "order-3",
+        "userId": "user-3",
+        "status": "PENDING",
+        "totalAmount": 360,
+        "name": "Miya的完成材訂單",
+        "createdAt": "2024-01-12T00:00:00.000Z",
+        "updatedAt": "2024-01-12T00:00:00.000Z",
+        "items": []
+      },
+      {
+        "id": "order-4",
+        "userId": "id-2064",
+        "status": "COMPLETED",
+        "totalAmount": 180,
+        "name": "Erica的完成材訂單",
+        "createdAt": "2024-01-13T00:00:00.000Z",
+        "updatedAt": "2024-01-13T00:00:00.000Z",
+        "items": []
+      }
+    ],
+    "users": [
+      {
+        "id": "user-1",
+        "username": "admin",
+        "email": "admin@yunshui.com",
+        "role": "ADMIN",
+        "passwordHash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.s5uIoO",
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "updatedAt": "2024-01-01T00:00:00.000Z"
+      },
+      {
+        "id": "user-2",
+        "username": "Jeffrey",
+        "email": "pm001@yunshui.com",
+        "role": "PM",
+        "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+        "createdAt": "2024-01-02T00:00:00.000Z",
+        "updatedAt": "2024-01-02T00:00:00.000Z"
+      },
+      {
+        "id": "user-3",
+        "username": "Miya",
+        "email": "am001@yunshui.com",
+        "role": "AM",
+        "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
+        "createdAt": "2024-01-03T00:00:00.000Z",
+        "updatedAt": "2024-01-03T00:00:00.000Z"
+      },
+      {
+        "id": "user-4",
+        "username": "Mark",
+        "email": "warehouse001@yunshui.com",
+        "role": "WAREHOUSE",
+        "passwordHash": "$2b$12$6BNUHWuoAhHfufkBMy4MJ.qiAiHXVBFy4XGaGILoxN05oy01L9Hhm",
+        "createdAt": "2024-01-04T00:00:00.000Z",
+        "updatedAt": "2024-01-04T00:00:00.000Z"
+      },
+      {
+        "id": "id-2064",
+        "username": "Erica",
+        "email": "Erica@yunshui.com",
+        "role": "AM",
+        "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
+        "createdAt": "2024-01-05T00:00:00.000Z",
+        "updatedAt": "2024-01-05T00:00:00.000Z"
+      },
+      {
+        "id": "id-2065",
+        "username": "LUKE",
+        "email": "LUKE@yunshui.com",
+        "role": "PM",
+        "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+        "createdAt": "2024-01-06T00:00:00.000Z",
+        "updatedAt": "2024-01-06T00:00:00.000Z"
+      },
+      {
+        "id": "id-2255",
+        "username": "777",
+        "email": "777@yunshui.com",
+        "role": "PM",
+        "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+        "createdAt": "2024-01-07T00:00:00.000Z",
+        "updatedAt": "2024-01-07T00:00:00.000Z"
+      },
+      {
+        "id": "id-2036",
+        "username": "Erica",
+        "email": "erica2@yunshui.com",
+        "role": "AM",
+        "passwordHash": "$2b$12$8k2ydShrf92wRSu0Cxn2lOm.hl0oBBXXisop.CqvN/9tQiJMXvne6",
+        "createdAt": "2024-01-08T00:00:00.000Z",
+        "updatedAt": "2024-01-08T00:00:00.000Z"
+      },
+      {
+        "id": "id-2037",
+        "username": "Unknown User",
+        "email": "unknown@yunshui.com",
+        "role": "PM",
+        "passwordHash": "$2b$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+        "createdAt": "2024-01-09T00:00:00.000Z",
+        "updatedAt": "2024-01-09T00:00:00.000Z"
+      }
+    ],
+    "projects": [
+      {
+        "id": "project-1",
+        "orderId": "order-1",
+        "projectName": "輔材專案-2024-01-10-order-1",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2024-01-10T00:00:00.000Z",
+        "updatedAt": "2024-01-10T00:00:00.000Z"
+      },
+      {
+        "id": "project-2",
+        "orderId": "order-2",
+        "projectName": "輔材專案-2024-01-11-order-2",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2024-01-11T00:00:00.000Z",
+        "updatedAt": "2024-01-11T00:00:00.000Z"
+      },
+      {
+        "id": "project-1002",
+        "orderId": "id-1002",
+        "projectName": "輔材專案-2024-01-12-id-1002",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2024-01-12T00:00:00.000Z",
+        "updatedAt": "2024-01-12T00:00:00.000Z"
+      }
+    ],
+    "orderItems": [
+      {
+        "id": "item-1",
+        "orderId": "order-1",
+        "materialId": "material-1",
+        "quantity": 100,
+        "unitPrice": 2.5
+      },
+      {
+        "id": "item-2",
+        "orderId": "order-2",
+        "materialId": "material-2",
+        "quantity": 2,
+        "unitPrice": 45
+      }
+    ],
+    "statusUpdates": [],
+    "messages": [],
+    "nextId": 2000
+  }
+}
