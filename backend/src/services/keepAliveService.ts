@@ -12,9 +12,13 @@ export class KeepAliveService {
 
   constructor() {
     // 根據環境設置基礎 URL
-    this.baseUrl = process.env.RENDER_EXTERNAL_URL || 
-                   process.env.BASE_URL || 
-                   `http://localhost:${process.env.PORT || 3004}`;
+    if (process.env.NODE_ENV === 'production') {
+      // 在 Render 環境中，使用服務的外部 URL
+      this.baseUrl = process.env.RENDER_EXTERNAL_URL || 
+                     `https://yunshui-backend.onrender.com`;
+    } else {
+      this.baseUrl = `http://localhost:${process.env.PORT || 3004}`;
+    }
   }
 
   /**
@@ -36,6 +40,8 @@ export class KeepAliveService {
     console.log(`🔄 Starting keep-alive service...`);
     console.log(`📍 Target URL: ${this.baseUrl}/health`);
     console.log(`⏰ Ping interval: ${this.pingInterval / 1000 / 60} minutes`);
+    console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
+    console.log(`🔧 Port: ${process.env.PORT}`);
 
     // 立即執行一次 ping
     this.ping();
