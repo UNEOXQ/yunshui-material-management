@@ -1,0 +1,570 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, ActivityIndicator, TextInput } from 'react-native';
+
+// API 配置 - 使用你的電腦實際 IP 位址
+const API_BASE_URL = 'http://192.168.68.95:3004/api';
+
+// API 服務函數
+const apiService = {
+  // 取得基材列表
+  getMaterials: async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/materials`);
+      const data = await response.json();
+      return data.success ? data.data : [];
+    } catch (error) {
+      console.error('取得基材失敗:', error);
+      return [];
+    }
+  },
+
+  // 取得訂單列表
+  getOrders: async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders`);
+      const data = await response.json();
+      return data.success ? data.data : [];
+    } catch (error) {
+      console.error('取得訂單失敗:', error);
+      return [];
+    }
+  },
+
+  // 新增基材
+  createMaterial: async (material) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/materials`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(material),
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('新增基材失敗:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  // 新增訂單
+  createOrder: async (order) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(order),
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('新增訂單失敗:', error);
+      return { success: false, error: error.message };
+    }
+  },
+};
+
+export default function App() {
+  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [materials, setMaterials] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newMaterial, setNewMaterial] = useState({
+    name: '',
+    specification: '',
+    price: '',
+    stock: '',
+  });
+
+  // 載入資料
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const [materialsData, ordersData] = await Promise.all([
+        apiService.getMaterials(),
+        apiService.getOrders(),
+      ]);
+      setMaterials(materialsData);
+      setOrders(ordersData);
+    } catch (error) {
+      Alert.alert('錯誤', '載入資料失敗，請檢查後端服務是否運行');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 初始載入
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  // 新增基材
+  const handleAddMaterial = async () => {
+    if (!newMaterial.name || !newMaterial.price) {
+      Alert.alert('錯誤', '請填寫基材名稱和價格');
+      return;
+    }
+
+    setLoading(true);
+    const result = await apiService.createMaterial({
+      name: newMaterial.name,
+      specification: newMaterial.specification,
+      price: parseFloat(newMaterial.price),
+      stock: parseInt(newMaterial.stock) || 0,
+    });
+
+    if (result.success) {
+      Alert.alert('成功', '基材新增成功');
+      setNewMaterial({ name: '', specification: '', price: '', stock: '' });
+      setShowAddForm(false);
+      loadData(); // 重新載入資料
+    } else {
+      Alert.alert('錯誤', result.error || '新增基材失敗');
+    }
+    setLoading(false);
+  };
+
+  const renderDashboard = () => (
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>🏗️ 雲水基材管理系統</Text>
+      <Text style={styles.subtitle}>儀表板 (即時資料)</Text>
+      <Text style={styles.apiInfo}>連接到: {API_BASE_URL}</Text>
+      
+      {loading ? (
+        <ActivityIndicator size="large" color="#007bff" style={{ marginVertical: 20 }} />
+      ) : (
+        <View style={styles.statsContainer}>
+          <View style={styles.statCard}>
+            <Text style={styles.statNumber}>{orders.length}</Text>
+            <Text style={styles.statLabel}>總訂單數</Text>
+          </View>
+          <View style={styles.statCard}>
+            <Text style={styles.statNumber}>{materials.length}</Text>
+            <Text style={styles.statLabel}>基材種類</Text>
+          </View>
+        </View>
+      )}
+
+      <View style={styles.quickActions}>
+        <TouchableOpacity style={styles.actionButton} onPress={() => setCurrentPage('materials')}>
+          <Text style={styles.actionText}>📦 基材管理 ({materials.length})</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton} onPress={() => setCurrentPage('orders')}>
+          <Text style={styles.actionText}>📋 訂單管理 ({orders.length})</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.refreshButton} onPress={loadData}>
+          <Text style={styles.refreshText}>🔄 重新載入資料</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
+
+  const renderAddMaterialForm = () => (
+    <View style={styles.formContainer}>
+      <Text style={styles.formTitle}>新增基材</Text>
+      
+      <TextInput
+        style={styles.input}
+        placeholder="基材名稱 *"
+        value={newMaterial.name}
+        onChangeText={(text) => setNewMaterial({...newMaterial, name: text})}
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="規格說明"
+        value={newMaterial.specification}
+        onChangeText={(text) => setNewMaterial({...newMaterial, specification: text})}
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="價格 *"
+        value={newMaterial.price}
+        onChangeText={(text) => setNewMaterial({...newMaterial, price: text})}
+        keyboardType="numeric"
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="庫存數量"
+        value={newMaterial.stock}
+        onChangeText={(text) => setNewMaterial({...newMaterial, stock: text})}
+        keyboardType="numeric"
+      />
+      
+      <View style={styles.formButtons}>
+        <TouchableOpacity style={styles.cancelButton} onPress={() => setShowAddForm(false)}>
+          <Text style={styles.cancelText}>取消</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.saveButton} onPress={handleAddMaterial}>
+          <Text style={styles.saveText}>儲存</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+
+  const renderMaterials = () => (
+    <ScrollView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>📦 基材管理 (即時資料)</Text>
+        <TouchableOpacity style={styles.addButton} onPress={() => setShowAddForm(true)}>
+          <Text style={styles.addButtonText}>+ 新增</Text>
+        </TouchableOpacity>
+      </View>
+      
+      {showAddForm && renderAddMaterialForm()}
+      
+      {loading ? (
+        <ActivityIndicator size="large" color="#007bff" style={{ marginVertical: 20 }} />
+      ) : materials.length === 0 ? (
+        <Text style={styles.emptyText}>暫無基材資料，請先新增基材</Text>
+      ) : (
+        materials.map((material, index) => (
+          <View key={material.id || index} style={styles.materialCard}>
+            <Text style={styles.materialName}>{material.name}</Text>
+            <Text style={styles.materialSpec}>{material.specification || '無規格說明'}</Text>
+            <Text style={styles.materialPrice}>價格: ${material.price}</Text>
+            <Text style={styles.materialStock}>庫存: {material.stock || 0}</Text>
+          </View>
+        ))
+      )}
+
+      <TouchableOpacity style={styles.backButton} onPress={() => setCurrentPage('dashboard')}>
+        <Text style={styles.backText}>← 返回儀表板</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+
+  const renderOrders = () => (
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>📋 訂單管理 (即時資料)</Text>
+      
+      {loading ? (
+        <ActivityIndicator size="large" color="#007bff" style={{ marginVertical: 20 }} />
+      ) : orders.length === 0 ? (
+        <Text style={styles.emptyText}>暫無訂單資料</Text>
+      ) : (
+        orders.map((order, index) => (
+          <View key={order.id || index} style={styles.orderCard}>
+            <Text style={styles.orderNumber}>訂單 #{order.orderNumber || `ORD-${index + 1}`}</Text>
+            <Text style={styles.orderCustomer}>客戶: {order.customerName || '未知客戶'}</Text>
+            <Text style={styles.orderStatus}>狀態: {order.status || '待處理'}</Text>
+            <Text style={styles.orderAmount}>金額: ${order.totalAmount || 0}</Text>
+            <Text style={styles.orderDate}>日期: {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '未知'}</Text>
+          </View>
+        ))
+      )}
+
+      <TouchableOpacity style={styles.backButton} onPress={() => setCurrentPage('dashboard')}>
+        <Text style={styles.backText}>← 返回儀表板</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+
+  return (
+    <View style={styles.app}>
+      {currentPage === 'dashboard' && renderDashboard()}
+      {currentPage === 'materials' && renderMaterials()}
+      {currentPage === 'orders' && renderOrders()}
+      
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navButton} onPress={() => setCurrentPage('dashboard')}>
+          <Text style={[styles.navText, currentPage === 'dashboard' && styles.activeNav]}>🏠 首頁</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => setCurrentPage('materials')}>
+          <Text style={[styles.navText, currentPage === 'materials' && styles.activeNav]}>📦 基材</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => setCurrentPage('orders')}>
+          <Text style={[styles.navText, currentPage === 'orders' && styles.activeNav]}>📋 訂單</Text>
+        </TouchableOpacity>
+      </View>
+      
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#007bff" />
+          <Text style={styles.loadingText}>處理中...</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  app: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#007bff',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  apiInfo: {
+    fontSize: 12,
+    color: '#999',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 30,
+  },
+  statCard: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    minWidth: 120,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  statNumber: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#007bff',
+  },
+  statLabel: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 5,
+  },
+  quickActions: {
+    gap: 15,
+  },
+  actionButton: {
+    backgroundColor: '#007bff',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  actionText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  refreshButton: {
+    backgroundColor: '#28a745',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  refreshText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  addButton: {
+    backgroundColor: '#28a745',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  formContainer: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  formTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 15,
+    fontSize: 16,
+  },
+  formButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
+  cancelButton: {
+    flex: 1,
+    backgroundColor: '#6c757d',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  cancelText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  saveButton: {
+    flex: 1,
+    backgroundColor: '#28a745',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  saveText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  materialCard: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  materialName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+  },
+  materialSpec: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 5,
+  },
+  materialPrice: {
+    fontSize: 16,
+    color: '#007bff',
+    fontWeight: 'bold',
+    marginBottom: 3,
+  },
+  materialStock: {
+    fontSize: 14,
+    color: '#28a745',
+  },
+  orderCard: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  orderNumber: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+  },
+  orderCustomer: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 5,
+  },
+  orderStatus: {
+    fontSize: 14,
+    color: '#ffc107',
+    marginBottom: 5,
+  },
+  orderAmount: {
+    fontSize: 16,
+    color: '#007bff',
+    fontWeight: 'bold',
+    marginBottom: 3,
+  },
+  orderDate: {
+    fontSize: 12,
+    color: '#999',
+  },
+  emptyText: {
+    textAlign: 'center',
+    color: '#666',
+    fontSize: 16,
+    marginVertical: 40,
+  },
+  backButton: {
+    backgroundColor: '#6c757d',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  backText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+  },
+  navButton: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  navText: {
+    fontSize: 12,
+    color: '#007bff',
+  },
+  activeNav: {
+    fontWeight: 'bold',
+    color: '#0056b3',
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    color: '#fff',
+    marginTop: 10,
+    fontSize: 16,
+  },
+});

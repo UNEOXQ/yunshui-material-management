@@ -484,19 +484,41 @@ export class OrderController {
       const userId = req.user!.userId;
       const userRole = req.user!.role;
 
+      console.log(`Getting orders for user ${userId} (${userRole}), page ${page}, limit ${limit}`);
+
       let result;
-      if (userRole === 'ADMIN') {
-        // Admin can see all orders
-        result = await OrderModel.findAll({ status }, page, limit);
+      if (userRole === 'ADMIN' || userRole === 'WAREHOUSE') {
+        // Admin and Warehouse can see all orders - use memory database directly
+        result = await memoryDb.findAllOrders({ status }, page, limit);
       } else {
-        // Other users can only see their own orders
-        result = await OrderModel.findByUserId(userId, { status }, page, limit);
+        // Other users can only see their own orders - use memory database directly
+        result = await memoryDb.findOrdersByUserId(userId, { status }, page, limit);
       }
+
+      // Convert OrderWithItems to Order format for API response
+      const orders = result.orders.map(orderWithItems => ({
+        id: orderWithItems.id,
+        userId: orderWithItems.userId,
+        totalAmount: orderWithItems.totalAmount,
+        status: orderWithItems.status,
+        name: orderWithItems.name,
+        createdAt: orderWithItems.createdAt,
+        updatedAt: orderWithItems.updatedAt,
+        // Include items for mobile app compatibility
+        items: orderWithItems.items?.map(item => ({
+          materialId: item.materialId,
+          materialName: item.materialName,
+          quantity: item.quantity,
+          price: item.unitPrice
+        })) || []
+      }));
+
+      console.log(`Found ${orders.length} orders for user ${userId}`);
 
       res.status(200).json({
         success: true,
         data: {
-          orders: result.orders,
+          orders: orders,
           pagination: {
             page,
             limit,

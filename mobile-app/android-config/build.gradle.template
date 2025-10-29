@@ -1,0 +1,297 @@
+// Android 建置配置範本
+// 此檔案提供 Android 專案的 Gradle 建置配置範例
+
+apply plugin: "com.android.application"
+apply plugin: "com.facebook.react"
+
+/**
+ * 應用程式版本配置
+ */
+def getVersionCode = { ->
+    def versionCode = System.getenv("VERSION_CODE")
+    if (versionCode != null) {
+        return versionCode.toInteger()
+    }
+    return 1
+}
+
+def getVersionName = { ->
+    def versionName = System.getenv("VERSION_NAME")
+    if (versionName != null) {
+        return versionName
+    }
+    return "1.0.0"
+}
+
+/**
+ * React Native 配置
+ */
+react {
+    /* Folders */
+    root = file("../")
+    reactNativeDir = file("../node_modules/react-native")
+    codegenDir = file("../node_modules/@react-native/codegen")
+    cliFile = file("../node_modules/@react-native/cli/build/bin.js")
+
+    /* Variants */
+    debuggableVariants = ["liveReload", "debug"]
+
+    /* Bundling */
+    bundleCommand = "ram-bundle"
+    bundleInDebug = false
+    bundleInRelease = true
+    bundleInVariant = "release"
+
+    /* Hermes Commands */
+    hermesCommand = "../node_modules/react-native/sdks/hermesc/%OS-BIN%/hermesc"
+    hermesFlags = ["-O", "-output-source-map"]
+}
+
+/**
+ * Android 應用程式配置
+ */
+android {
+    ndkVersion rootProject.ext.ndkVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    namespace "com.yunshui.mobile"
+    
+    defaultConfig {
+        applicationId "com.yunshui.mobile"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode getVersionCode()
+        versionName getVersionName()
+        
+        // 多語言支援
+        resConfigs "zh-rTW", "zh-rCN", "en"
+        
+        // 向量圖形支援
+        vectorDrawables.useSupportLibrary = true
+        
+        // 測試配置
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // ProGuard 配置
+        proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+    }
+
+    /**
+     * 簽名配置
+     */
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+        release {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
+    /**
+     * 建置類型配置
+     */
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            applicationIdSuffix ".debug"
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+        }
+        
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            
+            // ProGuard 優化
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+        
+        // 預覽版本 (用於內部測試)
+        preview {
+            initWith release
+            applicationIdSuffix ".preview"
+            versionNameSuffix "-preview"
+            debuggable true
+        }
+    }
+
+    /**
+     * 產品風味配置 (可選)
+     */
+    flavorDimensions "version"
+    productFlavors {
+        production {
+            dimension "version"
+            applicationId "com.yunshui.mobile"
+        }
+        
+        staging {
+            dimension "version"
+            applicationId "com.yunshui.mobile.staging"
+            versionNameSuffix "-staging"
+        }
+    }
+
+    /**
+     * 編譯選項
+     */
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    /**
+     * 打包選項
+     */
+    packagingOptions {
+        pickFirst "**/libc++_shared.so"
+        pickFirst "**/libjsc.so"
+        pickFirst "**/libfbjni.so"
+        
+        // 排除不必要的檔案
+        exclude "META-INF/DEPENDENCIES"
+        exclude "META-INF/LICENSE"
+        exclude "META-INF/LICENSE.txt"
+        exclude "META-INF/NOTICE"
+        exclude "META-INF/NOTICE.txt"
+    }
+
+    /**
+     * Lint 選項
+     */
+    lintOptions {
+        disable 'MissingTranslation'
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    /**
+     * 分割 APK 配置 (可選)
+     */
+    splits {
+        abi {
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk false  // 如果為 true，也會生成通用 APK
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
+    }
+
+    /**
+     * Bundle 配置
+     */
+    bundle {
+        language {
+            enableSplit = true
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
+    }
+}
+
+/**
+ * 依賴項配置
+ */
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    
+    // React Native
+    implementation "com.facebook.react:react-android"
+    implementation "com.facebook.react:flipper-integration"
+    
+    // Android 支援庫
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.core:core-ktx:1.10.1"
+    implementation "androidx.activity:activity:1.7.2"
+    
+    // 測試依賴
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+    
+    // Debug 依賴
+    debugImplementation "com.facebook.flipper:flipper:0.201.0"
+    debugImplementation "com.facebook.flipper:flipper-network-plugin:0.201.0"
+    debugImplementation "com.facebook.flipper:flipper-fresco-plugin:0.201.0"
+}
+
+/**
+ * 自動版本號管理
+ */
+def getGitCommitCount = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-list', '--count', 'HEAD'
+            standardOutput = stdout
+        }
+        return Integer.parseInt(stdout.toString().trim())
+    } catch (Exception e) {
+        return 1
+    }
+}
+
+// 如果沒有設定版本號，使用 Git commit 數量
+if (!project.hasProperty('VERSION_CODE')) {
+    android.defaultConfig.versionCode = getGitCommitCount()
+}
+
+/**
+ * 建置後處理
+ */
+tasks.whenTaskAdded { task ->
+    if (task.name.startsWith('bundle')) {
+        task.doLast {
+            println "✅ Bundle 建置完成: ${task.name}"
+        }
+    }
+    
+    if (task.name.startsWith('assemble')) {
+        task.doLast {
+            println "✅ APK 建置完成: ${task.name}"
+        }
+    }
+}
+
+/**
+ * 自定義任務
+ */
+task printVersionInfo {
+    doLast {
+        println "應用程式版本資訊:"
+        println "  版本名稱: ${android.defaultConfig.versionName}"
+        println "  版本代碼: ${android.defaultConfig.versionCode}"
+        println "  應用程式 ID: ${android.defaultConfig.applicationId}"
+        println "  編譯 SDK: ${android.compileSdkVersion}"
+        println "  目標 SDK: ${android.defaultConfig.targetSdkVersion}"
+        println "  最小 SDK: ${android.defaultConfig.minSdkVersion}"
+    }
+}
+
+/**
+ * 清理任務
+ */
+task cleanAll(type: Delete) {
+    delete rootProject.buildDir
+    delete file("src/main/assets/index.android.bundle")
+    delete file("src/main/assets/index.android.bundle.map")
+}
+
+// 在 clean 任務之前執行 cleanAll
+clean.dependsOn cleanAll

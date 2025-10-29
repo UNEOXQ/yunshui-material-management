@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- 雲水基材管理系統 - iOS Info.plist 範本 -->
+<plist version="1.0">
+<dict>
+    <!-- 應用程式基本資訊 -->
+    <key>CFBundleDevelopmentRegion</key>
+    <string>zh_TW</string>
+    
+    <key>CFBundleDisplayName</key>
+    <string>雲水基材管理</string>
+    
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+    
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    
+    <key>CFBundleShortVersionString</key>
+    <string>$(MARKETING_VERSION)</string>
+    
+    <key>CFBundleVersion</key>
+    <string>$(CURRENT_PROJECT_VERSION)</string>
+    
+    <!-- 支援的設備方向 -->
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+    </array>
+    
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    
+    <!-- 狀態列設定 -->
+    <key>UIStatusBarStyle</key>
+    <string>UIStatusBarStyleDefault</string>
+    
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+    
+    <!-- 啟動畫面設定 -->
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+    
+    <!-- 應用程式圖示設定 -->
+    <key>CFBundleIcons</key>
+    <dict>
+        <key>CFBundlePrimaryIcon</key>
+        <dict>
+            <key>CFBundleIconFiles</key>
+            <array>
+                <string>AppIcon20x20</string>
+                <string>AppIcon29x29</string>
+                <string>AppIcon40x40</string>
+                <string>AppIcon60x60</string>
+            </array>
+            <key>CFBundleIconName</key>
+            <string>AppIcon</string>
+        </dict>
+    </dict>
+    
+    <!-- 相機和相簿權限 -->
+    <key>NSCameraUsageDescription</key>
+    <string>此應用程式需要使用相機來拍攝基材照片</string>
+    
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>此應用程式需要存取相簿來選擇基材照片</string>
+    
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>此應用程式需要將照片儲存到相簿</string>
+    
+    <!-- 網路權限 -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>localhost</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
+        </dict>
+    </dict>
+    
+    <!-- 檔案分享設定 -->
+    <key>UIFileSharingEnabled</key>
+    <false/>
+    
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <false/>
+    
+    <!-- 背景模式 -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>background-fetch</string>
+        <string>remote-notification</string>
+    </array>
+    
+    <!-- 推播通知設定 -->
+    <key>UIUserNotificationSettings</key>
+    <dict>
+        <key>UIUserNotificationTypeAlert</key>
+        <true/>
+        <key>UIUserNotificationTypeBadge</key>
+        <true/>
+        <key>UIUserNotificationTypeSound</key>
+        <true/>
+    </dict>
+    
+    <!-- URL Scheme 設定 -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>com.yunshui.mobile</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>yunshui</string>
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>com.yunshui.mobile.https</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>https</string>
+            </array>
+        </dict>
+    </array>
+    
+    <!-- 支援的檔案類型 -->
+    <key>CFBundleDocumentTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>Image</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>public.image</string>
+                <string>public.jpeg</string>
+                <string>public.png</string>
+            </array>
+        </dict>
+    </array>
+    
+    <!-- 字體設定 -->
+    <key>UIAppFonts</key>
+    <array>
+        <!-- 如果有自定義字體，在這裡添加 -->
+    </array>
+    
+    <!-- 隱私權設定 -->
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
+    
+    <!-- 應用程式類別 -->
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.business</string>
+    
+    <!-- 最低 iOS 版本 -->
+    <key>MinimumOSVersion</key>
+    <string>12.0</string>
+    
+    <!-- 支援的設備 -->
+    <key>UIDeviceFamily</key>
+    <array>
+        <integer>1</integer> <!-- iPhone -->
+        <integer>2</integer> <!-- iPad -->
+    </array>
+    
+    <!-- 鍵盤設定 -->
+    <key>UIRequiresFullScreen</key>
+    <false/>
+    
+    <!-- 應用程式場景設定 (iOS 13+) -->
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+        <key>UISceneConfigurations</key>
+        <dict>
+            <key>UIWindowSceneSessionRoleApplication</key>
+            <array>
+                <dict>
+                    <key>UISceneConfigurationName</key>
+                    <string>Default Configuration</string>
+                    <key>UISceneDelegateClassName</key>
+                    <string>SceneDelegate</string>
+                </dict>
+            </array>
+        </dict>
+    </dict>
+    
+    <!-- React Native 相關設定 -->
+    <key>NSMainNibFile</key>
+    <string></string>
+    
+    <key>UIMainStoryboardFile</key>
+    <string></string>
+    
+    <!-- 應用程式元資料 -->
+    <key>YunShuiAppVersion</key>
+    <string>$(MARKETING_VERSION)</string>
+    
+    <key>YunShuiBuildNumber</key>
+    <string>$(CURRENT_PROJECT_VERSION)</string>
+    
+    <key>YunShuiBuildDate</key>
+    <string>$(BUILD_DATE)</string>
+    
+    <!-- Firebase 配置 (如果使用) -->
+    <key>FirebaseAppDelegateProxyEnabled</key>
+    <false/>
+    
+    <!-- Flipper 配置 (開發模式) -->
+    <key>FlipperKitNetworkPlugin</key>
+    <true/>
+    
+    <!-- 其他設定 -->
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+        <string>armv7</string>
+    </array>
+    
+    <key>UISupportedExternalAccessoryProtocols</key>
+    <array>
+        <!-- 如果需要支援外部配件，在這裡添加 -->
+    </array>
+    
+</dict>
+</plist>

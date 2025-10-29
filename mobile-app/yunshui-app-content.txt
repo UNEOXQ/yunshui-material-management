@@ -1,0 +1,45 @@
+import React from 'react';
+import { View, Text } from 'react-native';
+
+export default function App() {
+  return (
+    <View style={{ 
+      flex: 1, 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      backgroundColor: '#f0f0f0' 
+    }}>
+      <Text style={{ 
+        fontSize: 24, 
+        color: '#007bff', 
+        marginBottom: 20,
+        textAlign: 'center'
+      }}>
+        🏗️ 雲水基材管理系統
+      </Text>
+      <Text style={{ 
+        fontSize: 16, 
+        color: '#666',
+        marginBottom: 10
+      }}>
+        手機版 v2.0.0
+      </Text>
+      <Text style={{ 
+        fontSize: 14, 
+        color: '#28a745', 
+        marginTop: 20,
+        textAlign: 'center'
+      }}>
+        ✅ 新版本成功啟動！
+      </Text>
+      <Text style={{ 
+        fontSize: 12, 
+        color: '#999', 
+        marginTop: 20,
+        textAlign: 'center'
+      }}>
+        版本相容性問題已解決 🎉
+      </Text>
+    </View>
+  );
+}

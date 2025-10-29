@@ -1,0 +1,940 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, ActivityIndicator, TextInput, Modal, BackHandler } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+// API 配置
+const API_BASE_URL = 'http://192.168.68.95:3004/api';
+
+// 完整的 API 服務
+const apiService = {
+  // 認證相關
+  login: async (username: string, password: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      return await response.json();
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  // 基材管理
+  getMaterials: async (token: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/materials`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      if (data.success && data.data) {
+        return Array.isArray(data.data) ? data.data : data.data.materials || [];
+      }
+      return [];
+    } catch (error) {
+      console.error('取得基材失敗:', error);
+      return [];
+    }
+  },
+
+  // 訂單管理 - 所有訂單 (修復版)
+  getAllOrders: async (token: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      console.log('All orders response:', data);
+      if (data.success && data.data) {
+        return Array.isArray(data.data) ? data.data : data.data.orders || [];
+      }
+      return [];
+    } catch (error) {
+      console.error('取得所有訂單失敗:', error);
+      return [];
+    }
+  },
+
+  // 訂單管理 - 輔材訂單
+  getAuxiliaryOrders: async (token: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders/auxiliary`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      console.log('Auxiliary orders response:', data);
+      if (data.success && data.data) {
+        return Array.isArray(data.data) ? data.data : data.data.orders || [];
+      }
+      return [];
+    } catch (error) {
+      console.error('取得輔材訂單失敗:', error);
+      return [];
+    }
+  },
+
+  // 訂單管理 - 完成材訂單
+  getFinishedOrders: async (token: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders/finished`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      console.log('Finished orders response:', data);
+      if (data.success && data.data) {
+        return Array.isArray(data.data) ? data.data : data.data.orders || [];
+      }
+      return [];
+    } catch (error) {
+      console.error('取得完成材訂單失敗:', error);
+      return [];
+    }
+  },
+
+  // 建立輔材訂單
+  createAuxiliaryOrder: async (token: string, orderData: any) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders/auxiliary`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData),
+      });
+      return await response.json();
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  // 建立完成材訂單
+  createFinishedOrder: async (token: string, orderData: any) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders/finished`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData),
+      });
+      return await response.json();
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+};
+
+export default function App() {
+  const insets = useSafeAreaInsets();
+  
+  // 認證狀態
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authToken, setAuthToken] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  
+  // 登入表單
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [loginLoading, setLoginLoading] = useState(false);
+
+  // 快速登入用戶列表
+  const [quickLoginUsers, setQuickLoginUsers] = useState([
+    { id: 'user-1', username: '系統管理員', password: 'admin123', role: 'ADMIN', email: 'admin@yunshui.com', originalUsername: 'admin' },
+    { id: 'user-2', username: 'Jeffrey', password: 'pm123', role: 'PM', email: 'pm001@yunshui.com', originalUsername: 'pm001' },
+    { id: 'user-3', username: 'Miya', password: 'am123', role: 'AM', email: 'am001@yunshui.com', originalUsername: 'am001' },
+    { id: 'user-4', username: 'Mark', password: 'wh123', role: 'WAREHOUSE', email: 'warehouse001@yunshui.com', originalUsername: 'warehouse001' },
+    { id: 'id-2064', username: 'Erica', password: 'default123', role: 'AM', email: 'Erica@yunshui.com', originalUsername: 'Erica' },
+    { id: 'id-2065', username: 'LUKE', password: 'default123', role: 'PM', email: 'LUKE@yunshui.com', originalUsername: 'LUKE' }
+  ]);
+
+  // 主要狀態
+  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [materials, setMaterials] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // 材料選擇狀態
+  const [showMaterialSelection, setShowMaterialSelection] = useState(false);
+  const [selectedMaterials, setSelectedMaterials] = useState([]);
+  const [materialType, setMaterialType] = useState('AUXILIARY');
+
+  // 硬體返回鍵處理
+  useEffect(() => {
+    const backAction = () => {
+      if (showMaterialSelection) {
+        setShowMaterialSelection(false);
+        return true;
+      }
+      
+      if (currentPage !== 'dashboard') {
+        setCurrentPage('dashboard');
+        return true;
+      }
+      
+      return false; // 讓系統處理返回鍵（退出 App）
+    };
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () => backHandler.remove();
+  }, [currentPage, showMaterialSelection]);
+
+  // 檢查登入狀態
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  // 當用戶登入後載入資料
+  useEffect(() => {
+    if (isLoggedIn && authToken && currentUser) {
+      loadInitialData(authToken);
+    }
+  }, [isLoggedIn, authToken, currentUser]);
+
+  const checkAuthStatus = async () => {
+    // 檢查本地存儲的 token
+  };
+
+  // 一般登入處理
+  const handleLogin = async () => {
+    if (!loginForm.username || !loginForm.password) {
+      Alert.alert('錯誤', '請輸入帳號和密碼');
+      return;
+    }
+
+    setLoginLoading(true);
+    const result = await apiService.login(loginForm.username, loginForm.password);
+    
+    if (result.success) {
+      setAuthToken(result.data.token);
+      setCurrentUser(result.data.user);
+      setIsLoggedIn(true);
+      // loadInitialData 會在 useEffect 中自動執行
+    } else {
+      Alert.alert('登入失敗', result.message || '帳號或密碼錯誤');
+    }
+    setLoginLoading(false);
+  };
+
+  // 快速登入處理
+  const handleQuickLogin = async (account: any) => {
+    setLoginLoading(true);
+    const result = await apiService.login(account.originalUsername, account.password);
+    
+    if (result.success) {
+      setAuthToken(result.data.token);
+      setCurrentUser(result.data.user);
+      setIsLoggedIn(true);
+      // loadInitialData 會在 useEffect 中自動執行
+    } else {
+      Alert.alert('快速登入失敗', result.message || '登入失敗');
+    }
+    setLoginLoading(false);
+  };
+
+  // 載入初始資料 (修復版)
+  const loadInitialData = async (token: string) => {
+    if (!currentUser) return;
+    
+    setLoading(true);
+    try {
+      console.log('Loading initial data for user:', currentUser);
+      
+      const [materialsData, ordersData] = await Promise.all([
+        apiService.getMaterials(token),
+        loadOrdersByRole(token, currentUser.role)
+      ]);
+      
+      console.log('Loaded materials:', materialsData.length);
+      console.log('Loaded orders:', ordersData.length);
+      
+      setMaterials(materialsData);
+      setOrders(ordersData);
+    } catch (error) {
+      console.error('載入資料錯誤:', error);
+      Alert.alert('錯誤', '載入資料失敗');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 根據角色載入對應的訂單 (修復版)
+  const loadOrdersByRole = async (token: string, userRole: string) => {
+    console.log('Loading orders for role:', userRole);
+    
+    try {
+      switch (userRole) {
+        case 'PM':
+          // PM 只看輔材訂單，但先嘗試所有訂單 API
+          const pmOrders = await apiService.getAllOrders(token);
+          return pmOrders.filter(order => 
+            !order.type || order.type === 'AUXILIARY' || order.type === 'auxiliary'
+          );
+          
+        case 'AM':
+          // AM 只看完成材訂單，但先嘗試所有訂單 API
+          const amOrders = await apiService.getAllOrders(token);
+          return amOrders.filter(order => 
+            order.type === 'FINISHED' || order.type === 'finished'
+          );
+          
+        case 'WAREHOUSE':
+        case 'ADMIN':
+          // 倉管和管理員看所有訂單
+          return await apiService.getAllOrders(token);
+          
+        default:
+          return [];
+      }
+    } catch (error) {
+      console.error('載入訂單失敗:', error);
+      return [];
+    }
+  };
+
+  // 登出
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setAuthToken('');
+    setCurrentUser(null);
+    setCurrentPage('dashboard');
+    setOrders([]);
+    setMaterials([]);
+  };
+
+  // 開啟材料選擇
+  const handleOpenMaterialSelection = (type: string) => {
+    setMaterialType(type);
+    setSelectedMaterials([]);
+    setShowMaterialSelection(true);
+  };
+
+  // 選擇材料
+  const handleSelectMaterial = (material: any) => {
+    const existingIndex = selectedMaterials.findIndex(item => item.materialId === material.id);
+    
+    if (existingIndex >= 0) {
+      const updated = [...selectedMaterials];
+      updated[existingIndex].quantity += 1;
+      setSelectedMaterials(updated);
+    } else {
+      setSelectedMaterials(prev => [...prev, {
+        materialId: material.id,
+        materialName: material.name,
+        price: material.price,
+        quantity: 1
+      }]);
+    }
+  };
+
+  // 移除材料
+  const handleRemoveMaterial = (materialId: string) => {
+    setSelectedMaterials(prev => prev.filter(item => item.materialId !== materialId));
+  };
+
+  // 更新材料數量
+  const handleUpdateQuantity = (materialId: string, quantity: number) => {
+    if (quantity <= 0) {
+      handleRemoveMaterial(materialId);
+      return;
+    }
+    
+    setSelectedMaterials(prev => 
+      prev.map(item => 
+        item.materialId === materialId 
+          ? { ...item, quantity } 
+          : item
+      )
+    );
+  };
+
+  // 建立訂單
+  const handleCreateOrder = async () => {
+    if (selectedMaterials.length === 0) {
+      Alert.alert('錯誤', '請選擇材料');
+      return;
+    }
+
+    setLoading(true);
+    
+    const orderData = {
+      items: selectedMaterials.map(item => ({
+        materialId: item.materialId,
+        quantity: item.quantity
+      }))
+    };
+
+    let result;
+    if (materialType === 'AUXILIARY') {
+      result = await apiService.createAuxiliaryOrder(authToken, orderData);
+    } else {
+      result = await apiService.createFinishedOrder(authToken, orderData);
+    }
+
+    if (result.success) {
+      Alert.alert('成功', '訂單建立成功');
+      setShowMaterialSelection(false);
+      setSelectedMaterials([]);
+      // 重新載入資料
+      await loadInitialData(authToken);
+    } else {
+      Alert.alert('錯誤', result.error || '建立訂單失敗');
+    }
+    setLoading(false);
+  };
+
+  // 獲取角色功能
+  const getRoleFeatures = (role: string) => {
+    const features = {
+      PM: ['🔧 輔材訂單管理'],
+      AM: ['🏠 完成材訂單管理'],
+      WAREHOUSE: ['📋 訂單狀態管理'],
+      ADMIN: ['👑 管理員控制台', '🔧 輔材訂單管理', '🏠 完成材訂單管理', '📋 訂單狀態管理']
+    };
+    return features[role] || [];
+  };
+
+  // 獲取角色顯示文字
+  const getRoleDisplayText = (role: string) => {
+    const roleMap = {
+      'ADMIN': '系統管理員',
+      'PM': '專案經理',
+      'AM': '區域經理',
+      'WAREHOUSE': '倉管人員'
+    };
+    return roleMap[role] || role;
+  };
+
+  // 獲取角色顏色
+  const getRoleColor = (role: string) => {
+    const colorMap = {
+      'ADMIN': '#dc3545',
+      'PM': '#007bff',
+      'AM': '#28a745',
+      'WAREHOUSE': '#ffc107'
+    };
+    return colorMap[role] || '#6c757d';
+  };
+
+  // 返回儀表板
+  const handleBackToDashboard = () => {
+    setCurrentPage('dashboard');
+  };  // 登入畫面
+
+  if (!isLoggedIn) {
+    return (
+      <View style={[styles.loginContainer, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
+        <ScrollView style={styles.loginScrollView}>
+          <View style={styles.loginForm}>
+            <Text style={styles.loginTitle}>🏗️ 雲水基材管理系統</Text>
+            <Text style={styles.loginSubtitle}>手機版登入</Text>
+            
+            {/* 快速登入區域 */}
+            <View style={styles.quickLoginSection}>
+              <Text style={styles.quickLoginTitle}>快速登入</Text>
+              <View style={styles.quickLoginGrid}>
+                {quickLoginUsers.map((account) => (
+                  <TouchableOpacity
+                    key={account.id}
+                    style={[styles.quickLoginButton, { borderColor: getRoleColor(account.role) }]}
+                    onPress={() => handleQuickLogin(account)}
+                    disabled={loginLoading}
+                  >
+                    <Text style={[styles.quickLoginName, { color: getRoleColor(account.role) }]}>
+                      {account.username}
+                    </Text>
+                    <Text style={styles.quickLoginRole}>
+                      {getRoleDisplayText(account.role)}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            {/* 分隔線 */}
+            <View style={styles.divider}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>或</Text>
+              <View style={styles.dividerLine} />
+            </View>
+            
+            {/* 手動登入區域 */}
+            <View style={styles.manualLoginSection}>
+              <Text style={styles.manualLoginTitle}>手動登入</Text>
+              <TextInput
+                style={styles.loginInput}
+                placeholder="帳號"
+                value={loginForm.username}
+                onChangeText={(text) => setLoginForm(prev => ({ ...prev, username: text }))}
+                autoCapitalize="none"
+              />
+              
+              <TextInput
+                style={styles.loginInput}
+                placeholder="密碼"
+                value={loginForm.password}
+                onChangeText={(text) => setLoginForm(prev => ({ ...prev, password: text }))}
+                secureTextEntry
+              />
+              
+              <TouchableOpacity 
+                style={styles.loginButton} 
+                onPress={handleLogin}
+                disabled={loginLoading}
+              >
+                {loginLoading ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text style={styles.loginButtonText}>登入</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // 儀表板
+  const renderDashboard = () => (
+    <ScrollView 
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
+    >
+      <View style={styles.header}>
+        <Text style={styles.title}>🏗️ 雲水基材管理系統</Text>
+        <Text style={styles.subtitle}>歡迎，{currentUser?.username}</Text>
+        <Text style={styles.userRole}>角色：{getRoleDisplayText(currentUser?.role)}</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutText}>登出</Text>
+        </TouchableOpacity>
+      </View>
+      
+      <View style={styles.statsContainer}>
+        <View style={styles.statCard}>
+          <Text style={styles.statNumber}>{orders.length}</Text>
+          <Text style={styles.statLabel}>總訂單數</Text>
+        </View>
+        <View style={styles.statCard}>
+          <Text style={styles.statNumber}>{materials.length}</Text>
+          <Text style={styles.statLabel}>基材種類</Text>
+        </View>
+      </View>
+
+      <View style={styles.featuresSection}>
+        <Text style={styles.featuresTitle}>系統功能</Text>
+        <View style={styles.featuresGrid}>
+          {getRoleFeatures(currentUser?.role).map((feature, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.featureCard}
+              onPress={() => {
+                if (feature.includes('輔材訂單管理')) {
+                  setCurrentPage('auxiliary-orders');
+                } else if (feature.includes('完成材訂單管理')) {
+                  setCurrentPage('finished-orders');
+                } else if (feature.includes('訂單狀態管理')) {
+                  setCurrentPage('order-status');
+                } else if (feature.includes('管理員控制台')) {
+                  setCurrentPage('admin-dashboard');
+                }
+              }}
+            >
+              <Text style={styles.featureText}>{feature}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  );
+
+  // 輔材訂單管理
+  const renderAuxiliaryOrders = () => (
+    <View style={styles.pageContainer}>
+      <View style={styles.pageHeader}>
+        <TouchableOpacity style={styles.backHeaderButton} onPress={handleBackToDashboard}>
+          <Text style={styles.backHeaderText}>← 返回</Text>
+        </TouchableOpacity>
+        <Text style={styles.pageTitle}>🔧 輔材訂單管理</Text>
+        <TouchableOpacity 
+          style={styles.addButton} 
+          onPress={() => handleOpenMaterialSelection('AUXILIARY')}
+        >
+          <Text style={styles.addButtonText}>+ 選擇輔材</Text>
+        </TouchableOpacity>
+      </View>
+      
+      <ScrollView 
+        style={styles.pageContent}
+        contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
+      >
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#007bff" />
+            <Text style={styles.loadingText}>載入訂單中...</Text>
+          </View>
+        ) : orders.filter(order => !order.type || order.type === 'AUXILIARY' || order.type === 'auxiliary').length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>暫無輔材訂單</Text>
+            <Text style={styles.emptyHint}>點擊上方「+ 選擇輔材」建立新訂單</Text>
+          </View>
+        ) : (
+          orders.filter(order => !order.type || order.type === 'AUXILIARY' || order.type === 'auxiliary').map((order, index) => (
+            <View key={order.id || index} style={styles.orderCard}>
+              <Text style={styles.orderNumber}>訂單 #{order.orderNumber || order.id}</Text>
+              <Text style={styles.orderDate}>日期: {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '未知'}</Text>
+              <Text style={styles.orderStatus}>狀態: {order.status || '待處理'}</Text>
+              
+              {order.items && order.items.length > 0 && (
+                <View style={styles.orderItems}>
+                  <Text style={styles.orderItemsTitle}>訂單項目:</Text>
+                  {order.items.map((item, itemIndex) => (
+                    <Text key={itemIndex} style={styles.orderItem}>
+                      • {item.materialName || item.name} x {item.quantity}
+                    </Text>
+                  ))}
+                </View>
+              )}
+            </View>
+          ))
+        )}
+      </ScrollView>
+    </View>
+  );
+
+  // 完成材訂單管理
+  const renderFinishedOrders = () => (
+    <View style={styles.pageContainer}>
+      <View style={styles.pageHeader}>
+        <TouchableOpacity style={styles.backHeaderButton} onPress={handleBackToDashboard}>
+          <Text style={styles.backHeaderText}>← 返回</Text>
+        </TouchableOpacity>
+        <Text style={styles.pageTitle}>🏠 完成材訂單管理</Text>
+        <TouchableOpacity 
+          style={styles.addButton} 
+          onPress={() => handleOpenMaterialSelection('FINISHED')}
+        >
+          <Text style={styles.addButtonText}>+ 選擇完成材</Text>
+        </TouchableOpacity>
+      </View>
+      
+      <ScrollView 
+        style={styles.pageContent}
+        contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
+      >
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#007bff" />
+            <Text style={styles.loadingText}>載入訂單中...</Text>
+          </View>
+        ) : orders.filter(order => order.type === 'FINISHED' || order.type === 'finished').length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>暫無完成材訂單</Text>
+            <Text style={styles.emptyHint}>點擊上方「+ 選擇完成材」建立新訂單</Text>
+          </View>
+        ) : (
+          orders.filter(order => order.type === 'FINISHED' || order.type === 'finished').map((order, index) => (
+            <View key={order.id || index} style={styles.orderCard}>
+              <Text style={styles.orderNumber}>訂單 #{order.orderNumber || order.id}</Text>
+              <Text style={styles.orderDate}>日期: {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '未知'}</Text>
+              <Text style={styles.orderStatus}>狀態: {order.status || '待處理'}</Text>
+              
+              {order.items && order.items.length > 0 && (
+                <View style={styles.orderItems}>
+                  <Text style={styles.orderItemsTitle}>訂單項目:</Text>
+                  {order.items.map((item, itemIndex) => (
+                    <Text key={itemIndex} style={styles.orderItem}>
+                      • {item.materialName || item.name} x {item.quantity}
+                    </Text>
+                  ))}
+                </View>
+              )}
+            </View>
+          ))
+        )}
+      </ScrollView>
+    </View>
+  );
+
+  // 訂單狀態管理
+  const renderOrderStatus = () => (
+    <View style={styles.pageContainer}>
+      <View style={styles.pageHeader}>
+        <TouchableOpacity style={styles.backHeaderButton} onPress={handleBackToDashboard}>
+          <Text style={styles.backHeaderText}>← 返回</Text>
+        </TouchableOpacity>
+        <Text style={styles.pageTitle}>📋 訂單狀態管理</Text>
+        <View style={styles.headerSpacer} />
+      </View>
+      
+      <ScrollView 
+        style={styles.pageContent}
+        contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
+      >
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#007bff" />
+            <Text style={styles.loadingText}>載入訂單中...</Text>
+          </View>
+        ) : orders.length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>暫無訂單需要管理</Text>
+          </View>
+        ) : (
+          orders.map((order, index) => (
+            <View key={order.id || index} style={styles.statusCard}>
+              <Text style={styles.orderNumber}>訂單 #{order.orderNumber || order.id}</Text>
+              <Text style={styles.orderType}>類型: {order.type === 'FINISHED' || order.type === 'finished' ? '完成材' : '輔材'}</Text>
+              <Text style={styles.orderDate}>日期: {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '未知'}</Text>
+              
+              <View style={styles.statusSection}>
+                <Text style={styles.statusTitle}>訂單狀態:</Text>
+                <Text style={styles.statusValue}>{order.status || '待處理'}</Text>
+              </View>
+            </View>
+          ))
+        )}
+      </ScrollView>
+    </View>
+  );
+
+  return (
+    <View style={[styles.app, { paddingTop: insets.top }]}>
+      {currentPage === 'dashboard' && renderDashboard()}
+      {currentPage === 'auxiliary-orders' && renderAuxiliaryOrders()}
+      {currentPage === 'finished-orders' && renderFinishedOrders()}
+      {currentPage === 'order-status' && renderOrderStatus()}
+      
+      {/* 材料選擇 Modal */}
+      <Modal visible={showMaterialSelection} animationType="slide" transparent>
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalContent, { paddingBottom: insets.bottom + 20 }]}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>
+                選擇{materialType === 'AUXILIARY' ? '輔材' : '完成材'}
+              </Text>
+              <TouchableOpacity onPress={() => setShowMaterialSelection(false)}>
+                <Text style={styles.closeButton}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <ScrollView style={styles.materialsList}>
+              {materials
+                .filter(material => material.type === materialType)
+                .map((material, index) => (
+                <TouchableOpacity
+                  key={material.id || index}
+                  style={styles.materialSelectCard}
+                  onPress={() => handleSelectMaterial(material)}
+                >
+                  <Text style={styles.materialSelectName}>{material.name}</Text>
+                  <Text style={styles.materialSelectPrice}>CAD ${material.price}</Text>
+                  <Text style={styles.materialSelectStock}>庫存: {material.quantity}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+            
+            {/* 購物車 */}
+            <View style={styles.cart}>
+              <Text style={styles.cartTitle}>已選擇的材料 ({selectedMaterials.length})</Text>
+              {selectedMaterials.map((item, index) => (
+                <View key={index} style={styles.cartItem}>
+                  <Text style={styles.cartItemName}>{item.materialName}</Text>
+                  <View style={styles.quantityControls}>
+                    <TouchableOpacity 
+                      style={styles.quantityButton}
+                      onPress={() => handleUpdateQuantity(item.materialId, item.quantity - 1)}
+                    >
+                      <Text style={styles.quantityButtonText}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.quantityText}>{item.quantity}</Text>
+                    <TouchableOpacity 
+                      style={styles.quantityButton}
+                      onPress={() => handleUpdateQuantity(item.materialId, item.quantity + 1)}
+                    >
+                      <Text style={styles.quantityButtonText}>+</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+            </View>
+            
+            <View style={styles.modalButtons}>
+              <TouchableOpacity 
+                style={styles.cancelButton} 
+                onPress={() => setShowMaterialSelection(false)}
+              >
+                <Text style={styles.cancelText}>取消</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={[styles.createOrderButton, selectedMaterials.length === 0 && styles.disabledButton]} 
+                onPress={handleCreateOrder}
+                disabled={selectedMaterials.length === 0}
+              >
+                <Text style={styles.createOrderText}>建立訂單</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#007bff" />
+          <Text style={styles.loadingText}>處理中...</Text>
+        </View>
+      )}
+    </View>
+  );
+}const st
+yles = StyleSheet.create({
+  app: { flex: 1, backgroundColor: '#f5f5f5' },
+  
+  // 登入相關
+  loginContainer: { flex: 1, backgroundColor: '#007bff' },
+  loginScrollView: { flex: 1, padding: 20 },
+  loginForm: { backgroundColor: '#fff', padding: 30, borderRadius: 15, marginTop: 20 },
+  loginTitle: { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 10, color: '#007bff' },
+  loginSubtitle: { fontSize: 16, textAlign: 'center', marginBottom: 30, color: '#666' },
+  
+  // 快速登入
+  quickLoginSection: { marginBottom: 20 },
+  quickLoginTitle: { fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginBottom: 15, color: '#333' },
+  quickLoginGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  quickLoginButton: { 
+    width: '48%', 
+    backgroundColor: '#fff', 
+    borderWidth: 2, 
+    borderRadius: 10, 
+    padding: 15, 
+    marginBottom: 10, 
+    alignItems: 'center',
+    elevation: 2
+  },
+  quickLoginName: { fontSize: 16, fontWeight: 'bold', marginBottom: 5 },
+  quickLoginRole: { fontSize: 12, color: '#666' },
+  
+  // 分隔線
+  divider: { flexDirection: 'row', alignItems: 'center', marginVertical: 20 },
+  dividerLine: { flex: 1, height: 1, backgroundColor: '#ddd' },
+  dividerText: { marginHorizontal: 15, color: '#666', fontSize: 14 },
+  
+  // 手動登入
+  manualLoginSection: {},
+  manualLoginTitle: { fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 15, color: '#333' },
+  loginInput: { borderWidth: 1, borderColor: '#ddd', borderRadius: 8, padding: 15, marginBottom: 15, fontSize: 16 },
+  loginButton: { backgroundColor: '#007bff', padding: 15, borderRadius: 8, alignItems: 'center' },
+  loginButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  
+  // 主要佈局
+  container: { flex: 1, padding: 20 },
+  header: { alignItems: 'center', marginBottom: 30 },
+  title: { fontSize: 24, fontWeight: 'bold', color: '#007bff', marginBottom: 5 },
+  subtitle: { fontSize: 16, color: '#666', marginBottom: 5 },
+  userRole: { fontSize: 14, color: '#28a745', marginBottom: 10 },
+  logoutButton: { backgroundColor: '#dc3545', paddingHorizontal: 15, paddingVertical: 8, borderRadius: 5 },
+  logoutText: { color: '#fff', fontSize: 14 },
+  
+  // 統計卡片
+  statsContainer: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 30 },
+  statCard: { backgroundColor: '#fff', padding: 20, borderRadius: 10, alignItems: 'center', minWidth: 120, elevation: 3 },
+  statNumber: { fontSize: 32, fontWeight: 'bold', color: '#007bff' },
+  statLabel: { fontSize: 14, color: '#666', marginTop: 5 },
+  
+  // 功能區域
+  featuresSection: { marginBottom: 20 },
+  featuresTitle: { fontSize: 20, fontWeight: 'bold', color: '#333', marginBottom: 15 },
+  featuresGrid: { gap: 15 },
+  featureCard: { backgroundColor: '#fff', padding: 20, borderRadius: 10, alignItems: 'center', elevation: 2 },
+  featureText: { fontSize: 16, fontWeight: 'bold', color: '#007bff' },
+  
+  // 頁面佈局 (修復版)
+  pageContainer: { flex: 1 },
+  pageHeader: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    paddingHorizontal: 20, 
+    paddingVertical: 15,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    elevation: 2
+  },
+  pageContent: { flex: 1, padding: 20 },
+  pageTitle: { fontSize: 18, fontWeight: 'bold', color: '#007bff', flex: 1, textAlign: 'center' },
+  
+  // 返回按鈕 (頂部)
+  backHeaderButton: { 
+    backgroundColor: '#6c757d', 
+    paddingHorizontal: 12, 
+    paddingVertical: 8, 
+    borderRadius: 6,
+    minWidth: 60
+  },
+  backHeaderText: { color: '#fff', fontSize: 14, fontWeight: 'bold' },
+  headerSpacer: { minWidth: 60 }, // 佔位符，保持標題居中
+  
+  // 新增按鈕
+  addButton: { backgroundColor: '#28a745', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 6, minWidth: 60 },
+  addButtonText: { color: '#fff', fontSize: 12, fontWeight: 'bold', textAlign: 'center' },
+  
+  // 載入和空狀態
+  loadingContainer: { alignItems: 'center', marginVertical: 40 },
+  loadingText: { marginTop: 10, fontSize: 16, color: '#666' },
+  emptyContainer: { alignItems: 'center', marginVertical: 40 },
+  emptyText: { fontSize: 16, color: '#666', marginBottom: 10 },
+  emptyHint: { fontSize: 14, color: '#999', textAlign: 'center' },
+  
+  // 訂單卡片
+  orderCard: { backgroundColor: '#fff', padding: 15, borderRadius: 10, marginBottom: 15, elevation: 2 },
+  orderNumber: { fontSize: 16, fontWeight: 'bold', color: '#333', marginBottom: 5 },
+  orderDate: { fontSize: 12, color: '#999', marginBottom: 5 },
+  orderStatus: { fontSize: 14, color: '#ffc107', marginBottom: 10 },
+  orderItems: { borderTopWidth: 1, borderTopColor: '#eee', paddingTop: 10 },
+  orderItemsTitle: { fontSize: 14, fontWeight: 'bold', color: '#333', marginBottom: 5 },
+  orderItem: { fontSize: 13, color: '#666', marginBottom: 2 },
+  
+  // 狀態卡片
+  statusCard: { backgroundColor: '#fff', padding: 15, borderRadius: 10, marginBottom: 15, elevation: 2 },
+  orderType: { fontSize: 14, color: '#007bff', marginBottom: 5 },
+  statusSection: { marginTop: 10 },
+  statusTitle: { fontSize: 14, fontWeight: 'bold', color: '#333' },
+  statusValue: { fontSize: 14, color: '#28a745', marginTop: 5 },
+  
+  // Modal
+  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' },
+  modalContent: { backgroundColor: '#fff', borderRadius: 15, width: '95%', height: '80%', padding: 20 },
+  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
+  modalTitle: { fontSize: 20, fontWeight: 'bold', color: '#333' },
+  closeButton: { fontSize: 24, color: '#666' },
+  
+  // 材料列表
+  materialsList: { flex: 1, marginBottom: 20 },
+  materialSelectCard: { backgroundColor: '#f8f9fa', padding: 15, borderRadius: 8, marginBottom: 10 },
+  materialSelectName: { fontSize: 16, fontWeight: 'bold', color: '#333', marginBottom: 5 },
+  materialSelectPrice: { fontSize: 14, color: '#28a745', marginBottom: 3 },
+  materialSelectStock: { fontSize: 12, color: '#666' },
+  
+  // 購物車
+  cart: { borderTopWidth: 1, borderTopColor: '#eee', paddingTop: 15, marginBottom: 20 },
+  cartTitle: { fontSize: 16, fontWeight: 'bold', color: '#333', marginBottom: 10 },
+  cartItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8 },
+  cartItemName: { flex: 1, fontSize: 14, color: '#333' },
+  quantityControls: { flexDirection: 'row', alignItems: 'center' },
+  quantityButton: { backgroundColor: '#007bff', width: 30, height: 30, borderRadius: 15, justifyContent: 'center', alignItems: 'center' },
+  quantityButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  quantityText: { marginHorizontal: 15, fontSize: 16, fontWeight: 'bold' },
+  
+  // 按鈕
+  modalButtons: { flexDirection: 'row', gap: 10 },
+  cancelButton: { flex: 1, backgroundColor: '#6c757d', padding: 12, borderRadius: 8, alignItems: 'center' },
+  cancelText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  createOrderButton: { flex: 1, backgroundColor: '#28a745', padding: 12, borderRadius: 8, alignItems: 'center' },
+  createOrderText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  disabledButton: { backgroundColor: '#ccc' },
+  
+  // 載入覆蓋層
+  loadingOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' },
+});

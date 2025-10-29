@@ -22,6 +22,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "keep-alive": "node keep-render-alive.js",
+    "test-keep-alive": "powershell -ExecutionPolicy Bypass -File test-keep-alive.ps1",
+    "test-keep-alive-system": "powershell -ExecutionPolicy Bypass -File test-keep-alive-system.ps1"
   }
 }

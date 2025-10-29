@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>材料管理精度測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-section h2 {
+            color: #2c5aa0;
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>雲水基材管理系統 - 材料精度測試</h1>
+        
+        <div class="test-section">
+            <h2>1. 價格精度測試（支援4位小數）</h2>
+            <div class="form-group">
+                <label for="price-input">輸入價格（支援到小數點後4位）：</label>
+                <input type="number" id="price-input" step="0.0001" min="0" placeholder="例如：14.3276">
+                <button onclick="testPrice()">測試價格</button>
+            </div>
+            <div id="price-result"></div>
+            
+            <div class="info">
+                <strong>測試案例：</strong>
+                <ul>
+                    <li>14.3276 ✓ 應該通過</li>
+                    <li>123.4567 ✓ 應該通過</li>
+                    <li>0.0001 ✓ 應該通過</li>
+                    <li>999999.9999 ✓ 應該通過</li>
+                    <li>14.32765 ✗ 應該失敗（超過4位小數）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. 庫存數量測試（支援0值）</h2>
+            <div class="form-group">
+                <label for="quantity-input">輸入庫存數量（支援0）：</label>
+                <input type="number" id="quantity-input" step="1" min="0" placeholder="例如：0">
+                <button onclick="testQuantity()">測試數量</button>
+            </div>
+            <div id="quantity-result"></div>
+            
+            <div class="info">
+                <strong>測試案例：</strong>
+                <ul>
+                    <li>0 ✓ 應該通過</li>
+                    <li>1 ✓ 應該通過</li>
+                    <li>999999 ✓ 應該通過</li>
+                    <li>-1 ✗ 應該失敗（負數）</li>
+                    <li>1.5 ✗ 應該失敗（非整數）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. API 測試</h2>
+            <button onclick="testAPI()">測試後端 API</button>
+            <div id="api-result"></div>
+        </div>
+    </div>
+
+    <script>
+        function testPrice() {
+            const input = document.getElementById('price-input');
+            const result = document.getElementById('price-result');
+            const value = input.value;
+            
+            if (!value) {
+                result.innerHTML = '<div class="error">請輸入價格</div>';
+                return;
+            }
+            
+            const price = parseFloat(value);
+            const decimalPlaces = (value.split('.')[1] || '').length;
+            
+            let message = '';
+            let className = '';
+            
+            if (isNaN(price) || price <= 0) {
+                message = '價格必須為正數';
+                className = 'error';
+            } else if (price > 999999.9999) {
+                message = '價格不能超過999,999.9999';
+                className = 'error';
+            } else if (decimalPlaces > 4) {
+                message = '價格最多只能有4位小數';
+                className = 'error';
+            } else {
+                message = `價格 ${price} 驗證通過！（小數位數：${decimalPlaces}）`;
+                className = 'success';
+            }
+            
+            result.innerHTML = `<div class="${className}">${message}</div>`;
+        }
+        
+        function testQuantity() {
+            const input = document.getElementById('quantity-input');
+            const result = document.getElementById('quantity-result');
+            const value = input.value;
+            
+            if (!value && value !== '0') {
+                result.innerHTML = '<div class="error">請輸入數量</div>';
+                return;
+            }
+            
+            const quantity = parseInt(value, 10);
+            
+            let message = '';
+            let className = '';
+            
+            if (isNaN(quantity) || quantity < 0) {
+                message = '數量必須為0或正整數';
+                className = 'error';
+            } else if (quantity > 999999) {
+                message = '數量不能超過999,999';
+                className = 'error';
+            } else if (value.includes('.')) {
+                message = '數量必須為整數';
+                className = 'error';
+            } else {
+                message = `數量 ${quantity} 驗證通過！`;
+                className = 'success';
+            }
+            
+            result.innerHTML = `<div class="${className}">${message}</div>`;
+        }
+        
+        async function testAPI() {
+            const result = document.getElementById('api-result');
+            result.innerHTML = '<div class="info">正在測試 API...</div>';
+            
+            try {
+                // 測試創建材料 API
+                const testMaterial = {
+                    name: '測試材料-精度',
+                    category: '測試分類',
+                    price: 14.3276, // 4位小數
+                    quantity: 0, // 0庫存
+                    supplier: '測試供應商',
+                    type: 'AUXILIARY'
+                };
+                
+                const response = await fetch('http://localhost:3004/api/materials', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer test-token' // 需要實際的 token
+                    },
+                    body: JSON.stringify(testMaterial)
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `
+                        <div class="success">
+                            API 測試成功！<br>
+                            材料ID: ${data.data?.id}<br>
+                            價格: ${data.data?.price}<br>
+                            數量: ${data.data?.quantity}
+                        </div>
+                    `;
+                } else {
+                    const error = await response.json();
+                    result.innerHTML = `<div class="error">API 測試失敗: ${error.message || response.statusText}</div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="error">API 測試錯誤: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

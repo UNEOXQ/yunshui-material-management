@@ -1,0 +1,833 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, ActivityIndicator, TextInput, Modal, Image } from 'react-native';
+
+// API 配置
+const API_BASE_URL = 'http://192.168.68.95:3004/api';
+
+// 完整的 API 服務
+const apiService = {
+  // 認證相關
+  login: async (username: string, password: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      return await response.json();
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  // 基材管理
+  getMaterials: async (token: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/materials`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      if (data.success && data.data) {
+        return Array.isArray(data.data) ? data.data : data.data.materials || [];
+      }
+      return [];
+    } catch (error) {
+      console.error('取得基材失敗:', error);
+      return [];
+    }
+  },
+
+  createMaterial: async (token: string, material: any) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/materials`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(material),
+      });
+      return await response.json();
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  getCategories: async (token: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/materials/categories`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      return data.success ? data.data.categories : [];
+    } catch (error) {
+      return [];
+    }
+  },
+
+  getSuppliers: async (token: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/materials/suppliers`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      return data.success ? data.data.suppliers : [];
+    } catch (error) {
+      return [];
+    }
+  },
+
+  // 訂單管理
+  getOrders: async (token: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      if (data.success && data.data) {
+        return Array.isArray(data.data) ? data.data : data.data.orders || [];
+      }
+      return [];
+    } catch (error) {
+      return [];
+    }
+  },
+
+  createOrder: async (token: string, order: any) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(order),
+      });
+      return await response.json();
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+};
+
+export default function App() {
+  // 認證狀態
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authToken, setAuthToken] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  
+  // 登入表單
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [loginLoading, setLoginLoading] = useState(false);
+
+  // 快速登入用戶列表
+  const [quickLoginUsers, setQuickLoginUsers] = useState([
+    { id: 'user-1', username: '系統管理員', password: 'admin123', role: 'ADMIN', email: 'admin@yunshui.com', originalUsername: 'admin' },
+    { id: 'user-2', username: 'Jeffrey', password: 'pm123', role: 'PM', email: 'pm001@yunshui.com', originalUsername: 'pm001' },
+    { id: 'user-3', username: 'Miya', password: 'am123', role: 'AM', email: 'am001@yunshui.com', originalUsername: 'am001' },
+    { id: 'user-4', username: 'Mark', password: 'wh123', role: 'WAREHOUSE', email: 'warehouse001@yunshui.com', originalUsername: 'warehouse001' },
+    { id: 'id-2064', username: 'Erica', password: 'default123', role: 'AM', email: 'Erica@yunshui.com', originalUsername: 'Erica' },
+    { id: 'id-2065', username: 'LUKE', password: 'default123', role: 'PM', email: 'LUKE@yunshui.com', originalUsername: 'LUKE' }
+  ]);
+
+  // 主要狀態
+  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [materials, setMaterials] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // 基材表單狀態
+  const [showMaterialForm, setShowMaterialForm] = useState(false);
+  const [materialForm, setMaterialForm] = useState({
+    name: '',
+    category: '',
+    supplier: '',
+    price: '',
+    quantity: '',
+    type: 'AUXILIARY'
+  });
+  const [categories, setCategories] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
+
+  // 訂單表單狀態
+  const [showOrderForm, setShowOrderForm] = useState(false);
+  const [orderForm, setOrderForm] = useState({
+    customerName: '',
+    projectName: '',
+    totalAmount: '',
+    status: 'PENDING'
+  });
+  const [selectedMaterials, setSelectedMaterials] = useState([]);
+
+  // 類型選擇器狀態
+  const [showTypeSelector, setShowTypeSelector] = useState(false);
+
+  // 檢查登入狀態和載入快速登入用戶
+  useEffect(() => {
+    checkAuthStatus();
+    loadQuickLoginUsers();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    // 檢查本地存儲的 token
+  };
+
+  // 載入快速登入用戶列表
+  const loadQuickLoginUsers = async () => {
+    try {
+      const adminResponse = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: 'admin', password: 'admin123' })
+      });
+      
+      if (adminResponse.ok) {
+        const adminResult = await adminResponse.json();
+        if (adminResult.success && adminResult.data) {
+          const token = adminResult.data.token;
+          
+          const usersResponse = await fetch(`${API_BASE_URL}/users`, {
+            method: 'GET',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          
+          if (usersResponse.ok) {
+            const usersResult = await usersResponse.json();
+            if (usersResult.success && usersResult.data) {
+              const allUsers = usersResult.data.users || usersResult.data;
+              
+              const quickLoginUsers = allUsers.map((user: any) => {
+                let password = 'default123';
+                let originalUsername = user.username;
+                
+                if (user.id === 'user-1') {
+                  password = 'admin123';
+                  originalUsername = 'admin';
+                } else if (user.id === 'user-2') {
+                  password = 'pm123';
+                  originalUsername = 'pm001';
+                } else if (user.id === 'user-3') {
+                  password = 'am123';
+                  originalUsername = 'am001';
+                } else if (user.id === 'user-4') {
+                  password = 'wh123';
+                  originalUsername = 'warehouse001';
+                }
+                
+                return {
+                  id: user.id,
+                  username: user.username,
+                  password: password,
+                  role: user.role,
+                  email: user.email,
+                  originalUsername: originalUsername
+                };
+              });
+              
+              setQuickLoginUsers(quickLoginUsers);
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.log('Failed to load quick login users:', error);
+    }
+  };
+
+  // 一般登入處理
+  const handleLogin = async () => {
+    if (!loginForm.username || !loginForm.password) {
+      Alert.alert('錯誤', '請輸入帳號和密碼');
+      return;
+    }
+
+    setLoginLoading(true);
+    const result = await apiService.login(loginForm.username, loginForm.password);
+    
+    if (result.success) {
+      setAuthToken(result.data.token);
+      setCurrentUser(result.data.user);
+      setIsLoggedIn(true);
+      loadInitialData(result.data.token);
+    } else {
+      Alert.alert('登入失敗', result.message || '帳號或密碼錯誤');
+    }
+    setLoginLoading(false);
+  };
+
+  // 快速登入處理
+  const handleQuickLogin = async (account: any) => {
+    setLoginLoading(true);
+    const result = await apiService.login(account.originalUsername, account.password);
+    
+    if (result.success) {
+      setAuthToken(result.data.token);
+      setCurrentUser(result.data.user);
+      setIsLoggedIn(true);
+      loadInitialData(result.data.token);
+    } else {
+      Alert.alert('快速登入失敗', result.message || '登入失敗');
+    }
+    setLoginLoading(false);
+  };
+
+  // 載入初始資料
+  const loadInitialData = async (token: string) => {
+    setLoading(true);
+    try {
+      const [materialsData, ordersData, categoriesData, suppliersData] = await Promise.all([
+        apiService.getMaterials(token),
+        apiService.getOrders(token),
+        apiService.getCategories(token),
+        apiService.getSuppliers(token),
+      ]);
+      
+      setMaterials(materialsData);
+      setOrders(ordersData);
+      setCategories(categoriesData);
+      setSuppliers(suppliersData);
+    } catch (error) {
+      Alert.alert('錯誤', '載入資料失敗');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 登出
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setAuthToken('');
+    setCurrentUser(null);
+    setCurrentPage('dashboard');
+  };
+
+  // 新增基材
+  const handleAddMaterial = async () => {
+    if (!materialForm.name || !materialForm.category || !materialForm.price) {
+      Alert.alert('錯誤', '請填寫必要欄位：名稱、分類、價格');
+      return;
+    }
+
+    setLoading(true);
+    const result = await apiService.createMaterial(authToken, {
+      name: materialForm.name,
+      category: materialForm.category,
+      supplier: materialForm.supplier,
+      price: parseFloat(materialForm.price),
+      quantity: parseInt(materialForm.quantity) || 0,
+      type: materialForm.type
+    });
+
+    if (result.success) {
+      Alert.alert('成功', '基材新增成功');
+      setShowMaterialForm(false);
+      setMaterialForm({
+        name: '', category: '', supplier: '', price: '', quantity: '', type: 'AUXILIARY'
+      });
+      loadInitialData(authToken);
+    } else {
+      Alert.alert('錯誤', result.error || '新增基材失敗');
+    }
+    setLoading(false);
+  };
+
+  // 新增訂單
+  const handleAddOrder = async () => {
+    if (!orderForm.customerName) {
+      Alert.alert('錯誤', '請填寫客戶名稱');
+      return;
+    }
+
+    setLoading(true);
+    const result = await apiService.createOrder(authToken, {
+      customerName: orderForm.customerName,
+      projectName: orderForm.projectName,
+      status: orderForm.status
+    });
+
+    if (result.success) {
+      Alert.alert('成功', '訂單建立成功');
+      setShowOrderForm(false);
+      setOrderForm({ customerName: '', projectName: '', totalAmount: '', status: 'PENDING' });
+      loadInitialData(authToken);
+    } else {
+      Alert.alert('錯誤', result.error || '建立訂單失敗');
+    }
+    setLoading(false);
+  };
+
+  // 獲取角色顯示文字
+  const getRoleDisplayText = (role: string) => {
+    const roleMap = {
+      'ADMIN': '系統管理員',
+      'PM': '專案經理',
+      'AM': '區域經理',
+      'WAREHOUSE': '倉管人員'
+    };
+    return roleMap[role] || role;
+  };
+
+  // 獲取角色顏色
+  const getRoleColor = (role: string) => {
+    const colorMap = {
+      'ADMIN': '#dc3545',
+      'PM': '#007bff',
+      'AM': '#28a745',
+      'WAREHOUSE': '#ffc107'
+    };
+    return colorMap[role] || '#6c757d';
+  };
+
+  // 登入畫面
+  if (!isLoggedIn) {
+    return (
+      <ScrollView style={styles.loginContainer}>
+        <View style={styles.loginForm}>
+          <Text style={styles.loginTitle}>🏗️ 雲水基材管理系統</Text>
+          <Text style={styles.loginSubtitle}>手機版登入</Text>
+          
+          {/* 快速登入區域 */}
+          <View style={styles.quickLoginSection}>
+            <Text style={styles.quickLoginTitle}>快速登入</Text>
+            <View style={styles.quickLoginGrid}>
+              {quickLoginUsers.map((account) => (
+                <TouchableOpacity
+                  key={account.id}
+                  style={[styles.quickLoginButton, { borderColor: getRoleColor(account.role) }]}
+                  onPress={() => handleQuickLogin(account)}
+                  disabled={loginLoading}
+                >
+                  <Text style={[styles.quickLoginName, { color: getRoleColor(account.role) }]}>
+                    {account.username}
+                  </Text>
+                  <Text style={styles.quickLoginRole}>
+                    {getRoleDisplayText(account.role)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+
+          {/* 分隔線 */}
+          <View style={styles.divider}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>或</Text>
+            <View style={styles.dividerLine} />
+          </View>
+          
+          {/* 手動登入區域 */}
+          <View style={styles.manualLoginSection}>
+            <Text style={styles.manualLoginTitle}>手動登入</Text>
+            <TextInput
+              style={styles.loginInput}
+              placeholder="帳號"
+              value={loginForm.username}
+              onChangeText={(text) => setLoginForm(prev => ({ ...prev, username: text }))}
+              autoCapitalize="none"
+            />
+            
+            <TextInput
+              style={styles.loginInput}
+              placeholder="密碼"
+              value={loginForm.password}
+              onChangeText={(text) => setLoginForm(prev => ({ ...prev, password: text }))}
+              secureTextEntry
+            />
+            
+            <TouchableOpacity 
+              style={styles.loginButton} 
+              onPress={handleLogin}
+              disabled={loginLoading}
+            >
+              {loginLoading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.loginButtonText}>登入</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    );
+  }
+
+  // 儀表板
+  const renderDashboard = () => (
+    <ScrollView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>🏗️ 雲水基材管理系統</Text>
+        <Text style={styles.subtitle}>歡迎，{currentUser?.username}</Text>
+        <Text style={styles.userRole}>角色：{getRoleDisplayText(currentUser?.role)}</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutText}>登出</Text>
+        </TouchableOpacity>
+      </View>
+      
+      <View style={styles.statsContainer}>
+        <View style={styles.statCard}>
+          <Text style={styles.statNumber}>{orders.length}</Text>
+          <Text style={styles.statLabel}>總訂單數</Text>
+        </View>
+        <View style={styles.statCard}>
+          <Text style={styles.statNumber}>{materials.length}</Text>
+          <Text style={styles.statLabel}>基材種類</Text>
+        </View>
+      </View>
+
+      <View style={styles.quickActions}>
+        <TouchableOpacity style={styles.actionButton} onPress={() => setCurrentPage('materials')}>
+          <Text style={styles.actionText}>📦 基材管理</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton} onPress={() => setCurrentPage('orders')}>
+          <Text style={styles.actionText}>📋 訂單管理</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton} onPress={() => setCurrentPage('status')}>
+          <Text style={styles.actionText}>📊 狀態管理</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
+
+  // 基材管理
+  const renderMaterials = () => (
+    <ScrollView style={styles.container}>
+      <View style={styles.pageHeader}>
+        <Text style={styles.pageTitle}>📦 基材管理</Text>
+        <TouchableOpacity style={styles.addButton} onPress={() => setShowMaterialForm(true)}>
+          <Text style={styles.addButtonText}>+ 新增</Text>
+        </TouchableOpacity>
+      </View>
+      
+      {materials.length === 0 ? (
+        <Text style={styles.emptyText}>暫無基材資料，請先新增基材</Text>
+      ) : (
+        materials.map((material, index) => (
+          <View key={material.id || index} style={styles.materialCard}>
+            <View style={styles.materialInfo}>
+              <Text style={styles.materialName}>{material.name}</Text>
+              <Text style={styles.materialCategory}>分類: {material.category}</Text>
+              <Text style={styles.materialSupplier}>供應商: {material.supplier || '未指定'}</Text>
+              <Text style={styles.materialType}>類型: {material.type === 'AUXILIARY' ? '輔材' : '完成材'}</Text>
+              <Text style={styles.materialPrice}>價格: CAD ${material.price}</Text>
+              <Text style={styles.materialQuantity}>庫存: {material.quantity}</Text>
+            </View>
+          </View>
+        ))
+      )}
+
+      <TouchableOpacity style={styles.backButton} onPress={() => setCurrentPage('dashboard')}>
+        <Text style={styles.backText}>← 返回儀表板</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+
+  // 訂單管理
+  const renderOrders = () => (
+    <ScrollView style={styles.container}>
+      <View style={styles.pageHeader}>
+        <Text style={styles.pageTitle}>📋 訂單管理</Text>
+        <TouchableOpacity style={styles.addButton} onPress={() => setShowOrderForm(true)}>
+          <Text style={styles.addButtonText}>+ 新增</Text>
+        </TouchableOpacity>
+      </View>
+      
+      {orders.length === 0 ? (
+        <Text style={styles.emptyText}>暫無訂單資料</Text>
+      ) : (
+        orders.map((order, index) => (
+          <View key={order.id || index} style={styles.orderCard}>
+            <Text style={styles.orderNumber}>訂單 #{order.orderNumber || order.id}</Text>
+            <Text style={styles.orderCustomer}>客戶: {order.customerName || '未知客戶'}</Text>
+            <Text style={styles.orderProject}>專案: {order.projectName || '未指定'}</Text>
+            <Text style={styles.orderStatus}>狀態: {order.status || '待處理'}</Text>
+            <Text style={styles.orderAmount}>金額: CAD ${order.totalAmount || 0}</Text>
+            <Text style={styles.orderDate}>日期: {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '未知'}</Text>
+          </View>
+        ))
+      )}
+
+      <TouchableOpacity style={styles.backButton} onPress={() => setCurrentPage('dashboard')}>
+        <Text style={styles.backText}>← 返回儀表板</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+
+  // 狀態管理
+  const renderStatus = () => (
+    <ScrollView style={styles.container}>
+      <Text style={styles.pageTitle}>📊 狀態管理</Text>
+      <Text style={styles.comingSoon}>功能開發中...</Text>
+      <TouchableOpacity style={styles.backButton} onPress={() => setCurrentPage('dashboard')}>
+        <Text style={styles.backText}>← 返回儀表板</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+
+  return (
+    <View style={styles.app}>
+      {currentPage === 'dashboard' && renderDashboard()}
+      {currentPage === 'materials' && renderMaterials()}
+      {currentPage === 'orders' && renderOrders()}
+      {currentPage === 'status' && renderStatus()}
+      
+      {/* 底部導航 */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navButton} onPress={() => setCurrentPage('dashboard')}>
+          <Text style={[styles.navText, currentPage === 'dashboard' && styles.activeNav]}>🏠 首頁</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => setCurrentPage('materials')}>
+          <Text style={[styles.navText, currentPage === 'materials' && styles.activeNav]}>📦 基材</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => setCurrentPage('orders')}>
+          <Text style={[styles.navText, currentPage === 'orders' && styles.activeNav]}>📋 訂單</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => setCurrentPage('status')}>
+          <Text style={[styles.navText, currentPage === 'status' && styles.activeNav]}>📊 狀態</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* 基材新增表單 Modal */}
+      <Modal visible={showMaterialForm} animationType="slide" transparent>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>新增基材</Text>
+            
+            <TextInput
+              style={styles.input}
+              placeholder="基材名稱 *"
+              value={materialForm.name}
+              onChangeText={(text) => setMaterialForm(prev => ({ ...prev, name: text }))}
+            />
+            
+            <TextInput
+              style={styles.input}
+              placeholder="分類 *"
+              value={materialForm.category}
+              onChangeText={(text) => setMaterialForm(prev => ({ ...prev, category: text }))}
+            />
+            
+            <TextInput
+              style={styles.input}
+              placeholder="供應商"
+              value={materialForm.supplier}
+              onChangeText={(text) => setMaterialForm(prev => ({ ...prev, supplier: text }))}
+            />
+            
+            {/* 材料類型選擇 */}
+            <View style={styles.typeSelector}>
+              <Text style={styles.typeSelectorLabel}>材料類型:</Text>
+              <View style={styles.typeButtons}>
+                <TouchableOpacity
+                  style={[styles.typeButton, materialForm.type === 'AUXILIARY' && styles.typeButtonActive]}
+                  onPress={() => setMaterialForm(prev => ({ ...prev, type: 'AUXILIARY' }))}
+                >
+                  <Text style={[styles.typeButtonText, materialForm.type === 'AUXILIARY' && styles.typeButtonTextActive]}>
+                    輔材
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.typeButton, materialForm.type === 'FINISHED' && styles.typeButtonActive]}
+                  onPress={() => setMaterialForm(prev => ({ ...prev, type: 'FINISHED' }))}
+                >
+                  <Text style={[styles.typeButtonText, materialForm.type === 'FINISHED' && styles.typeButtonTextActive]}>
+                    完成材
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            
+            <TextInput
+              style={styles.input}
+              placeholder="價格 (CAD) *"
+              value={materialForm.price}
+              onChangeText={(text) => setMaterialForm(prev => ({ ...prev, price: text }))}
+              keyboardType="numeric"
+            />
+            
+            <TextInput
+              style={styles.input}
+              placeholder="庫存數量"
+              value={materialForm.quantity}
+              onChangeText={(text) => setMaterialForm(prev => ({ ...prev, quantity: text }))}
+              keyboardType="numeric"
+            />
+            
+            <View style={styles.modalButtons}>
+              <TouchableOpacity style={styles.cancelButton} onPress={() => setShowMaterialForm(false)}>
+                <Text style={styles.cancelText}>取消</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.saveButton} onPress={handleAddMaterial}>
+                <Text style={styles.saveText}>儲存</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* 訂單新增表單 Modal */}
+      <Modal visible={showOrderForm} animationType="slide" transparent>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>新增訂單</Text>
+            
+            <TextInput
+              style={styles.input}
+              placeholder="客戶名稱 *"
+              value={orderForm.customerName}
+              onChangeText={(text) => setOrderForm(prev => ({ ...prev, customerName: text }))}
+            />
+            
+            <TextInput
+              style={styles.input}
+              placeholder="專案名稱"
+              value={orderForm.projectName}
+              onChangeText={(text) => setOrderForm(prev => ({ ...prev, projectName: text }))}
+            />
+            
+            <View style={styles.modalButtons}>
+              <TouchableOpacity style={styles.cancelButton} onPress={() => setShowOrderForm(false)}>
+                <Text style={styles.cancelText}>取消</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.saveButton} onPress={handleAddOrder}>
+                <Text style={styles.saveText}>建立訂單</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#007bff" />
+          <Text style={styles.loadingText}>處理中...</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  app: { flex: 1, backgroundColor: '#f5f5f5' },
+  
+  // 登入相關
+  loginContainer: { flex: 1, backgroundColor: '#007bff', padding: 20 },
+  loginForm: { backgroundColor: '#fff', padding: 30, borderRadius: 15, marginTop: 50 },
+  loginTitle: { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 10, color: '#007bff' },
+  loginSubtitle: { fontSize: 16, textAlign: 'center', marginBottom: 30, color: '#666' },
+  
+  // 快速登入
+  quickLoginSection: { marginBottom: 20 },
+  quickLoginTitle: { fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginBottom: 15, color: '#333' },
+  quickLoginGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  quickLoginButton: { 
+    width: '48%', 
+    backgroundColor: '#fff', 
+    borderWidth: 2, 
+    borderRadius: 10, 
+    padding: 15, 
+    marginBottom: 10, 
+    alignItems: 'center',
+    elevation: 2
+  },
+  quickLoginName: { fontSize: 16, fontWeight: 'bold', marginBottom: 5 },
+  quickLoginRole: { fontSize: 12, color: '#666' },
+  
+  // 分隔線
+  divider: { flexDirection: 'row', alignItems: 'center', marginVertical: 20 },
+  dividerLine: { flex: 1, height: 1, backgroundColor: '#ddd' },
+  dividerText: { marginHorizontal: 15, color: '#666', fontSize: 14 },
+  
+  // 手動登入
+  manualLoginSection: {},
+  manualLoginTitle: { fontSize: 16, fontWeight: 'bold', textAlign: 'center', marginBottom: 15, color: '#333' },
+  loginInput: { borderWidth: 1, borderColor: '#ddd', borderRadius: 8, padding: 15, marginBottom: 15, fontSize: 16 },
+  loginButton: { backgroundColor: '#007bff', padding: 15, borderRadius: 8, alignItems: 'center' },
+  loginButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  
+  // 主要佈局
+  container: { flex: 1, padding: 20 },
+  header: { alignItems: 'center', marginBottom: 30 },
+  title: { fontSize: 24, fontWeight: 'bold', color: '#007bff', marginBottom: 5 },
+  subtitle: { fontSize: 16, color: '#666', marginBottom: 5 },
+  userRole: { fontSize: 14, color: '#28a745', marginBottom: 10 },
+  logoutButton: { backgroundColor: '#dc3545', paddingHorizontal: 15, paddingVertical: 8, borderRadius: 5 },
+  logoutText: { color: '#fff', fontSize: 14 },
+  
+  // 統計卡片
+  statsContainer: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 30 },
+  statCard: { backgroundColor: '#fff', padding: 20, borderRadius: 10, alignItems: 'center', minWidth: 120, elevation: 3 },
+  statNumber: { fontSize: 32, fontWeight: 'bold', color: '#007bff' },
+  statLabel: { fontSize: 14, color: '#666', marginTop: 5 },
+  
+  // 快速操作
+  quickActions: { gap: 15 },
+  actionButton: { backgroundColor: '#007bff', padding: 15, borderRadius: 10, alignItems: 'center' },
+  actionText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  
+  // 頁面標題
+  pageHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
+  pageTitle: { fontSize: 24, fontWeight: 'bold', color: '#007bff' },
+  addButton: { backgroundColor: '#28a745', paddingHorizontal: 15, paddingVertical: 8, borderRadius: 8 },
+  addButtonText: { color: '#fff', fontSize: 14, fontWeight: 'bold' },
+  
+  // 基材卡片
+  materialCard: { backgroundColor: '#fff', padding: 15, borderRadius: 10, marginBottom: 15, elevation: 2 },
+  materialInfo: { flex: 1 },
+  materialName: { fontSize: 18, fontWeight: 'bold', color: '#333', marginBottom: 5 },
+  materialCategory: { fontSize: 14, color: '#666', marginBottom: 3 },
+  materialSupplier: { fontSize: 14, color: '#666', marginBottom: 3 },
+  materialType: { fontSize: 14, color: '#007bff', marginBottom: 3 },
+  materialPrice: { fontSize: 16, color: '#28a745', fontWeight: 'bold', marginBottom: 3 },
+  materialQuantity: { fontSize: 14, color: '#666' },
+  
+  // 訂單卡片
+  orderCard: { backgroundColor: '#fff', padding: 15, borderRadius: 10, marginBottom: 15, elevation: 2 },
+  orderNumber: { fontSize: 16, fontWeight: 'bold', color: '#333', marginBottom: 5 },
+  orderCustomer: { fontSize: 14, color: '#666', marginBottom: 3 },
+  orderProject: { fontSize: 14, color: '#666', marginBottom: 3 },
+  orderStatus: { fontSize: 14, color: '#ffc107', marginBottom: 3 },
+  orderAmount: { fontSize: 16, color: '#28a745', fontWeight: 'bold', marginBottom: 3 },
+  orderDate: { fontSize: 12, color: '#999', marginBottom: 10 },
+  
+  // Modal
+  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' },
+  modalContent: { backgroundColor: '#fff', padding: 20, borderRadius: 15, width: '90%', maxHeight: '80%' },
+  modalTitle: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginBottom: 20, color: '#333' },
+  input: { borderWidth: 1, borderColor: '#ddd', borderRadius: 8, padding: 12, marginBottom: 15, fontSize: 16 },
+  
+  // 類型選擇器
+  typeSelector: { marginBottom: 15 },
+  typeSelectorLabel: { fontSize: 16, color: '#333', marginBottom: 10 },
+  typeButtons: { flexDirection: 'row', gap: 10 },
+  typeButton: { flex: 1, padding: 12, borderRadius: 8, borderWidth: 1, borderColor: '#ddd', alignItems: 'center' },
+  typeButtonActive: { backgroundColor: '#007bff', borderColor: '#007bff' },
+  typeButtonText: { fontSize: 16, color: '#666' },
+  typeButtonTextActive: { color: '#fff', fontWeight: 'bold' },
+  
+  // 按鈕
+  modalButtons: { flexDirection: 'row', justifyContent: 'space-between', gap: 10, marginTop: 20 },
+  cancelButton: { flex: 1, backgroundColor: '#6c757d', padding: 12, borderRadius: 8, alignItems: 'center' },
+  cancelText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  saveButton: { flex: 1, backgroundColor: '#28a745', padding: 12, borderRadius: 8, alignItems: 'center' },
+  saveText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  
+  backButton: { backgroundColor: '#6c757d', padding: 12, borderRadius: 8, alignItems: 'center', marginTop: 20 },
+  backText: { color: '#fff', fontSize: 16 },
+  
+  // 底部導航
+  bottomNav: { flexDirection: 'row', backgroundColor: '#fff', paddingVertical: 10, borderTopWidth: 1, borderTopColor: '#ddd' },
+  navButton: { flex: 1, alignItems: 'center', paddingVertical: 10 },
+  navText: { fontSize: 12, color: '#007bff' },
+  activeNav: { fontWeight: 'bold', color: '#0056b3' },
+  
+  // 載入覆蓋層
+  loadingOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' },
+  loadingText: { color: '#fff', marginTop: 10, fontSize: 16 },
+  
+  // 其他
+  emptyText: { textAlign: 'center', color: '#666', fontSize: 16, marginVertical: 40 },
+  comingSoon: { textAlign: 'center', color: '#666', fontSize: 16, marginVertical: 40 },
+});

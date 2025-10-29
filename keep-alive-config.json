@@ -1,0 +1,27 @@
+{
+  "render": {
+    "url": "https://your-app.onrender.com",
+    "healthEndpoint": "/health",
+    "pingInterval": 5,
+    "maxRetries": 3,
+    "timeout": 10,
+    "enabled": true
+  },
+  "logging": {
+    "enabled": true,
+    "level": "info",
+    "logFile": "keep-alive.log"
+  },
+  "notifications": {
+    "enabled": false,
+    "webhook": "",
+    "email": ""
+  },
+  "advanced": {
+    "userAgent": "RenderKeepAlive/1.0",
+    "retryDelay": 30,
+    "headers": {
+      "Accept": "application/json"
+    }
+  }
+}

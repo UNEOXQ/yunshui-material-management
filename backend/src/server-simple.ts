@@ -21,6 +21,7 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://localhost:5173',
+    'http://192.168.68.103:3000',
     'https://yunshui-material-management.vercel.app',
     process.env.CORS_ORIGIN || 'http://localhost:3000'
   ],
@@ -63,12 +64,24 @@ app.use('/uploads', (req, res, next) => {
 
 // 健康檢查端點
 app.get('/health', (_req, res) => {
+  const keepAliveStatus = keepAliveService.getStatus();
   res.json({
     status: 'OK',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     environment: process.env.NODE_ENV || 'development',
-    version: '1.0.0'
+    version: '1.0.0',
+    keepAlive: keepAliveStatus
+  });
+});
+
+// Keep-alive 狀態端點
+app.get('/api/keep-alive/status', (_req, res) => {
+  const status = keepAliveService.getStatus();
+  res.json({
+    success: true,
+    data: status,
+    message: status.running ? 'Keep-alive service is running' : 'Keep-alive service is stopped'
   });
 });
 
@@ -85,6 +98,7 @@ import messageRoutes from './routes/messageRoutes';
 import { memoryDb } from './config/memory-database';
 import { githubBackupService } from './services/githubBackupService';
 import { githubRecoveryService } from './services/githubRecoveryService';
+import { keepAliveService } from './services/keepAliveService';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
@@ -182,6 +196,11 @@ if (process.env.NODE_ENV !== 'test') {
       console.log('   - GITHUB_OWNER: GitHub 用戶名或組織名');
       console.log('   - GITHUB_REPO: 倉庫名稱');
     }
+
+    // 啟動 Keep-Alive 服務（防止 Render 休眠）
+    console.log('');
+    console.log('🔄 啟動 Keep-Alive 服務...');
+    keepAliveService.start();
   });
 }
 

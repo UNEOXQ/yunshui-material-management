@@ -1,0 +1,241 @@
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+
+export default function App() {
+  const [currentPage, setCurrentPage] = useState('dashboard');
+
+  const renderDashboard = () => (
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>🏗️ 雲水基材管理系統</Text>
+      <Text style={styles.subtitle}>儀表板</Text>
+      
+      <View style={styles.statsContainer}>
+        <View style={styles.statCard}>
+          <Text style={styles.statNumber}>25</Text>
+          <Text style={styles.statLabel}>待處理訂單</Text>
+        </View>
+        <View style={styles.statCard}>
+          <Text style={styles.statNumber}>150</Text>
+          <Text style={styles.statLabel}>基材種類</Text>
+        </View>
+      </View>
+
+      <View style={styles.quickActions}>
+        <TouchableOpacity style={styles.actionButton} onPress={() => setCurrentPage('materials')}>
+          <Text style={styles.actionText}>📦 基材管理</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton} onPress={() => setCurrentPage('orders')}>
+          <Text style={styles.actionText}>📋 訂單管理</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
+
+  const renderMaterials = () => (
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>📦 基材管理</Text>
+      
+      <View style={styles.materialCard}>
+        <Text style={styles.materialName}>不鏽鋼板 304</Text>
+        <Text style={styles.materialSpec}>厚度 2mm, 1000x2000mm</Text>
+        <Text style={styles.materialPrice}>價格: $1,500</Text>
+        <Text style={styles.materialStock}>庫存: 50 片</Text>
+      </View>
+
+      <View style={styles.materialCard}>
+        <Text style={styles.materialName}>鋁合金板</Text>
+        <Text style={styles.materialSpec}>厚度 3mm, 1200x2400mm</Text>
+        <Text style={styles.materialPrice}>價格: $800</Text>
+        <Text style={styles.materialStock}>庫存: 30 片</Text>
+      </View>
+
+      <TouchableOpacity style={styles.backButton} onPress={() => setCurrentPage('dashboard')}>
+        <Text style={styles.backText}>← 返回儀表板</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+
+  const renderOrders = () => (
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>📋 訂單管理</Text>
+      
+      <View style={styles.orderCard}>
+        <Text style={styles.orderNumber}>訂單 #ORD-001</Text>
+        <Text style={styles.orderCustomer}>客戶: 台灣鋼鐵公司</Text>
+        <Text style={styles.orderStatus}>狀態: 待處理</Text>
+        <Text style={styles.orderAmount}>金額: $45,000</Text>
+      </View>
+
+      <View style={styles.orderCard}>
+        <Text style={styles.orderNumber}>訂單 #ORD-002</Text>
+        <Text style={styles.orderCustomer}>客戶: 建築材料行</Text>
+        <Text style={styles.orderStatus}>狀態: 處理中</Text>
+        <Text style={styles.orderAmount}>金額: $28,500</Text>
+      </View>
+
+      <TouchableOpacity style={styles.backButton} onPress={() => setCurrentPage('dashboard')}>
+        <Text style={styles.backText}>← 返回儀表板</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+
+  return (
+    <View style={styles.app}>
+      {currentPage === 'dashboard' && renderDashboard()}
+      {currentPage === 'materials' && renderMaterials()}
+      {currentPage === 'orders' && renderOrders()}
+      
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navButton} onPress={() => setCurrentPage('dashboard')}>
+          <Text style={styles.navText}>🏠 首頁</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => setCurrentPage('materials')}>
+          <Text style={styles.navText}>📦 基材</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => setCurrentPage('orders')}>
+          <Text style={styles.navText}>📋 訂單</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  app: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#007bff',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 30,
+  },
+  statCard: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    minWidth: 120,
+  },
+  statNumber: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#007bff',
+  },
+  statLabel: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 5,
+  },
+  quickActions: {
+    gap: 15,
+  },
+  actionButton: {
+    backgroundColor: '#007bff',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  actionText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  materialCard: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  materialName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+  },
+  materialSpec: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 5,
+  },
+  materialPrice: {
+    fontSize: 16,
+    color: '#007bff',
+    fontWeight: 'bold',
+  },
+  materialStock: {
+    fontSize: 14,
+    color: '#28a745',
+  },
+  orderCard: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  orderNumber: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+  },
+  orderCustomer: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 5,
+  },
+  orderStatus: {
+    fontSize: 14,
+    color: '#ffc107',
+    marginBottom: 5,
+  },
+  orderAmount: {
+    fontSize: 16,
+    color: '#007bff',
+    fontWeight: 'bold',
+  },
+  backButton: {
+    backgroundColor: '#6c757d',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  backText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+  },
+  navButton: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  navText: {
+    fontSize: 12,
+    color: '#007bff',
+  },
+});

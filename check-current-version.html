@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>檢查當前版本</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>檢查當前運行的版本</h1>
+        
+        <div class="test-section">
+            <h2>1. 檢查當前頁面的格式化函數</h2>
+            <p>這將檢查您當前訪問的頁面是否包含我們的修改：</p>
+            <button onclick="checkCurrentPageFunction()">檢查當前頁面</button>
+            <div id="current-page-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. 測試 3000 端口的 API</h2>
+            <p>檢查 3000 端口上的 API 響應：</p>
+            <button onclick="testPort3000()">測試 3000 端口</button>
+            <div id="port3000-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. 測試 3004 端口的 API（後端）</h2>
+            <p>檢查後端 API 是否正常：</p>
+            <button onclick="testPort3004()">測試 3004 端口</button>
+            <div id="port3004-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>4. 建議的解決方案</h2>
+            <div class="info">
+                <strong>如果您正在使用 3000 端口，可能的問題：</strong>
+                <ul>
+                    <li>您可能在使用構建版本（dist 文件夾）而不是開發版本</li>
+                    <li>瀏覽器緩存了舊的 JavaScript 文件</li>
+                    <li>需要重新構建前端代碼</li>
+                </ul>
+                <strong>建議的解決步驟：</strong>
+                <ol>
+                    <li>清除瀏覽器緩存（Ctrl + Shift + R）</li>
+                    <li>重新構建前端：<code>cd frontend && npm run build</code></li>
+                    <li>或者使用開發模式：<code>cd frontend && npm run dev</code></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 我們的正確格式化函數（用於比較）
+        function correctFormatPrice(price) {
+            if (typeof price !== 'number' || isNaN(price)) {
+                return 'CAD $0.00';
+            }
+            const formattedNumber = price.toFixed(4).replace(/\.?0+$/, '');
+            const finalNumber = formattedNumber.includes('.') ? formattedNumber : `${formattedNumber}.00`;
+            return `CAD $${finalNumber}`;
+        }
+
+        function checkCurrentPageFunction() {
+            const result = document.getElementById('current-page-result');
+            let html = '<div class="info">檢查結果：</div>';
+
+            // 測試我們的正確函數
+            const testPrice = 2.2657;
+            const correctResult = correctFormatPrice(testPrice);
+            html += `<div class="code-block">我們的正確函數結果：
+輸入: ${testPrice}
+輸出: ${correctResult}</div>`;
+
+            // 檢查是否能訪問到應用中的格式化函數
+            html += '<div class="code-block">檢查當前頁面的函數...</div>';
+
+            // 檢查是否有 React 應用
+            if (window.React) {
+                html += '<div class="success">檢測到 React</div>';
+            } else {
+                html += '<div class="error">未檢測到 React</div>';
+            }
+
+            // 檢查是否有我們的工具函數
+            try {
+                // 嘗試檢查是否有模組載入器
+                if (window.__vite__ || window.webpackChunkName) {
+                    html += '<div class="info">檢測到模組打包器</div>';
+                }
+            } catch (e) {
+                html += '<div class="error">無法檢測模組載入器</div>';
+            }
+
+            result.innerHTML = html;
+        }
+
+        async function testPort3000() {
+            const result = document.getElementById('port3000-result');
+            result.innerHTML = '<div class="info">正在測試 3000 端口...</div>';
+
+            try {
+                const response = await fetch('http://localhost:3000/api/materials');
+                const data = await response.json();
+
+                let html = '<div class="info">3000 端口測試結果：</div>';
+                
+                if (response.ok && data.success) {
+                    html += '<div class="success">3000 端口 API 正常</div>';
+                    
+                    const testMaterial = data.data.materials.find(m => m.name === '222');
+                    if (testMaterial) {
+                        html += `<div class="code-block">找到測試材料：
+價格: ${testMaterial.price}
+類型: ${typeof testMaterial.price}</div>`;
+                    }
+                } else {
+                    html += `<div class="error">3000 端口 API 錯誤: ${data.message || '未知錯誤'}</div>`;
+                }
+
+                result.innerHTML = html;
+            } catch (error) {
+                result.innerHTML = `<div class="error">3000 端口連接失敗: ${error.message}</div>`;
+            }
+        }
+
+        async function testPort3004() {
+            const result = document.getElementById('port3004-result');
+            result.innerHTML = '<div class="info">正在測試 3004 端口...</div>';
+
+            try {
+                const response = await fetch('http://localhost:3004/api/materials');
+                const data = await response.json();
+
+                let html = '<div class="info">3004 端口測試結果：</div>';
+                
+                if (response.ok && data.success) {
+                    html += '<div class="success">3004 端口 API 正常</div>';
+                    
+                    const testMaterial = data.data.materials.find(m => m.name === '222');
+                    if (testMaterial) {
+                        html += `<div class="code-block">找到測試材料：
+價格: ${testMaterial.price}
+類型: ${typeof testMaterial.price}
+正確格式化: ${correctFormatPrice(testMaterial.price)}</div>`;
+                    }
+                } else {
+                    html += `<div class="error">3004 端口 API 錯誤: ${data.message || '未知錯誤'}</div>`;
+                }
+
+                result.innerHTML = html;
+            } catch (error) {
+                result.innerHTML = `<div class="error">3004 端口連接失敗: ${error.message}</div>`;
+            }
+        }
+
+        // 頁面載入時自動檢查
+        document.addEventListener('DOMContentLoaded', function() {
+            checkCurrentPageFunction();
+        });
+    </script>
+</body>
+</html>

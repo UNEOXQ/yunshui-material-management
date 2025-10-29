@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>價格格式化調試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-section h2 {
+            color: #2c5aa0;
+            margin-top: 0;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        .test-case {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+        .test-input {
+            font-weight: bold;
+            color: #333;
+        }
+        .test-output {
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>價格格式化調試工具</h1>
+        
+        <div class="test-section">
+            <h2>1. 當前格式化函數測試</h2>
+            <p>測試我們的價格格式化函數是否正確工作：</p>
+            <button onclick="testCurrentFormatFunction()">測試格式化函數</button>
+            <div id="format-test-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. 檢查瀏覽器中的實際函數</h2>
+            <p>檢查瀏覽器是否載入了正確的格式化函數：</p>
+            <button onclick="checkBrowserFunction()">檢查瀏覽器函數</button>
+            <div id="browser-check-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. 模擬材料數據測試</h2>
+            <p>使用與您輸入相同的數據進行測試：</p>
+            <button onclick="testMaterialData()">測試材料數據</button>
+            <div id="material-test-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>4. 直接 API 測試</h2>
+            <p>直接測試 API 響應和格式化：</p>
+            <button onclick="testAPIResponse()">測試 API</button>
+            <div id="api-test-result"></div>
+        </div>
+    </div>
+
+    <script>
+        // 我們的正確格式化函數
+        function correctFormatPrice(price) {
+            if (typeof price !== 'number' || isNaN(price)) {
+                return 'CAD $0.00';
+            }
+            const formattedNumber = price.toFixed(4).replace(/\.?0+$/, '');
+            const finalNumber = formattedNumber.includes('.') ? formattedNumber : `${formattedNumber}.00`;
+            return `CAD $${finalNumber}`;
+        }
+
+        function testCurrentFormatFunction() {
+            const result = document.getElementById('format-test-result');
+            const testCases = [
+                { input: 2.2657, expected: 'CAD $2.2657' },
+                { input: 2.2600, expected: 'CAD $2.26' },
+                { input: 2.0000, expected: 'CAD $2.00' },
+                { input: 14.3276, expected: 'CAD $14.3276' },
+                { input: 100, expected: 'CAD $100.00' }
+            ];
+
+            let html = '<div class="info">格式化函數測試結果：</div>';
+            let allPassed = true;
+
+            testCases.forEach(testCase => {
+                const actual = correctFormatPrice(testCase.input);
+                const passed = actual === testCase.expected;
+                if (!passed) allPassed = false;
+
+                html += `
+                    <div class="test-case">
+                        <span class="test-input">輸入: ${testCase.input}</span>
+                        <span class="test-output">輸出: ${actual}</span>
+                        <span class="${passed ? 'success' : 'error'}">${passed ? '✓' : '✗'}</span>
+                    </div>
+                `;
+            });
+
+            html += `<div class="${allPassed ? 'success' : 'error'}">
+                ${allPassed ? '所有測試通過！' : '部分測試失敗！'}
+            </div>`;
+
+            result.innerHTML = html;
+        }
+
+        function checkBrowserFunction() {
+            const result = document.getElementById('browser-check-result');
+            
+            // 檢查是否有全局的 formatPrice 函數
+            let html = '<div class="info">瀏覽器函數檢查：</div>';
+            
+            if (typeof window.formatPrice === 'function') {
+                html += '<div class="success">找到全局 formatPrice 函數</div>';
+                const testResult = window.formatPrice(2.2657);
+                html += `<div class="test-case">
+                    <span class="test-input">window.formatPrice(2.2657)</span>
+                    <span class="test-output">${testResult}</span>
+                </div>`;
+            } else {
+                html += '<div class="error">未找到全局 formatPrice 函數</div>';
+            }
+
+            // 檢查是否可以從模組載入
+            html += '<div class="code-block">嘗試檢查模組載入情況...</div>';
+
+            result.innerHTML = html;
+        }
+
+        function testMaterialData() {
+            const result = document.getElementById('material-test-result');
+            
+            // 模擬您的材料數據
+            const materialData = {
+                id: 'test-material',
+                name: '222',
+                category: '222',
+                price: 2.2657,  // 您輸入的價格
+                quantity: 0,
+                type: 'AUXILIARY'
+            };
+
+            let html = '<div class="info">材料數據測試：</div>';
+            html += `<div class="code-block">原始數據：
+price: ${materialData.price}
+typeof price: ${typeof materialData.price}</div>`;
+
+            const formatted = correctFormatPrice(materialData.price);
+            html += `<div class="test-case">
+                <span class="test-input">原始價格: ${materialData.price}</span>
+                <span class="test-output">格式化後: ${formatted}</span>
+            </div>`;
+
+            // 測試可能的數據轉換問題
+            const asString = materialData.price.toString();
+            const backToNumber = parseFloat(asString);
+            html += `<div class="code-block">數據轉換測試：
+字符串: "${asString}"
+轉回數字: ${backToNumber}
+格式化: ${correctFormatPrice(backToNumber)}</div>`;
+
+            result.innerHTML = html;
+        }
+
+        async function testAPIResponse() {
+            const result = document.getElementById('api-test-result');
+            result.innerHTML = '<div class="info">正在測試 API...</div>';
+
+            try {
+                // 測試獲取材料列表
+                const response = await fetch('http://localhost:3004/api/materials');
+                const data = await response.json();
+
+                let html = '<div class="info">API 響應測試：</div>';
+                
+                if (response.ok && data.success) {
+                    html += '<div class="success">API 請求成功</div>';
+                    
+                    // 找到您創建的測試材料
+                    const testMaterial = data.data.materials.find(m => m.name === '222');
+                    if (testMaterial) {
+                        html += `<div class="code-block">找到測試材料 "222"：
+ID: ${testMaterial.id}
+名稱: ${testMaterial.name}
+原始價格: ${testMaterial.price}
+價格類型: ${typeof testMaterial.price}
+格式化價格: ${correctFormatPrice(testMaterial.price)}</div>`;
+
+                        // 檢查是否有精度丟失
+                        if (testMaterial.price === 2.2657) {
+                            html += '<div class="success">價格精度保持正確！</div>';
+                        } else {
+                            html += `<div class="error">價格精度丟失！期望: 2.2657，實際: ${testMaterial.price}</div>`;
+                        }
+                    } else {
+                        html += '<div class="error">未找到測試材料 "222"</div>';
+                    }
+                } else {
+                    html += `<div class="error">API 請求失敗: ${data.message || '未知錯誤'}</div>`;
+                }
+
+                result.innerHTML = html;
+            } catch (error) {
+                result.innerHTML = `<div class="error">請求錯誤: ${error.message}</div>`;
+            }
+        }
+
+        // 頁面載入時自動運行基本測試
+        document.addEventListener('DOMContentLoaded', function() {
+            testCurrentFormatFunction();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,654 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, ActivityIndicator, TextInput, Modal } from 'react-native';
+
+// API 配置
+const API_BASE_URL = 'http://192.168.68.95:3004/api';
+
+// API 服務
+const apiService = {
+  login: async (username, password) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      return await response.json();
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  getMaterials: async (token) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/materials`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      if (data.success && data.data) {
+        return Array.isArray(data.data) ? data.data : data.data.materials || [];
+      }
+      return [];
+    } catch (error) {
+      return [];
+    }
+  },
+
+  getAllOrders: async (token) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      if (data.success && data.data) {
+        return Array.isArray(data.data) ? data.data : data.data.orders || [];
+      }
+      return [];
+    } catch (error) {
+      return [];
+    }
+  },
+
+  createAuxiliaryOrder: async (token, orderData) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders/auxiliary`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData),
+      });
+      return await response.json();
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  createFinishedOrder: async (token, orderData) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/orders/finished`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData),
+      });
+      return await response.json();
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+};
+
+export default function App() {
+  // 狀態
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authToken, setAuthToken] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [materials, setMaterials] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showMaterialSelection, setShowMaterialSelection] = useState(false);
+  const [selectedMaterials, setSelectedMaterials] = useState([]);
+  const [materialType, setMaterialType] = useState('AUXILIARY');
+
+  // 快速登入用戶
+  const quickLoginUsers = [
+    { id: 'user-1', username: '系統管理員', password: 'admin123', role: 'ADMIN', originalUsername: 'admin' },
+    { id: 'user-2', username: 'Jeffrey', password: 'pm123', role: 'PM', originalUsername: 'pm001' },
+    { id: 'user-3', username: 'Miya', password: 'am123', role: 'AM', originalUsername: 'am001' },
+    { id: 'user-4', username: 'Mark', password: 'wh123', role: 'WAREHOUSE', originalUsername: 'warehouse001' },
+    { id: 'id-2064', username: 'Erica', password: 'default123', role: 'AM', originalUsername: 'Erica' },
+    { id: 'id-2065', username: 'LUKE', password: 'default123', role: 'PM', originalUsername: 'LUKE' }
+  ];
+
+  // 載入資料
+  useEffect(() => {
+    if (isLoggedIn && authToken && currentUser) {
+      loadData();
+    }
+  }, [isLoggedIn, authToken, currentUser]);
+
+  const loadData = async () => {
+    if (!currentUser) return;
+    
+    setLoading(true);
+    try {
+      const [materialsData, ordersData] = await Promise.all([
+        apiService.getMaterials(authToken),
+        apiService.getAllOrders(authToken)
+      ]);
+      
+      setMaterials(materialsData);
+      
+      // 根據角色過濾訂單
+      let filteredOrders = ordersData;
+      if (currentUser.role === 'PM') {
+        filteredOrders = ordersData.filter(order => !order.type || order.type === 'AUXILIARY');
+      } else if (currentUser.role === 'AM') {
+        filteredOrders = ordersData.filter(order => order.type === 'FINISHED');
+      }
+      
+      setOrders(filteredOrders);
+    } catch (error) {
+      Alert.alert('錯誤', '載入資料失敗');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 登入處理
+  const handleLogin = async () => {
+    if (!loginForm.username || !loginForm.password) {
+      Alert.alert('錯誤', '請輸入帳號和密碼');
+      return;
+    }
+
+    setLoginLoading(true);
+    const result = await apiService.login(loginForm.username, loginForm.password);
+    
+    if (result.success) {
+      setAuthToken(result.data.token);
+      setCurrentUser(result.data.user);
+      setIsLoggedIn(true);
+    } else {
+      Alert.alert('登入失敗', result.message || '帳號或密碼錯誤');
+    }
+    setLoginLoading(false);
+  };
+
+  // 快速登入
+  const handleQuickLogin = async (account) => {
+    setLoginLoading(true);
+    const result = await apiService.login(account.originalUsername, account.password);
+    
+    if (result.success) {
+      setAuthToken(result.data.token);
+      setCurrentUser(result.data.user);
+      setIsLoggedIn(true);
+    } else {
+      Alert.alert('快速登入失敗', result.message || '登入失敗');
+    }
+    setLoginLoading(false);
+  };
+
+  // 登出
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setAuthToken('');
+    setCurrentUser(null);
+    setCurrentPage('dashboard');
+    setOrders([]);
+    setMaterials([]);
+  };
+
+  // 選擇材料
+  const handleSelectMaterial = (material) => {
+    const existingIndex = selectedMaterials.findIndex(item => item.materialId === material.id);
+    
+    if (existingIndex >= 0) {
+      const updated = [...selectedMaterials];
+      updated[existingIndex].quantity += 1;
+      setSelectedMaterials(updated);
+    } else {
+      setSelectedMaterials(prev => [...prev, {
+        materialId: material.id,
+        materialName: material.name,
+        price: material.price,
+        quantity: 1
+      }]);
+    }
+  };
+
+  // 更新數量
+  const handleUpdateQuantity = (materialId, quantity) => {
+    if (quantity <= 0) {
+      setSelectedMaterials(prev => prev.filter(item => item.materialId !== materialId));
+      return;
+    }
+    
+    setSelectedMaterials(prev => 
+      prev.map(item => 
+        item.materialId === materialId 
+          ? { ...item, quantity } 
+          : item
+      )
+    );
+  };
+
+  // 建立訂單
+  const handleCreateOrder = async () => {
+    if (selectedMaterials.length === 0) {
+      Alert.alert('錯誤', '請選擇材料');
+      return;
+    }
+
+    setLoading(true);
+    
+    const orderData = {
+      items: selectedMaterials.map(item => ({
+        materialId: item.materialId,
+        quantity: item.quantity
+      }))
+    };
+
+    let result;
+    if (materialType === 'AUXILIARY') {
+      result = await apiService.createAuxiliaryOrder(authToken, orderData);
+    } else {
+      result = await apiService.createFinishedOrder(authToken, orderData);
+    }
+
+    if (result.success) {
+      Alert.alert('成功', '訂單建立成功');
+      setShowMaterialSelection(false);
+      setSelectedMaterials([]);
+      await loadData();
+    } else {
+      Alert.alert('錯誤', result.error || '建立訂單失敗');
+    }
+    setLoading(false);
+  };
+
+  // 獲取角色功能
+  const getRoleFeatures = (role) => {
+    const features = {
+      PM: ['🔧 輔材訂單管理'],
+      AM: ['🏠 完成材訂單管理'],
+      WAREHOUSE: ['📋 訂單狀態管理'],
+      ADMIN: ['🔧 輔材訂單管理', '🏠 完成材訂單管理', '📋 訂單狀態管理']
+    };
+    return features[role] || [];
+  };
+
+  // 獲取角色顯示文字
+  const getRoleDisplayText = (role) => {
+    const roleMap = {
+      'ADMIN': '系統管理員',
+      'PM': '專案經理',
+      'AM': '區域經理',
+      'WAREHOUSE': '倉管人員'
+    };
+    return roleMap[role] || role;
+  };
+
+  // 獲取角色顏色
+  const getRoleColor = (role) => {
+    const colorMap = {
+      'ADMIN': '#dc3545',
+      'PM': '#007bff',
+      'AM': '#28a745',
+      'WAREHOUSE': '#ffc107'
+    };
+    return colorMap[role] || '#6c757d';
+  };
+
+  // 登入畫面
+  if (!isLoggedIn) {
+    return (
+      <View style={styles.loginContainer}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
+          <View style={styles.loginForm}>
+            <Text style={styles.loginTitle}>🏗️ 雲水基材管理系統</Text>
+            <Text style={styles.loginSubtitle}>手機版登入</Text>
+            
+            <View style={styles.quickLoginSection}>
+              <Text style={styles.quickLoginTitle}>快速登入</Text>
+              <View style={styles.quickLoginGrid}>
+                {quickLoginUsers.map((account) => (
+                  <TouchableOpacity
+                    key={account.id}
+                    style={[styles.quickLoginButton, { borderColor: getRoleColor(account.role) }]}
+                    onPress={() => handleQuickLogin(account)}
+                    disabled={loginLoading}
+                  >
+                    <Text style={[styles.quickLoginName, { color: getRoleColor(account.role) }]}>
+                      {account.username}
+                    </Text>
+                    <Text style={styles.quickLoginRole}>
+                      {getRoleDisplayText(account.role)}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            <View style={styles.divider}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>或</Text>
+              <View style={styles.dividerLine} />
+            </View>
+            
+            <View style={styles.manualLoginSection}>
+              <Text style={styles.manualLoginTitle}>手動登入</Text>
+              <TextInput
+                style={styles.loginInput}
+                placeholder="帳號"
+                value={loginForm.username}
+                onChangeText={(text) => setLoginForm(prev => ({ ...prev, username: text }))}
+                autoCapitalize="none"
+              />
+              
+              <TextInput
+                style={styles.loginInput}
+                placeholder="密碼"
+                value={loginForm.password}
+                onChangeText={(text) => setLoginForm(prev => ({ ...prev, password: text }))}
+                secureTextEntry
+              />
+              
+              <TouchableOpacity 
+                style={styles.loginButton} 
+                onPress={handleLogin}
+                disabled={loginLoading}
+              >
+                {loginLoading ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text style={styles.loginButtonText}>登入</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // 儀表板
+  if (currentPage === 'dashboard') {
+    return (
+      <View style={styles.app}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <Text style={styles.title}>🏗️ 雲水基材管理系統</Text>
+              <Text style={styles.subtitle}>歡迎，{currentUser?.username}</Text>
+              <Text style={styles.userRole}>角色：{getRoleDisplayText(currentUser?.role)}</Text>
+              <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                <Text style={styles.logoutText}>登出</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <View style={styles.statsContainer}>
+              <View style={styles.statCard}>
+                <Text style={styles.statNumber}>{orders.length}</Text>
+                <Text style={styles.statLabel}>總訂單數</Text>
+              </View>
+              <View style={styles.statCard}>
+                <Text style={styles.statNumber}>{materials.length}</Text>
+                <Text style={styles.statLabel}>基材種類</Text>
+              </View>
+            </View>
+
+            <View style={styles.featuresSection}>
+              <Text style={styles.featuresTitle}>系統功能</Text>
+              <View style={styles.featuresGrid}>
+                {getRoleFeatures(currentUser?.role).map((feature, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.featureCard}
+                    onPress={() => {
+                      if (feature.includes('輔材訂單管理')) {
+                        setCurrentPage('auxiliary-orders');
+                      } else if (feature.includes('完成材訂單管理')) {
+                        setCurrentPage('finished-orders');
+                      } else if (feature.includes('訂單狀態管理')) {
+                        setCurrentPage('order-status');
+                      }
+                    }}
+                  >
+                    <Text style={styles.featureText}>{feature}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // 輔材訂單管理
+  if (currentPage === 'auxiliary-orders') {
+    return (
+      <View style={styles.app}>
+        <View style={styles.pageHeader}>
+          <TouchableOpacity style={styles.backButton} onPress={() => setCurrentPage('dashboard')}>
+            <Text style={styles.backText}>← 返回</Text>
+          </TouchableOpacity>
+          <Text style={styles.pageTitle}>🔧 輔材訂單管理</Text>
+          <TouchableOpacity 
+            style={styles.addButton} 
+            onPress={() => {
+              setMaterialType('AUXILIARY');
+              setSelectedMaterials([]);
+              setShowMaterialSelection(true);
+            }}
+          >
+            <Text style={styles.addButtonText}>+ 選擇輔材</Text>
+          </TouchableOpacity>
+        </View>
+        
+        <ScrollView style={styles.pageContent} contentContainerStyle={{ paddingBottom: 100 }}>
+          {loading ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#007bff" />
+              <Text style={styles.loadingText}>載入中...</Text>
+            </View>
+          ) : orders.length === 0 ? (
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>暫無輔材訂單</Text>
+              <Text style={styles.emptyHint}>點擊上方「+ 選擇輔材」建立新訂單</Text>
+            </View>
+          ) : (
+            orders.map((order, index) => (
+              <View key={order.id || index} style={styles.orderCard}>
+                <Text style={styles.orderNumber}>訂單 #{order.orderNumber || order.id}</Text>
+                <Text style={styles.orderDate}>日期: {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '未知'}</Text>
+                <Text style={styles.orderStatus}>狀態: {order.status || '待處理'}</Text>
+                
+                {order.items && order.items.length > 0 && (
+                  <View style={styles.orderItems}>
+                    <Text style={styles.orderItemsTitle}>訂單項目:</Text>
+                    {order.items.map((item, itemIndex) => (
+                      <Text key={itemIndex} style={styles.orderItem}>
+                        • {item.materialName || item.name} x {item.quantity}
+                      </Text>
+                    ))}
+                  </View>
+                )}
+              </View>
+            ))
+          )}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // 完成材訂單管理
+  if (currentPage === 'finished-orders') {
+    return (
+      <View style={styles.app}>
+        <View style={styles.pageHeader}>
+          <TouchableOpacity style={styles.backButton} onPress={() => setCurrentPage('dashboard')}>
+            <Text style={styles.backText}>← 返回</Text>
+          </TouchableOpacity>
+          <Text style={styles.pageTitle}>🏠 完成材訂單管理</Text>
+          <TouchableOpacity 
+            style={styles.addButton} 
+            onPress={() => {
+              setMaterialType('FINISHED');
+              setSelectedMaterials([]);
+              setShowMaterialSelection(true);
+            }}
+          >
+            <Text style={styles.addButtonText}>+ 選擇完成材</Text>
+          </TouchableOpacity>
+        </View>
+        
+        <ScrollView style={styles.pageContent} contentContainerStyle={{ paddingBottom: 100 }}>
+          {loading ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#007bff" />
+              <Text style={styles.loadingText}>載入中...</Text>
+            </View>
+          ) : orders.length === 0 ? (
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>暫無完成材訂單</Text>
+              <Text style={styles.emptyHint}>點擊上方「+ 選擇完成材」建立新訂單</Text>
+            </View>
+          ) : (
+            orders.map((order, index) => (
+              <View key={order.id || index} style={styles.orderCard}>
+                <Text style={styles.orderNumber}>訂單 #{order.orderNumber || order.id}</Text>
+                <Text style={styles.orderDate}>日期: {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '未知'}</Text>
+                <Text style={styles.orderStatus}>狀態: {order.status || '待處理'}</Text>
+                
+                {order.items && order.items.length > 0 && (
+                  <View style={styles.orderItems}>
+                    <Text style={styles.orderItemsTitle}>訂單項目:</Text>
+                    {order.items.map((item, itemIndex) => (
+                      <Text key={itemIndex} style={styles.orderItem}>
+                        • {item.materialName || item.name} x {item.quantity}
+                      </Text>
+                    ))}
+                  </View>
+                )}
+              </View>
+            ))
+          )}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // 訂單狀態管理
+  if (currentPage === 'order-status') {
+    return (
+      <View style={styles.app}>
+        <View style={styles.pageHeader}>
+          <TouchableOpacity style={styles.backButton} onPress={() => setCurrentPage('dashboard')}>
+            <Text style={styles.backText}>← 返回</Text>
+          </TouchableOpacity>
+          <Text style={styles.pageTitle}>📋 訂單狀態管理</Text>
+          <View style={styles.headerSpacer} />
+        </View>
+        
+        <ScrollView style={styles.pageContent} contentContainerStyle={{ paddingBottom: 100 }}>
+          {loading ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#007bff" />
+              <Text style={styles.loadingText}>載入中...</Text>
+            </View>
+          ) : orders.length === 0 ? (
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>暫無訂單需要管理</Text>
+            </View>
+          ) : (
+            orders.map((order, index) => (
+              <View key={order.id || index} style={styles.statusCard}>
+                <Text style={styles.orderNumber}>訂單 #{order.orderNumber || order.id}</Text>
+                <Text style={styles.orderType}>類型: {order.type === 'FINISHED' ? '完成材' : '輔材'}</Text>
+                <Text style={styles.orderDate}>日期: {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '未知'}</Text>
+                
+                <View style={styles.statusSection}>
+                  <Text style={styles.statusTitle}>訂單狀態:</Text>
+                  <Text style={styles.statusValue}>{order.status || '待處理'}</Text>
+                </View>
+              </View>
+            ))
+          )}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.app}>
+      {/* 材料選擇 Modal */}
+      <Modal visible={showMaterialSelection} animationType="slide" transparent>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>
+                選擇{materialType === 'AUXILIARY' ? '輔材' : '完成材'}
+              </Text>
+              <TouchableOpacity onPress={() => setShowMaterialSelection(false)}>
+                <Text style={styles.closeButton}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <ScrollView style={styles.materialsList}>
+              {materials
+                .filter(material => material.type === materialType)
+                .map((material, index) => (
+                <TouchableOpacity
+                  key={material.id || index}
+                  style={styles.materialSelectCard}
+                  onPress={() => handleSelectMaterial(material)}
+                >
+                  <Text style={styles.materialSelectName}>{material.name}</Text>
+                  <Text style={styles.materialSelectPrice}>CAD ${material.price}</Text>
+                  <Text style={styles.materialSelectStock}>庫存: {material.quantity}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+            
+            <View style={styles.cart}>
+              <Text style={styles.cartTitle}>已選擇的材料 ({selectedMaterials.length})</Text>
+              {selectedMaterials.map((item, index) => (
+                <View key={index} style={styles.cartItem}>
+                  <Text style={styles.cartItemName}>{item.materialName}</Text>
+                  <View style={styles.quantityControls}>
+                    <TouchableOpacity 
+                      style={styles.quantityButton}
+                      onPress={() => handleUpdateQuantity(item.materialId, item.quantity - 1)}
+                    >
+                      <Text style={styles.quantityButtonText}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.quantityText}>{item.quantity}</Text>
+                    <TouchableOpacity 
+                      style={styles.quantityButton}
+                      onPress={() => handleUpdateQuantity(item.materialId, item.quantity + 1)}
+                    >
+                      <Text style={styles.quantityButtonText}>+</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+            </View>
+            
+            <View style={styles.modalButtons}>
+              <TouchableOpacity 
+                style={styles.cancelButton} 
+                onPress={() => setShowMaterialSelection(false)}
+              >
+                <Text style={styles.cancelText}>取消</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={[styles.createOrderButton, selectedMaterials.length === 0 && styles.disabledButton]} 
+                onPress={handleCreateOrder}
+                disabled={selectedMaterials.length === 0}
+              >
+                <Text style={styles.createOrderText}>建立訂單</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#007bff" />
+          <Text style={styles.loadingText}>處理中...</Text>
+        </View>
+      )}
+    </View>
+  );
+}

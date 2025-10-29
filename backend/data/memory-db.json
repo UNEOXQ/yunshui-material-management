@@ -61,12 +61,12 @@
       "name": "螺絲釘 M6x20",
       "category": "五金配件",
       "price": 2.5,
-      "quantity": 979,
+      "quantity": 975,
       "imageUrl": "http://localhost:3004/uploads/materials/1-1761002573730-540964348.jpg",
       "supplier": "五金供應商A",
       "type": "AUXILIARY",
       "createdAt": "2024-01-01T00:00:00.000Z",
-      "updatedAt": "2025-10-23T01:10:24.040Z"
+      "updatedAt": "2025-10-29T00:08:38.621Z"
     },
     {
       "id": "material-2",
@@ -85,24 +85,48 @@
       "name": "電線 2.5mm²",
       "category": "電氣材料",
       "price": 8.5,
-      "quantity": 498,
+      "quantity": 493,
       "imageUrl": "http://localhost:3004/uploads/materials/2-1761002566198-901414729.jpg",
       "supplier": "電氣供應商C",
       "type": "AUXILIARY",
       "createdAt": "2024-01-03T00:00:00.000Z",
-      "updatedAt": "2025-10-20T23:22:46.201Z"
+      "updatedAt": "2025-10-29T21:07:23.965Z"
     },
     {
       "id": "material-4",
       "name": "水泥 50kg",
       "category": "建材",
       "price": 180,
-      "quantity": 91,
+      "quantity": 90,
       "imageUrl": "http://localhost:3004/uploads/materials/4-1761002648362-880965179.jpg",
       "supplier": "建材供應商D",
       "type": "FINISHED",
       "createdAt": "2024-01-04T00:00:00.000Z",
-      "updatedAt": "2025-10-20T23:24:08.363Z"
+      "updatedAt": "2025-10-28T23:03:15.788Z"
+    },
+    {
+      "name": "222",
+      "category": "222",
+      "price": 2.28,
+      "quantity": 0,
+      "supplier": "",
+      "type": "AUXILIARY",
+      "imageUrl": "",
+      "id": "id-2089",
+      "createdAt": "2025-10-27T18:49:54.234Z",
+      "updatedAt": "2025-10-27T19:29:17.332Z"
+    },
+    {
+      "name": "測試材料4位小數",
+      "category": "1",
+      "price": 2.3927,
+      "quantity": 0,
+      "supplier": "1",
+      "type": "AUXILIARY",
+      "imageUrl": "",
+      "id": "id-2090",
+      "createdAt": "2025-10-27T19:17:03.215Z",
+      "updatedAt": "2025-10-27T20:57:25.812Z"
     }
   ],
   "orders": [
@@ -156,6 +180,54 @@
       "id": "id-2081",
       "createdAt": "2025-10-23T01:10:24.037Z",
       "updatedAt": "2025-10-23T01:10:24.037Z"
+    },
+    {
+      "userId": "user-2",
+      "totalAmount": 11,
+      "status": "PENDING",
+      "id": "id-2091",
+      "createdAt": "2025-10-28T23:01:48.738Z",
+      "updatedAt": "2025-10-28T23:01:48.738Z"
+    },
+    {
+      "userId": "user-3",
+      "totalAmount": 180,
+      "status": "PENDING",
+      "id": "id-2099",
+      "createdAt": "2025-10-28T23:03:15.785Z",
+      "updatedAt": "2025-10-28T23:03:15.785Z"
+    },
+    {
+      "userId": "user-2",
+      "totalAmount": 2.5,
+      "status": "PENDING",
+      "id": "id-2106",
+      "createdAt": "2025-10-28T23:04:32.634Z",
+      "updatedAt": "2025-10-28T23:04:32.634Z"
+    },
+    {
+      "userId": "user-2",
+      "totalAmount": 11,
+      "status": "PENDING",
+      "id": "id-2113",
+      "createdAt": "2025-10-28T23:57:17.911Z",
+      "updatedAt": "2025-10-28T23:57:17.911Z"
+    },
+    {
+      "userId": "user-2",
+      "totalAmount": 2.5,
+      "status": "PENDING",
+      "id": "id-2121",
+      "createdAt": "2025-10-29T00:08:38.618Z",
+      "updatedAt": "2025-10-29T00:08:38.618Z"
+    },
+    {
+      "userId": "user-2",
+      "totalAmount": 25.5,
+      "status": "PENDING",
+      "id": "id-2132",
+      "createdAt": "2025-10-29T21:07:23.961Z",
+      "updatedAt": "2025-10-29T21:07:23.961Z"
     }
   ],
   "orderItems": [
@@ -221,6 +293,62 @@
       "quantity": 10,
       "unitPrice": 2.5,
       "id": "id-2082"
+    },
+    {
+      "orderId": "id-2091",
+      "materialId": "material-1",
+      "quantity": 1,
+      "unitPrice": 2.5,
+      "id": "id-2092"
+    },
+    {
+      "orderId": "id-2091",
+      "materialId": "material-3",
+      "quantity": 1,
+      "unitPrice": 8.5,
+      "id": "id-2093"
+    },
+    {
+      "orderId": "id-2099",
+      "materialId": "material-4",
+      "quantity": 1,
+      "unitPrice": 180,
+      "id": "id-2100"
+    },
+    {
+      "orderId": "id-2106",
+      "materialId": "material-1",
+      "quantity": 1,
+      "unitPrice": 2.5,
+      "id": "id-2107"
+    },
+    {
+      "orderId": "id-2113",
+      "materialId": "material-1",
+      "quantity": 1,
+      "unitPrice": 2.5,
+      "id": "id-2114"
+    },
+    {
+      "orderId": "id-2113",
+      "materialId": "material-3",
+      "quantity": 1,
+      "unitPrice": 8.5,
+      "id": "id-2115"
+    },
+    {
+      "orderId": "id-2121",
+      "materialId": "material-1",
+      "quantity": 1,
+      "unitPrice": 2.5,
+      "id": "id-2122"
+    },
+    {
+      "orderId": "id-2132",
+      "materialId": "material-3",
+      "quantity": 3,
+      "unitPrice": 8.5,
+      "id": "id-2133"
     }
   ],
   "projects": [
@@ -271,6 +399,54 @@
       "overallStatus": "ACTIVE",
       "createdAt": "2025-10-23T01:10:24.042Z",
       "updatedAt": "2025-10-23T01:10:24.042Z"
+    },
+    {
+      "id": "id-2094",
+      "orderId": "id-2091",
+      "projectName": "輔材專案-2025-10-28-id-2091",
+      "overallStatus": "ACTIVE",
+      "createdAt": "2025-10-28T23:01:48.746Z",
+      "updatedAt": "2025-10-28T23:01:48.746Z"
+    },
+    {
+      "id": "id-2101",
+      "orderId": "id-2099",
+      "projectName": "完成材專案-2025-10-28-id-2099",
+      "overallStatus": "ACTIVE",
+      "createdAt": "2025-10-28T23:03:15.790Z",
+      "updatedAt": "2025-10-28T23:03:15.790Z"
+    },
+    {
+      "id": "id-2108",
+      "orderId": "id-2106",
+      "projectName": "輔材專案-2025-10-28-id-2106",
+      "overallStatus": "ACTIVE",
+      "createdAt": "2025-10-28T23:04:32.639Z",
+      "updatedAt": "2025-10-28T23:04:32.639Z"
+    },
+    {
+      "id": "id-2116",
+      "orderId": "id-2113",
+      "projectName": "輔材專案-2025-10-28-id-2113",
+      "overallStatus": "ACTIVE",
+      "createdAt": "2025-10-28T23:57:17.920Z",
+      "updatedAt": "2025-10-28T23:57:17.920Z"
+    },
+    {
+      "id": "id-2123",
+      "orderId": "id-2121",
+      "projectName": "輔材專案-2025-10-29-id-2121",
+      "overallStatus": "ACTIVE",
+      "createdAt": "2025-10-29T00:08:38.622Z",
+      "updatedAt": "2025-10-29T00:08:38.622Z"
+    },
+    {
+      "id": "id-2134",
+      "orderId": "id-2132",
+      "projectName": "輔材專案-2025-10-29-id-2132",
+      "overallStatus": "ACTIVE",
+      "createdAt": "2025-10-29T21:07:23.967Z",
+      "updatedAt": "2025-10-29T21:07:23.967Z"
     }
   ],
   "statusUpdates": [
@@ -631,6 +807,312 @@
         "secondaryStatus": "Processing"
       },
       "createdAt": "2025-10-23T01:10:50.404Z"
+    },
+    {
+      "id": "id-2095",
+      "projectId": "id-2094",
+      "updatedBy": "user-2",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-28T23:01:48.746Z"
+    },
+    {
+      "id": "id-2096",
+      "projectId": "id-2094",
+      "updatedBy": "user-2",
+      "statusType": "PICKUP",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:01:48.749Z"
+    },
+    {
+      "id": "id-2097",
+      "projectId": "id-2094",
+      "updatedBy": "user-2",
+      "statusType": "DELIVERY",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:01:48.749Z"
+    },
+    {
+      "id": "id-2098",
+      "projectId": "id-2094",
+      "updatedBy": "user-2",
+      "statusType": "CHECK",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:01:48.750Z"
+    },
+    {
+      "id": "id-2102",
+      "projectId": "id-2101",
+      "updatedBy": "user-3",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-28T23:03:15.790Z"
+    },
+    {
+      "id": "id-2103",
+      "projectId": "id-2101",
+      "updatedBy": "user-3",
+      "statusType": "PICKUP",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:03:15.791Z"
+    },
+    {
+      "id": "id-2104",
+      "projectId": "id-2101",
+      "updatedBy": "user-3",
+      "statusType": "DELIVERY",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:03:15.792Z"
+    },
+    {
+      "id": "id-2105",
+      "projectId": "id-2101",
+      "updatedBy": "user-3",
+      "statusType": "CHECK",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:03:15.793Z"
+    },
+    {
+      "id": "id-2109",
+      "projectId": "id-2108",
+      "updatedBy": "user-2",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-28T23:04:32.639Z"
+    },
+    {
+      "id": "id-2110",
+      "projectId": "id-2108",
+      "updatedBy": "user-2",
+      "statusType": "PICKUP",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:04:32.640Z"
+    },
+    {
+      "id": "id-2111",
+      "projectId": "id-2108",
+      "updatedBy": "user-2",
+      "statusType": "DELIVERY",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:04:32.640Z"
+    },
+    {
+      "id": "id-2112",
+      "projectId": "id-2108",
+      "updatedBy": "user-2",
+      "statusType": "CHECK",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:04:32.642Z"
+    },
+    {
+      "id": "id-2117",
+      "projectId": "id-2116",
+      "updatedBy": "user-2",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-28T23:57:17.921Z"
+    },
+    {
+      "id": "id-2118",
+      "projectId": "id-2116",
+      "updatedBy": "user-2",
+      "statusType": "PICKUP",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:57:17.922Z"
+    },
+    {
+      "id": "id-2119",
+      "projectId": "id-2116",
+      "updatedBy": "user-2",
+      "statusType": "DELIVERY",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:57:17.923Z"
+    },
+    {
+      "id": "id-2120",
+      "projectId": "id-2116",
+      "updatedBy": "user-2",
+      "statusType": "CHECK",
+      "statusValue": "",
+      "createdAt": "2025-10-28T23:57:17.924Z"
+    },
+    {
+      "id": "id-2124",
+      "projectId": "id-2123",
+      "updatedBy": "user-2",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-29T00:08:38.622Z"
+    },
+    {
+      "id": "id-2125",
+      "projectId": "id-2123",
+      "updatedBy": "user-2",
+      "statusType": "PICKUP",
+      "statusValue": "",
+      "createdAt": "2025-10-29T00:08:38.623Z"
+    },
+    {
+      "id": "id-2126",
+      "projectId": "id-2123",
+      "updatedBy": "user-2",
+      "statusType": "DELIVERY",
+      "statusValue": "",
+      "createdAt": "2025-10-29T00:08:38.623Z"
+    },
+    {
+      "id": "id-2127",
+      "projectId": "id-2123",
+      "updatedBy": "user-2",
+      "statusType": "CHECK",
+      "statusValue": "",
+      "createdAt": "2025-10-29T00:08:38.624Z"
+    },
+    {
+      "id": "id-2128",
+      "projectId": "id-2083",
+      "updatedBy": "user-4",
+      "statusType": "DELIVERY",
+      "statusValue": "",
+      "createdAt": "2025-10-29T21:06:19.472Z"
+    },
+    {
+      "id": "id-2129",
+      "projectId": "id-2083",
+      "updatedBy": "user-4",
+      "statusType": "CHECK",
+      "statusValue": "",
+      "createdAt": "2025-10-29T21:06:19.477Z"
+    },
+    {
+      "id": "id-2130",
+      "projectId": "id-2123",
+      "updatedBy": "user-4",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - Processing",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "Processing"
+      },
+      "createdAt": "2025-10-29T21:06:34.670Z"
+    },
+    {
+      "id": "id-2131",
+      "projectId": "id-2123",
+      "updatedBy": "user-4",
+      "statusType": "DELIVERY",
+      "statusValue": "Delivered",
+      "additionalData": {
+        "time": "0",
+        "address": "1",
+        "po": "2",
+        "deliveredBy": "3"
+      },
+      "createdAt": "2025-10-29T21:06:34.681Z"
+    },
+    {
+      "id": "id-2135",
+      "projectId": "id-2134",
+      "updatedBy": "user-2",
+      "statusType": "ORDER",
+      "statusValue": "PENDING",
+      "createdAt": "2025-10-29T21:07:23.967Z"
+    },
+    {
+      "id": "id-2136",
+      "projectId": "id-2134",
+      "updatedBy": "user-2",
+      "statusType": "PICKUP",
+      "statusValue": "",
+      "createdAt": "2025-10-29T21:07:23.969Z"
+    },
+    {
+      "id": "id-2137",
+      "projectId": "id-2134",
+      "updatedBy": "user-2",
+      "statusType": "DELIVERY",
+      "statusValue": "",
+      "createdAt": "2025-10-29T21:07:23.970Z"
+    },
+    {
+      "id": "id-2138",
+      "projectId": "id-2134",
+      "updatedBy": "user-2",
+      "statusType": "CHECK",
+      "statusValue": "",
+      "createdAt": "2025-10-29T21:07:23.972Z"
+    },
+    {
+      "id": "id-2139",
+      "projectId": "id-2134",
+      "updatedBy": "user-4",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - waiting for pick",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "waiting for pick"
+      },
+      "createdAt": "2025-10-29T21:41:29.248Z"
+    },
+    {
+      "id": "id-2140",
+      "projectId": "id-2134",
+      "updatedBy": "user-4",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - Processing",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "Processing"
+      },
+      "createdAt": "2025-10-29T21:48:55.788Z"
+    },
+    {
+      "id": "id-2141",
+      "projectId": "id-2134",
+      "updatedBy": "user-4",
+      "statusType": "PICKUP",
+      "statusValue": "Picked (B.T.W)",
+      "additionalData": {
+        "primaryStatus": "Picked",
+        "secondaryStatus": "(B.T.W)"
+      },
+      "createdAt": "2025-10-29T21:48:55.808Z"
+    },
+    {
+      "id": "id-2142",
+      "projectId": "id-2134",
+      "updatedBy": "user-4",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - waiting for pick",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "waiting for pick"
+      },
+      "createdAt": "2025-10-29T21:52:26.121Z"
+    },
+    {
+      "id": "id-2143",
+      "projectId": "id-2134",
+      "updatedBy": "user-4",
+      "statusType": "ORDER",
+      "statusValue": "Ordered - pending",
+      "additionalData": {
+        "primaryStatus": "Ordered",
+        "secondaryStatus": "pending"
+      },
+      "createdAt": "2025-10-29T21:52:41.000Z"
+    },
+    {
+      "id": "id-2144",
+      "projectId": "id-2134",
+      "updatedBy": "user-4",
+      "statusType": "PICKUP",
+      "statusValue": "Failed (E.H)",
+      "additionalData": {
+        "primaryStatus": "Failed",
+        "secondaryStatus": "(E.H)"
+      },
+      "createdAt": "2025-10-29T21:53:02.416Z"
     }
   ],
   "messages": [
@@ -723,6 +1205,6 @@
       "updatedAt": "2025-10-21T00:58:48.326Z"
     }
   ],
-  "nextId": 2089,
-  "lastSaved": "2025-10-23T01:10:50.404Z"
+  "nextId": 2145,
+  "lastSaved": "2025-10-29T21:53:02.416Z"
 }

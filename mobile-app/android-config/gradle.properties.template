@@ -1,0 +1,153 @@
+# 雲水基材管理系統 - Gradle 屬性配置範本
+# 複製此檔案為 gradle.properties 並填入實際值
+
+# Android 建置配置
+android.useAndroidX=true
+android.enableJetifier=true
+
+# 建置效能優化
+org.gradle.jvmargs=-Xmx4096m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+org.gradle.parallel=true
+org.gradle.configureondemand=true
+org.gradle.daemon=true
+org.gradle.caching=true
+
+# React Native 配置
+FLIPPER_VERSION=0.201.0
+
+# 建置選項
+# 設為 true 可為每個 CPU 架構生成獨立的 APK
+enableSeparateBuildPerCPUArchitecture=false
+
+# 設為 true 可啟用 Hermes JavaScript 引擎
+hermesEnabled=true
+
+# 設為 true 可在 Debug 模式下啟用 Proguard
+enableProguardInReleaseBuilds=true
+
+# 應用程式簽名配置 (Release 版本)
+# 請填入您的實際簽名資訊
+MYAPP_RELEASE_STORE_FILE=yunshui-release.keystore
+MYAPP_RELEASE_KEY_ALIAS=yunshui-key
+MYAPP_RELEASE_STORE_PASSWORD=your_keystore_password_here
+MYAPP_RELEASE_KEY_PASSWORD=your_key_password_here
+
+# 版本配置 (可選，也可以從環境變數讀取)
+# VERSION_NAME=1.0.0
+# VERSION_CODE=1
+
+# Google Play 服務配置 (如果使用)
+# GOOGLE_SERVICES_JSON_PATH=google-services.json
+
+# Firebase 配置 (如果使用)
+# FIREBASE_PROJECT_ID=your-firebase-project-id
+
+# Cloudinary 配置 (圖片上傳服務)
+# CLOUDINARY_CLOUD_NAME=your-cloud-name
+# CLOUDINARY_API_KEY=your-api-key
+# CLOUDINARY_API_SECRET=your-api-secret
+
+# API 端點配置
+# API_BASE_URL_PRODUCTION=https://api.yunshui.com
+# API_BASE_URL_STAGING=https://staging-api.yunshui.com
+# API_BASE_URL_DEVELOPMENT=http://localhost:3004
+
+# 除錯配置
+# 設為 true 可在 Release 版本中保留除錯資訊
+debuggableRelease=false
+
+# 設為 true 可啟用網路安全配置
+networkSecurityConfig=true
+
+# 設為 true 可啟用備份功能
+allowBackup=false
+
+# 多 APK 支援
+# 設為 true 可為不同螢幕密度生成獨立的 APK
+enableSeparateBuildPerDensity=false
+
+# 資源壓縮
+# 設為 true 可移除未使用的資源
+shrinkResources=true
+
+# 程式碼混淆
+# 設為 true 可啟用程式碼混淆
+minifyEnabled=true
+
+# 建置快取
+# 設為 true 可啟用建置快取以提升建置速度
+buildCache=true
+
+# NDK 配置
+# 指定支援的 CPU 架構
+android.bundle.enableUncompressedNativeLibs=false
+
+# 實驗性功能
+# 啟用新的 Gradle 功能 (謹慎使用)
+android.experimental.enableNewResourceShrinker=false
+
+# 記憶體配置
+# JVM 堆記憶體大小
+org.gradle.jvmargs=-Xmx4g -XX:+UseParallelGC
+
+# 平行建置
+# 啟用平行建置以提升速度
+org.gradle.workers.max=4
+
+# 檔案系統監控
+# 啟用檔案系統監控以提升增量建置速度
+org.gradle.vfs.watch=true
+
+# Kotlin 配置 (如果使用 Kotlin)
+# kotlin.code.style=official
+# kotlin.incremental=true
+# kotlin.incremental.android=true
+
+# 安全性配置
+# 網路安全配置檔案路徑
+# NETWORK_SECURITY_CONFIG=network_security_config.xml
+
+# 測試配置
+# 啟用測試覆蓋率報告
+# testCoverageEnabled=true
+
+# 國際化配置
+# 支援的語言代碼
+# supportedLocales=zh-rTW,zh-rCN,en
+
+# 效能監控 (如果使用 Firebase Performance)
+# FIREBASE_PERF_ENABLED=true
+
+# 崩潰報告 (如果使用 Crashlytics)
+# CRASHLYTICS_ENABLED=true
+
+# 分析工具 (如果使用 Firebase Analytics)
+# ANALYTICS_ENABLED=true
+
+# 推播通知配置
+# FCM_SENDER_ID=your-fcm-sender-id
+
+# 深度連結配置
+# DEEP_LINK_SCHEME=yunshui
+# DEEP_LINK_HOST=app.yunshui.com
+
+# 應用程式 ID 後綴 (用於不同建置變體)
+# DEBUG_APPLICATION_ID_SUFFIX=.debug
+# STAGING_APPLICATION_ID_SUFFIX=.staging
+
+# 版本名稱後綴
+# DEBUG_VERSION_NAME_SUFFIX=-debug
+# STAGING_VERSION_NAME_SUFFIX=-staging
+
+# 建置時間戳記 (自動生成)
+# BUILD_TIMESTAMP=auto
+
+# Git 資訊 (自動生成)
+# GIT_COMMIT_HASH=auto
+# GIT_BRANCH_NAME=auto
+
+# 注意事項:
+# 1. 請勿將包含敏感資訊的 gradle.properties 檔案提交到版本控制系統
+# 2. 建議使用環境變數來管理敏感配置
+# 3. 在 CI/CD 環境中，可以通過環境變數覆蓋這些設定
+# 4. 定期更新密碼和金鑰以確保安全性

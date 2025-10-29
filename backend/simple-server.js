@@ -110,6 +110,11 @@ let orders = [
     userId: 'demo-pm001',
     status: 'PENDING',
     totalAmount: 250.0,
+    type: 'AUXILIARY',
+    items: [
+      { materialId: 'material-1', materialName: '螺絲釘 M6x20', quantity: 50, price: 2.5 },
+      { materialId: 'material-3', materialName: '電線 2.5mm²', quantity: 20, price: 8.5 }
+    ],
     createdAt: new Date('2024-01-10'),
     updatedAt: new Date('2024-01-10')
   },
@@ -118,6 +123,10 @@ let orders = [
     userId: 'demo-admin',
     status: 'APPROVED',
     totalAmount: 90.0,
+    type: 'FINISHED',
+    items: [
+      { materialId: 'material-2', materialName: '木板 2x4x8', quantity: 2, price: 45.0 }
+    ],
     createdAt: new Date('2024-01-11'),
     updatedAt: new Date('2024-01-11')
   },
@@ -126,6 +135,11 @@ let orders = [
     userId: 'demo-warehouse001',
     status: 'PENDING',
     totalAmount: 150.0,
+    type: 'AUXILIARY',
+    items: [
+      { materialId: 'material-1', materialName: '螺絲釘 M6x20', quantity: 30, price: 2.5 },
+      { materialId: 'material-3', materialName: '電線 2.5mm²', quantity: 10, price: 8.5 }
+    ],
     createdAt: new Date('2024-01-12'),
     updatedAt: new Date('2024-01-12')
   }
@@ -390,54 +404,31 @@ app.delete('/api/materials/:id', (req, res) => {
   });
 });
 
-// 訂單 API
+// 訂單 API (簡化版，用於手機應用)
 app.get('/api/orders', (req, res) => {
-  // 為每個訂單添加狀態信息
-  const ordersWithStatus = orders.map(order => {
-    const project = projects.find(p => p.orderId === order.id);
-    if (!project) return order;
-
-    // 獲取該項目的最新狀態
-    const projectStatusUpdates = statusUpdates.filter(su => su.projectId === project.id);
-    const latestStatuses = {
-      ORDER: null,
-      PICKUP: null,
-      DELIVERY: null,
-      CHECK: null
-    };
-
-    projectStatusUpdates.forEach(update => {
-      if (!latestStatuses[update.statusType] || 
-          new Date(update.createdAt) > new Date(latestStatuses[update.statusType].createdAt)) {
-        latestStatuses[update.statusType] = update;
+  try {
+    console.log('Getting orders, total count:', orders.length);
+    
+    // 直接返回訂單，不處理複雜的狀態
+    res.json({
+      success: true,
+      data: {
+        orders: orders,
+        pagination: {
+          page: 1,
+          limit: 10,
+          total: orders.length,
+          totalPages: Math.ceil(orders.length / 10)
+        }
       }
     });
-
-    return {
-      ...order,
-      project: project,
-      statusSummary: {
-        order: latestStatuses.ORDER?.statusValue || '未設定',
-        pickup: latestStatuses.PICKUP?.statusValue || '未設定',
-        delivery: latestStatuses.DELIVERY?.statusValue || '未設定',
-        check: latestStatuses.CHECK?.statusValue || '未設定'
-      },
-      latestStatuses: latestStatuses
-    };
-  });
-
-  res.json({
-    success: true,
-    data: {
-      orders: ordersWithStatus,
-      pagination: {
-        page: 1,
-        limit: 10,
-        total: ordersWithStatus.length,
-        totalPages: Math.ceil(ordersWithStatus.length / 10)
-      }
-    }
-  });
+  } catch (error) {
+    console.error('Orders API error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
 });
 
 app.get('/api/orders/auxiliary', (req, res) => {
