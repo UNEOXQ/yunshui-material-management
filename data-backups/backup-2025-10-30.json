@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-30T22:54:49.227Z",
+  "timestamp": "2025-10-30T23:24:49.227Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -584,6 +584,66 @@
             }
           }
         ]
+      },
+      {
+        "userId": "id-2033",
+        "status": "PENDING",
+        "totalAmount": 23.16,
+        "name": "000",
+        "projectId": "id-2290",
+        "id": "id-2291",
+        "createdAt": "2025-10-30T23:12:26.173Z",
+        "updatedAt": "2025-10-30T23:12:26.173Z",
+        "items": [
+          {
+            "orderId": "id-2291",
+            "materialId": "id-2029",
+            "quantity": 1,
+            "unitPrice": 8.5,
+            "id": "id-2292",
+            "materialName": "電線 2.5mm²",
+            "materialCategory": "電氣材料",
+            "materialType": "AUXILIARY",
+            "supplier": "電氣供應商C",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
+            "material": {
+              "id": "id-2029",
+              "name": "電線 2.5mm²",
+              "category": "電氣材料",
+              "price": 8.5,
+              "quantity": 475,
+              "supplier": "電氣供應商C",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T03:17:25.096Z",
+              "updatedAt": "2025-10-24T00:09:03.097Z"
+            }
+          },
+          {
+            "orderId": "id-2291",
+            "materialId": "id-2283",
+            "quantity": 1,
+            "unitPrice": 14.66,
+            "id": "id-2293",
+            "materialName": "灰板 4x8-1/2",
+            "materialCategory": "建材",
+            "materialType": "AUXILIARY",
+            "supplier": "CBS",
+            "imageUrl": "",
+            "material": {
+              "id": "id-2283",
+              "name": "灰板 4x8-1/2",
+              "category": "建材",
+              "price": 14.66,
+              "quantity": 1,
+              "supplier": "CBS",
+              "imageUrl": "",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-27T18:32:48.832Z",
+              "updatedAt": "2025-10-27T18:32:48.832Z"
+            }
+          }
+        ]
       }
     ],
     "users": [
@@ -762,6 +822,24 @@
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-30T01:19:58.379Z",
         "updatedAt": "2025-10-30T01:19:58.379Z"
+      },
+      {
+        "id": "id-2290",
+        "orderId": "",
+        "projectName": "777",
+        "overallStatus": "ACTIVE",
+        "description": "由訂單創建的專案",
+        "createdBy": "id-2033",
+        "createdAt": "2025-10-30T23:12:15.158Z",
+        "updatedAt": "2025-10-30T23:12:15.158Z"
+      },
+      {
+        "id": "id-2294",
+        "orderId": "id-2291",
+        "projectName": "輔材專案-10/30/2025-id-2291",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2025-10-30T23:12:26.216Z",
+        "updatedAt": "2025-10-30T23:12:26.216Z"
       }
     ],
     "orderItems": [
@@ -918,6 +996,20 @@
         "quantity": 2,
         "unitPrice": 45,
         "id": "id-2288"
+      },
+      {
+        "orderId": "id-2291",
+        "materialId": "id-2029",
+        "quantity": 1,
+        "unitPrice": 8.5,
+        "id": "id-2292"
+      },
+      {
+        "orderId": "id-2291",
+        "materialId": "id-2283",
+        "quantity": 1,
+        "unitPrice": 14.66,
+        "id": "id-2293"
       }
     ],
     "statusUpdates": [
@@ -1468,6 +1560,6 @@
         "updatedAt": "2025-10-23T21:29:33.306Z"
       }
     ],
-    "nextId": 2290
+    "nextId": 2295
   }
 }
