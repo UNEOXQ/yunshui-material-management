@@ -75,9 +75,58 @@
 }
 
 .cart-section {
-  flex: 0 0 30%;
+  flex: 0 0 35%;
   border-left: 1px solid #e0e0e0;
   background-color: #f8f9fa;
+}
+
+.cart-with-project {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.project-selection-section {
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.order-name-section {
+  margin-top: 16px;
+}
+
+.order-name-label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.order-name-label .optional {
+  font-weight: 400;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.order-name-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.order-name-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.order-name-input::placeholder {
+  color: #9ca3af;
 }
 
 /* Material Selection Filters */

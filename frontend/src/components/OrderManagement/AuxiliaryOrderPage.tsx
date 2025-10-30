@@ -574,7 +574,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   };
 
   // 處理輔材訂單創建
-  const handleCreateAuxiliaryOrder = async (cartItems: CartItem[]) => {
+  const handleCreateAuxiliaryOrder = async (cartItems: CartItem[], projectData?: { projectId?: string; newProjectName?: string; orderName?: string }) => {
     try {
       setLoading(true);
       const orderItems = cartItems.map(item => ({
@@ -582,12 +582,25 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
         quantity: item.quantity
       }));
 
-      const response = await orderService.createAuxiliaryOrder({ items: orderItems });
+      // 準備訂單數據，包含專案信息
+      const orderPayload = {
+        items: orderItems,
+        ...(projectData?.projectId && { projectId: projectData.projectId }),
+        ...(projectData?.newProjectName && { newProjectName: projectData.newProjectName }),
+        ...(projectData?.orderName && { orderName: projectData.orderName })
+      };
+
+      const response = await orderService.createAuxiliaryOrder(orderPayload);
       
       if (response.success) {
         setIsMaterialModalOpen(false);
         await loadOrders(); // 重新載入訂單列表
-        alert('輔材訂單創建成功！');
+        
+        const projectInfo = projectData?.newProjectName ? 
+          `並創建了新專案「${projectData.newProjectName}」` : 
+          projectData?.projectId ? '並關聯到選定專案' : '';
+        
+        alert(`輔材訂單創建成功！${projectInfo}`);
       } else {
         throw new Error(response.message || '創建訂單失敗');
       }
@@ -600,7 +613,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   };
 
   // 處理完成材訂單創建
-  const handleCreateFinishedOrder = async (cartItems: CartItem[]) => {
+  const handleCreateFinishedOrder = async (cartItems: CartItem[], projectData?: { projectId?: string; newProjectName?: string; orderName?: string }) => {
     try {
       setLoading(true);
       const orderItems = cartItems.map(item => ({
@@ -608,12 +621,25 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
         quantity: item.quantity
       }));
 
-      const response = await orderService.createFinishedOrder({ items: orderItems });
+      // 準備訂單數據，包含專案信息
+      const orderPayload = {
+        items: orderItems,
+        ...(projectData?.projectId && { projectId: projectData.projectId }),
+        ...(projectData?.newProjectName && { newProjectName: projectData.newProjectName }),
+        ...(projectData?.orderName && { orderName: projectData.orderName })
+      };
+
+      const response = await orderService.createFinishedOrder(orderPayload);
       
       if (response.success) {
         setIsFinishedMaterialModalOpen(false);
         await loadOrders(); // 重新載入訂單列表
-        alert('完成材訂單創建成功！');
+        
+        const projectInfo = projectData?.newProjectName ? 
+          `並創建了新專案「${projectData.newProjectName}」` : 
+          projectData?.projectId ? '並關聯到選定專案' : '';
+        
+        alert(`完成材訂單創建成功！${projectInfo}`);
       } else {
         throw new Error(response.message || '創建訂單失敗');
       }

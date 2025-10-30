@@ -3,13 +3,14 @@ import { Material } from '../../types';
 import { MaterialCard } from './MaterialCard';
 import { MaterialFilters } from './MaterialFilters';
 import { ShoppingCart } from './ShoppingCart';
+import { ProjectSelector } from '../ProjectSelection/ProjectSelector';
 import { materialService, MaterialFilters as FilterType } from '../../services/materialService';
 import './MaterialSelection.css';
 
 interface MaterialSelectionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onOrderCreate: (orderItems: CartItem[]) => void;
+  onOrderCreate: (orderItems: CartItem[], projectData?: { projectId?: string; newProjectName?: string; orderName?: string }) => void;
   materialType: 'AUXILIARY' | 'FINISHED';
   title: string;
 }
@@ -37,6 +38,9 @@ export const MaterialSelectionModal: React.FC<MaterialSelectionModalProps> = ({
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('');
+  const [newProjectName, setNewProjectName] = useState<string>('');
+  const [orderName, setOrderName] = useState<string>('');
   const itemsPerPage = 12;
 
   useEffect(() => {
@@ -119,9 +123,31 @@ export const MaterialSelectionModal: React.FC<MaterialSelectionModalProps> = ({
       return;
     }
     
-    onOrderCreate(cartItems);
+    // 準備專案數據
+    const projectData = {
+      projectId: selectedProjectId || undefined,
+      newProjectName: newProjectName || undefined,
+      orderName: orderName || undefined
+    };
+    
+    onOrderCreate(cartItems, projectData);
+    
+    // 重置狀態
     setCartItems([]);
+    setSelectedProjectId('');
+    setNewProjectName('');
+    setOrderName('');
     onClose();
+  };
+
+  const handleProjectSelect = (projectId: string, projectName: string) => {
+    setSelectedProjectId(projectId);
+    setNewProjectName(''); // 清除新專案名稱
+  };
+
+  const handleNewProject = (projectName: string) => {
+    setNewProjectName(projectName);
+    setSelectedProjectId(''); // 清除選中的專案
   };
 
   const handleFiltersChange = (newFilters: FilterType) => {
@@ -250,15 +276,40 @@ export const MaterialSelectionModal: React.FC<MaterialSelectionModalProps> = ({
 
             {isCartOpen && (
               <div className="cart-section">
-                <ShoppingCart
-                  items={cartItems}
-                  onUpdateItem={handleUpdateCartItem}
-                  onRemoveItem={handleRemoveFromCart}
-                  onClearCart={handleClearCart}
-                  onCreateOrder={handleCreateOrder}
-                  totalAmount={getTotalAmount()}
-                  loading={false}
-                />
+                <div className="cart-with-project">
+                  <div className="project-selection-section">
+                    <ProjectSelector
+                      selectedProjectId={selectedProjectId}
+                      onProjectSelect={handleProjectSelect}
+                      onNewProject={handleNewProject}
+                      placeholder="選擇專案或創建新專案"
+                    />
+                    
+                    <div className="order-name-section">
+                      <label className="order-name-label">
+                        訂單名稱 <span className="optional">(可選)</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={orderName}
+                        onChange={(e) => setOrderName(e.target.value)}
+                        placeholder={`${materialType === 'AUXILIARY' ? '輔材' : '完成材'}訂單-${new Date().toLocaleDateString()}`}
+                        maxLength={100}
+                        className="order-name-input"
+                      />
+                    </div>
+                  </div>
+                  
+                  <ShoppingCart
+                    items={cartItems}
+                    onUpdateItem={handleUpdateCartItem}
+                    onRemoveItem={handleRemoveFromCart}
+                    onClearCart={handleClearCart}
+                    onCreateOrder={handleCreateOrder}
+                    totalAmount={getTotalAmount()}
+                    loading={false}
+                  />
+                </div>
               </div>
             )}
           </div>
