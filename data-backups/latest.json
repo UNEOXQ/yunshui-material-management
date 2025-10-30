@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-30T23:29:13.554Z",
+  "timestamp": "2025-10-30T23:34:32.851Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -644,6 +644,66 @@
             }
           }
         ]
+      },
+      {
+        "userId": "id-2033",
+        "status": "PENDING",
+        "totalAmount": 65.49000000000001,
+        "name": "輔材訂單-10/30/2025",
+        "projectId": "id-2297",
+        "id": "id-2298",
+        "createdAt": "2025-10-30T23:32:58.971Z",
+        "updatedAt": "2025-10-30T23:32:58.971Z",
+        "items": [
+          {
+            "orderId": "id-2298",
+            "materialId": "id-2029",
+            "quantity": 1,
+            "unitPrice": 8.5,
+            "id": "id-2299",
+            "materialName": "電線 2.5mm²",
+            "materialCategory": "電氣材料",
+            "materialType": "AUXILIARY",
+            "supplier": "電氣供應商C",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
+            "material": {
+              "id": "id-2029",
+              "name": "電線 2.5mm²",
+              "category": "電氣材料",
+              "price": 8.5,
+              "quantity": 475,
+              "supplier": "電氣供應商C",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T03:17:25.096Z",
+              "updatedAt": "2025-10-24T00:09:03.097Z"
+            }
+          },
+          {
+            "orderId": "id-2298",
+            "materialId": "id-2027",
+            "quantity": 1,
+            "unitPrice": 56.99,
+            "id": "id-2300",
+            "materialName": "灰板黑螺絲-1-1/4-box",
+            "materialCategory": "建材",
+            "materialType": "AUXILIARY",
+            "supplier": "CBS",
+            "imageUrl": "",
+            "material": {
+              "id": "id-2027",
+              "name": "灰板黑螺絲-1-1/4-box",
+              "category": "建材",
+              "price": 56.99,
+              "quantity": 1,
+              "supplier": "CBS",
+              "imageUrl": "",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T03:17:25.095Z",
+              "updatedAt": "2025-10-27T18:37:56.981Z"
+            }
+          }
+        ]
       }
     ],
     "users": [
@@ -840,6 +900,16 @@
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-30T23:12:26.216Z",
         "updatedAt": "2025-10-30T23:12:26.216Z"
+      },
+      {
+        "id": "id-2297",
+        "orderId": "",
+        "projectName": "111",
+        "overallStatus": "ACTIVE",
+        "description": "由訂單創建的專案",
+        "createdBy": "id-2033",
+        "createdAt": "2025-10-30T23:32:50.204Z",
+        "updatedAt": "2025-10-30T23:32:50.204Z"
       }
     ],
     "orderItems": [
@@ -1010,6 +1080,20 @@
         "quantity": 1,
         "unitPrice": 14.66,
         "id": "id-2293"
+      },
+      {
+        "orderId": "id-2298",
+        "materialId": "id-2029",
+        "quantity": 1,
+        "unitPrice": 8.5,
+        "id": "id-2299"
+      },
+      {
+        "orderId": "id-2298",
+        "materialId": "id-2027",
+        "quantity": 1,
+        "unitPrice": 56.99,
+        "id": "id-2300"
       }
     ],
     "statusUpdates": [
@@ -1544,6 +1628,30 @@
         "statusValue": "",
         "createdAt": "2025-10-24T23:28:02.705Z",
         "updatedAt": "2025-10-24T23:28:02.705Z"
+      },
+      {
+        "id": "id-2295",
+        "projectId": "id-2294",
+        "updatedBy": "id-2035",
+        "statusType": "ORDER",
+        "statusValue": "Ordered - Processing",
+        "additionalData": {
+          "primaryStatus": "Ordered",
+          "secondaryStatus": "Processing"
+        },
+        "createdAt": "2025-10-30T23:32:28.664Z"
+      },
+      {
+        "id": "id-2296",
+        "projectId": "id-2294",
+        "updatedBy": "id-2035",
+        "statusType": "PICKUP",
+        "statusValue": "Failed (E.S)",
+        "additionalData": {
+          "primaryStatus": "Failed",
+          "secondaryStatus": "(E.S)"
+        },
+        "createdAt": "2025-10-30T23:32:28.670Z"
       }
     ],
     "messages": [
@@ -1560,6 +1668,6 @@
         "updatedAt": "2025-10-23T21:29:33.306Z"
       }
     ],
-    "nextId": 2295
+    "nextId": 2301
   }
 }
