@@ -3,7 +3,7 @@ import { Material } from '../../types';
 import { FinishedMaterialCard } from './FinishedMaterialCard';
 import { MaterialFilters } from './MaterialFilters';
 import { ShoppingCart } from './ShoppingCart';
-import { ProjectSelector } from '../ProjectSelection/ProjectSelector';
+import { SimpleProjectSelector } from '../ProjectSelection/SimpleProjectSelector';
 import { materialService, MaterialFilters as FilterType } from '../../services/materialService';
 import './MaterialSelection.css';
 
@@ -37,7 +37,7 @@ export const FinishedMaterialModal: React.FC<FinishedMaterialModalProps> = ({
   const [supplierFilter, setSupplierFilter] = useState<string>('');
   const [availableSuppliers, setAvailableSuppliers] = useState<string[]>([]);
   const [selectedProjectId, setSelectedProjectId] = useState<string>('');
-  const [newProjectName, setNewProjectName] = useState<string>('');
+
   const [orderName, setOrderName] = useState<string>('');
   const itemsPerPage = 12;
 
@@ -144,7 +144,6 @@ export const FinishedMaterialModal: React.FC<FinishedMaterialModalProps> = ({
     // 準備專案數據
     const projectData = {
       projectId: selectedProjectId || undefined,
-      newProjectName: newProjectName || undefined,
       orderName: orderName || undefined
     };
     
@@ -153,20 +152,15 @@ export const FinishedMaterialModal: React.FC<FinishedMaterialModalProps> = ({
     // 重置狀態
     setCartItems([]);
     setSelectedProjectId('');
-    setNewProjectName('');
     setOrderName('');
     onClose();
   };
 
   const handleProjectSelect = (projectId: string, projectName: string) => {
     setSelectedProjectId(projectId);
-    setNewProjectName(''); // 清除新專案名稱
   };
 
-  const handleNewProject = (projectName: string) => {
-    setNewProjectName(projectName);
-    setSelectedProjectId(''); // 清除選中的專案
-  };
+
 
   const handleFiltersChange = (newFilters: FilterType) => {
     setFilters({ ...newFilters, type: 'FINISHED' });
@@ -338,11 +332,9 @@ export const FinishedMaterialModal: React.FC<FinishedMaterialModalProps> = ({
               <div className="cart-section">
                 <div className="cart-with-project">
                   <div className="project-selection-section">
-                    <ProjectSelector
+                    <SimpleProjectSelector
                       selectedProjectId={selectedProjectId}
                       onProjectSelect={handleProjectSelect}
-                      onNewProject={handleNewProject}
-                      placeholder="選擇專案或創建新專案"
                     />
                     
                     <div className="order-name-section">

@@ -62,11 +62,40 @@ export const ProjectSelector: React.FC<ProjectSelectorProps> = ({
     }
   };
 
-  const handleCreateNewProject = () => {
-    if (newProjectName.trim()) {
-      onNewProject(newProjectName.trim());
-      setShowNewProjectInput(false);
-      setNewProjectName('');
+  const handleCreateNewProject = async () => {
+    if (!newProjectName.trim()) return;
+    
+    try {
+      console.log('🏗️ ProjectSelector 創建新專案:', newProjectName.trim());
+      
+      const response = await projectService.createProject({
+        projectName: newProjectName.trim(),
+        description: `由專案選擇器創建的專案`
+      });
+      
+      if (response.success && response.data) {
+        console.log('✅ ProjectSelector 專案創建成功:', response.data);
+        
+        const project = response.data as Project;
+        
+        // 添加到專案列表
+        setProjects(prev => [project, ...prev]);
+        
+        // 選中新創建的專案
+        onProjectSelect(project.id, project.projectName);
+        
+        // 重置輸入狀態
+        setShowNewProjectInput(false);
+        setNewProjectName('');
+        
+        console.log('✅ 專案選擇器狀態已更新');
+      } else {
+        console.error('❌ ProjectSelector 專案創建失敗:', response.message);
+        alert(`專案創建失敗: ${response.message}`);
+      }
+    } catch (error: any) {
+      console.error('❌ ProjectSelector 專案創建錯誤:', error);
+      alert(`專案創建失敗: ${error.message}`);
     }
   };
 
