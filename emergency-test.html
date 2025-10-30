@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>緊急測試 - 專案創建功能</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>🚨 緊急測試 - 專案創建功能</h1>
+    
+    <div class="test-section">
+        <h2>1. 測試 API 連接</h2>
+        <button onclick="testAPIConnection()">測試 API 連接</button>
+        <div id="api-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. 測試專案創建</h2>
+        <input type="text" id="project-name" placeholder="輸入專案名稱" value="緊急測試專案">
+        <button onclick="testProjectCreation()">創建專案</button>
+        <div id="project-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Console 輸出</h2>
+        <p>請打開 F12 開發者工具查看 Console 輸出</p>
+    </div>
+
+    <script>
+        // 使用線上 API URL
+        const API_URL = 'https://yunshui-backend1.onrender.com/api';
+        
+        async function testAPIConnection() {
+            console.log('🔍 測試 API 連接...');
+            const resultDiv = document.getElementById('api-result');
+            
+            try {
+                const response = await fetch(`${API_URL}/projects`);
+                console.log('📡 API 響應狀態:', response.status);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ API 連接成功:', data);
+                    resultDiv.innerHTML = `<span class="success">✅ API 連接成功！找到 ${data.data?.length || 0} 個專案</span>`;
+                } else {
+                    console.error('❌ API 響應錯誤:', response.status);
+                    resultDiv.innerHTML = `<span class="error">❌ API 連接失敗: ${response.status}</span>`;
+                }
+            } catch (error) {
+                console.error('❌ API 連接錯誤:', error);
+                resultDiv.innerHTML = `<span class="error">❌ 連接錯誤: ${error.message}</span>`;
+            }
+        }
+
+        async function testProjectCreation() {
+            console.log('🏗️ 測試專案創建...');
+            const projectName = document.getElementById('project-name').value;
+            const resultDiv = document.getElementById('project-result');
+            
+            if (!projectName.trim()) {
+                alert('請輸入專案名稱');
+                return;
+            }
+
+            try {
+                console.log('📝 創建專案:', projectName);
+                
+                const response = await fetch(`${API_URL}/projects`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        projectName: projectName.trim(),
+                        description: '緊急測試創建的專案'
+                    })
+                });
+
+                console.log('📡 專案創建響應狀態:', response.status);
+                const data = await response.json();
+                console.log('📡 專案創建響應數據:', data);
+
+                if (response.ok && data.success) {
+                    console.log('✅ 專案創建成功:', data.data);
+                    resultDiv.innerHTML = `<span class="success">✅ 專案創建成功！專案 ID: ${data.data.id}</span>`;
+                } else {
+                    console.error('❌ 專案創建失敗:', data.message);
+                    resultDiv.innerHTML = `<span class="error">❌ 專案創建失敗: ${data.message}</span>`;
+                }
+            } catch (error) {
+                console.error('❌ 專案創建錯誤:', error);
+                resultDiv.innerHTML = `<span class="error">❌ 創建錯誤: ${error.message}</span>`;
+            }
+        }
+
+        // 頁面載入時自動測試 API 連接
+        window.onload = function() {
+            console.log('🚀 緊急測試頁面載入完成');
+            console.log('📍 API URL:', API_URL);
+            testAPIConnection();
+        };
+    </script>
+</body>
+</html>
