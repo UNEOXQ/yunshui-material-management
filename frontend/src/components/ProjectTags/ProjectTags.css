@@ -1,0 +1,82 @@
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 16px 0;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.project-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #495057;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-tag:hover {
+  background-color: #e3f2fd;
+  border-color: #2196f3;
+  color: #1976d2;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.project-tag.active {
+  background-color: #2196f3;
+  border-color: #1976d2;
+  color: white;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.project-tag.all-tag {
+  background-color: #6c757d;
+  border-color: #5a6268;
+  color: white;
+  font-weight: 600;
+}
+
+.project-tag.all-tag:hover {
+  background-color: #5a6268;
+  border-color: #495057;
+}
+
+.project-tag.all-tag.active {
+  background-color: #495057;
+  border-color: #343a40;
+}
+
+.loading-text,
+.no-projects-text {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 14px;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .project-tags {
+    padding: 8px;
+    gap: 6px;
+  }
+  
+  .project-tag {
+    padding: 4px 8px;
+    font-size: 12px;
+    max-width: 150px;
+  }
+}

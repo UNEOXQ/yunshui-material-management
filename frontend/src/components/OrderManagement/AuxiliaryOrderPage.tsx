@@ -4,6 +4,7 @@ import { statusService } from '../../services/statusService';
 import { Order, OrderItem } from '../../types';
 import { MaterialSelectionModal, CartItem } from '../MaterialSelection/MaterialSelectionModal';
 import { FinishedMaterialModal } from '../MaterialSelection/FinishedMaterialModal';
+import { ProjectTags } from '../ProjectTags/ProjectTags';
 import OperationHistory from './OperationHistory';
 import { processImageUrl } from '../../utils/imageUtils';
 
@@ -145,6 +146,9 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   const [orderFilter, setOrderFilter] = useState<'all' | 'processing' | 'completed'>('all');
   const [allOrders, setAllOrders] = useState<Order[]>([]); // 存儲所有訂單
   const [filteredOrders, setFilteredOrders] = useState<Order[]>([]); // 顯示的過濾後訂單
+  
+  // 專案篩選狀態
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
 
   // 圖片查看狀態
   const [selectedImage, setSelectedImage] = useState<{url: string, name: string} | null>(null);
@@ -206,10 +210,17 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
     return backendCheckStatus && backendCheckStatus !== '' && backendCheckStatus !== '未設定' && backendCheckStatus !== 'RESET';
   };
 
+  // 專案選擇處理函數
+  const handleProjectSelect = (projectId: string | null) => {
+    setSelectedProjectId(projectId);
+    console.log('選擇專案篩選:', projectId ? `專案 ${projectId}` : '全部訂單');
+  };
+
   // 過濾訂單
   const filterOrders = (orders: Order[], filter: 'all' | 'processing' | 'completed'): Order[] => {
     let filtered: Order[];
     
+    // 首先按狀態篩選
     switch (filter) {
       case 'completed':
         filtered = orders.filter(order => isOrderCompleted(order));
@@ -221,6 +232,15 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
       default:
         filtered = orders;
         break;
+    }
+    
+    // 然後按專案篩選
+    if (selectedProjectId) {
+      filtered = filtered.filter(order => {
+        // 檢查訂單是否屬於選中的專案
+        const orderProjectId = (order as any).projectId;
+        return orderProjectId === selectedProjectId;
+      });
     }
     
     // 按創建時間排序，最新的在最上面
@@ -328,12 +348,12 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
     preloadUserRoles(); // 預載入用戶角色信息
   }, [selectedOrderType]); // 當選擇的訂單類型改變時重新載入
 
-  // 當過濾器或訂單狀態改變時重新過濾
+  // 當過濾器、專案篩選或訂單狀態改變時重新過濾
   useEffect(() => {
     const filtered = filterOrders(allOrders, orderFilter);
     setFilteredOrders(filtered);
     setOrders(filtered); // 保持向後兼容
-  }, [orderFilter, allOrders, orderStatuses]);
+  }, [orderFilter, allOrders, orderStatuses, selectedProjectId]);
 
   const loadOrders = async () => {
     try {
@@ -765,6 +785,13 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
                 </span>
               )}
             </div>
+            
+            {/* 專案標籤篩選 */}
+            <ProjectTags
+              selectedProjectId={selectedProjectId}
+              onProjectSelect={handleProjectSelect}
+              className="order-project-tags"
+            />
             {canViewStatus && allOrders.length > 0 && (
               <div className="order-stats-container">
                 {user.role !== 'WAREHOUSE' && user.role !== 'ADMIN' && (

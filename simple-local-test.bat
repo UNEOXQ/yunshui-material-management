@@ -9,24 +9,24 @@ taskkill /f /im node.exe >nul 2>&1
 echo ⏳ 等待 3 秒...
 timeout /t 3 /nobreak >nul
 
-echo 🚀 啟動後端服務器 (端口 3001)...
+echo 🚀 啟動後端服務器 (端口 3004)...
 start "後端服務器" cmd /k "cd backend && npm start"
 
 echo ⏳ 等待後端啟動 (8 秒)...
 timeout /t 8 /nobreak >nul
 
-echo 🚀 啟動前端服務器 (端口 5173)...
+echo 🚀 啟動前端服務器 (端口 3000)...
 start "前端服務器" cmd /k "cd frontend && npm run dev"
 
 echo ⏳ 等待前端啟動 (8 秒)...
 timeout /t 8 /nobreak >nul
 
 echo 🌐 打開瀏覽器...
-start http://localhost:5173
+start http://localhost:3000
 
 echo ✅ 本地測試環境已啟動！
-echo 📝 前端: http://localhost:5173
-echo 📝 後端: http://localhost:3001
+echo 📝 前端: http://localhost:3000
+echo 📝 後端: http://localhost:3004
 echo.
 echo 📋 測試步驟:
 echo 1. 檢查前端是否正常載入

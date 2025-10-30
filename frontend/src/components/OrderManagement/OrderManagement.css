@@ -2692,3 +2692,60 @@ dal Styles */
     width: 100%;
   }
 }
+/* 專
+案標籤樣式 */
+.order-project-tags {
+  margin: 16px 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-title-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 專案標籤在訂單管理頁面的特殊樣式 */
+.orders-section .project-tags {
+  background-color: #ffffff;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.orders-section .project-tag {
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.orders-section .project-tag.active {
+  background-color: #667eea;
+  border-color: #5a67d8;
+  color: white;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+  .section-header {
+    gap: 12px;
+  }
+  
+  .section-title-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .orders-section .project-tags {
+    padding: 8px 12px;
+  }
+}
