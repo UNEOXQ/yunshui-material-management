@@ -4,10 +4,10 @@
 }
 
 .material-selection-modal {
-  max-width: 95vw;
+  max-width: 98vw;
   max-height: 95vh;
-  width: 1200px;
-  height: 800px;
+  width: 1400px;
+  height: 850px;
 }
 
 .material-selection-modal .modal-header {
@@ -75,7 +75,7 @@
 }
 
 .cart-section {
-  flex: 0 0 35%;
+  flex: 0 0 400px;
   border-left: 1px solid #e0e0e0;
   background-color: #f8f9fa;
 }
@@ -87,9 +87,10 @@
 }
 
 .project-selection-section {
-  padding: 20px;
+  padding: 16px;
   border-bottom: 1px solid #e5e7eb;
   background-color: #f9fafb;
+  flex-shrink: 0;
 }
 
 .order-name-section {

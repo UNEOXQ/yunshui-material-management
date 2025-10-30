@@ -198,7 +198,34 @@
 }
 
 /* 響應式設計 */
+@media (max-width: 1200px) {
+  .material-selection-modal {
+    width: 95vw;
+    height: 90vh;
+  }
+  
+  .cart-section {
+    flex: 0 0 350px;
+  }
+}
+
 @media (max-width: 768px) {
+  .material-selection-modal {
+    width: 98vw;
+    height: 95vh;
+  }
+  
+  .selection-layout {
+    flex-direction: column;
+  }
+  
+  .cart-section {
+    flex: none;
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #e0e0e0;
+  }
+  
   .new-project-actions {
     flex-direction: column;
   }

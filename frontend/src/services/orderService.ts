@@ -44,6 +44,9 @@ export interface CreateOrderRequest {
     materialId: string;
     quantity: number;
   }>;
+  projectId?: string;
+  newProjectName?: string;
+  orderName?: string;
 }
 
 export interface OrderFilters {
@@ -231,7 +234,12 @@ class OrderService {
    */
   async createAuxiliaryOrder(orderData: CreateOrderRequest): Promise<ApiResponse<{ order: Order; project: any }>> {
     try {
-      const response = await apiClient.post<ApiResponse<{ order: Order; project: any }>>('/orders/auxiliary', orderData);
+      // 如果有專案相關數據，使用支持專案的 API
+      const endpoint = (orderData.projectId || orderData.newProjectName) 
+        ? '/orders/auxiliary-with-project' 
+        : '/orders/auxiliary';
+      
+      const response = await apiClient.post<ApiResponse<{ order: Order; project: any }>>(endpoint, orderData);
       return response.data;
     } catch (error: any) {
       console.error('Error creating auxiliary order:', error);
@@ -285,7 +293,12 @@ class OrderService {
    */
   async createFinishedOrder(orderData: CreateOrderRequest): Promise<ApiResponse<{ order: Order; project: any }>> {
     try {
-      const response = await apiClient.post<ApiResponse<{ order: Order; project: any }>>('/orders/finished', orderData);
+      // 如果有專案相關數據，使用支持專案的 API
+      const endpoint = (orderData.projectId || orderData.newProjectName) 
+        ? '/orders/finished-with-project' 
+        : '/orders/finished';
+      
+      const response = await apiClient.post<ApiResponse<{ order: Order; project: any }>>(endpoint, orderData);
       return response.data;
     } catch (error: any) {
       console.error('Error creating finished order:', error);

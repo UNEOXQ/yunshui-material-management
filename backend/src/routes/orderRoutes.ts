@@ -15,6 +15,16 @@ router.use(authenticateToken);
 router.post('/auxiliary', requireRole('PM', 'ADMIN'), OrderController.createAuxiliaryOrder);
 
 /**
+ * @route   POST /api/orders/auxiliary-with-project
+ * @desc    Create a new auxiliary material order with project support (PM and Admin)
+ * @access  Private (PM, ADMIN)
+ */
+router.post('/auxiliary-with-project', requireRole('PM', 'ADMIN'), async (req, res) => {
+  const { OrderControllerWithProject } = await import('../controllers/orderControllerWithProject');
+  return OrderControllerWithProject.createAuxiliaryOrderWithProject(req, res);
+});
+
+/**
  * @route   GET /api/orders/auxiliary
  * @desc    Get auxiliary material orders with project details (PM, Warehouse, Admin)
  * @access  Private (PM, WAREHOUSE, ADMIN)
@@ -30,6 +40,16 @@ router.get('/auxiliary', requireRole('PM', 'WAREHOUSE', 'ADMIN'), OrderControlle
  * @access  Private (AM, ADMIN)
  */
 router.post('/finished', requireRole('AM', 'ADMIN'), OrderController.createFinishedOrder);
+
+/**
+ * @route   POST /api/orders/finished-with-project
+ * @desc    Create a new finished material order with project support (AM and Admin)
+ * @access  Private (AM, ADMIN)
+ */
+router.post('/finished-with-project', requireRole('AM', 'ADMIN'), async (req, res) => {
+  const { OrderControllerWithProject } = await import('../controllers/orderControllerWithProject');
+  return OrderControllerWithProject.createFinishedOrderWithProject(req, res);
+});
 
 /**
  * @route   GET /api/orders/finished
