@@ -392,10 +392,7 @@ class OrderService {
       };
     }
   }
-}
-
-export const orderService = new OrderService(); 
- // 將訂單分配到專案
+  // 將訂單分配到專案
   async assignOrderToProject(orderId: string, projectId: string): Promise<ApiResponse<any>> {
     try {
       const response = await apiClient.put(`/orders/${orderId}/project`, {
@@ -426,3 +423,6 @@ export const orderService = new OrderService();
       };
     }
   }
+}
+
+export const orderService = new OrderService();

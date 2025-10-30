@@ -350,9 +350,9 @@ export class OrderControllerWithProject {
       });
     }
   }
-}  // 將訂單分
-配到專案
-  static async assignOrderToProject(req: AuthenticatedRequest, res: Response) {
+
+  // 將訂單分配到專案
+  static async assignOrderToProject(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const { id: orderId } = req.params;
       const { projectId } = req.body;
@@ -361,28 +361,31 @@ export class OrderControllerWithProject {
 
       // 驗證輸入
       if (!orderId || !projectId) {
-        return res.status(400).json({
+        res.status(400).json({
           success: false,
           message: '訂單ID和專案ID都是必需的'
         });
+        return;
       }
 
       // 檢查訂單是否存在
       const order = await memoryDb.getOrderById(orderId);
       if (!order) {
-        return res.status(404).json({
+        res.status(404).json({
           success: false,
           message: '找不到指定的訂單'
         });
+        return;
       }
 
       // 檢查專案是否存在
       const project = await memoryDb.findProjectById(projectId);
       if (!project) {
-        return res.status(404).json({
+        res.status(404).json({
           success: false,
           message: '找不到指定的專案'
         });
+        return;
       }
 
       // 分配訂單到專案
@@ -418,7 +421,7 @@ export class OrderControllerWithProject {
   }
 
   // 移除訂單的專案關聯
-  static async removeOrderFromProject(req: AuthenticatedRequest, res: Response) {
+  static async removeOrderFromProject(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
       const { id: orderId } = req.params;
 
@@ -426,19 +429,21 @@ export class OrderControllerWithProject {
 
       // 驗證輸入
       if (!orderId) {
-        return res.status(400).json({
+        res.status(400).json({
           success: false,
           message: '訂單ID是必需的'
         });
+        return;
       }
 
       // 檢查訂單是否存在
       const order = await memoryDb.getOrderById(orderId);
       if (!order) {
-        return res.status(404).json({
+        res.status(404).json({
           success: false,
           message: '找不到指定的訂單'
         });
+        return;
       }
 
       // 移除訂單的專案關聯
