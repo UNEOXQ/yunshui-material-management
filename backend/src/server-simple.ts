@@ -95,6 +95,7 @@ import errorRoutes from './routes/errorRoutes';
 import statusRoutes from './routes/statusRoutes';
 import backupRoutes from './routes/backup';
 import messageRoutes from './routes/messageRoutes';
+import projectRoutes from './routes/projectRoutes';
 import { memoryDb } from './config/memory-database';
 import { githubBackupService } from './services/githubBackupService';
 import { githubRecoveryService } from './services/githubRecoveryService';
@@ -109,6 +110,7 @@ app.use('/api/errors', errorRoutes);
 app.use('/api/status', statusRoutes);
 app.use('/api/backup', backupRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/projects', projectRoutes);
 
 // 圖片恢復端點
 app.post('/api/materials/restore-images', async (_req, res) => {

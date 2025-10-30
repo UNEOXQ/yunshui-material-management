@@ -29,6 +29,8 @@ export interface Order {
   totalAmount: number;
   status: 'PENDING' | 'CONFIRMED' | 'PROCESSING' | 'COMPLETED' | 'CANCELLED';
   items: OrderItem[];
+  projectId?: string; // 關聯的專案ID
+  projectName?: string; // 專案名稱（用於顯示）
   createdAt: Date;
   updatedAt: Date;
 }
@@ -50,10 +52,12 @@ export interface OrderItem {
 
 export interface Project {
   id: string;
-  orderId: string;
+  orderId: string; // 空字符串表示獨立專案
   projectName: string;
   overallStatus: 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
   statusHistory: StatusUpdate[];
+  description?: string;
+  createdBy?: string;
   createdAt: Date;
   updatedAt: Date;
 }

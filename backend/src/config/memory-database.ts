@@ -604,7 +604,7 @@ export class MemoryDatabase {
   }
 
   // 豐富訂單數據，包含完整的材料信息
-  private async enrichOrderWithMaterials(order: Order): Promise<OrderWithItems> {
+  async enrichOrderWithMaterials(order: Order): Promise<OrderWithItems> {
     const orderItems = this.orderItems.filter(item => item.orderId === order.id);
     
     const enrichedItems = await Promise.all(orderItems.map(async (item) => {
@@ -705,23 +705,122 @@ export class MemoryDatabase {
       updatedAt: new Date()
     };
     this.projects.push(newProject);
+    this.hasUnsavedChanges = true;
+    this.saveToFile();
     return newProject;
   }
 
-  async updateProjectStatus(id: string, status: 'ACTIVE' | 'COMPLETED' | 'CANCELLED'): Promise<Project | null> {
+  // 創建獨立專案（不關聯訂單）
+  async createStandaloneProject(projectData: {
+    projectName: string;
+    description?: string;
+    createdBy: string;
+  }): Promise<Project> {
+    const newProject: Project = {
+      id: this.generateId(),
+      orderId: '', // 獨立專案沒有關聯訂單
+      projectName: projectData.projectName,
+      overallStatus: 'ACTIVE',
+      description: projectData.description || undefined,
+      createdBy: projectData.createdBy,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.projects.push(newProject);
+    this.hasUnsavedChanges = true;
+    this.saveToFile();
+    return newProject;
+  }
+
+  // 獲取所有專案
+  async getAllProjects(): Promise<Project[]> {
+    return [...this.projects].sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }
+
+  // 更新專案
+  async updateProject(id: string, updateData: {
+    projectName?: string;
+    description?: string;
+    overallStatus?: 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
+  }): Promise<Project | null> {
     const index = this.projects.findIndex(p => p.id === id);
     if (index === -1) return null;
 
     this.projects[index] = {
       ...this.projects[index],
-      overallStatus: status,
+      ...updateData,
       updatedAt: new Date()
     };
+    this.hasUnsavedChanges = true;
+    this.saveToFile();
     return this.projects[index];
+  }
+
+  async updateProjectStatus(id: string, status: 'ACTIVE' | 'COMPLETED' | 'CANCELLED'): Promise<Project | null> {
+    return this.updateProject(id, { overallStatus: status });
   }
 
   async findProjectById(id: string): Promise<Project | null> {
     return this.projects.find(p => p.id === id) || null;
+  }
+
+  // 獲取專案下的所有訂單
+  async getOrdersByProject(projectId: string): Promise<OrderWithItems[]> {
+    const project = await this.findProjectById(projectId);
+    if (!project) return [];
+
+    // 如果是關聯到特定訂單的專案
+    if (project.orderId) {
+      const order = await this.getOrderById(project.orderId);
+      if (order) {
+        return [await this.enrichOrderWithMaterials(order)];
+      }
+      return [];
+    }
+
+    // 如果是獨立專案，查找所有關聯的訂單
+    const projectOrders = this.orders.filter(order => 
+      (order as any).projectId === projectId
+    );
+
+    const enrichedOrders = await Promise.all(
+      projectOrders.map(order => this.enrichOrderWithMaterials(order))
+    );
+
+    return enrichedOrders;
+  }
+
+  // 刪除專案
+  async deleteProject(id: string): Promise<boolean> {
+    const index = this.projects.findIndex(p => p.id === id);
+    if (index === -1) return false;
+
+    // 刪除專案相關的狀態更新
+    this.statusUpdates = this.statusUpdates.filter(su => su.projectId !== id);
+
+    // 刪除專案
+    this.projects.splice(index, 1);
+    
+    this.hasUnsavedChanges = true;
+    this.saveToFile();
+    return true;
+  }
+
+  // 將訂單關聯到專案
+  async assignOrderToProject(orderId: string, projectId: string): Promise<boolean> {
+    const orderIndex = this.orders.findIndex(o => o.id === orderId);
+    if (orderIndex === -1) return false;
+
+    const project = await this.findProjectById(projectId);
+    if (!project) return false;
+
+    // 更新訂單的專案關聯
+    (this.orders[orderIndex] as any).projectId = projectId;
+    this.hasUnsavedChanges = true;
+    this.saveToFile();
+    return true;
   }
 
   // Status Update methods

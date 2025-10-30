@@ -33,6 +33,7 @@ export interface Order {
   name?: string; // 可選的訂單名稱，用戶可以自定義
   totalAmount: number;
   status: OrderStatus;
+  projectId?: string; // 關聯的專案ID
   createdAt: Date;
   updatedAt: Date;
 }
@@ -60,9 +61,11 @@ export interface OrderWithItems extends Order {
 
 export interface Project {
   id: string;
-  orderId: string;
+  orderId: string; // 空字符串表示獨立專案
   projectName: string;
   overallStatus: ProjectStatus;
+  description?: string | undefined;
+  createdBy?: string | undefined;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -47,7 +47,9 @@ const createOrderSchema = Joi.object({
     .messages({
       'array.min': 'At least one item is required',
       'any.required': 'Items are required'
-    })
+    }),
+  projectId: Joi.string().optional().allow(''),
+  newProjectName: Joi.string().optional().allow('')
 });
 
 const paginationSchema = Joi.object({
