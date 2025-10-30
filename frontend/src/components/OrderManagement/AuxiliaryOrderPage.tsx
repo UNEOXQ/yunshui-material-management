@@ -5,6 +5,7 @@ import { Order, OrderItem } from '../../types';
 import { MaterialSelectionModal, CartItem } from '../MaterialSelection/MaterialSelectionModal';
 import { FinishedMaterialModal } from '../MaterialSelection/FinishedMaterialModal';
 import { ProjectTags } from '../ProjectTags/ProjectTags';
+import { OrderProjectManager } from '../OrderProjectManager/OrderProjectManager';
 import OperationHistory from './OperationHistory';
 import { processImageUrl } from '../../utils/imageUtils';
 
@@ -214,6 +215,29 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   const handleProjectSelect = (projectId: string | null) => {
     setSelectedProjectId(projectId);
     console.log('選擇專案篩選:', projectId ? `專案 ${projectId}` : '全部訂單');
+  };
+
+  // 專案刪除處理函數
+  const handleProjectDelete = (projectId: string) => {
+    console.log('專案已刪除:', projectId);
+    // 重新載入訂單以反映變更
+    loadOrders();
+  };
+
+  // 專案創建處理函數
+  const handleProjectCreate = (projectName: string) => {
+    console.log('新專案已創建:', projectName);
+    // 重新載入訂單以反映變更
+    loadOrders();
+  };
+
+  // 根據專案ID獲取專案名稱
+  const getProjectNameById = (projectId: string | undefined): string | undefined => {
+    if (!projectId) return undefined;
+    
+    // 這裡可以從專案列表中查找，或者從訂單數據中獲取
+    // 暫時返回一個佔位符，實際應該從 API 獲取專案信息
+    return `專案 ${projectId.substring(0, 8)}`;
   };
 
   // 過濾訂單
@@ -790,6 +814,9 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
             <ProjectTags
               selectedProjectId={selectedProjectId}
               onProjectSelect={handleProjectSelect}
+              onProjectDelete={handleProjectDelete}
+              onProjectCreate={handleProjectCreate}
+              showManagementButtons={true}
               className="order-project-tags"
             />
             {canViewStatus && allOrders.length > 0 && (
@@ -960,6 +987,15 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
                           order={order}
                           onNameUpdate={loadOrders}
                           canEdit={user.role === 'PM' || user.role === 'AM' || user.role === 'ADMIN'}
+                        />
+                        
+                        {/* 專案管理 */}
+                        <OrderProjectManager
+                          orderId={order.id}
+                          currentProjectId={(order as any).projectId}
+                          currentProjectName={getProjectNameById((order as any).projectId)}
+                          onProjectChange={loadOrders}
+                          disabled={user.role === 'WAREHOUSE'}
                         />
                       </div>
                       <span className="order-date">{formatDate(order.createdAt)}</span>

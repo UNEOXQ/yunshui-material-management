@@ -394,4 +394,35 @@ class OrderService {
   }
 }
 
-export const orderService = new OrderService();
+export const orderService = new OrderService(); 
+ // 將訂單分配到專案
+  async assignOrderToProject(orderId: string, projectId: string): Promise<ApiResponse<any>> {
+    try {
+      const response = await apiClient.put(`/orders/${orderId}/project`, {
+        projectId
+      });
+      return response.data;
+    } catch (error: any) {
+      console.error('分配訂單到專案失敗:', error);
+      return {
+        success: false,
+        message: error.response?.data?.message || '分配訂單到專案失敗',
+        data: null
+      };
+    }
+  }
+
+  // 移除訂單的專案關聯
+  async removeOrderFromProject(orderId: string): Promise<ApiResponse<any>> {
+    try {
+      const response = await apiClient.delete(`/orders/${orderId}/project`);
+      return response.data;
+    } catch (error: any) {
+      console.error('移除訂單專案關聯失敗:', error);
+      return {
+        success: false,
+        message: error.response?.data?.message || '移除訂單專案關聯失敗',
+        data: null
+      };
+    }
+  }

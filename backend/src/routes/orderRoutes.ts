@@ -145,4 +145,27 @@ router.delete('/:id/delete', requireRole('ADMIN'), OrderController.deleteOrder);
  */
 router.delete('/:id', OrderController.cancelOrder);
 
+/**
+ * @route   PUT /api/orders/:id/project
+ * @desc    Assign order to project
+ * @access  Private (PM, AM, ADMIN)
+ * @param   id - Order UUID
+ * @body    projectId - Project UUID
+ */
+router.put('/:id/project', requireRole('PM', 'AM', 'ADMIN'), async (req, res) => {
+  const { OrderControllerWithProject } = await import('../controllers/orderControllerWithProject');
+  return OrderControllerWithProject.assignOrderToProject(req, res);
+});
+
+/**
+ * @route   DELETE /api/orders/:id/project
+ * @desc    Remove order from project
+ * @access  Private (PM, AM, ADMIN)
+ * @param   id - Order UUID
+ */
+router.delete('/:id/project', requireRole('PM', 'AM', 'ADMIN'), async (req, res) => {
+  const { OrderControllerWithProject } = await import('../controllers/orderControllerWithProject');
+  return OrderControllerWithProject.removeOrderFromProject(req, res);
+});
+
 export default router;

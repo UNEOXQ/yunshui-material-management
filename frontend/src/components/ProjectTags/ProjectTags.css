@@ -60,6 +60,109 @@
   border-color: #343a40;
 }
 
+/* 專案標籤容器 */
+.project-tag-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 刪除按鈕 */
+.project-delete-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #dc3545;
+  color: white;
+  border: 1px solid white;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.project-delete-btn:hover {
+  background-color: #c82333;
+  transform: scale(1.1);
+}
+
+/* 創建專案標籤 */
+.project-tag.create-tag {
+  background-color: #28a745;
+  border-color: #20c997;
+  color: white;
+  font-weight: 600;
+}
+
+.project-tag.create-tag:hover {
+  background-color: #20c997;
+  border-color: #17a2b8;
+}
+
+/* 創建專案輸入框 */
+.project-create-input {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 20px;
+  padding: 4px 8px;
+}
+
+.project-create-input input {
+  border: none;
+  outline: none;
+  padding: 4px 8px;
+  font-size: 13px;
+  width: 120px;
+  background: transparent;
+}
+
+.create-confirm-btn,
+.create-cancel-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-confirm-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.create-confirm-btn:hover {
+  background-color: #218838;
+}
+
+.create-confirm-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.create-cancel-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.create-cancel-btn:hover {
+  background-color: #c82333;
+}
+
 .loading-text,
 .no-projects-text {
   color: #6c757d;

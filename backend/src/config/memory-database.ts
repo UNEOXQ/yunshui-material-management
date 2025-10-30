@@ -823,6 +823,18 @@ export class MemoryDatabase {
     return true;
   }
 
+  // 移除訂單的專案關聯
+  async removeOrderFromProject(orderId: string): Promise<boolean> {
+    const orderIndex = this.orders.findIndex(o => o.id === orderId);
+    if (orderIndex === -1) return false;
+
+    // 移除訂單的專案關聯
+    delete (this.orders[orderIndex] as any).projectId;
+    this.hasUnsavedChanges = true;
+    this.saveToFile();
+    return true;
+  }
+
   // Status Update methods
   async createStatusUpdate(statusUpdateData: {
     projectId: string;

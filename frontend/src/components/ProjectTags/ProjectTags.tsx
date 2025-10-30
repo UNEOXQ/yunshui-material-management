@@ -6,16 +6,24 @@ import './ProjectTags.css';
 interface ProjectTagsProps {
   selectedProjectId?: string;
   onProjectSelect: (projectId: string | null) => void;
+  onProjectDelete?: (projectId: string) => void;
+  onProjectCreate?: (projectName: string) => void;
+  showManagementButtons?: boolean;
   className?: string;
 }
 
 export const ProjectTags: React.FC<ProjectTagsProps> = ({
   selectedProjectId,
   onProjectSelect,
+  onProjectDelete,
+  onProjectCreate,
+  showManagementButtons = false,
   className = ''
 }) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(false);
+  const [showCreateInput, setShowCreateInput] = useState(false);
+  const [newProjectName, setNewProjectName] = useState('');
 
   useEffect(() => {
     loadProjects();
@@ -56,6 +64,82 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
     onProjectSelect(null);
   };
 
+  const handleDeleteProject = async (e: React.MouseEvent, projectId: string) => {
+    e.stopPropagation(); // 防止觸發標籤點擊
+    
+    const project = projects.find(p => p.id === projectId);
+    if (!project) return;
+    
+    if (confirm(`確定要刪除專案「${project.projectName}」嗎？\n\n注意：這不會刪除訂單，只會將訂單從專案中移除。`)) {
+      try {
+        const response = await projectService.deleteProject(projectId);
+        if (response.success) {
+          // 更新本地專案列表
+          setProjects(prev => prev.filter(p => p.id !== projectId));
+          
+          // 如果刪除的是當前選中的專案，切換到全部訂單
+          if (selectedProjectId === projectId) {
+            onProjectSelect(null);
+          }
+          
+          // 通知父組件
+          if (onProjectDelete) {
+            onProjectDelete(projectId);
+          }
+          
+          alert('專案已刪除，相關訂單已移除專案歸屬');
+        } else {
+          alert(`刪除失敗: ${response.message}`);
+        }
+      } catch (error: any) {
+        console.error('刪除專案失敗:', error);
+        alert(`刪除失敗: ${error.message}`);
+      }
+    }
+  };
+
+  const handleCreateProject = async () => {
+    if (!newProjectName.trim()) {
+      alert('請輸入專案名稱');
+      return;
+    }
+    
+    try {
+      const response = await projectService.createProject({
+        projectName: newProjectName.trim(),
+        description: '手動創建的專案'
+      });
+      
+      if (response.success && response.data) {
+        const newProject = response.data as Project;
+        
+        // 更新本地專案列表
+        setProjects(prev => [newProject, ...prev]);
+        
+        // 重置輸入狀態
+        setNewProjectName('');
+        setShowCreateInput(false);
+        
+        // 通知父組件
+        if (onProjectCreate) {
+          onProjectCreate(newProject.projectName);
+        }
+        
+        alert(`專案「${newProject.projectName}」創建成功！`);
+      } else {
+        alert(`創建失敗: ${response.message}`);
+      }
+    } catch (error: any) {
+      console.error('創建專案失敗:', error);
+      alert(`創建失敗: ${error.message}`);
+    }
+  };
+
+  const handleCancelCreate = () => {
+    setShowCreateInput(false);
+    setNewProjectName('');
+  };
+
   if (loading) {
     return (
       <div className={`project-tags ${className}`}>
@@ -82,15 +166,67 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
       </button>
       
       {projects.map(project => (
-        <button
-          key={project.id}
-          className={`project-tag ${selectedProjectId === project.id ? 'active' : ''}`}
-          onClick={() => handleTagClick(project.id)}
-          title={`專案：${project.projectName}`}
-        >
-          📁 {project.projectName}
-        </button>
+        <div key={project.id} className="project-tag-container">
+          <button
+            className={`project-tag ${selectedProjectId === project.id ? 'active' : ''}`}
+            onClick={() => handleTagClick(project.id)}
+            title={`專案：${project.projectName}`}
+          >
+            📁 {project.projectName}
+          </button>
+          {showManagementButtons && (
+            <button
+              className="project-delete-btn"
+              onClick={(e) => handleDeleteProject(e, project.id)}
+              title={`刪除專案「${project.projectName}」`}
+            >
+              ×
+            </button>
+          )}
+        </div>
       ))}
+      
+      {showManagementButtons && (
+        <>
+          {showCreateInput ? (
+            <div className="project-create-input">
+              <input
+                type="text"
+                value={newProjectName}
+                onChange={(e) => setNewProjectName(e.target.value)}
+                placeholder="輸入專案名稱"
+                maxLength={50}
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleCreateProject();
+                  if (e.key === 'Escape') handleCancelCreate();
+                }}
+              />
+              <button
+                className="create-confirm-btn"
+                onClick={handleCreateProject}
+                disabled={!newProjectName.trim()}
+              >
+                ✓
+              </button>
+              <button
+                className="create-cancel-btn"
+                onClick={handleCancelCreate}
+              >
+                ×
+              </button>
+            </div>
+          ) : (
+            <button
+              className="project-tag create-tag"
+              onClick={() => setShowCreateInput(true)}
+              title="創建新專案"
+            >
+              + 新專案
+            </button>
+          )}
+        </>
+      )}
     </div>
   );
 };
