@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-30T01:03:27.983Z",
+  "timestamp": "2025-10-30T01:33:22.982Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -512,6 +512,78 @@
             }
           }
         ]
+      },
+      {
+        "userId": "id-2033",
+        "status": "PENDING",
+        "totalAmount": 17,
+        "name": "輔材訂單-10/30/2025",
+        "projectId": "id-2278",
+        "id": "id-2284",
+        "createdAt": "2025-10-30T01:17:24.377Z",
+        "updatedAt": "2025-10-30T01:17:24.377Z",
+        "items": [
+          {
+            "orderId": "id-2284",
+            "materialId": "id-2029",
+            "quantity": 2,
+            "unitPrice": 8.5,
+            "id": "id-2285",
+            "materialName": "電線 2.5mm²",
+            "materialCategory": "電氣材料",
+            "materialType": "AUXILIARY",
+            "supplier": "電氣供應商C",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
+            "material": {
+              "id": "id-2029",
+              "name": "電線 2.5mm²",
+              "category": "電氣材料",
+              "price": 8.5,
+              "quantity": 475,
+              "supplier": "電氣供應商C",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264542/yunshui-materials/cgu8grvxobv08gw9x8vc.jpg",
+              "type": "AUXILIARY",
+              "createdAt": "2025-10-23T03:17:25.096Z",
+              "updatedAt": "2025-10-24T00:09:03.097Z"
+            }
+          }
+        ]
+      },
+      {
+        "userId": "id-2034",
+        "status": "PENDING",
+        "totalAmount": 90,
+        "name": "完成材訂單-10/30/2025",
+        "projectId": "id-2278",
+        "id": "id-2287",
+        "createdAt": "2025-10-30T01:19:58.376Z",
+        "updatedAt": "2025-10-30T01:19:58.376Z",
+        "items": [
+          {
+            "orderId": "id-2287",
+            "materialId": "id-2028",
+            "quantity": 2,
+            "unitPrice": 45,
+            "id": "id-2288",
+            "materialName": "木板 2x4x8",
+            "materialCategory": "木材",
+            "materialType": "FINISHED",
+            "supplier": "木材供應商B",
+            "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
+            "material": {
+              "id": "id-2028",
+              "name": "木板 2x4x8",
+              "category": "木材",
+              "price": 45,
+              "quantity": 177,
+              "supplier": "木材供應商B",
+              "imageUrl": "https://res.cloudinary.com/dkszoqs9o/image/upload/v1761264547/yunshui-materials/goixhdphgoxs0esobkl8.jpg",
+              "type": "FINISHED",
+              "createdAt": "2025-10-23T03:17:25.095Z",
+              "updatedAt": "2025-10-24T23:28:02.626Z"
+            }
+          }
+        ]
       }
     ],
     "users": [
@@ -674,6 +746,22 @@
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-24T23:28:02.629Z",
         "updatedAt": "2025-10-24T23:28:02.629Z"
+      },
+      {
+        "id": "id-2286",
+        "orderId": "id-2284",
+        "projectName": "輔材專案-10/30/2025-id-2284",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2025-10-30T01:17:24.379Z",
+        "updatedAt": "2025-10-30T01:17:24.379Z"
+      },
+      {
+        "id": "id-2289",
+        "orderId": "id-2287",
+        "projectName": "完成材專案-10/30/2025-id-2287",
+        "overallStatus": "ACTIVE",
+        "createdAt": "2025-10-30T01:19:58.379Z",
+        "updatedAt": "2025-10-30T01:19:58.379Z"
       }
     ],
     "orderItems": [
@@ -816,6 +904,20 @@
         "quantity": 2,
         "unitPrice": 180,
         "id": "id-2277"
+      },
+      {
+        "orderId": "id-2284",
+        "materialId": "id-2029",
+        "quantity": 2,
+        "unitPrice": 8.5,
+        "id": "id-2285"
+      },
+      {
+        "orderId": "id-2287",
+        "materialId": "id-2028",
+        "quantity": 2,
+        "unitPrice": 45,
+        "id": "id-2288"
       }
     ],
     "statusUpdates": [
@@ -1366,6 +1468,6 @@
         "updatedAt": "2025-10-23T21:29:33.306Z"
       }
     ],
-    "nextId": 2284
+    "nextId": 2290
   }
 }
