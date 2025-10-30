@@ -25,10 +25,14 @@ export class OrderControllerWithProject {
    */
   static async createAuxiliaryOrderWithProject(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
+      console.log('🔍 創建輔材訂單（支持專案）- 開始');
+      console.log('📝 請求數據:', JSON.stringify(req.body, null, 2));
+      
       const userRole = req.user!.role;
       
       // 只有 PM 用戶和管理員可以創建輔材訂單
       if (userRole !== 'PM' && userRole !== 'ADMIN') {
+        console.log('❌ 權限不足:', userRole);
         res.status(403).json({
           success: false,
           message: '只有 PM 用戶和管理員可以創建輔材訂單'
@@ -39,6 +43,7 @@ export class OrderControllerWithProject {
       // 驗證請求數據
       const { error, value } = createOrderWithProjectSchema.validate(req.body);
       if (error) {
+        console.log('❌ 數據驗證失敗:', error.details[0].message);
         res.status(400).json({
           success: false,
           message: error.details[0].message
@@ -48,6 +53,12 @@ export class OrderControllerWithProject {
 
       const { items, projectId, newProjectName, orderName } = value;
       const userId = req.user!.userId;
+      
+      console.log('✅ 驗證通過 - 用戶ID:', userId);
+      console.log('📋 訂單項目:', items);
+      console.log('🏗️ 專案ID:', projectId);
+      console.log('🆕 新專案名稱:', newProjectName);
+      console.log('📝 訂單名稱:', orderName);
 
       // 驗證材料並計算總金額
       let totalAmount = 0;
@@ -57,6 +68,7 @@ export class OrderControllerWithProject {
         const material = await memoryDb.getMaterialById(item.materialId);
         
         if (!material) {
+          console.log('❌ 材料不存在:', item.materialId);
           res.status(400).json({
             success: false,
             message: `材料 ${item.materialId} 不存在`
@@ -66,6 +78,7 @@ export class OrderControllerWithProject {
 
         // 確保是輔材
         if (material.type !== 'AUXILIARY') {
+          console.log('❌ 材料類型錯誤:', material.name, material.type);
           res.status(400).json({
             success: false,
             message: `材料 ${material.name} 不是輔材`
@@ -83,17 +96,24 @@ export class OrderControllerWithProject {
         });
       }
 
+      console.log('💰 總金額:', totalAmount);
+
       // 處理專案邏輯
       let finalProjectId = projectId;
 
       // 如果提供了新專案名稱，創建新專案
       if (newProjectName && newProjectName.trim()) {
+        console.log('🏗️ 創建新專案:', newProjectName.trim());
+        
         const existingProjects = await memoryDb.getAllProjects();
+        console.log('📋 現有專案數量:', existingProjects.length);
+        
         const nameExists = existingProjects.some(p => 
           p.projectName.toLowerCase() === newProjectName.trim().toLowerCase()
         );
 
         if (nameExists) {
+          console.log('❌ 專案名稱已存在:', newProjectName.trim());
           res.status(400).json({
             success: false,
             message: '專案名稱已存在'
@@ -105,17 +125,24 @@ export class OrderControllerWithProject {
           projectName: newProjectName.trim(),
           createdBy: userId
         });
+        
+        console.log('✅ 新專案創建成功:', newProject.id, newProject.projectName);
         finalProjectId = newProject.id;
       }
 
       // 創建訂單
-      const order = await memoryDb.createOrder({
+      const orderData = {
         userId,
-        status: 'PENDING',
+        status: 'PENDING' as const,
         totalAmount,
         name: orderName || `輔材訂單-${new Date().toLocaleDateString()}`,
-        projectId: finalProjectId
-      });
+        ...(finalProjectId && { projectId: finalProjectId })
+      };
+
+      console.log('📦 創建訂單數據:', orderData);
+      
+      const order = await memoryDb.createOrder(orderData);
+      console.log('✅ 訂單創建成功:', order.id);
 
       // 創建訂單項目
       for (const item of validatedItems) {
@@ -127,16 +154,21 @@ export class OrderControllerWithProject {
         });
       }
 
+      console.log('✅ 訂單項目創建完成');
+
       // 如果有專案ID，創建專案關聯（用於舊的專案系統兼容）
       if (finalProjectId) {
         const existingProject = await memoryDb.findProjectByOrderId(order.id);
         if (!existingProject) {
           await memoryDb.createProject(order.id, `輔材專案-${new Date().toLocaleDateString()}-${order.id}`);
+          console.log('✅ 專案關聯創建完成');
         }
       }
 
       // 獲取完整的訂單信息
       const enrichedOrder = await memoryDb.enrichOrderWithMaterials(order);
+
+      console.log('🎉 輔材訂單創建流程完成');
 
       res.status(201).json({
         success: true,
@@ -145,7 +177,7 @@ export class OrderControllerWithProject {
       });
 
     } catch (error: any) {
-      console.error('創建輔材訂單失敗:', error);
+      console.error('❌ 創建輔材訂單失敗:', error);
       res.status(500).json({
         success: false,
         message: '創建輔材訂單失敗'
@@ -158,10 +190,14 @@ export class OrderControllerWithProject {
    */
   static async createFinishedOrderWithProject(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
+      console.log('🔍 創建完成材訂單（支持專案）- 開始');
+      console.log('📝 請求數據:', JSON.stringify(req.body, null, 2));
+      
       const userRole = req.user!.role;
       
       // 只有 AM 用戶和管理員可以創建完成材訂單
       if (userRole !== 'AM' && userRole !== 'ADMIN') {
+        console.log('❌ 權限不足:', userRole);
         res.status(403).json({
           success: false,
           message: '只有 AM 用戶和管理員可以創建完成材訂單'
@@ -172,6 +208,7 @@ export class OrderControllerWithProject {
       // 驗證請求數據
       const { error, value } = createOrderWithProjectSchema.validate(req.body);
       if (error) {
+        console.log('❌ 數據驗證失敗:', error.details[0].message);
         res.status(400).json({
           success: false,
           message: error.details[0].message
@@ -181,6 +218,12 @@ export class OrderControllerWithProject {
 
       const { items, projectId, newProjectName, orderName } = value;
       const userId = req.user!.userId;
+      
+      console.log('✅ 驗證通過 - 用戶ID:', userId);
+      console.log('📋 訂單項目:', items);
+      console.log('🏗️ 專案ID:', projectId);
+      console.log('🆕 新專案名稱:', newProjectName);
+      console.log('📝 訂單名稱:', orderName);
 
       // 驗證材料並計算總金額
       let totalAmount = 0;
@@ -190,6 +233,7 @@ export class OrderControllerWithProject {
         const material = await memoryDb.getMaterialById(item.materialId);
         
         if (!material) {
+          console.log('❌ 材料不存在:', item.materialId);
           res.status(400).json({
             success: false,
             message: `材料 ${item.materialId} 不存在`
@@ -199,6 +243,7 @@ export class OrderControllerWithProject {
 
         // 確保是完成材
         if (material.type !== 'FINISHED') {
+          console.log('❌ 材料類型錯誤:', material.name, material.type);
           res.status(400).json({
             success: false,
             message: `材料 ${material.name} 不是完成材`
@@ -216,17 +261,24 @@ export class OrderControllerWithProject {
         });
       }
 
+      console.log('💰 總金額:', totalAmount);
+
       // 處理專案邏輯
       let finalProjectId = projectId;
 
       // 如果提供了新專案名稱，創建新專案
       if (newProjectName && newProjectName.trim()) {
+        console.log('🏗️ 創建新專案:', newProjectName.trim());
+        
         const existingProjects = await memoryDb.getAllProjects();
+        console.log('📋 現有專案數量:', existingProjects.length);
+        
         const nameExists = existingProjects.some(p => 
           p.projectName.toLowerCase() === newProjectName.trim().toLowerCase()
         );
 
         if (nameExists) {
+          console.log('❌ 專案名稱已存在:', newProjectName.trim());
           res.status(400).json({
             success: false,
             message: '專案名稱已存在'
@@ -238,17 +290,24 @@ export class OrderControllerWithProject {
           projectName: newProjectName.trim(),
           createdBy: userId
         });
+        
+        console.log('✅ 新專案創建成功:', newProject.id, newProject.projectName);
         finalProjectId = newProject.id;
       }
 
       // 創建訂單
-      const order = await memoryDb.createOrder({
+      const orderData = {
         userId,
-        status: 'PENDING',
+        status: 'PENDING' as const,
         totalAmount,
         name: orderName || `完成材訂單-${new Date().toLocaleDateString()}`,
-        projectId: finalProjectId
-      });
+        ...(finalProjectId && { projectId: finalProjectId })
+      };
+
+      console.log('📦 創建訂單數據:', orderData);
+      
+      const order = await memoryDb.createOrder(orderData);
+      console.log('✅ 訂單創建成功:', order.id);
 
       // 創建訂單項目
       for (const item of validatedItems) {
@@ -260,16 +319,21 @@ export class OrderControllerWithProject {
         });
       }
 
+      console.log('✅ 訂單項目創建完成');
+
       // 如果有專案ID，創建專案關聯（用於舊的專案系統兼容）
       if (finalProjectId) {
         const existingProject = await memoryDb.findProjectByOrderId(order.id);
         if (!existingProject) {
           await memoryDb.createProject(order.id, `完成材專案-${new Date().toLocaleDateString()}-${order.id}`);
+          console.log('✅ 專案關聯創建完成');
         }
       }
 
       // 獲取完整的訂單信息
       const enrichedOrder = await memoryDb.enrichOrderWithMaterials(order);
+
+      console.log('🎉 完成材訂單創建流程完成');
 
       res.status(201).json({
         success: true,
@@ -278,7 +342,7 @@ export class OrderControllerWithProject {
       });
 
     } catch (error: any) {
-      console.error('創建完成材訂單失敗:', error);
+      console.error('❌ 創建完成材訂單失敗:', error);
       res.status(500).json({
         success: false,
         message: '創建完成材訂單失敗'
