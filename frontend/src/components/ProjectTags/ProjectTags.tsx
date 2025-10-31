@@ -25,7 +25,9 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
   const [showCreateInput, setShowCreateInput] = useState(false);
   const [newProjectName, setNewProjectName] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const projectsPerPage = 8; // 每頁顯示的專案數量
+  const [editMode, setEditMode] = useState(false);
+  const [editingProjects, setEditingProjects] = useState<{[key: string]: string}>({});
+  const projectsPerPage = 10; // 每頁顯示的專案數量 (2x5 網格)
 
   useEffect(() => {
     loadProjects();
@@ -145,6 +147,81 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
     setNewProjectName('');
   };
 
+  // 編輯模式相關函數
+  const handleEditMode = () => {
+    if (editMode) {
+      // 退出編輯模式，重置編輯狀態
+      setEditingProjects({});
+    } else {
+      // 進入編輯模式，初始化編輯狀態
+      const editState: {[key: string]: string} = {};
+      currentProjects.forEach(project => {
+        editState[project.id] = project.projectName;
+      });
+      setEditingProjects(editState);
+    }
+    setEditMode(!editMode);
+  };
+
+  const handleProjectNameChange = (projectId: string, newName: string) => {
+    setEditingProjects(prev => ({
+      ...prev,
+      [projectId]: newName
+    }));
+  };
+
+  const handleSaveProjectName = async (projectId: string) => {
+    const newName = editingProjects[projectId]?.trim();
+    if (!newName) {
+      alert('專案名稱不能為空');
+      return;
+    }
+
+    const project = projects.find(p => p.id === projectId);
+    if (!project) return;
+
+    if (newName === project.projectName) {
+      // 名稱沒有變化，直接返回
+      return;
+    }
+
+    try {
+      const response = await projectService.updateProject(projectId, {
+        projectName: newName,
+        description: project.description
+      });
+
+      if (response.success) {
+        // 更新本地專案列表
+        setProjects(prev => prev.map(p => 
+          p.id === projectId ? { ...p, projectName: newName } : p
+        ));
+        
+        // 通知父組件重新載入
+        if (onProjectCreate) {
+          onProjectCreate(newName);
+        }
+        
+        alert(`專案名稱已更新為「${newName}」`);
+      } else {
+        alert(`更新失敗: ${response.message}`);
+        // 恢復原始名稱
+        setEditingProjects(prev => ({
+          ...prev,
+          [projectId]: project.projectName
+        }));
+      }
+    } catch (error: any) {
+      console.error('更新專案名稱失敗:', error);
+      alert(`更新失敗: ${error.message}`);
+      // 恢復原始名稱
+      setEditingProjects(prev => ({
+        ...prev,
+        [projectId]: project.projectName
+      }));
+    }
+  };
+
   // 分頁邏輯
   const totalPages = Math.ceil(projects.length / projectsPerPage);
   const startIndex = currentPage * projectsPerPage;
@@ -190,32 +267,76 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
           全部訂單
         </button>
         
-        {showPagination && (
-          <div className="pagination-info">
-            第 {currentPage + 1} 頁，共 {totalPages} 頁
-          </div>
-        )}
+        <div className="header-controls">
+          {showPagination && (
+            <div className="pagination-info">
+              第 {currentPage + 1} 頁，共 {totalPages} 頁
+            </div>
+          )}
+          
+          {showManagementButtons && (
+            <button
+              className={`edit-mode-btn ${editMode ? 'active' : ''}`}
+              onClick={handleEditMode}
+              title={editMode ? '退出編輯模式' : '編輯專案名稱'}
+            >
+              {editMode ? '✓ 完成' : '✏️ 編輯'}
+            </button>
+          )}
+        </div>
       </div>
       
-      <div className="project-tags-content">
+      <div className="project-tags-grid">
         {currentProjects.map(project => (
-          <button
-            key={project.id}
-            className={`project-tag ${selectedProjectId === project.id ? 'active' : ''}`}
-            onClick={() => handleTagClick(project.id)}
-            title={`專案：${project.projectName}`}
-          >
-            📁 {project.projectName}
-            {showManagementButtons && (
-              <span
-                className="project-delete-btn"
-                onClick={(e) => handleDeleteProject(e, project.id)}
-                title={`刪除專案「${project.projectName}」`}
+          <div key={project.id} className="project-tag-wrapper">
+            {editMode ? (
+              <div className="project-edit-item">
+                <input
+                  type="text"
+                  value={editingProjects[project.id] || project.projectName}
+                  onChange={(e) => handleProjectNameChange(project.id, e.target.value)}
+                  onBlur={() => handleSaveProjectName(project.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleSaveProjectName(project.id);
+                    }
+                  }}
+                  className="project-name-input"
+                  maxLength={50}
+                />
+                {showManagementButtons && (
+                  <button
+                    className="project-delete-btn-edit"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteProject(e, project.id);
+                    }}
+                    title={`刪除專案「${project.projectName}」`}
+                  >
+                    🗑️
+                  </button>
+                )}
+              </div>
+            ) : (
+              <button
+                className={`project-tag ${selectedProjectId === project.id ? 'active' : ''}`}
+                onClick={() => handleTagClick(project.id)}
+                title={`專案：${project.projectName}`}
               >
-                ×
-              </span>
+                <span className="project-icon">📁</span>
+                <span className="project-name">{project.projectName}</span>
+                {showManagementButtons && !editMode && (
+                  <span
+                    className="project-delete-btn"
+                    onClick={(e) => handleDeleteProject(e, project.id)}
+                    title={`刪除專案「${project.projectName}」`}
+                  >
+                    ×
+                  </span>
+                )}
+              </button>
             )}
-          </button>
+          </div>
         ))}
         
         {showManagementButtons && (

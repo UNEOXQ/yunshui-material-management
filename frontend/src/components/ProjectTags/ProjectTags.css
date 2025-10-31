@@ -10,15 +10,50 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
-.project-tags-content {
+.header-controls {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
   align-items: center;
-  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.edit-mode-btn {
+  padding: 6px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #495057;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-mode-btn:hover {
+  background: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.edit-mode-btn.active {
+  background: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+.project-tags-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+  min-height: 80px;
+}
+
+.project-tag-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .project-tags-pagination {
@@ -62,21 +97,34 @@
 }
 
 .project-tag {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  padding: 8px 14px;
+  justify-content: space-between;
+  padding: 8px 12px;
   background-color: #ffffff;
   border: 1px solid #dee2e6;
-  border-radius: 20px;
-  font-size: 13px;
+  border-radius: 8px;
+  font-size: 12px;
   font-weight: 500;
   color: #495057;
   cursor: pointer;
   transition: all 0.2s ease;
-  white-space: nowrap;
-  max-width: 200px;
+  width: 100%;
+  height: 36px;
+  position: relative;
+}
+
+.project-icon {
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.project-name {
+  flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
 }
 
 .project-tag:hover {
@@ -120,26 +168,51 @@
 
 /* 刪除按鈕 */
 .project-delete-btn {
-  margin-left: 6px;
-  width: 16px;
-  height: 16px;
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background-color: rgba(220, 53, 69, 0.6);
+  background-color: rgba(220, 53, 69, 0.8);
   color: white;
   border: none;
-  font-size: 10px;
-  font-weight: normal;
+  font-size: 12px;
+  font-weight: bold;
   cursor: pointer;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  opacity: 0.7;
+  opacity: 0.8;
+  z-index: 10;
 }
 
 .project-delete-btn:hover {
-  background-color: rgba(220, 53, 69, 0.9);
+  background-color: rgba(220, 53, 69, 1);
   opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.project-delete-btn-edit {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+}
+
+.project-delete-btn-edit:hover {
+  background-color: #c82333;
   transform: scale(1.05);
 }
 
@@ -232,5 +305,62 @@
     padding: 4px 8px;
     font-size: 12px;
     max-width: 150px;
+  }
+}/* 編輯模式
+樣式 */
+.project-edit-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 36px;
+}
+
+.project-name-input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  font-size: 12px;
+  background: white;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.project-name-input:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* 響應式設計調整 */
+@media (max-width: 1200px) {
+  .project-tags-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .project-tags-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+  
+  .project-tag {
+    font-size: 11px;
+    padding: 6px 8px;
+    height: 32px;
+  }
+  
+  .header-controls {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-tags-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
   }
 }

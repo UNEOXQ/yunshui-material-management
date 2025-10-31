@@ -811,7 +811,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
         <div className="orders-section">
           <div className="section-header">
             <div className="section-title-group">
-              <div className="title-with-stats">
+              <div className="title-and-stats-row">
                 <h2>
                   {user.role === 'WAREHOUSE' ? 
                     `${selectedOrderType === 'PM' ? 'PM輔材' : 'AM完成材'}訂單記錄` : 
@@ -822,9 +822,9 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
                     '訂單記錄'}
                 </h2>
                 
-                {/* 移動狀態指示器到標題右邊 */}
+                {/* 狀態指示器在標題同一行的最右邊 */}
                 {canViewStatus && allOrders.length > 0 && (
-                  <div className="inline-order-stats">
+                  <div className="title-right-stats">
                     {(() => {
                       const stats = getOrderStats(allOrders);
                       return (

@@ -2801,4 +2801,72 @@ ggle Buttons for Order Type Selector */
     width: 100%;
     text-align: center;
   }
+}/
+* 標題和狀態指示器樣式 */
+.title-and-stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+
+.title-and-stats-row h2 {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.title-right-stats {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.title-right-stats .stat-button {
+  padding: 6px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 16px;
+  background-color: #f8f9fa;
+  color: #495057;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.title-right-stats .stat-button:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+  transform: translateY(-1px);
+}
+
+.title-right-stats .stat-button.active {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .title-and-stats-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .title-right-stats {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-right-stats .stat-button {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
 }
