@@ -44,6 +44,9 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
           !p.projectName.includes('成品專案-')
         );
         setProjects(activeProjects);
+        console.log('✅ 專案列表載入成功:', activeProjects.length, '個專案');
+        console.log('📋 專案列表:', activeProjects.map(p => ({ id: p.id, name: p.projectName })));
+        console.log('🔧 showManagementButtons:', showManagementButtons);
       }
     } catch (error) {
       console.error('載入專案失敗:', error);

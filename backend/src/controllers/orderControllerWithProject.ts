@@ -322,13 +322,14 @@ export class OrderControllerWithProject {
 
       console.log('✅ 訂單項目創建完成');
 
-      // 如果有專案ID，創建專案關聯（用於舊的專案系統兼容）
+      // 如果有專案ID，將訂單關聯到現有專案
       if (finalProjectId) {
-        const existingProject = await memoryDb.findProjectByOrderId(order.id);
-        if (!existingProject) {
-          await memoryDb.createProject(order.id, `完成材專案-${new Date().toLocaleDateString()}-${order.id}`);
-          console.log('✅ 專案關聯創建完成');
-        }
+        console.log('📋 將訂單關聯到專案:', finalProjectId);
+        // 不自動創建專案，只關聯到現有專案
+        await memoryDb.assignOrderToProject(order.id, finalProjectId);
+        console.log('✅ 訂單專案關聯完成');
+      } else {
+        console.log('📝 訂單未選擇專案，保持獨立狀態');
       }
 
       // 獲取完整的訂單信息

@@ -109,3 +109,60 @@
   background-color: #e3f2fd;
   border-color: #bbdefb;
 }
+
+/* 創建專案輸入框 */
+.create-project-input {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.create-project-input input {
+  border: none;
+  outline: none;
+  padding: 2px 4px;
+  font-size: 12px;
+  width: 120px;
+  background: transparent;
+}
+
+.create-confirm-btn,
+.create-cancel-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-confirm-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.create-confirm-btn:hover {
+  background-color: #218838;
+}
+
+.create-confirm-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.create-cancel-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.create-cancel-btn:hover {
+  background-color: #c82333;
+}

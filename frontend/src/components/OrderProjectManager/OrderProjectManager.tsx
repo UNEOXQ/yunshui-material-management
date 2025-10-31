@@ -22,6 +22,8 @@ export const OrderProjectManager: React.FC<OrderProjectManagerProps> = ({
   const [projects, setProjects] = useState<Project[]>([]);
   const [showSelector, setShowSelector] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showCreateInput, setShowCreateInput] = useState(false);
+  const [newProjectName, setNewProjectName] = useState('');
 
   useEffect(() => {
     if (showSelector) {
@@ -95,6 +97,41 @@ export const OrderProjectManager: React.FC<OrderProjectManagerProps> = ({
     }
   };
 
+  const handleCreateProject = async () => {
+    if (!newProjectName.trim()) {
+      alert('請輸入專案名稱');
+      return;
+    }
+    
+    try {
+      const response = await projectService.createProject({
+        projectName: newProjectName.trim(),
+        description: '從訂單管理創建的專案'
+      });
+      
+      if (response.success && response.data) {
+        const newProject = response.data as Project;
+        
+        // 更新本地專案列表
+        setProjects(prev => [newProject, ...prev]);
+        
+        // 自動將訂單分配到新專案
+        await handleProjectAssign(newProject.id);
+        
+        // 重置狀態
+        setNewProjectName('');
+        setShowCreateInput(false);
+        
+        alert(`專案「${newProject.projectName}」創建成功並已分配給此訂單！`);
+      } else {
+        alert(`創建失敗: ${response.message}`);
+      }
+    } catch (error: any) {
+      console.error('創建專案失敗:', error);
+      alert(`創建失敗: ${error.message}`);
+    }
+  };
+
   if (disabled) {
     return (
       <div className="order-project-manager disabled">
@@ -143,11 +180,47 @@ export const OrderProjectManager: React.FC<OrderProjectManagerProps> = ({
         <div className="project-selector">
           {loading ? (
             <div className="loading">載入中...</div>
+          ) : showCreateInput ? (
+            <div className="create-project-input">
+              <input
+                type="text"
+                value={newProjectName}
+                onChange={(e) => setNewProjectName(e.target.value)}
+                placeholder="輸入新專案名稱"
+                maxLength={50}
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleCreateProject();
+                  if (e.key === 'Escape') {
+                    setShowCreateInput(false);
+                    setNewProjectName('');
+                  }
+                }}
+              />
+              <button
+                className="create-confirm-btn"
+                onClick={handleCreateProject}
+                disabled={!newProjectName.trim()}
+              >
+                ✓
+              </button>
+              <button
+                className="create-cancel-btn"
+                onClick={() => {
+                  setShowCreateInput(false);
+                  setNewProjectName('');
+                }}
+              >
+                ×
+              </button>
+            </div>
           ) : (
             <>
               <select
                 onChange={(e) => {
-                  if (e.target.value) {
+                  if (e.target.value === 'CREATE_NEW') {
+                    setShowCreateInput(true);
+                  } else if (e.target.value) {
                     handleProjectAssign(e.target.value);
                   }
                 }}
@@ -164,6 +237,7 @@ export const OrderProjectManager: React.FC<OrderProjectManagerProps> = ({
                     {project.id === currentProjectId ? ' (當前)' : ''}
                   </option>
                 ))}
+                <option value="CREATE_NEW">+ 創建新專案</option>
               </select>
               <button
                 className="cancel-btn"
