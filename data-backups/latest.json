@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-31T21:09:03.902Z",
+  "timestamp": "2025-10-31T21:39:03.902Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -772,28 +772,12 @@
         "updatedAt": "2025-10-23T01:20:27.749Z"
       },
       {
-        "id": "id-2026",
-        "orderId": "id-2023",
-        "projectName": "完成材專案-2025-10-23-id-2023",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:20:37.522Z",
-        "updatedAt": "2025-10-23T01:20:37.522Z"
-      },
-      {
         "id": "id-2017",
         "orderId": "id-2013",
         "projectName": "輔材專案-2025-10-23-id-2013",
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-23T01:29:29.533Z",
         "updatedAt": "2025-10-23T01:29:29.533Z"
-      },
-      {
-        "id": "id-2025",
-        "orderId": "id-2022",
-        "projectName": "完成材專案-2025-10-23-id-2022",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:29:40.001Z",
-        "updatedAt": "2025-10-23T01:29:40.001Z"
       },
       {
         "id": "id-2017",
@@ -804,14 +788,6 @@
         "updatedAt": "2025-10-23T01:38:16.995Z"
       },
       {
-        "id": "id-2025",
-        "orderId": "id-2022",
-        "projectName": "完成材專案-2025-10-23-id-2022",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T01:38:25.106Z",
-        "updatedAt": "2025-10-23T01:38:25.106Z"
-      },
-      {
         "id": "id-2118",
         "orderId": "id-2114",
         "projectName": "輔材專案-2025-10-23-id-2114",
@@ -820,28 +796,12 @@
         "updatedAt": "2025-10-23T23:30:45.975Z"
       },
       {
-        "id": "id-2218",
-        "orderId": "id-2215",
-        "projectName": "完成材專案-2025-10-23-id-2215",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T22:12:47.242Z",
-        "updatedAt": "2025-10-23T22:12:47.242Z"
-      },
-      {
         "id": "id-2234",
         "orderId": "id-2232",
         "projectName": "輔材專案-2025-10-23-id-2232",
         "overallStatus": "ACTIVE",
         "createdAt": "2025-10-23T22:24:32.837Z",
         "updatedAt": "2025-10-23T22:24:32.837Z"
-      },
-      {
-        "id": "id-2242",
-        "orderId": "id-2239",
-        "projectName": "完成材專案-2025-10-23-id-2239",
-        "overallStatus": "ACTIVE",
-        "createdAt": "2025-10-23T22:25:49.280Z",
-        "updatedAt": "2025-10-23T22:25:49.280Z"
       },
       {
         "id": "id-2250",
@@ -1229,125 +1189,6 @@
         "updatedAt": "2025-10-23T20:31:52.173Z"
       },
       {
-        "id": "id-2219",
-        "projectId": "id-2218",
-        "updatedBy": "id-2034",
-        "statusType": "ORDER",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:12:47.242Z",
-        "updatedAt": "2025-10-23T22:12:47.242Z"
-      },
-      {
-        "id": "id-2220",
-        "projectId": "id-2218",
-        "updatedBy": "id-2034",
-        "statusType": "PICKUP",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:12:47.243Z",
-        "updatedAt": "2025-10-23T22:12:47.243Z"
-      },
-      {
-        "id": "id-2221",
-        "projectId": "id-2218",
-        "updatedBy": "id-2034",
-        "statusType": "DELIVERY",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:12:47.243Z",
-        "updatedAt": "2025-10-23T22:12:47.243Z"
-      },
-      {
-        "id": "id-2222",
-        "projectId": "id-2218",
-        "updatedBy": "id-2034",
-        "statusType": "CHECK",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:12:47.244Z",
-        "updatedAt": "2025-10-23T22:12:47.244Z"
-      },
-      {
-        "id": "id-2223",
-        "projectId": "id-2218",
-        "updatedBy": "user-1",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - Processing",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "Processing"
-        },
-        "createdAt": "2025-10-23T22:13:31.628Z",
-        "updatedAt": "2025-10-23T22:13:31.628Z"
-      },
-      {
-        "id": "id-2224",
-        "projectId": "id-2218",
-        "updatedBy": "user-1",
-        "statusType": "PICKUP",
-        "statusValue": "Failed (E.S)",
-        "additionalData": {
-          "primaryStatus": "Failed",
-          "secondaryStatus": "(E.S)"
-        },
-        "createdAt": "2025-10-23T22:13:36.982Z",
-        "updatedAt": "2025-10-23T22:13:36.982Z"
-      },
-      {
-        "id": "id-2225",
-        "projectId": "id-2218",
-        "updatedBy": "user-1",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - Processing",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "Processing"
-        },
-        "createdAt": "2025-10-23T22:13:37.004Z",
-        "updatedAt": "2025-10-23T22:13:37.004Z"
-      },
-      {
-        "id": "id-2226",
-        "projectId": "id-2218",
-        "updatedBy": "id-2035",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - waiting for pick",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "waiting for pick"
-        },
-        "createdAt": "2025-10-23T22:14:01.783Z",
-        "updatedAt": "2025-10-23T22:14:01.783Z"
-      },
-      {
-        "id": "id-2227",
-        "projectId": "id-2218",
-        "updatedBy": "id-2035",
-        "statusType": "DELIVERY",
-        "statusValue": "",
-        "createdAt": "2025-10-23T22:14:07.559Z",
-        "updatedAt": "2025-10-23T22:14:07.559Z"
-      },
-      {
-        "id": "id-2228",
-        "projectId": "id-2218",
-        "updatedBy": "id-2035",
-        "statusType": "ORDER",
-        "statusValue": "Ordered - waiting for pick",
-        "additionalData": {
-          "primaryStatus": "Ordered",
-          "secondaryStatus": "waiting for pick"
-        },
-        "createdAt": "2025-10-23T22:14:07.565Z",
-        "updatedAt": "2025-10-23T22:14:07.565Z"
-      },
-      {
-        "id": "id-2229",
-        "projectId": "id-2218",
-        "updatedBy": "id-2032",
-        "statusType": "CHECK",
-        "statusValue": "",
-        "createdAt": "2025-10-23T22:14:19.927Z",
-        "updatedAt": "2025-10-23T22:14:19.927Z"
-      },
-      {
         "id": "id-2231",
         "projectId": "id-2118",
         "updatedBy": "id-2032",
@@ -1399,42 +1240,6 @@
         "updatedAt": "2025-10-23T22:24:32.841Z"
       },
       {
-        "id": "id-2243",
-        "projectId": "id-2242",
-        "updatedBy": "id-2036",
-        "statusType": "ORDER",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:25:49.280Z",
-        "updatedAt": "2025-10-23T22:25:49.280Z"
-      },
-      {
-        "id": "id-2244",
-        "projectId": "id-2242",
-        "updatedBy": "id-2036",
-        "statusType": "PICKUP",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:25:49.281Z",
-        "updatedAt": "2025-10-23T22:25:49.281Z"
-      },
-      {
-        "id": "id-2245",
-        "projectId": "id-2242",
-        "updatedBy": "id-2036",
-        "statusType": "DELIVERY",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:25:49.282Z",
-        "updatedAt": "2025-10-23T22:25:49.282Z"
-      },
-      {
-        "id": "id-2246",
-        "projectId": "id-2242",
-        "updatedBy": "id-2036",
-        "statusType": "CHECK",
-        "statusValue": "PENDING",
-        "createdAt": "2025-10-23T22:25:49.282Z",
-        "updatedAt": "2025-10-23T22:25:49.282Z"
-      },
-      {
         "id": "id-2251",
         "projectId": "id-2250",
         "updatedBy": "id-2036",
@@ -1469,24 +1274,6 @@
         "statusValue": "",
         "createdAt": "2025-10-23T23:27:41.419Z",
         "updatedAt": "2025-10-23T23:27:41.419Z"
-      },
-      {
-        "id": "id-2255",
-        "projectId": "id-2242",
-        "updatedBy": "id-2035",
-        "statusType": "CHECK",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:28:23.242Z",
-        "updatedAt": "2025-10-23T23:28:23.242Z"
-      },
-      {
-        "id": "id-2256",
-        "projectId": "id-2242",
-        "updatedBy": "id-2035",
-        "statusType": "DELIVERY",
-        "statusValue": "",
-        "createdAt": "2025-10-23T23:28:23.271Z",
-        "updatedAt": "2025-10-23T23:28:23.271Z"
       },
       {
         "id": "id-2257",
