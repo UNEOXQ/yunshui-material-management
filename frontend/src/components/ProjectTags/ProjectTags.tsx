@@ -24,6 +24,8 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
   const [loading, setLoading] = useState(false);
   const [showCreateInput, setShowCreateInput] = useState(false);
   const [newProjectName, setNewProjectName] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const projectsPerPage = 8; // 每頁顯示的專案數量
 
   useEffect(() => {
     loadProjects();
@@ -140,6 +142,25 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
     setNewProjectName('');
   };
 
+  // 分頁邏輯
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+  const startIndex = currentPage * projectsPerPage;
+  const endIndex = startIndex + projectsPerPage;
+  const currentProjects = projects.slice(startIndex, endIndex);
+  const showPagination = projects.length > projectsPerPage;
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   if (loading) {
     return (
       <div className={`project-tags ${className}`}>
@@ -158,74 +179,104 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
 
   return (
     <div className={`project-tags ${className}`}>
-      <button
-        className={`project-tag all-tag ${!selectedProjectId ? 'active' : ''}`}
-        onClick={handleShowAll}
-      >
-        全部訂單
-      </button>
+      <div className="project-tags-header">
+        <button
+          className={`project-tag all-tag ${!selectedProjectId ? 'active' : ''}`}
+          onClick={handleShowAll}
+        >
+          全部訂單
+        </button>
+        
+        {showPagination && (
+          <div className="pagination-info">
+            第 {currentPage + 1} 頁，共 {totalPages} 頁
+          </div>
+        )}
+      </div>
       
-      {projects.map(project => (
-        <div key={project.id} className="project-tag-container">
+      <div className="project-tags-content">
+        {currentProjects.map(project => (
           <button
+            key={project.id}
             className={`project-tag ${selectedProjectId === project.id ? 'active' : ''}`}
             onClick={() => handleTagClick(project.id)}
             title={`專案：${project.projectName}`}
           >
             📁 {project.projectName}
-          </button>
-          {showManagementButtons && (
-            <button
-              className="project-delete-btn"
-              onClick={(e) => handleDeleteProject(e, project.id)}
-              title={`刪除專案「${project.projectName}」`}
-            >
-              ×
-            </button>
-          )}
-        </div>
-      ))}
-      
-      {showManagementButtons && (
-        <>
-          {showCreateInput ? (
-            <div className="project-create-input">
-              <input
-                type="text"
-                value={newProjectName}
-                onChange={(e) => setNewProjectName(e.target.value)}
-                placeholder="輸入專案名稱"
-                maxLength={50}
-                autoFocus
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') handleCreateProject();
-                  if (e.key === 'Escape') handleCancelCreate();
-                }}
-              />
-              <button
-                className="create-confirm-btn"
-                onClick={handleCreateProject}
-                disabled={!newProjectName.trim()}
-              >
-                ✓
-              </button>
-              <button
-                className="create-cancel-btn"
-                onClick={handleCancelCreate}
+            {showManagementButtons && (
+              <span
+                className="project-delete-btn"
+                onClick={(e) => handleDeleteProject(e, project.id)}
+                title={`刪除專案「${project.projectName}」`}
               >
                 ×
+              </span>
+            )}
+          </button>
+        ))}
+        
+        {showManagementButtons && (
+          <>
+            {showCreateInput ? (
+              <div className="project-create-input">
+                <input
+                  type="text"
+                  value={newProjectName}
+                  onChange={(e) => setNewProjectName(e.target.value)}
+                  placeholder="輸入專案名稱"
+                  maxLength={50}
+                  autoFocus
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleCreateProject();
+                    if (e.key === 'Escape') handleCancelCreate();
+                  }}
+                />
+                <button
+                  className="create-confirm-btn"
+                  onClick={handleCreateProject}
+                  disabled={!newProjectName.trim()}
+                >
+                  ✓
+                </button>
+                <button
+                  className="create-cancel-btn"
+                  onClick={handleCancelCreate}
+                >
+                  ×
+                </button>
+              </div>
+            ) : (
+              <button
+                className="project-tag create-tag"
+                onClick={() => setShowCreateInput(true)}
+                title="創建新專案"
+              >
+                + 新專案
               </button>
-            </div>
-          ) : (
-            <button
-              className="project-tag create-tag"
-              onClick={() => setShowCreateInput(true)}
-              title="創建新專案"
-            >
-              + 新專案
-            </button>
-          )}
-        </>
+            )}
+          </>
+        )}
+      </div>
+      
+      {showPagination && (
+        <div className="project-tags-pagination">
+          <button
+            className="pagination-btn"
+            onClick={handlePrevPage}
+            disabled={currentPage === 0}
+            title="上一頁"
+          >
+            ‹
+          </button>
+          <button
+            className="pagination-btn"
+            onClick={handleNextPage}
+            disabled={currentPage >= totalPages - 1}
+            title="下一頁"
+          >
+            ›
+          </button>
+        </div>
       )}
     </div>
   );

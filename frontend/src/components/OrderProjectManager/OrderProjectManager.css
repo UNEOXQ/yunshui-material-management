@@ -42,24 +42,27 @@
 }
 
 .remove-project-btn {
-  width: 16px;
-  height: 16px;
+  margin-left: 4px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background-color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.5);
   color: white;
   border: none;
-  font-size: 10px;
-  font-weight: bold;
+  font-size: 9px;
+  font-weight: normal;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  opacity: 0.6;
 }
 
 .remove-project-btn:hover {
-  background-color: #c82333;
-  transform: scale(1.1);
+  background-color: rgba(220, 53, 69, 0.8);
+  opacity: 1;
+  transform: scale(1.05);
 }
 
 .project-selector {

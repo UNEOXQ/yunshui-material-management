@@ -119,21 +119,25 @@ export const OrderProjectManager: React.FC<OrderProjectManagerProps> = ({
             title="點擊更改專案歸屬"
           >
             {currentProjectName ? (
-              <>📁 {currentProjectName}</>
+              <>
+                📁 {currentProjectName}
+                {currentProjectId && (
+                  <span
+                    className="remove-project-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleProjectRemove();
+                    }}
+                    title="移除專案歸屬"
+                  >
+                    ×
+                  </span>
+                )}
+              </>
             ) : (
               <span className="no-project">未歸屬專案</span>
             )}
           </span>
-          
-          {currentProjectId && (
-            <button
-              className="remove-project-btn"
-              onClick={handleProjectRemove}
-              title="移除專案歸屬"
-            >
-              ×
-            </button>
-          )}
         </div>
       ) : (
         <div className="project-selector">
