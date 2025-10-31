@@ -14,11 +14,11 @@
 }
 
 .project-tags-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 10px;
-  margin-bottom: 12px;
-  align-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .project-tags-pagination {
@@ -62,23 +62,21 @@
 }
 
 .project-tag {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 16px;
+  padding: 8px 14px;
   background-color: #ffffff;
   border: 1px solid #dee2e6;
-  border-radius: 12px;
-  font-size: 14px;
+  border-radius: 20px;
+  font-size: 13px;
   font-weight: 500;
   color: #495057;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-height: 44px;
-  width: 100%;
 }
 
 .project-tag:hover {
@@ -101,8 +99,6 @@
   border-color: #5a6268;
   color: white;
   font-weight: 600;
-  grid-column: 1 / -1;
-  margin-bottom: 8px;
 }
 
 .project-tag.all-tag:hover {

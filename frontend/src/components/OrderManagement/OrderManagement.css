@@ -2749,3 +2749,56 @@ dal Styles */
     padding: 8px 12px;
   }
 }
+/* To
+ggle Buttons for Order Type Selector */
+.type-toggle-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.toggle-btn {
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
+}
+
+.toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.toggle-btn.active {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-btn.active:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 1);
+}
+
+/* Responsive Design for Toggle Buttons */
+@media (max-width: 768px) {
+  .type-toggle-buttons {
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+  
+  .toggle-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

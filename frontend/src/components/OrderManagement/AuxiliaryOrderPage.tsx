@@ -221,15 +221,17 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   // 專案刪除處理函數
   const handleProjectDelete = (projectId: string) => {
     console.log('專案已刪除:', projectId);
-    // 重新載入訂單以反映變更
+    // 重新載入訂單和專案映射
     loadOrders();
+    loadProjectsMap();
   };
 
   // 專案創建處理函數
   const handleProjectCreate = (projectName: string) => {
     console.log('新專案已創建:', projectName);
-    // 重新載入訂單以反映變更
+    // 重新載入訂單和專案映射
     loadOrders();
+    loadProjectsMap();
   };
 
   // 載入專案映射
@@ -809,15 +811,52 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
         <div className="orders-section">
           <div className="section-header">
             <div className="section-title-group">
-              <h2>
-                {user.role === 'WAREHOUSE' ? 
-                  `${selectedOrderType === 'PM' ? 'PM輔材' : 'AM完成材'}訂單記錄` : 
-                  user.role === 'ADMIN' ?
-                  `${selectedOrderType === 'PM' ? 'PM輔材' : 'AM完成材'}訂單記錄` :
-                  user.role === 'PM' ? '輔材訂單記錄' :
-                  user.role === 'AM' ? '完成材訂單記錄' :
-                  '訂單記錄'}
-              </h2>
+              <div className="title-with-stats">
+                <h2>
+                  {user.role === 'WAREHOUSE' ? 
+                    `${selectedOrderType === 'PM' ? 'PM輔材' : 'AM完成材'}訂單記錄` : 
+                    user.role === 'ADMIN' ?
+                    `${selectedOrderType === 'PM' ? 'PM輔材' : 'AM完成材'}訂單記錄` :
+                    user.role === 'PM' ? '輔材訂單記錄' :
+                    user.role === 'AM' ? '完成材訂單記錄' :
+                    '訂單記錄'}
+                </h2>
+                
+                {/* 移動狀態指示器到標題右邊 */}
+                {canViewStatus && allOrders.length > 0 && (
+                  <div className="inline-order-stats">
+                    {(() => {
+                      const stats = getOrderStats(allOrders);
+                      return (
+                        <>
+                          <button
+                            className={`stat-button ${orderFilter === 'all' ? 'active' : ''}`}
+                            onClick={() => setOrderFilter('all')}
+                            title="顯示所有訂單"
+                          >
+                            📋 {stats.total} 筆全部
+                          </button>
+                          <button
+                            className={`stat-button ${orderFilter === 'processing' ? 'active' : ''}`}
+                            onClick={() => setOrderFilter('processing')}
+                            title={user.role === 'WAREHOUSE' || user.role === 'ADMIN' ? '顯示處理中的訂單' : '顯示倉管處理中的訂單'}
+                          >
+                            🔄 {stats.processing} 筆處理中
+                          </button>
+                          <button
+                            className={`stat-button ${orderFilter === 'completed' ? 'active' : ''}`}
+                            onClick={() => setOrderFilter('completed')}
+                            title={user.role === 'WAREHOUSE' || user.role === 'ADMIN' ? '顯示已完成的訂單' : '顯示倉管已完成的訂單'}
+                          >
+                            ✅ {stats.completed} 筆已完成
+                          </button>
+                        </>
+                      );
+                    })()}
+                  </div>
+                )}
+              </div>
+              
               {canViewStatus && orderFilter !== 'all' && (
                 <span className="filter-indicator">
                   {orderFilter === 'processing' ? 
@@ -836,54 +875,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
               showManagementButtons={true}
               className="order-project-tags"
             />
-            {canViewStatus && allOrders.length > 0 && (
-              <div className="order-stats-container">
-                {user.role !== 'WAREHOUSE' && user.role !== 'ADMIN' && (
-                  <div className="stats-description">
-                    <span className="stats-hint">
-                      💡 點擊統計按鈕可快速篩選訂單 • 已完成 = 倉管已點收 • 狀態即時更新
-                    </span>
-                  </div>
-                )}
-                {user.role === 'ADMIN' && (
-                  <div className="stats-description">
-                    <span className="stats-hint admin-hint">
-                      🔧 管理員模式 • 可編輯所有狀態 • 可下所有類型訂單 • 點擊統計按鈕篩選訂單
-                    </span>
-                  </div>
-                )}
-                <div className="order-stats">
-                  {(() => {
-                    const stats = getOrderStats(allOrders);
-                    return (
-                      <>
-                        <button
-                          className={`stat-button ${orderFilter === 'all' ? 'active' : ''}`}
-                          onClick={() => setOrderFilter('all')}
-                          title="顯示所有訂單"
-                        >
-                          📊 共 {stats.total} 筆訂單
-                        </button>
-                        <button
-                          className={`stat-button ${orderFilter === 'processing' ? 'active' : ''}`}
-                          onClick={() => setOrderFilter('processing')}
-                          title={user.role === 'WAREHOUSE' || user.role === 'ADMIN' ? '顯示處理中的訂單' : '顯示倉管處理中的訂單'}
-                        >
-                          🔄 {stats.processing} 筆處理中
-                        </button>
-                        <button
-                          className={`stat-button ${orderFilter === 'completed' ? 'active' : ''}`}
-                          onClick={() => setOrderFilter('completed')}
-                          title={user.role === 'WAREHOUSE' || user.role === 'ADMIN' ? '顯示已完成的訂單' : '顯示倉管已完成的訂單'}
-                        >
-                          ✅ {stats.completed} 筆已完成
-                        </button>
-                      </>
-                    );
-                  })()}
-                </div>
-              </div>
-            )}
+
           </div>
           
 

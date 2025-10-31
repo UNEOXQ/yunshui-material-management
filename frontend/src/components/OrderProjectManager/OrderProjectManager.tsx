@@ -121,6 +121,10 @@ export const OrderProjectManager: React.FC<OrderProjectManagerProps> = ({
         // 重置狀態
         setNewProjectName('');
         setShowCreateInput(false);
+        setShowSelector(false);
+        
+        // 通知父組件重新載入專案映射
+        onProjectChange();
         
         alert(`專案「${newProject.projectName}」創建成功並已分配給此訂單！`);
       } else {
