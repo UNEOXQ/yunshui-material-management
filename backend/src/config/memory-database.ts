@@ -810,14 +810,28 @@ export class MemoryDatabase {
 
   // 將訂單關聯到專案
   async assignOrderToProject(orderId: string, projectId: string): Promise<boolean> {
+    console.log('🔄 數據庫：分配訂單到專案', { orderId, projectId });
+    
     const orderIndex = this.orders.findIndex(o => o.id === orderId);
-    if (orderIndex === -1) return false;
+    if (orderIndex === -1) {
+      console.error('❌ 找不到訂單:', orderId);
+      return false;
+    }
 
     const project = await this.findProjectById(projectId);
-    if (!project) return false;
+    if (!project) {
+      console.error('❌ 找不到專案:', projectId);
+      return false;
+    }
+
+    console.log('📋 找到專案:', project.projectName);
+    console.log('📋 訂單更新前:', { orderId, currentProjectId: (this.orders[orderIndex] as any).projectId });
 
     // 更新訂單的專案關聯
     (this.orders[orderIndex] as any).projectId = projectId;
+    
+    console.log('📋 訂單更新後:', { orderId, newProjectId: (this.orders[orderIndex] as any).projectId });
+    
     this.hasUnsavedChanges = true;
     this.saveToFile();
     return true;

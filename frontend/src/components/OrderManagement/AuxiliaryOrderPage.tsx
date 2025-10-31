@@ -150,6 +150,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   
   // 專案篩選狀態
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [projectsMap, setProjectsMap] = useState<{ [key: string]: string }>({});
 
   // 圖片查看狀態
   const [selectedImage, setSelectedImage] = useState<{url: string, name: string} | null>(null);
@@ -231,13 +232,28 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
     loadOrders();
   };
 
+  // 載入專案映射
+  const loadProjectsMap = async () => {
+    try {
+      const { projectService } = await import('../../services/projectService');
+      const response = await projectService.getAllProjects();
+      
+      if (response.success && Array.isArray(response.data)) {
+        const map: { [key: string]: string } = {};
+        response.data.forEach(project => {
+          map[project.id] = project.projectName;
+        });
+        setProjectsMap(map);
+      }
+    } catch (error) {
+      console.error('載入專案映射失敗:', error);
+    }
+  };
+
   // 根據專案ID獲取專案名稱
   const getProjectNameById = (projectId: string | undefined): string | undefined => {
     if (!projectId) return undefined;
-    
-    // 這裡可以從專案列表中查找，或者從訂單數據中獲取
-    // 暫時返回一個佔位符，實際應該從 API 獲取專案信息
-    return `專案 ${projectId.substring(0, 8)}`;
+    return projectsMap[projectId] || `專案 ${projectId.substring(0, 8)}`;
   };
 
   // 過濾訂單
@@ -369,6 +385,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
     // 清除用戶角色緩存以確保獲取最新角色
     setUserRoleCache({});
     loadOrders();
+    loadProjectsMap(); // 載入專案映射
     preloadUserRoles(); // 預載入用戶角色信息
   }, [selectedOrderType]); // 當選擇的訂單類型改變時重新載入
 

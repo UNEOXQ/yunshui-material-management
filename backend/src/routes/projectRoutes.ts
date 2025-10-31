@@ -129,15 +129,13 @@ router.delete('/:id', authenticateToken, async (req: AuthenticatedRequest, res):
   try {
     const { id } = req.params;
     
-    // 檢查是否有訂單關聯到此專案
+    // 移除所有關聯訂單的專案歸屬
     const orders = await memoryDb.getOrdersByProject(id);
-    if (orders.length > 0) {
-      res.status(400).json({
-        success: false,
-        message: '無法刪除有關聯訂單的專案'
-      });
-      return;
+    for (const order of orders) {
+      await memoryDb.removeOrderFromProject(order.id);
     }
+    
+    console.log(`📋 已移除 ${orders.length} 個訂單的專案歸屬`);
     
     const success = await memoryDb.deleteProject(id);
     

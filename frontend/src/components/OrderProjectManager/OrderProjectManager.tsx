@@ -52,19 +52,27 @@ export const OrderProjectManager: React.FC<OrderProjectManagerProps> = ({
 
   const handleProjectAssign = async (projectId: string) => {
     try {
+      console.log('🔄 開始分配訂單到專案:', { orderId, projectId });
+      
+      const selectedProject = projects.find(p => p.id === projectId);
+      console.log('📋 選中的專案:', selectedProject);
+      
       const response = await orderService.assignOrderToProject(orderId, projectId);
+      console.log('📡 API 響應:', response);
       
       if (response.success) {
         setShowSelector(false);
         onProjectChange();
         
         const project = projects.find(p => p.id === projectId);
+        console.log('✅ 分配成功，專案信息:', project);
         alert(`訂單已歸屬到專案「${project?.projectName}」`);
       } else {
+        console.error('❌ 分配失敗:', response.message);
         alert(`歸屬失敗: ${response.message}`);
       }
     } catch (error: any) {
-      console.error('歸屬專案失敗:', error);
+      console.error('❌ 歸屬專案錯誤:', error);
       alert(`歸屬失敗: ${error.message}`);
     }
   };
