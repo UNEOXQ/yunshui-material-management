@@ -2707,10 +2707,11 @@ dal Styles */
   gap: 16px;
 }
 
-.section-title-group {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.filter-indicator {
+  font-size: 14px;
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 8px;
 }
 
 /* 專案標籤在訂單管理頁面的特殊樣式 */

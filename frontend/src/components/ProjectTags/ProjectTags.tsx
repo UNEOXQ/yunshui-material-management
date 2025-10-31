@@ -77,6 +77,12 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
     const project = projects.find(p => p.id === projectId);
     if (!project) return;
     
+    // 檢查是否為系統創建的專案
+    if (project.projectName.includes('輔材專案-') || project.projectName.includes('成品專案-')) {
+      alert('系統自動創建的專案無法刪除');
+      return;
+    }
+    
     if (confirm(`確定要刪除專案「${project.projectName}」嗎？\n\n注意：這不會刪除訂單，只會將訂單從專案中移除。`)) {
       try {
         const response = await projectService.deleteProject(projectId);
@@ -96,11 +102,26 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
           
           alert('專案已刪除，相關訂單已移除專案歸屬');
         } else {
-          alert(`刪除失敗: ${response.message}`);
+          // 更詳細的錯誤處理
+          let errorMessage = response.message || '刪除失敗';
+          if (errorMessage.includes('404')) {
+            errorMessage = '專案不存在或已被刪除';
+          } else if (errorMessage.includes('403')) {
+            errorMessage = '沒有權限刪除此專案';
+          } else if (errorMessage.includes('400')) {
+            errorMessage = '專案可能有關聯的訂單，無法刪除';
+          }
+          alert(`刪除失敗: ${errorMessage}`);
         }
       } catch (error: any) {
         console.error('刪除專案失敗:', error);
-        alert(`刪除失敗: ${error.message}`);
+        let errorMessage = error.message || '網路錯誤';
+        if (errorMessage.includes('404')) {
+          errorMessage = '專案不存在或已被刪除';
+        } else if (errorMessage.includes('403')) {
+          errorMessage = '沒有權限刪除此專案';
+        }
+        alert(`刪除失敗: ${errorMessage}`);
       }
     }
   };
@@ -260,20 +281,22 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
   return (
     <div className={`project-tags ${className}`}>
       <div className="project-tags-header">
-        <button
-          className={`project-tag all-tag ${!selectedProjectId ? 'active' : ''}`}
-          onClick={handleShowAll}
-        >
-          全部訂單
-        </button>
-        
-        <div className="header-controls">
+        <div className="header-left">
+          <button
+            className={`project-tag all-tag ${!selectedProjectId ? 'active' : ''}`}
+            onClick={handleShowAll}
+          >
+            📋 全部
+          </button>
+          
           {showPagination && (
             <div className="pagination-info">
               第 {currentPage + 1} 頁，共 {totalPages} 頁
             </div>
           )}
-          
+        </div>
+        
+        <div className="header-controls">
           {showManagementButtons && (
             <button
               className={`edit-mode-btn ${editMode ? 'active' : ''}`}

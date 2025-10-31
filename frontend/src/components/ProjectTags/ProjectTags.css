@@ -13,6 +13,12 @@
   margin-bottom: 12px;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .header-controls {
   display: flex;
   align-items: center;
@@ -147,6 +153,11 @@
   border-color: #5a6268;
   color: white;
   font-weight: 600;
+  padding: 6px 12px;
+  font-size: 13px;
+  width: auto;
+  height: auto;
+  min-width: 80px;
 }
 
 .project-tag.all-tag:hover {
