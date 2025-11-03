@@ -2702,10 +2702,10 @@ dal Styles */
   border: none;
 }
 
-.section-header {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.orders-section .section-header {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
 }
 
 .filter-indicator {

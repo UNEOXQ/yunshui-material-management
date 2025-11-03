@@ -378,30 +378,19 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
                     }}
                     title={`刪除專案「${project.projectName}」`}
                   >
-                    🗑️
+                    ×
                   </button>
                 )}
               </div>
             ) : (
-              <>
-                <button
-                  className={`project-tag ${selectedProjectId === project.id ? 'active' : ''}`}
-                  onClick={() => handleTagClick(project.id)}
-                  title={`專案：${project.projectName}`}
-                >
-                  <span className="project-icon">📁</span>
-                  <span className="project-name">{project.projectName}</span>
-                </button>
-                {showManagementButtons && !editMode && (
-                  <span
-                    className="project-delete-btn-overlay"
-                    onClick={(e) => handleDeleteProject(e, project.id)}
-                    title={`刪除專案「${project.projectName}」`}
-                  >
-                    ×
-                  </span>
-                )}
-              </>
+              <button
+                className={`project-tag ${selectedProjectId === project.id ? 'active' : ''}`}
+                onClick={() => handleTagClick(project.id)}
+                title={`專案：${project.projectName}`}
+              >
+                <span className="project-icon">📁</span>
+                <span className="project-name">{project.projectName}</span>
+              </button>
             )}
           </div>
         ))}

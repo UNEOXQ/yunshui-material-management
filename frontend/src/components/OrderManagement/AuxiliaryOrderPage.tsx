@@ -7,6 +7,7 @@ import { FinishedMaterialModal } from '../MaterialSelection/FinishedMaterialModa
 import { ProjectTags } from '../ProjectTags/ProjectTags';
 import { OrderProjectManager } from '../OrderProjectManager/OrderProjectManager';
 import OperationHistory from './OperationHistory';
+import { ProjectCostSummary } from '../ProjectCostSummary/ProjectCostSummary';
 import { processImageUrl } from '../../utils/imageUtils';
 
 import './OrderManagement.css';
@@ -151,6 +152,9 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   // 專案篩選狀態
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [projectsMap, setProjectsMap] = useState<{ [key: string]: string }>({});
+  
+  // 專案成本總結狀態
+  const [showCostSummary, setShowCostSummary] = useState(false);
 
   // 圖片查看狀態
   const [selectedImage, setSelectedImage] = useState<{url: string, name: string} | null>(null);
@@ -215,6 +219,7 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
   // 專案選擇處理函數
   const handleProjectSelect = (projectId: string | null) => {
     setSelectedProjectId(projectId);
+    setShowCostSummary(!!projectId); // 選擇專案時顯示成本總結，取消選擇時隱藏
     console.log('選擇專案篩選:', projectId ? `專案 ${projectId}` : '全部訂單');
   };
 
@@ -2113,6 +2118,16 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
             </div>
           </div>
         </div>
+      )}
+
+      {/* 專案成本總結側邊欄 */}
+      {showCostSummary && selectedProjectId && (
+        <ProjectCostSummary
+          projectId={selectedProjectId}
+          projectName={getProjectNameById(selectedProjectId)}
+          orders={allOrders}
+          onClose={() => setShowCostSummary(false)}
+        />
       )}
     </div>
   );
