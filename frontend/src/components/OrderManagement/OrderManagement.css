@@ -2808,24 +2808,24 @@ ggle Buttons for Order Type Selector */
   }
 }/
 * 標題和狀態指示器樣式 */
-.title-and-stats-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 20px;
+.orders-section .title-and-stats-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  gap: 20px !important;
 }
 
-.title-and-stats-row h2 {
-  margin: 0;
-  flex-shrink: 0;
+.orders-section .title-and-stats-row h2 {
+  margin: 0 !important;
+  flex-shrink: 0 !important;
 }
 
-.title-right-stats {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  flex-shrink: 0;
+.orders-section .title-right-stats {
+  display: flex !important;
+  gap: 8px !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
 }
 
 .title-right-stats .stat-button {
@@ -2856,16 +2856,16 @@ ggle Buttons for Order Type Selector */
 
 /* 響應式設計 */
 @media (max-width: 768px) {
-  .title-and-stats-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  .orders-section .title-and-stats-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
   }
   
-  .title-right-stats {
-    width: 100%;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+  .orders-section .title-right-stats {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
   }
 }
 

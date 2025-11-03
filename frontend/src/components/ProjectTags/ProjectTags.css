@@ -131,6 +131,7 @@
 .project-tag-wrapper {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .project-tags-pagination {
