@@ -366,15 +366,15 @@
 }
 
 .item-supplier-compact {
-  font-size: 14px !important;
+  font-size: 12px !important;
   color: #6c757d !important;
   background: #e9ecef !important;
-  padding: 4px 8px !important;
+  padding: 3px 6px !important;
   border-radius: 4px !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
-  margin-top: 8px !important;
+  margin-top: 6px !important;
 }
 
 .item-main-info {
@@ -2447,17 +2447,7 @@ dal Styles */
   font-size: 8px;
 }
 
-.item-supplier-compact {
-  font-size: 7px;
-  color: #6c757d;
-  background: #e9ecef;
-  padding: 1px 2px;
-  border-radius: 2px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-top: 1px;
-}
+
 
 /* 右上角狀態指示器 */
 .order-status-indicator {
@@ -2882,4 +2872,13 @@ ggle Buttons for Order Type Selector */
     font-size: 11px;
     padding: 4px 8px;
   }
+}  box-sh
+adow: 0 1px 3px rgba(220, 53, 69, 0.2);
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
 }

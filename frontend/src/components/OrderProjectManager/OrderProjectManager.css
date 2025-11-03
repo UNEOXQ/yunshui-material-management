@@ -12,12 +12,13 @@
 }
 
 .project-info {
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 12px;
+  font-size: 11px;
+  padding: 1px 4px;
+  border-radius: 8px;
   background-color: #e3f2fd;
   color: #1976d2;
   border: 1px solid #bbdefb;
+  font-weight: 400;
 }
 
 .project-info.clickable {
