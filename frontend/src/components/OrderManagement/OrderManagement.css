@@ -3,6 +3,7 @@
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
   /* 確保可以滾動 */
   overflow-y: auto;
   min-height: calc(100vh - 120px); /* 減去 header 高度 */
@@ -2723,6 +2724,7 @@ dal Styles */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin: 16px 0;
   max-width: none;
+  width: 100%;
 }
 
 .orders-section .project-tag {

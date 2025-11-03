@@ -270,7 +270,7 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
     );
   }
 
-  if (projects.length === 0) {
+  if (projects.length === 0 && !loading) {
     return (
       <div className={`project-tags ${className}`}>
         <span className="no-projects-text">尚無專案</span>

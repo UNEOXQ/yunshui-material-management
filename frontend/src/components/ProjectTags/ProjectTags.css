@@ -4,9 +4,7 @@
   background-color: #f8f9fa;
   border-radius: 8px;
   border: 1px solid #e9ecef;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
 }
 
 .project-tags-header {
