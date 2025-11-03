@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-11-03T20:53:29.883Z",
+  "timestamp": "2025-11-03T21:23:29.884Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -993,6 +993,16 @@
         "createdBy": "id-2032",
         "createdAt": "2025-11-03T19:55:49.967Z",
         "updatedAt": "2025-11-03T19:55:49.967Z"
+      },
+      {
+        "id": "id-2311",
+        "orderId": "",
+        "projectName": "dds",
+        "overallStatus": "ACTIVE",
+        "description": "手動創建的專案",
+        "createdBy": "id-2032",
+        "createdAt": "2025-11-03T21:22:32.256Z",
+        "updatedAt": "2025-11-03T21:22:32.256Z"
       }
     ],
     "orderItems": [
@@ -1594,6 +1604,6 @@
         "updatedAt": "2025-10-23T21:29:33.306Z"
       }
     ],
-    "nextId": 2311
+    "nextId": 2312
   }
 }
