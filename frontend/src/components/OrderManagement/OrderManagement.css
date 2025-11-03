@@ -166,6 +166,7 @@
   gap: 16px;
   margin-bottom: 16px;
 }
+}
 
 .order-item {
   display: flex;
@@ -288,6 +289,7 @@
   margin-bottom: 10px !important;
   z-index: 1 !important;
 }
+}
 
 .material-image-small {
   width: 100% !important;
@@ -331,6 +333,11 @@
   flex: 1 !important;
   display: flex !important;
   flex-direction: column !important;
+  gap: 8px !important;
+  font-size: 16px !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
   gap: 8px !important;
   font-size: 16px !important;
   position: relative !important;
@@ -2810,8 +2817,9 @@ ggle Buttons for Order Type Selector */
     width: 100%;
     text-align: center;
   }
-}/
-* 標題和狀態指示器樣式 */
+}
+
+/* 標題和狀態指示器樣式 */
 .orders-section .title-and-stats-row {
   display: flex !important;
   align-items: center !important;
