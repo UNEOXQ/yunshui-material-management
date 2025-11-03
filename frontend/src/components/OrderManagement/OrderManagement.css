@@ -289,7 +289,6 @@
   margin-bottom: 10px !important;
   z-index: 1 !important;
 }
-}
 
 .material-image-small {
   width: 100% !important;
@@ -334,12 +333,7 @@
   display: flex !important;
   flex-direction: column !important;
   gap: 8px !important;
-  font-size: 16px !important;
-  position: relative !important;
-  z-index: 2 !important;
-}
-  gap: 8px !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   position: relative !important;
   z-index: 2 !important;
 }
@@ -347,7 +341,7 @@
 .item-name-compact {
   font-weight: 500 !important;
   color: #2c3e50 !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   line-height: 1.4 !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -355,11 +349,11 @@
   -webkit-line-clamp: 2 !important;
   -webkit-box-orient: vertical !important;
   margin-bottom: 8px !important;
-  min-height: 44px !important;
+  min-height: 40px !important;
 }
 
 .item-quantity-compact {
-  font-size: 15px !important;
+  font-size: 14px !important;
   color: #6c757d !important;
   font-weight: 500 !important;
 }
@@ -367,7 +361,8 @@
 .item-price-compact {
   font-weight: 600 !important;
   color: #28a745 !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
+}
 }
 
 .item-supplier-compact {
