@@ -298,13 +298,55 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
         
         <div className="header-controls">
           {showManagementButtons && (
-            <button
-              className={`edit-mode-btn ${editMode ? 'active' : ''}`}
-              onClick={handleEditMode}
-              title={editMode ? '退出編輯模式' : '編輯專案名稱'}
-            >
-              {editMode ? '✓ 完成' : '✏️ 編輯'}
-            </button>
+            <>
+              {showCreateInput ? (
+                <div className="header-create-input">
+                  <input
+                    type="text"
+                    value={newProjectName}
+                    onChange={(e) => setNewProjectName(e.target.value)}
+                    placeholder="輸入專案名稱"
+                    maxLength={50}
+                    autoFocus
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleCreateProject();
+                      if (e.key === 'Escape') handleCancelCreate();
+                    }}
+                    className="header-project-input"
+                  />
+                  <button
+                    className="header-confirm-btn"
+                    onClick={handleCreateProject}
+                    disabled={!newProjectName.trim()}
+                  >
+                    ✓
+                  </button>
+                  <button
+                    className="header-cancel-btn"
+                    onClick={handleCancelCreate}
+                  >
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <button
+                    className="create-project-btn"
+                    onClick={() => setShowCreateInput(true)}
+                    title="創建新專案"
+                  >
+                    + 新專案
+                  </button>
+                  <button
+                    className={`edit-mode-btn ${editMode ? 'active' : ''}`}
+                    onClick={handleEditMode}
+                    title={editMode ? '退出編輯模式' : '編輯專案名稱'}
+                  >
+                    {editMode ? '✓ 完成' : '✏️ 編輯'}
+                  </button>
+                </>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -348,61 +390,20 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
               >
                 <span className="project-icon">📁</span>
                 <span className="project-name">{project.projectName}</span>
-                {showManagementButtons && !editMode && (
-                  <span
-                    className="project-delete-btn"
-                    onClick={(e) => handleDeleteProject(e, project.id)}
-                    title={`刪除專案「${project.projectName}」`}
-                  >
-                    ×
-                  </span>
-                )}
               </button>
+              {showManagementButtons && !editMode && (
+                <span
+                  className="project-delete-btn-overlay"
+                  onClick={(e) => handleDeleteProject(e, project.id)}
+                  title={`刪除專案「${project.projectName}」`}
+                >
+                  ×
+                </span>
+              )}
             )}
           </div>
         ))}
-        
-        {showManagementButtons && (
-          <>
-            {showCreateInput ? (
-              <div className="project-create-input">
-                <input
-                  type="text"
-                  value={newProjectName}
-                  onChange={(e) => setNewProjectName(e.target.value)}
-                  placeholder="輸入專案名稱"
-                  maxLength={50}
-                  autoFocus
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleCreateProject();
-                    if (e.key === 'Escape') handleCancelCreate();
-                  }}
-                />
-                <button
-                  className="create-confirm-btn"
-                  onClick={handleCreateProject}
-                  disabled={!newProjectName.trim()}
-                >
-                  ✓
-                </button>
-                <button
-                  className="create-cancel-btn"
-                  onClick={handleCancelCreate}
-                >
-                  ×
-                </button>
-              </div>
-            ) : (
-              <button
-                className="project-tag create-tag"
-                onClick={() => setShowCreateInput(true)}
-                title="創建新專案"
-              >
-                + 新專案
-              </button>
-            )}
-          </>
-        )}
+
       </div>
       
       {showPagination && (

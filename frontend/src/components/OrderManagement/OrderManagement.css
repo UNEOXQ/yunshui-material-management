@@ -2719,8 +2719,10 @@ dal Styles */
   background-color: #ffffff;
   border: 1px solid #e1e5e9;
   border-radius: 8px;
-  padding: 12px 16px;
+  padding: 12px 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin: 16px 0;
+  max-width: none;
 }
 
 .orders-section .project-tag {

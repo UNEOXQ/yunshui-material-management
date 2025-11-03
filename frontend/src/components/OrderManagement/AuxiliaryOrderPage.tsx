@@ -744,13 +744,13 @@ export const AuxiliaryOrderPage: React.FC<AuxiliaryOrderPageProps> = ({ currentU
                   className={`toggle-btn ${selectedOrderType === 'PM' ? 'active' : ''}`}
                   onClick={() => setSelectedOrderType('PM')}
                 >
-                  📦 PM輔材
+                  PM輔材
                 </button>
                 <button
                   className={`toggle-btn ${selectedOrderType === 'AM' ? 'active' : ''}`}
                   onClick={() => setSelectedOrderType('AM')}
                 >
-                  🏗️ AM完成材
+                  AM完成材
                 </button>
               </div>
             </div>
