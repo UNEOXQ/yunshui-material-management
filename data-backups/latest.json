@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-11-04T21:17:08.224Z",
+  "timestamp": "2025-11-04T21:47:08.224Z",
   "version": "1.0.0",
   "data": {
     "materials": [
@@ -978,11 +978,10 @@
         "id": "id-2309",
         "orderId": "",
         "projectName": "3",
-        "overallStatus": "ACTIVE",
         "description": "手動創建的專案",
         "createdBy": "id-2032",
         "createdAt": "2025-11-03T19:55:46.477Z",
-        "updatedAt": "2025-11-03T19:55:46.477Z"
+        "updatedAt": "2025-11-04T21:27:29.974Z"
       },
       {
         "id": "id-2310",
