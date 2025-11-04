@@ -14,4 +14,7 @@ services:
       - key: JWT_REFRESH_SECRET
         value: yunshui-refresh-secret-key-2024
       - key: DEPLOY_VERSION
-        value: "1.0.2-image-fix-deploy"
+        value: "1.0.3-project-tags-fix"
+      - key: PORT
+        value: "10000"
+    healthCheckPath: /api/health

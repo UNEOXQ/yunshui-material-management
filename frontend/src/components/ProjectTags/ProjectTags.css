@@ -183,8 +183,8 @@
 .project-tag {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 10px 10px 8px 10px;
+  justify-content: center;
+  padding: 9px 10px 9px 10px;
   background-color: #ffffff;
   border: 1px solid #dee2e6;
   border-radius: 6px;
@@ -209,11 +209,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: left;
+  text-align: center;
   font-weight: 400 !important;
   line-height: 1.2;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .project-tag:hover {
