@@ -2725,13 +2725,18 @@ dal Styles */
 
 .orders-section .project-tag {
   font-size: 12px;
-  padding: 4px 10px;
+  padding: 6px 10px 4px 10px;
+  font-weight: 400 !important;
 }
 
 .orders-section .project-tag.active {
   background-color: #667eea;
   border-color: #5a67d8;
   color: white;
+}
+
+.orders-section .project-tag .project-name {
+  font-weight: 400 !important;
 }
 
 /* 響應式調整 */
