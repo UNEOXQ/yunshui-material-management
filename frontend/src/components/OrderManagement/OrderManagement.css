@@ -2725,11 +2725,17 @@ dal Styles */
 
 .orders-section .project-tag {
   font-size: 12px;
-  padding: 0 10px !important;
+  padding: 8px 10px !important;
   font-weight: 400 !important;
   justify-content: center !important;
-  line-height: 1 !important;
+  line-height: 1.2 !important;
   box-sizing: border-box !important;
+}
+
+/* 只針對一般專案標籤，不包括"全部"按鈕 */
+.orders-section .project-tag:not(.all-tag) {
+  padding: 0 10px !important;
+  line-height: 1 !important;
 }
 
 .orders-section .project-tag.active {
@@ -2741,13 +2747,22 @@ dal Styles */
 .orders-section .project-tag .project-name {
   font-weight: 400 !important;
   text-align: center !important;
+  line-height: 1.2 !important;
+}
+
+.orders-section .project-tag .project-icon {
+  line-height: 1.2 !important;
+  font-size: 10px !important;
+}
+
+/* 只針對一般專案標籤的圖標和文字 */
+.orders-section .project-tag:not(.all-tag) .project-name {
   line-height: 1 !important;
   transform: translateY(1px) !important;
 }
 
-.orders-section .project-tag .project-icon {
+.orders-section .project-tag:not(.all-tag) .project-icon {
   line-height: 1 !important;
-  font-size: 10px !important;
   transform: translateY(1px) !important;
 }
 
