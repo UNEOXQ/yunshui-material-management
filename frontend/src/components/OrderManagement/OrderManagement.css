@@ -2725,10 +2725,10 @@ dal Styles */
 
 .orders-section .project-tag {
   font-size: 12px;
-  padding: 8px 10px !important;
+  padding: 0 10px !important;
   font-weight: 400 !important;
   justify-content: center !important;
-  line-height: 1.1 !important;
+  line-height: 32px !important;
   box-sizing: border-box !important;
 }
 
@@ -2741,13 +2741,14 @@ dal Styles */
 .orders-section .project-tag .project-name {
   font-weight: 400 !important;
   text-align: center !important;
-  justify-content: center !important;
-  line-height: 1.1 !important;
+  line-height: 32px !important;
+  vertical-align: middle !important;
 }
 
 .orders-section .project-tag .project-icon {
-  line-height: 1.1 !important;
+  line-height: 32px !important;
   font-size: 10px !important;
+  vertical-align: middle !important;
 }
 
 /* 響應式調整 */
