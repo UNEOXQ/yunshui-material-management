@@ -208,11 +208,11 @@
 }
 
 .project-tag:not(.all-tag) .project-icon {
-  transform: translateY(1px);
+  transform: translateY(2px);
 }
 
 .project-tag:not(.all-tag) .project-name {
-  transform: translateY(1px);
+  transform: translateY(2px);
 }
 
 .project-icon {
