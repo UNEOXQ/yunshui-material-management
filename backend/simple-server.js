@@ -912,6 +912,217 @@ app.get('/api/status/projects/:projectId/status', (req, res) => {
   });
 });
 
+// 專案 API
+app.get('/api/projects', (req, res) => {
+  try {
+    console.log('Getting projects, total count:', projects.length);
+    
+    res.json({
+      success: true,
+      data: projects.sort((a, b) => 
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      )
+    });
+  } catch (error) {
+    console.error('Projects API error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+app.get('/api/projects/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = projects.find(p => p.id === id);
+    
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        message: 'Project not found'
+      });
+    }
+    
+    res.json({
+      success: true,
+      data: project
+    });
+  } catch (error) {
+    console.error('Get project API error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+app.post('/api/projects', (req, res) => {
+  try {
+    const { projectName, description } = req.body;
+    
+    if (!projectName) {
+      return res.status(400).json({
+        success: false,
+        message: 'Project name is required'
+      });
+    }
+    
+    const newProject = {
+      id: generateId(),
+      orderId: '', // 獨立專案沒有關聯訂單
+      projectName: projectName,
+      description: description || undefined,
+      overallStatus: 'ACTIVE',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    
+    projects.push(newProject);
+    
+    res.json({
+      success: true,
+      data: newProject,
+      message: 'Project created successfully'
+    });
+  } catch (error) {
+    console.error('Create project API error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+app.put('/api/projects/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    const { projectName, description, overallStatus } = req.body;
+    
+    const projectIndex = projects.findIndex(p => p.id === id);
+    if (projectIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        message: 'Project not found'
+      });
+    }
+    
+    // 更新專案
+    const updatedProject = {
+      ...projects[projectIndex],
+      ...(projectName && { projectName }),
+      ...(description !== undefined && { description }),
+      ...(overallStatus && { overallStatus }),
+      updatedAt: new Date()
+    };
+    
+    projects[projectIndex] = updatedProject;
+    
+    console.log(`Project ${id} updated:`, { projectName, description, overallStatus });
+    
+    res.json({
+      success: true,
+      data: updatedProject,
+      message: 'Project updated successfully'
+    });
+  } catch (error) {
+    console.error('Update project API error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+app.delete('/api/projects/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const projectIndex = projects.findIndex(p => p.id === id);
+    if (projectIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        message: 'Project not found'
+      });
+    }
+    
+    // 刪除專案相關的狀態更新
+    statusUpdates = statusUpdates.filter(su => su.projectId !== id);
+    
+    // 刪除專案
+    projects.splice(projectIndex, 1);
+    
+    res.json({
+      success: true,
+      message: 'Project deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete project API error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// 獲取專案下的所有訂單
+app.get('/api/projects/:id/orders', (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const project = projects.find(p => p.id === id);
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        message: 'Project not found'
+      });
+    }
+    
+    // 如果是關聯到特定訂單的專案
+    if (project.orderId) {
+      const order = orders.find(o => o.id === project.orderId);
+      if (order) {
+        return res.json({
+          success: true,
+          data: {
+            orders: [order],
+            pagination: {
+              page: 1,
+              limit: 1,
+              total: 1,
+              totalPages: 1
+            }
+          }
+        });
+      }
+    }
+    
+    // 如果是獨立專案，查找所有關聯的訂單
+    const projectOrders = orders.filter(order => 
+      order.projectId === id
+    );
+    
+    res.json({
+      success: true,
+      data: {
+        orders: projectOrders,
+        pagination: {
+          page: 1,
+          limit: projectOrders.length,
+          total: projectOrders.length,
+          totalPages: 1
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Get project orders API error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // 上傳 API
 app.post('/api/upload', (req, res) => {
   // 簡單的上傳模擬
@@ -949,8 +1160,10 @@ app.listen(PORT, () => {
   console.log(`👥 Users API: http://localhost:${PORT}/api/users`);
   console.log(`📦 Materials API: http://localhost:${PORT}/api/materials`);
   console.log(`🛒 Orders API: http://localhost:${PORT}/api/orders`);
+  console.log(`📋 Projects API: http://localhost:${PORT}/api/projects`);
   console.log('');
   console.log('✅ 簡化服務器啟動成功！使用內存數據庫');
+  console.log(`📋 Projects loaded: ${projects.length} projects`);
 });
 
 module.exports = app;
