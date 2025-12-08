@@ -39,26 +39,39 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
       const response = await projectService.getAllProjects();
       
       if (response.success && Array.isArray(response.data)) {
-        // 簡化的過濾邏輯：只過濾明確的自動生成專案
+        // 修復過濾邏輯：處理 overallStatus 為 undefined 的情況
         const activeProjects = response.data.filter(p => {
-          if (p.overallStatus !== 'ACTIVE') return false;
-          
-          // 只過濾完全符合自動生成格式且沒有被修改過的專案
-          const isUnmodifiedAutoProject = (
-            (p.projectName.startsWith('輔材專案-') || p.projectName.startsWith('成品專案-')) &&
-            (!p.description || p.description === '' || p.description === '自動創建的專案')
-          );
-          
-          console.log('🔍 專案過濾檢查:', {
+          console.log('🔍 專案檢查:', {
             id: p.id,
             name: p.projectName,
             description: p.description,
-            isUnmodifiedAutoProject: isUnmodifiedAutoProject,
-            willShow: !isUnmodifiedAutoProject
+            status: p.overallStatus,
+            hasDescription: !!p.description,
+            descriptionLength: p.description ? p.description.length : 0
           });
           
-          // 顯示所有非未修改的自動專案
-          return !isUnmodifiedAutoProject;
+          // 顯示活躍專案或狀態未定義/空字符串的專案（視為活躍）
+          const isActive = p.overallStatus === 'ACTIVE' || !p.overallStatus;
+          
+          if (!isActive) {
+            console.log('❌ 專案被過濾（非活躍）:', p.id, p.overallStatus);
+            return false;
+          }
+          
+          // 簡化的過濾邏輯：只過濾明確的自動生成專案
+          const isUnmodifiedAutoProject = (
+            (p.projectName && (p.projectName.startsWith('輔材專案-') || p.projectName.startsWith('成品專案-'))) &&
+            (!p.description || p.description === '' || p.description === '自動創建的專案')
+          );
+          
+          const willShow = !isUnmodifiedAutoProject;
+          console.log('🎯 專案過濾結果:', {
+            id: p.id,
+            isUnmodifiedAutoProject,
+            willShow
+          });
+          
+          return willShow;
         });
         
         setProjects(activeProjects);
@@ -93,9 +106,14 @@ export const ProjectTags: React.FC<ProjectTagsProps> = ({
     const project = projects.find(p => p.id === projectId);
     if (!project) return;
     
-    // 檢查是否為系統創建的專案
-    if (project.projectName.includes('輔材專案-') || project.projectName.includes('成品專案-')) {
-      alert('系統自動創建的專案無法刪除');
+    // 檢查是否為未修改的系統自動創建專案
+    const isUnmodifiedAutoProject = (
+      (project.projectName.startsWith('輔材專案-') || project.projectName.startsWith('成品專案-')) &&
+      (!project.description || project.description === '' || project.description === '自動創建的專案')
+    );
+    
+    if (isUnmodifiedAutoProject) {
+      alert('系統自動創建的專案無法刪除\n\n提示：如果您已經重命名此專案，請重新整理頁面後再試。');
       return;
     }
     
